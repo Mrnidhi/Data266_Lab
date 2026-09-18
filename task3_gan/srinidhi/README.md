@@ -40,6 +40,8 @@ Every checkpoint contains all four model states, both optimizer states, both sch
 PYTHONPATH=src python -m lab1.cyclegan train --mode rehearsal --device cuda --output-dir runs/cyclegan_rehearsal --resume runs/cyclegan_rehearsal/last.pt
 ```
 
+Transfer the complete run, keeping `best.pt` beside `last.pt`, plus the same data and split manifests. Fresh-output resume validates and preserves the previous best checkpoint; missing or inconsistent selected-best artifacts fail explicitly. If a crash leaves logs beyond the last saved update, retain the old run and resume into a fresh output directory. Changing visible CUDA device counts is supported, but cross-device continuation is not guaranteed to be bitwise identical. See [portable run instructions](../../COMPUTE_PLAN.md).
+
 `training_log.jsonl` records raw directional cycle/identity losses, adversarial losses, discriminator losses, gradient norms for each network, NaN events, learning rate, and update timing. `run_summary.json` records counts, parameters, memory, runtime, and provenance. Throughput counts two source images per update; it excludes loading/evaluation and is not the number of generator forward passes. CUDA peak allocated training memory is measured; CPU/MPS memory is explicitly unavailable. Fixed input → translation → reconstruction grids are saved. Non-finite losses/gradients stop training before applying the update.
 
 `best.pt` is selected only from genuine **validation** KID averaged across both directions, every five epochs. If required metric dependencies or weights are unavailable, no best model is invented. `last.pt` remains a resumable checkpoint, not a claim of best quality. Always inspect fixed grids and content metrics alongside KID.

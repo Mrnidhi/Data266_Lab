@@ -87,7 +87,7 @@ bash scripts/bootstrap_gpu.sh
 .venv/bin/python scripts/rehearsal.py --device cuda --mode rehearsal --max-minutes 60
 ```
 
-See each task's member README for full training, resume and evaluation. See [RunPod handoff](RUNPOD_HANDOFF.md) for the proposed paid rehearsal. The scripts do not allocate or stop a pod; their time limit stops training, not billing.
+See each task's member README for full training, resume and evaluation. The [compute allocation plan](COMPUTE_PLAN.md) prioritizes college/free GPUs, explains parallel task placement, costs and checkpoint transfers. The [RunPod handoff](RUNPOD_HANDOFF.md) is an optional paid fallback. The scripts do not allocate or stop a pod; their time limit stops training, not billing.
 
 ## Data, evidence and submission
 

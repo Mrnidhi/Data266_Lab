@@ -100,3 +100,91 @@ def test_synthetic_suite_checkpoint_reload_and_resume(tmp_path, config, monkeypa
     assert all(p.read_bytes() == contents for p, contents in preserved.items())
     with pytest.raises(ValueError, match="fingerprint"):
         sentiment.run(changed, tmp_path / "bad_resume", "cpu", resume=tmp_path)
+
+
+def test_empty_scaler_and_fewer_cuda_devices_can_resume(monkeypatch):
+    class EnabledScaler:
+        def is_enabled(self):
+            return True
+
+        def load_state_dict(self, state):
+            assert state
+            self.loaded = state
+
+    scaler = EnabledScaler()
+    assert sentiment._restore_scaler(scaler, {}) == "fresh_scaler_no_saved_fp16_state"
+    assert sentiment._restore_scaler(scaler, {"scale": 32}) == "restored"
+    assert scaler.loaded == {"scale": 32}
+    state = sentiment._rng_state()
+    state["cuda"] = [torch.tensor([1], dtype=torch.uint8), torch.tensor([2], dtype=torch.uint8)]
+    calls = []
+    monkeypatch.setattr(torch.cuda, "is_available", lambda: True)
+    monkeypatch.setattr(torch.cuda, "device_count", lambda: 1)
+    monkeypatch.setattr(torch.cuda, "set_rng_state", lambda value, index: calls.append((value.item(), index)))
+    sentiment._restore_rng(state)
+    assert calls == [(1, 0)]
+
+
+def _assert_nested_equal(left, right):
+    if isinstance(left, torch.Tensor):
+        torch.testing.assert_close(left, right, rtol=0, atol=0)
+    elif isinstance(left, np.ndarray):
+        np.testing.assert_array_equal(left, right)
+    elif isinstance(left, dict):
+        assert left.keys() == right.keys()
+        for key in left:
+            _assert_nested_equal(left[key], right[key])
+    elif isinstance(left, (tuple, list)):
+        assert len(left) == len(right)
+        for a, b in zip(left, right):
+            _assert_nested_equal(a, b)
+    else:
+        assert left == right
+
+
+@pytest.mark.parametrize("interruption", ["first_batch", "before_validation", "legacy_epoch"])
+def test_interrupted_training_is_exact_and_portable(tmp_path, config, monkeypatch, interruption):
+    config = dict(config, epochs=2, checkpoint_every_steps=1, early_stopping_patience=4, cpu_threads=1)
+    baseline, partial, relocated = (tmp_path / name for name in ("baseline", "partial", "relocated"))
+    sentiment.run(config, baseline, "cpu")
+    original_save = sentiment._atomic_checkpoint
+
+    class Interrupted(Exception):
+        pass
+
+    def interrupt(path, state):
+        progress = state.get("epoch_progress")
+        should_stop = path.name == "last.pt" and state["model_name"] == "maxpool_mlp" and (
+            (interruption == "first_batch" and progress and progress["next_batch"] == 1)
+            or (interruption == "before_validation" and progress and progress["next_batch"] == 3)
+            or (interruption == "legacy_epoch" and state["epoch"] == 1 and not progress))
+        if should_stop and interruption == "legacy_epoch":
+            # Reproduce the old epoch-only schema and fingerprint for both saved files.
+            records = sentiment._load_records(config)
+            for target, value in ((path, state), (path.parent / "best.pt", torch.load(path.parent / "best.pt", weights_only=False))):
+                value = dict(value)
+                value["format_version"] = 1
+                value.pop("epoch_progress", None)
+                value.pop("global_step", None)
+                value["fingerprint"] = sentiment._fingerprint(config, value["vocabulary"], records, legacy=True)
+                original_save(target, value)
+        else:
+            original_save(path, state)
+        if should_stop:
+            raise Interrupted()
+
+    monkeypatch.setattr(sentiment, "_atomic_checkpoint", interrupt)
+    with pytest.raises(Interrupted):
+        sentiment.run(config, partial, "cpu")
+    monkeypatch.setattr(sentiment, "_atomic_checkpoint", original_save)
+    settings = dict(config, raw_data_cache=str(tmp_path / "new_machine_cache"), checkpoint_every_steps=2)
+    sentiment.run(settings, relocated, "cpu", resume=partial)
+    for name in sentiment.MODEL_NAMES:
+        left = torch.load(baseline / name / "checkpoints" / "last.pt", weights_only=False)
+        right = torch.load(relocated / name / "checkpoints" / "last.pt", weights_only=False)
+        for key in ("model", "optimizer", "scheduler", "rng", "loader_rng", "best_f1", "bad_epochs", "global_step", "epoch"):
+            _assert_nested_equal(left[key], right[key])
+        for a, b in zip(left["history"], right["history"]):
+            for key in ("epoch", "train_loss", "validation_loss", "validation_macro_f1", "learning_rate"):
+                assert a[key] == b[key]
+        assert (baseline / name / "test_predictions.csv").read_bytes() == (relocated / name / "test_predictions.csv").read_bytes()

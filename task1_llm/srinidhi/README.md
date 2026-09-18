@@ -39,7 +39,8 @@ model. `lab1.gpt.data_cache_paths(config)` returns their paths. The configured
 cache directory defaults to `.cache/tinystories`, relative to the working directory.
 Copy the entire cache folder to the training environment. Verified cache hits
 need no network. Set `offline=true` to fail instead of downloading missing data.
-Do this before the training run; a resume requires the same saved configuration.
+Do this before the training run. Resume preserves the model, schedule and data contract;
+cache paths, offline/loading settings and checkpoint/log frequency may change between machines.
 
 The train-only character vocabulary includes PAD, UNK, BOS and EOS. Unknown
 validation characters map to UNK, and counts are reported. Stories are split

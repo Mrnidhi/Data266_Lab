@@ -176,7 +176,33 @@ def _restore_rng(state):
     np.random.set_state(state["numpy"])
     torch.set_rng_state(state["torch"].cpu())
     if torch.cuda.is_available() and state["cuda"]:
-        torch.cuda.set_rng_state_all([item.cpu() for item in state["cuda"]])
+        for index, rng in enumerate(state["cuda"][:torch.cuda.device_count()]):
+            torch.cuda.set_rng_state(rng.cpu(), index)
+
+
+def _restore_scaler(scaler, saved_state):
+    if not scaler.is_enabled():
+        return "disabled_for_current_device_precision"
+    if saved_state:
+        scaler.load_state_dict(saved_state)
+        return "restored"
+    # BF16/CPU checkpoints have no FP16 loss scale; initialize it on the new GPU.
+    return "fresh_scaler_no_saved_fp16_state"
+
+
+def _resume_contract(config):
+    local_settings = {"data_dir", "raw_data_cache", "offline", "num_workers", "cpu_threads",
+                      "checkpoint_every_steps"}
+    return {key: value for key, value in config.items() if key not in local_settings}
+
+
+def _fingerprint(config, vocabulary, records, legacy=False):
+    contract = {key: value for key, value in config.items() if key != "data_dir"} if legacy else _resume_contract(config)
+    digest = hashlib.sha256(json.dumps(contract, sort_keys=True).encode() + json.dumps(vocabulary, sort_keys=True).encode())
+    for name in ("train", "validation", "test"):
+        for row in records[name]:
+            digest.update(json.dumps(row, sort_keys=True).encode())
+    return digest.hexdigest()
 
 
 def _synthetic_records(count, offset, split):
@@ -413,7 +439,7 @@ def _plot(model_dir, history, metrics, curves):
     fig.tight_layout(); fig.savefig(model_dir / "confusion_matrix.png", dpi=150); plt.close(fig)
 
 
-def _train_one(name, cfg, datasets, vocabulary, output, device, fingerprint, resume):
+def _train_one(name, cfg, datasets, vocabulary, output, device, fingerprint, resume, accepted_fingerprints=None):
     _seed(cfg["seed"])
     model = build_model(name, len(vocabulary), cfg).to(device)
     optimizer = torch.optim.AdamW(model.parameters(), lr=cfg["learning_rates"][name], weight_decay=cfg["weight_decay"])
@@ -428,43 +454,72 @@ def _train_one(name, cfg, datasets, vocabulary, output, device, fingerprint, res
     checkpoint_dir.mkdir(exist_ok=True)
     history, epoch_start, best_f1, bad_epochs = [], 0, -1.0, 0
     stopped = False
+    epoch_progress, global_step = None, 0
+    resume_scaler_status = "not_resumed"
+    checkpoint_every = cfg.get("checkpoint_every_steps", 250)
+    if not isinstance(checkpoint_every, int) or checkpoint_every < 1:
+        raise ValueError("checkpoint_every_steps must be a positive integer")
     if resume:
         source = resume / name / "checkpoints" / "last.pt" if resume.is_dir() else resume
         if source.exists():
             state = torch.load(source, map_location="cpu", weights_only=False)
             if state["model_name"] != name:
                 raise ValueError("Resume a suite directory, or use a checkpoint matching the requested model")
-            if state["fingerprint"] != fingerprint:
+            if state["fingerprint"] not in (accepted_fingerprints or {fingerprint}):
                 raise ValueError("Resume configuration/data fingerprint mismatch")
             model.load_state_dict(state["model"])
             optimizer.load_state_dict(state["optimizer"])
             for optimizer_state in optimizer.state.values():
                 for key, value in optimizer_state.items():
-                    if isinstance(value, torch.Tensor):
+                    if isinstance(value, torch.Tensor) and key != "step":
                         optimizer_state[key] = value.to(device)
             scheduler.load_state_dict(state["scheduler"])
-            scaler.load_state_dict(state["scaler"])
+            resume_scaler_status = _restore_scaler(scaler, state["scaler"])
             generator.set_state(state["loader_rng"].cpu())
             _restore_rng(state["rng"])
             history, epoch_start, best_f1, bad_epochs = state["history"], state["epoch"], state["best_f1"], state["bad_epochs"]
             stopped = state["stopped_early"]
+            epoch_progress = state.get("epoch_progress")
+            batches_per_epoch = (len(datasets["train"]) + cfg["batch_size"] - 1) // cfg["batch_size"]
+            global_step = state.get("global_step", epoch_start * batches_per_epoch)
             # Allow outputs to be written to a fresh folder when resuming elsewhere.
+            import shutil
             prior_best = source.parent / "best.pt"
             if prior_best.exists() and prior_best.resolve() != (checkpoint_dir / "best.pt").resolve():
-                import shutil
                 shutil.copy2(prior_best, checkpoint_dir / "best.pt")
+            if source.resolve() != (checkpoint_dir / "last.pt").resolve():
                 shutil.copy2(source, checkpoint_dir / "last.pt")
-    train_loader = _loader(datasets["train"], cfg["batch_size"], True, generator)
+
+    def checkpoint_state(completed_epochs, progress=None):
+        return {"format_version": 2, "model_name": name, "model": model.state_dict(),
+                "optimizer": optimizer.state_dict(), "scheduler": scheduler.state_dict(),
+                "scaler": scaler.state_dict(), "rng": _rng_state(), "loader_rng": generator.get_state(),
+                "vocabulary": vocabulary, "config": cfg, "fingerprint": fingerprint,
+                "epoch": completed_epochs, "epoch_progress": progress, "global_step": global_step,
+                "history": history, "best_f1": best_f1, "bad_epochs": bad_epochs, "stopped_early": stopped}
+
     validation_loader = _loader(datasets["validation"], cfg["batch_size"])
     if cuda:
         torch.cuda.reset_peak_memory_stats(device)
     for epoch in range(epoch_start, cfg["epochs"]):
         if stopped:
             break
+        progress = epoch_progress or {}
+        if progress:
+            generator.set_state(progress["epoch_start_loader_rng"].cpu())
+        epoch_start_loader_rng = generator.get_state().clone()
+        train_loader = _loader(datasets["train"], cfg["batch_size"], True, generator)
+        next_batch = progress.get("next_batch", 0)
+        if not 0 <= next_batch <= len(train_loader):
+            raise ValueError("Saved sentiment batch position is outside the epoch")
         model.train()
         _sync(device); started = time.perf_counter()
-        train_loss, count = 0.0, 0
-        for ids, y, _ in train_loader:
+        train_loss, count = progress.get("train_loss", 0.0), progress.get("count", 0)
+        prior_train_seconds = progress.get("train_seconds", 0.0)
+        for batch_index, (ids, y, _) in enumerate(train_loader):
+            # Replay only the deterministic sampler/collation, never completed updates.
+            if batch_index < next_batch:
+                continue
             ids, y = ids.to(device), y.to(device)
             optimizer.zero_grad(set_to_none=True)
             context = torch.autocast("cuda", dtype=amp_dtype) if cuda and cfg["amp"] else nullcontext()
@@ -479,7 +534,14 @@ def _train_one(name, cfg, datasets, vocabulary, output, device, fingerprint, res
             scaler.step(optimizer); scaler.update()
             train_loss += loss.item() * len(y)
             count += len(y)
-        _sync(device); train_seconds = time.perf_counter() - started
+            global_step += 1
+            if global_step % checkpoint_every == 0:
+                _sync(device)
+                progress = {"next_batch": batch_index + 1, "epoch_start_loader_rng": epoch_start_loader_rng,
+                            "train_loss": train_loss, "count": count,
+                            "train_seconds": prior_train_seconds + time.perf_counter() - started}
+                _atomic_checkpoint(checkpoint_dir / "last.pt", checkpoint_state(epoch, progress))
+        _sync(device); train_seconds = prior_train_seconds + time.perf_counter() - started
         valid_y, valid_probability, valid_loss = _predict(model, validation_loader, device)
         validation_metrics, _ = compute_metrics(valid_y, valid_probability)
         f1 = validation_metrics["macro"]["f1"]
@@ -488,7 +550,8 @@ def _train_one(name, cfg, datasets, vocabulary, output, device, fingerprint, res
         best_f1, bad_epochs = (f1, 0) if improved else (best_f1, bad_epochs + 1)
         stopped = bad_epochs >= cfg["early_stopping_patience"]
         history.append({"epoch": epoch + 1, "train_loss": train_loss / count, "validation_loss": valid_loss, "validation_macro_f1": f1, "train_seconds": train_seconds, "examples_per_second": count / max(train_seconds, 1e-9), "learning_rate": optimizer.param_groups[0]["lr"]})
-        state = {"format_version": 1, "model_name": name, "model": model.state_dict(), "optimizer": optimizer.state_dict(), "scheduler": scheduler.state_dict(), "scaler": scaler.state_dict(), "rng": _rng_state(), "loader_rng": generator.get_state(), "vocabulary": vocabulary, "config": cfg, "fingerprint": fingerprint, "epoch": epoch + 1, "history": history, "best_f1": best_f1, "bad_epochs": bad_epochs, "stopped_early": stopped}
+        epoch_progress = None
+        state = checkpoint_state(epoch + 1)
         if improved:
             _atomic_checkpoint(checkpoint_dir / "best.pt", state)
         _atomic_checkpoint(checkpoint_dir / "last.pt", state)
@@ -498,7 +561,7 @@ def _train_one(name, cfg, datasets, vocabulary, output, device, fingerprint, res
     model.load_state_dict(best["model"])
     y, probabilities, test_loss = _predict(model, _loader(datasets["test"], cfg["batch_size"]), device)
     metrics, curves = compute_metrics(y, probabilities, cfg["bootstrap_samples"], cfg["seed"])
-    metrics.update(test_loss=test_loss, selected_epoch=best["epoch"], selected_validation_macro_f1=best["best_f1"], parameter_count=sum(p.numel() for p in model.parameters()), train_seconds=sum(row["train_seconds"] for row in history), peak_cuda_memory_bytes=int(torch.cuda.max_memory_allocated(device)) if cuda else None, mode=cfg["mode"], synthetic=cfg["mode"] == "smoke")
+    metrics.update(test_loss=test_loss, selected_epoch=best["epoch"], selected_validation_macro_f1=best["best_f1"], parameter_count=sum(p.numel() for p in model.parameters()), train_seconds=sum(row["train_seconds"] for row in history), peak_cuda_memory_bytes=int(torch.cuda.max_memory_allocated(device)) if cuda else None, mode=cfg["mode"], synthetic=cfg["mode"] == "smoke", resume_scaler_status=resume_scaler_status, completed_training_steps=global_step)
     _dump(model_dir / "metrics.json", metrics)
     _dump(model_dir / "curves.json", curves)
     _dump(model_dir / "slices.json", _slice_metrics(datasets["test"], y, probabilities))
@@ -518,7 +581,7 @@ def _train_one(name, cfg, datasets, vocabulary, output, device, fingerprint, res
 
 
 def run(config: dict, output_dir: Path, device: str, resume: Path | None = None) -> dict:
-    """Train/evaluate all three models. Resume checkpoints at epoch boundaries."""
+    """Train/evaluate all three models; resume saved batches or legacy epoch boundaries."""
     cfg = dict(config)
     if cfg["mode"] not in {"smoke", "rehearsal", "full"}:
         raise ValueError("Mode must be smoke, rehearsal, or full")
@@ -540,11 +603,9 @@ def run(config: dict, output_dir: Path, device: str, resume: Path | None = None)
     audit = audit_splits(records)
     vocabulary = build_vocabulary((row["text"] for row in records["train"]), cfg["vocabulary_size"], cfg["min_frequency"])
     # Paths may change between local/cloud/college machines; data bytes may not.
-    fingerprint_state = hashlib.sha256(json.dumps({k: v for k, v in cfg.items() if k != "data_dir"}, sort_keys=True).encode() + json.dumps(vocabulary, sort_keys=True).encode())
-    for name in ("train", "validation", "test"):
-        for row in records[name]:
-            fingerprint_state.update(json.dumps(row, sort_keys=True).encode())
-    fingerprint = fingerprint_state.hexdigest()
+    fingerprint = _fingerprint(cfg, vocabulary, records)
+    accepted_fingerprints = {fingerprint}
+    legacy_fingerprints = {}
     # Validate every existing model before touching a same-directory run's files.
     if resume:
         for name in MODEL_NAMES:
@@ -554,10 +615,24 @@ def run(config: dict, output_dir: Path, device: str, resume: Path | None = None)
             for filename in ("last.pt", "best.pt"):
                 source = checkpoint_dir / filename
                 if not source.is_file():
+                    if filename == "best.pt" and not last_state["history"] and last_state.get("epoch_progress"):
+                        # The first checkpoint can precede the first validation/best model.
+                        continue
                     raise ValueError(f"Resume is incomplete: missing {name}/{filename}")
                 state = torch.load(source, map_location="cpu", weights_only=False)
-                if state["model_name"] != name or state["fingerprint"] != fingerprint:
+                if state["model_name"] != name or _resume_contract(state["config"]) != _resume_contract(cfg):
                     raise ValueError("Resume configuration/data fingerprint mismatch")
+                expected_fingerprint = fingerprint
+                if state.get("format_version", 1) == 1:
+                    legacy_key = json.dumps(state["config"], sort_keys=True)
+                    if legacy_key not in legacy_fingerprints:
+                        legacy_fingerprints[legacy_key] = _fingerprint(state["config"], vocabulary, records, legacy=True)
+                    expected_fingerprint = legacy_fingerprints[legacy_key]
+                if state["fingerprint"] != expected_fingerprint or state["vocabulary"] != vocabulary:
+                    raise ValueError("Resume configuration/data fingerprint mismatch")
+                accepted_fingerprints.add(expected_fingerprint)
+                if filename == "last.pt":
+                    last_state = {"history": state["history"], "epoch_progress": state.get("epoch_progress")}
                 del state
     datasets = {name: Reviews(rows, vocabulary, cfg["max_length"]) for name, rows in records.items()}
     _dump(output_dir / "data_audit.json", audit)
@@ -568,7 +643,7 @@ def run(config: dict, output_dir: Path, device: str, resume: Path | None = None)
     _dump(output_dir / "dataset_statistics.json", {name: {"count": len(data), "truncated_fraction": float(np.mean(np.asarray(data.lengths) > cfg["max_length"])), "mean_oov_rate": float(np.mean(data.oov_rates)), "mean_tokens_before_truncation": float(np.mean(data.lengths))} for name, data in datasets.items()})
     results, predictions, reference_y = {}, {}, None
     for name in MODEL_NAMES:
-        metrics, y, probabilities = _train_one(name, cfg, datasets, vocabulary, output_dir, device, fingerprint, Path(resume) if resume else None)
+        metrics, y, probabilities = _train_one(name, cfg, datasets, vocabulary, output_dir, device, fingerprint, Path(resume) if resume else None, accepted_fingerprints)
         if reference_y is not None and not np.array_equal(reference_y, y):
             raise AssertionError("Test row order differs between models")
         reference_y = y

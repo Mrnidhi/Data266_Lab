@@ -2,6 +2,8 @@
 
 No pod is started by any script in this package. The current preparation step does not authorize a paid run.
 
+The current [compute plan](COMPUTE_PLAN.md) prioritizes college/free GPUs and independent tasks in parallel. This paid rehearsal is optional if those resources are unavailable or insufficient. The target additional compute cost is $0; the approximate $2 allowance below is a fallback estimate, not a charge or authorization.
+
 ## Proposed rehearsal
 
 Use one RTX 4090, matching the expected college hardware. The existing stopped pod was observed offering **$0.74/hour** on September 18, 2026. Recheck its displayed price before starting.
@@ -25,7 +27,7 @@ Plan about 60–90 minutes of powered-on time for installation, CUDA tests, shor
 4. Run `.venv/bin/python scripts/rehearsal.py --device cuda --mode smoke --max-minutes 10` to catch CUDA-specific issues first.
 5. Prepare/copy the text cache with `.venv/bin/python scripts/prefetch_rehearsal.py` if missing. Then run `.venv/bin/python scripts/rehearsal.py --device cuda --mode rehearsal --max-minutes 60`. It automatically uses the prepared cache if present. With no actual class image data, GAN results remain synthetic pipeline checks.
 6. Check all run summaries, peak VRAM, steps/second, and checkpoint reload. If the 9-block GAN runs out of memory, explicitly reduce `base_channels` to 32, record that revised configuration, and rerun. Do not silently alter the model.
-7. Download the entire `runs` and `verification` folders, including logs and weights. Verify files/checksums locally before removing anything remotely.
+7. Download the entire active run and its `verification` records, including logs, best/last weights and provenance. Use `scripts/checkpoint_bundle.py` after pausing training to create and verify a portable run archive. Copy frozen data and manifests separately. The existing Pod has only container storage shown, which RunPod erases when the Pod stops; verify the local backup before stopping it.
 8. Stop the pod in RunPod and verify its stopped state. Inspect any remaining storage charges. Do not terminate/delete storage before confirming the download.
 
 Use the observed throughput to estimate a full run: sum `(remaining training batches × seconds per batch) + validation + generation/evaluation + checkpoint overhead`, with at least 25% scheduling headroom. Short-run GPU timing must synchronize CUDA and exclude first-step initialization when forecasting steady state. Data loading and metric inference can be the bottleneck even on a larger GPU.

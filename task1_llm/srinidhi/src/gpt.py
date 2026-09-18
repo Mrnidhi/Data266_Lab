@@ -465,6 +465,13 @@ def _restore_scaler(scaler: Any, saved_state: dict[str, Any]) -> str:
     return "fresh_scaler_no_saved_fp16_state"
 
 
+def _resume_contract(config: dict[str, Any]) -> dict[str, Any]:
+    # These controls change where/how data is loaded, never its selected content.
+    local_settings = {"data_cache", "raw_data_cache", "offline", "num_workers", "cpu_threads",
+                      "checkpoint_every_steps", "log_every_steps"}
+    return {key: value for key, value in config.items() if key not in local_settings}
+
+
 def _empty_accumulator() -> dict[str, Any]:
     return {"loss_sum": 0.0, "tokens": 0, "correct": 0, "grad_norm_sum": 0.0,
             "batches": 0, "training_seconds": 0.0}
@@ -529,8 +536,8 @@ def run(config: dict, output_dir: Path, device: str, resume: Path | None = None)
     if target.type == "cuda":
         torch.cuda.reset_peak_memory_stats(target)
     checkpoint = load_checkpoint(Path(resume), "cpu") if resume else None
-    if checkpoint and checkpoint["config"] != config:
-        raise ValueError("Resume config must exactly match saved config (including schedule and data)")
+    if checkpoint and _resume_contract(checkpoint["config"]) != _resume_contract(config):
+        raise ValueError("Resume config must match the saved model, schedule and data contract")
     train_stories, valid_stories, manifest = prepare_data(config, checkpoint["data_manifest"] if checkpoint else None)
     vocabulary = build_vocabulary(train_stories)
     if checkpoint and checkpoint["vocabulary"] != vocabulary:

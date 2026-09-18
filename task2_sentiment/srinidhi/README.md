@@ -48,13 +48,15 @@ For final training, prefetch the `full` profile separately or leave its `data_di
 
 ## Checkpoints and resume
 
-Every model writes `checkpoints/best.pt` and `checkpoints/last.pt`, containing model/optimizer/scheduler/scaler state, epoch history, vocabulary, configuration, Python/NumPy/PyTorch/CUDA RNG states, and the shuffle-generator state. Resume works at **completed epoch boundaries**; an interrupted partial epoch repeats. Model checkpoints are local trusted artifacts; do not load arbitrary third-party pickle checkpoints.
+Every model writes `checkpoints/best.pt` and `checkpoints/last.pt`, containing model/optimizer/scheduler/scaler state, epoch history, vocabulary, configuration, Python/NumPy/PyTorch/CUDA RNG states, and the shuffle-generator state. New runs also save `last.pt` every **250 training batches** by default (`checkpoint_every_steps`), including the within-epoch position and loss/count totals. Resume reconstructs the batch order and continues after the saved batch. Only work since the last saved checkpoint repeats. Older checkpoints remain supported at their saved epoch boundaries. Model checkpoints are local trusted artifacts; do not load arbitrary third-party pickle checkpoints.
 
 ```bash
 .venv/bin/python -m lab1.run --task sentiment --mode rehearsal --device cuda --set 'data_dir="task2_sentiment/srinidhi/data_processed/rehearsal"' --output runs/sentiment-rehearsal --resume runs/sentiment-rehearsal
 ```
 
 Use the same profile/configuration and data. Local cache paths may change when moving machines. The resume fingerprint verifies configuration, vocabulary, IDs, labels, and review content. A completed model is evaluated from its best checkpoint; unfinished models continue. A run never overwrites existing training checkpoints unless `resume` is supplied.
+
+Move the complete suite directory so each classifier keeps both its best and last checkpoint. CPU/BF16 checkpoints initialize a fresh FP16 gradient scaler when resumed on a device that needs one; the metric record reports this transition. Different GPU/PyTorch environments can produce numerical differences. See [portable run instructions](../../COMPUTE_PLAN.md) for verified transfer bundles and independent storage.
 
 ## Saved evaluation
 

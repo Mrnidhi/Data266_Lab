@@ -138,3 +138,16 @@ def test_cpu_checkpoint_can_resume_with_a_new_fp16_scaler():
     assert gpt._restore_scaler(scaler, {}) == "fresh_scaler_no_saved_fp16_state"
     assert gpt._restore_scaler(scaler, {"scale": 65536}) == "restored"
     assert scaler.loaded == {"scale": 65536}
+
+
+def test_resume_allows_machine_local_settings_but_rejects_training_changes(config, tmp_path):
+    config.update(generation_prompts=1, generation_characters=2)
+    gpt.run(config, tmp_path / "source", "cpu")
+    relocated = dict(config, data_cache=str(tmp_path / "new_cache"), raw_data_cache=str(tmp_path / "raw"),
+                     offline=False, cpu_threads=1, checkpoint_every_steps=1, log_every_steps=2)
+    checkpoint = tmp_path / "source" / "checkpoints" / "last.pt"
+    summary = gpt.run(relocated, tmp_path / "destination", "cpu", checkpoint)
+    assert summary["global_steps"] == config["max_steps"]
+    assert summary["inference_reload_verified"]
+    with pytest.raises(ValueError, match="contract"):
+        gpt.run(dict(relocated, learning_rate=0.1), tmp_path / "bad", "cpu", checkpoint)

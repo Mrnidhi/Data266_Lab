@@ -6,6 +6,7 @@ import random
 
 import numpy as np
 import pytest
+import lab1.cyclegan as cyclegan
 from lab1.common import task_config_path
 import torch
 from torch import nn
@@ -13,7 +14,7 @@ from PIL import Image
 
 from lab1.cyclegan import (Generator, PatchDiscriminator, ReplayPool, build_models,
                           cycle_forward, generator_losses, prepare_data, run,
-                          score_human_audit, export_checkpoint)
+                          score_human_audit, export_checkpoint, restore_rng)
 
 
 @pytest.fixture(autouse=True)
@@ -90,6 +91,20 @@ def test_replay_detaches_and_roundtrips():
     assert all(torch.equal(a, b) for a, b in zip(pool.images, restored.images))
 
 
+@pytest.mark.parametrize("source_count,destination_count", [(2, 1), (1, 2)])
+def test_resume_restores_only_available_cuda_rng_devices(monkeypatch, capsys, source_count, destination_count):
+    restored = []
+    monkeypatch.setattr(torch.cuda, "is_available", lambda: True)
+    monkeypatch.setattr(torch.cuda, "device_count", lambda: destination_count)
+    monkeypatch.setattr(torch.cuda, "set_rng_state", lambda state, device: restored.append((device, state)))
+    state = {"python": random.getstate(), "numpy": np.random.get_state(),
+             "torch": torch.get_rng_state(), "cuda": [torch.tensor([i], dtype=torch.uint8) for i in range(source_count)]}
+    restore_rng(state)
+    assert [device for device, _ in restored] == list(range(min(source_count, destination_count)))
+    assert all(torch.equal(value, state["cuda"][device]) for device, value in restored)
+    assert "CUDA device count changed" in capsys.readouterr().out
+
+
 def test_full_cannot_use_synthetic_and_partial_paths_fail():
     config = smoke_config()
     config["mode"] = "full"
@@ -145,6 +160,65 @@ def test_resume_matches_uninterrupted_all_networks_optimizers_and_pools(tmp_path
     assert resumed["best_checkpoint"] is None
     with pytest.raises(ValueError, match="Synthetic rehearsal"):
         export_checkpoint(tmp_path / "resumed" / "last.pt", tmp_path, tmp_path / "absent.txt", tmp_path / "export", "cpu")
+
+
+@pytest.fixture
+def selected_best_run(tmp_path, monkeypatch):
+    manifests = tmp_path / "manifests"
+    manifests.mkdir()
+    for domain_number, domain in enumerate(("photo", "monet")):
+        folder = tmp_path / domain
+        folder.mkdir()
+        for split_number, split in enumerate(("train", "val", "test")):
+            filename = f"{split}.png"
+            Image.new("RGB", (40, 40), color=(30 + 30 * domain_number, 20 * split_number, 60)).save(folder / filename)
+            (manifests / f"{split}_{domain}.txt").write_text(filename + "\n")
+    config = dict(smoke_config(), mode="full", allow_synthetic=False, select_best=True, validation_every_epochs=1,
+                  data={"photo_dir": str(tmp_path / "photo"), "monet_dir": str(tmp_path / "monet"), "manifest_dir": str(manifests)})
+    def fake_evaluation(*args, **kwargs):
+        return {"directions": {name: {"metrics": {"kid": {"status": "computed", "value": 0.2}}}
+                               for name in cyclegan.DIRECTIONS}}
+    monkeypatch.setattr(cyclegan, "evaluate_models", fake_evaluation)
+    source = tmp_path / "source_run"
+    run(dict(config, max_steps=1), source, "cpu")
+    return config, source
+
+
+def test_resume_into_fresh_directory_preserves_prior_best_without_improvement(tmp_path, selected_best_run):
+    config, source = selected_best_run
+    original = (source / "best.pt").read_bytes()
+    destination = tmp_path / "new_platform"
+    result = run(config, destination, "cpu", source / "last.pt")
+    assert result["completed_updates"] == 2
+    assert result["best_selection"]["step"] == 1
+    assert result["best_checkpoint"] == str(destination / "best.pt")
+    assert (destination / "best.pt").read_bytes() == original
+
+
+@pytest.mark.parametrize("problem", ["future", "recipe", "data", "stale", "missing", "destination"])
+def test_resume_rejects_inconsistent_best_checkpoint(tmp_path, selected_best_run, problem):
+    config, source = selected_best_run
+    path = source / "best.pt"
+    candidate = torch.load(path, map_location="cpu", weights_only=False)
+    destination = tmp_path / "new_platform"
+    if problem == "missing":
+        path.unlink()
+    elif problem == "destination":
+        destination.mkdir()
+        (destination / "best.pt").write_bytes(b"different artifact")
+    else:
+        if problem == "future":
+            candidate["state"]["global_step"] = 100
+        elif problem == "recipe":
+            candidate["config"]["learning_rate"] *= 2
+        elif problem == "data":
+            candidate["state"]["manifest_fingerprint"] = "different data"
+        else:
+            candidate["state"]["best_selection"]["value"] = 0.1
+        torch.save(candidate, path)
+    with pytest.raises((ValueError, FileExistsError), match="[Bb]est"):
+        run(config, destination, "cpu", source / "last.pt")
+    assert not (destination / "last.pt").exists()
 
 
 def test_smoke_evaluation_marks_optional_quality_metrics_unavailable(tmp_path):

@@ -1,0 +1,27 @@
+{
+  "scope": "Synthetic CPU transfer and resumed execution; not a GPU benchmark or final training",
+  "cross_gpu_verified": false,
+  "checks": [
+    {
+      "task": "gpt",
+      "bundle_files": 16,
+      "verified_after_copy": true,
+      "resume_status": "completed",
+      "original_status": "completed"
+    },
+    {
+      "task": "sentiment",
+      "bundle_files": 48,
+      "verified_after_copy": true,
+      "resume_status": "completed",
+      "original_status": "completed"
+    },
+    {
+      "task": "cyclegan",
+      "bundle_files": 27,
+      "verified_after_copy": true,
+      "resume_status": "completed",
+      "original_status": "completed"
+    }
+  ]
+}

@@ -15,6 +15,8 @@ import json
 import math
 import os
 import random
+import shutil
+import tempfile
 import time
 from pathlib import Path
 
@@ -30,6 +32,8 @@ from .common import project_root, task_config_path
 
 DIRECTIONS = ("photo_to_monet", "monet_to_photo")
 METRICS = ("fid", "kid", "precision", "recall", "density", "coverage", "lpips_cycle", "content_cosine")
+RESUME_FIELDS = ("seed", "image_size", "base_channels", "residual_blocks", "learning_rate", "betas",
+                 "cycle_weight", "identity_weight", "epochs", "constant_epochs", "batch_size", "replay_size")
 
 
 def _json(path, value):
@@ -187,7 +191,13 @@ def restore_rng(state):
     np.random.set_state(state["numpy"])
     torch.set_rng_state(state["torch"].cpu())
     if "cuda" in state and torch.cuda.is_available():
-        torch.cuda.set_rng_state_all([x.cpu() for x in state["cuda"]])
+        available = torch.cuda.device_count()
+        for index, saved in enumerate(state["cuda"][:available]):
+            torch.cuda.set_rng_state(saved.cpu(), device=index)
+        if len(state["cuda"]) != available:
+            print("CUDA device count changed on resume; restored matching device RNG states. "
+                  "Additional devices keep their initialized seed. Cross-device continuation "
+                  "is not guaranteed to be bitwise identical.", flush=True)
     if "mps" in state and torch.backends.mps.is_available():
         torch.mps.set_rng_state(state["mps"].cpu())
 
@@ -219,6 +229,58 @@ def load_checkpoint(path, models, optimizers=None, schedulers=None, pools=None, 
     if restore_random:
         restore_rng(checkpoint["rng"])
     return checkpoint
+
+
+def _preserve_best_checkpoint(resume, output_dir, restored, provenance):
+    source, destination = Path(resume).parent / "best.pt", Path(output_dir) / "best.pt"
+    selection = restored["state"].get("best_selection")
+    if selection is None:
+        if source.exists() or destination.exists() or restored["state"].get("best_validation_score") is not None:
+            raise ValueError("Untracked best checkpoint/score; use a consistent checkpoint bundle")
+        return
+    if not provenance["class_results"]:
+        raise ValueError("Synthetic rehearsal checkpoints cannot have a selected class best checkpoint")
+    if not source.is_file():
+        raise ValueError("Selected best.pt is missing; transfer it alongside the resume checkpoint")
+    def digest(path):
+        with path.open("rb") as handle:
+            return hashlib.file_digest(handle, "sha256").hexdigest()
+    expected = digest(source)
+    candidate = torch.load(source, map_location="cpu", weights_only=False)
+    candidate_state = candidate.get("state", {})
+    valid = (candidate.get("format_version") == 1
+             and all(candidate.get("config", {}).get(key) == restored["config"].get(key) for key in RESUME_FIELDS)
+             and candidate_state.get("manifest_fingerprint") == provenance["manifest_fingerprint"]
+             and candidate_state.get("best_selection") == selection
+             and candidate_state.get("best_validation_score") == restored["state"].get("best_validation_score")
+             and candidate_state.get("global_step") == selection.get("step")
+             and isinstance(selection.get("step"), int)
+             and 0 <= selection["step"] <= restored["state"]["global_step"]
+             and selection.get("validation_only") is True
+             and selection.get("metric") == "mean_validation_KID_both_directions"
+             and selection.get("value") == restored["state"].get("best_validation_score")
+             and isinstance(selection.get("value"), (int, float)) and math.isfinite(selection["value"]))
+    del candidate
+    if not valid:
+        raise ValueError("Best checkpoint is stale, future, or inconsistent with the resumed data/recipe/selection")
+    if digest(source) != expected:
+        raise ValueError("Best checkpoint changed while validating; pause training and retry")
+    if source.resolve() == destination.resolve():
+        return
+    if destination.exists():
+        if digest(destination) != expected:
+            raise FileExistsError("Refusing to overwrite a different best.pt in the destination run")
+        return
+    descriptor, temporary_name = tempfile.mkstemp(prefix=".best-transfer-", suffix=".tmp", dir=output_dir)
+    os.close(descriptor)
+    temporary = Path(temporary_name)
+    try:
+        shutil.copyfile(source, temporary)
+        if digest(temporary) != expected:
+            raise ValueError("Best checkpoint changed while copying; pause training and retry")
+        os.link(temporary, destination)
+    finally:
+        temporary.unlink(missing_ok=True)
 
 
 class ImageDomain:
@@ -609,7 +671,7 @@ def run(config: dict, output_dir: Path, device: str, resume: Path | None = None)
     restored = None
     if resume is not None:
         restored = torch.load(resume, map_location="cpu", weights_only=False)
-        for field in ("seed", "image_size", "base_channels", "residual_blocks", "learning_rate", "betas", "cycle_weight", "identity_weight", "epochs", "constant_epochs", "batch_size", "replay_size"):
+        for field in RESUME_FIELDS:
             if restored["config"].get(field) != config.get(field):
                 raise ValueError(f"Resume must preserve {field}; create a new run for a changed training recipe")
         if restored["state"]["manifest_fingerprint"] != provenance["manifest_fingerprint"]:
@@ -623,6 +685,7 @@ def run(config: dict, output_dir: Path, device: str, resume: Path | None = None)
                         last_line = line
             if last_line and json.loads(last_line)["step"] > restored["state"]["global_step"]:
                 raise ValueError("Log extends beyond the requested checkpoint; resume into a new directory to preserve run history")
+        _preserve_best_checkpoint(resume, output_dir, restored, provenance)
     _json(output_dir / "resolved_config.json", config)
     _json(output_dir / "data_manifest.json", provenance)
     models = build_models(config, device)
