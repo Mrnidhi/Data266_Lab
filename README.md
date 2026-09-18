@@ -6,7 +6,7 @@ Each member independently implements and trains all three tasks. Members keep co
 
 ## Current status
 
-Srinidhi's implementation is prepared and locally tested. Committed notebook outputs are labeled **CPU smoke checks**, not final training results. Other members should add their own named folders and independently implement their models. GPU rehearsal and full training are pending. The PDF's class Kaggle link currently returns “We can't find that page,” so actual class GAN data and submission rules still need verification.
+Srinidhi's implementation is prepared and locally tested. Committed notebook outputs are labeled **CPU smoke checks**, not final training results. Revanth must independently implement his models in his own member folders. GPU rehearsal and full training are pending. The PDF's class Kaggle link currently returns “We can't find that page,” so actual class GAN data and submission rules still need verification.
 
 ## Layout
 
@@ -15,15 +15,18 @@ Data266_Lab/
 ├── README.md
 ├── task1_llm/
 │   ├── data/
-│   └── srinidhi/
+│   ├── srinidhi/
+│   └── revanth0211/
 ├── task2_sentiment/
 │   ├── data/
-│   └── srinidhi/
+│   ├── srinidhi/
+│   └── revanth0211/
 ├── task3_gan/
 │   ├── data/
 │   │   ├── monet_jpg/
 │   │   └── photo_jpg/
-│   └── srinidhi/
+│   ├── srinidhi/
+│   └── revanth0211/
 ├── reproducibility/
 │   ├── manifests/
 │   └── raw_logs/
@@ -46,7 +49,7 @@ srinidhi/
 
 Srinidhi's task folders additionally contain a configuration and README. Task 3 also contains `evaluate_local.py`, `full_metrics_report.csv`, and `outputs/pred_A2B/` / `outputs/pred_B2A/`, as shown in the PDF's GAN tree. `submission.csv` is a generated deliverable; its schema and actual class outputs must be verified before creating it. The final team PDF will be `report/DATA266_Lab1_Report_Team_49.pdf` after real experiments.
 
-Only Srinidhi's member folders currently exist. Teammates should add the same structure with their actual names. Shared runner/setup/test utilities remain in `src/`, `scripts/`, and `tests/`; execution receipts are in `verification/`. See [team workflow](TEAM_WORKFLOW.md).
+Lab Pair 49 uses `srinidhi/` for [Mrnidhi](https://github.com/Mrnidhi) and `revanth0211/` for [Revanth0211](https://github.com/Revanth0211). Revanth's folders are empty contribution scaffolds; his independent implementation and results are pending. Shared runner/setup/test utilities remain in `src/`, `scripts/`, and `tests/`; execution receipts are in `verification/`. See [team workflow](TEAM_WORKFLOW.md).
 
 ## Reproduce a smoke test with one command
 

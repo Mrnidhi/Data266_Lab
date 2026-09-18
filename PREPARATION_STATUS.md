@@ -1,6 +1,6 @@
 # Lab Pair 49 — preparation status
 
-This is the shared team repository. Srinidhi's code and configurations live inside his named task folders; teammates still need to add their independent work. The initial commit contains prepared code and synthetic CPU verification, not final submission results.
+This is the shared team repository. Srinidhi's code and configurations live inside his named task folders; Revanth has separate `revanth0211/` scaffolds for his independent work. The initial commit contains prepared code and synthetic CPU verification, not final submission results.
 
 ## Verified locally
 
@@ -14,7 +14,7 @@ Receipts are under `verification/`; raw runs are under `reproducibility/raw_logs
 
 ## Pending
 
-- Teammate collaborator access and independent model contributions.
+- Revanth must accept his GitHub invitation when sent and add his independent model contributions.
 - An authorized GPU rehearsal: Linux/CUDA setup, GPU memory, throughput and time measurements.
 - The working class Kaggle invitation/link and verified GAN data/rules; the PDF's link returned a missing-page message.
 - Full training, all final metrics, real failure analyses, two human GAN raters, teammate comparisons and the combined report.
