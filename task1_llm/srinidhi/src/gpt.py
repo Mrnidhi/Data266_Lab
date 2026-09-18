@@ -601,6 +601,10 @@ def run(config: dict, output_dir: Path, device: str, resume: Path | None = None)
             best_path.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(previous_best, best_path)
     validation_loader = _loader(valid_data, config["batch_size"], config["seed"], workers=config["num_workers"])
+    session_started = time.perf_counter()
+    session_initial_step = state["global_step"]
+    print(f"gpt/{config['mode']} training device={target} step={session_initial_step}/{planned_steps}; "
+          "ETA estimates cover remaining training steps; evaluation/export may add time", flush=True)
     while state["epoch"] < config["epochs"] and (state["global_step"] < planned_steps or state["evaluation_pending"]):
         epoch = state["epoch"]
         first_batch = state["next_batch"]
@@ -651,11 +655,19 @@ def run(config: dict, output_dir: Path, device: str, resume: Path | None = None)
                          "targets_per_second": tokens / max(seconds, 1e-9), **_memory(target)}
                 with metrics_path.open("a") as handle:
                     handle.write(json.dumps(event, allow_nan=False) + "\n")
+            if state["global_step"] % config["log_every_steps"] == 0 or state["global_step"] == planned_steps:
+                elapsed = time.perf_counter() - session_started
+                completed = state["global_step"] - session_initial_step
+                eta = elapsed / completed * max(0, planned_steps - state["global_step"])
+                print(f"gpt/{config['mode']} epoch={epoch + 1}/{config['epochs']} "
+                      f"batch={batch_index + 1}/{batches_per_epoch} step={state['global_step']}/{planned_steps} "
+                      f"loss={loss.item():.4f} elapsed={elapsed:.1f}s eta_steps_est={eta:.1f}s", flush=True)
             if state["global_step"] % config["checkpoint_every_steps"] == 0:
                 save(output_dir / "checkpoints" / "last.pt")
             if state["global_step"] >= planned_steps:
                 break
         accumulator = state["accumulator"]
+        print(f"gpt/{config['mode']} epoch={epoch + 1} validating", flush=True)
         validation = evaluate(model, validation_loader, target, amp, amp_dtype)
         training = _metric(accumulator["loss_sum"], accumulator["tokens"], accumulator["correct"])
         complete_epoch = state["next_batch"] == batches_per_epoch
@@ -673,6 +685,8 @@ def run(config: dict, output_dir: Path, device: str, resume: Path | None = None)
         state["evaluation_pending"] = False
         with metrics_path.open("a") as handle:
             handle.write(json.dumps(row, allow_nan=False) + "\n")
+        print(f"gpt/{config['mode']} epoch={epoch + 1} train_loss={training['cross_entropy']:.4f} "
+              f"val_loss={validation['cross_entropy']:.4f} val_perplexity={validation['perplexity']:.4f}", flush=True)
         improved = validation["cross_entropy"] < state["best_validation_loss"]
         if improved:
             state["best_validation_loss"] = validation["cross_entropy"]

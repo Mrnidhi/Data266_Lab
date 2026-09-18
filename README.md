@@ -89,6 +89,8 @@ bash scripts/bootstrap_gpu.sh
 
 See each task's member README for full training, resume and evaluation. The [compute allocation plan](COMPUTE_PLAN.md) prioritizes college/free GPUs, explains parallel task placement, costs and checkpoint transfers. The [RunPod handoff](RUNPOD_HANDOFF.md) is an optional paid fallback. The scripts do not allocate or stop a pod; their time limit stops training, not billing.
 
+For visible training progress, see the [SSH terminal workflow](SSH_WORKFLOW.md). All model runners print flushed step/loss/elapsed/estimated-time updates; the connection launcher requires the actual running Pod's SSH host/port and a registered key.
+
 ## Data, evidence and submission
 
 Raw text datasets are cached under each task's `data/huggingface/`; Srinidhi's selected rehearsal rows and preprocessing stay in his own `data_processed/`. Verified GAN images belong in `task3_gan/data/monet_jpg/` and `photo_jpg/`, with individual split manifests under the member's `data_processed/`. Data-folder READMEs are tracked so the required structure is visible on GitHub; large data, environments, caches, ZIPs and model binaries are ignored. Save weights separately and document their accessible location/checksum in `checkpoints/README.md`; include required weights in the final Canvas ZIP. Never commit credentials or personal absolute paths.

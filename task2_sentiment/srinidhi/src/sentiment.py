@@ -192,12 +192,12 @@ def _restore_scaler(scaler, saved_state):
 
 def _resume_contract(config):
     local_settings = {"data_dir", "raw_data_cache", "offline", "num_workers", "cpu_threads",
-                      "checkpoint_every_steps"}
+                      "checkpoint_every_steps", "log_every_steps"}
     return {key: value for key, value in config.items() if key not in local_settings}
 
 
 def _fingerprint(config, vocabulary, records, legacy=False):
-    contract = {key: value for key, value in config.items() if key != "data_dir"} if legacy else _resume_contract(config)
+    contract = {key: value for key, value in config.items() if key not in {"data_dir", "log_every_steps"}} if legacy else _resume_contract(config)
     digest = hashlib.sha256(json.dumps(contract, sort_keys=True).encode() + json.dumps(vocabulary, sort_keys=True).encode())
     for name in ("train", "validation", "test"):
         for row in records[name]:
@@ -459,6 +459,9 @@ def _train_one(name, cfg, datasets, vocabulary, output, device, fingerprint, res
     checkpoint_every = cfg.get("checkpoint_every_steps", 250)
     if not isinstance(checkpoint_every, int) or checkpoint_every < 1:
         raise ValueError("checkpoint_every_steps must be a positive integer")
+    log_every = cfg.get("log_every_steps", 50)
+    if not isinstance(log_every, int) or log_every < 1:
+        raise ValueError("log_every_steps must be a positive integer")
     if resume:
         source = resume / name / "checkpoints" / "last.pt" if resume.is_dir() else resume
         if source.exists():
@@ -501,6 +504,11 @@ def _train_one(name, cfg, datasets, vocabulary, output, device, fingerprint, res
     validation_loader = _loader(datasets["validation"], cfg["batch_size"])
     if cuda:
         torch.cuda.reset_peak_memory_stats(device)
+    batches_per_epoch = (len(datasets["train"]) + cfg["batch_size"] - 1) // cfg["batch_size"]
+    planned_steps = batches_per_epoch * cfg["epochs"]
+    session_started, session_initial_step = time.perf_counter(), global_step
+    print(f"sentiment/{name} mode={cfg['mode']} device={device} step={global_step}/{planned_steps}; "
+          "ETA estimates assume all planned epochs; early stopping may shorten training and evaluation/export may add time", flush=True)
     for epoch in range(epoch_start, cfg["epochs"]):
         if stopped:
             break
@@ -535,6 +543,14 @@ def _train_one(name, cfg, datasets, vocabulary, output, device, fingerprint, res
             train_loss += loss.item() * len(y)
             count += len(y)
             global_step += 1
+            if global_step % log_every == 0 or batch_index + 1 == len(train_loader):
+                elapsed = time.perf_counter() - session_started
+                completed = global_step - session_initial_step
+                eta = elapsed / completed * max(0, planned_steps - global_step)
+                print(f"sentiment/{name} epoch={epoch + 1}/{cfg['epochs']} "
+                      f"batch={batch_index + 1}/{len(train_loader)} step={global_step}/{planned_steps} "
+                      f"loss={loss.item():.4f} mean_loss={train_loss/count:.4f} "
+                      f"elapsed={elapsed:.1f}s eta_steps_est={eta:.1f}s", flush=True)
             if global_step % checkpoint_every == 0:
                 _sync(device)
                 progress = {"next_batch": batch_index + 1, "epoch_start_loader_rng": epoch_start_loader_rng,
@@ -542,6 +558,7 @@ def _train_one(name, cfg, datasets, vocabulary, output, device, fingerprint, res
                             "train_seconds": prior_train_seconds + time.perf_counter() - started}
                 _atomic_checkpoint(checkpoint_dir / "last.pt", checkpoint_state(epoch, progress))
         _sync(device); train_seconds = prior_train_seconds + time.perf_counter() - started
+        print(f"sentiment/{name} epoch={epoch + 1} validating", flush=True)
         valid_y, valid_probability, valid_loss = _predict(model, validation_loader, device)
         validation_metrics, _ = compute_metrics(valid_y, valid_probability)
         f1 = validation_metrics["macro"]["f1"]

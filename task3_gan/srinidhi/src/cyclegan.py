@@ -719,6 +719,9 @@ def run(config: dict, output_dir: Path, device: str, resume: Path | None = None)
         torch.cuda.reset_peak_memory_stats()
     log_path = output_dir / "training_log.jsonl"
     session_start = time.perf_counter()
+    session_initial_step = state["global_step"]
+    print(f"cyclegan/{mode} training device={device} step={session_initial_step}/{target_steps}; "
+          "ETA estimates cover remaining training steps; evaluation/export may add time", flush=True)
     interval = max(1, int(config.get("checkpoint_every", 500)))
     validation_epochs = max(1, int(config.get("validation_every_epochs", 5)))
     cached_epoch, order = None, None
@@ -771,12 +774,20 @@ def run(config: dict, output_dir: Path, device: str, resume: Path | None = None)
             handle.write(json.dumps(record, allow_nan=False) + "\n")
         current = state["global_step"]
         if current % max(1, int(config.get("log_every", 10))) == 0 or current == target_steps:
-            print(f"CycleGAN {mode}: {current}/{target_steps} updates, G={scalar_losses['generator_total']:.4f}, {duration:.3f}s/update", flush=True)
+            elapsed = time.perf_counter() - session_start
+            completed = current - session_initial_step
+            eta = elapsed / completed * max(0, target_steps - current)
+            print(f"cyclegan/{mode} epoch={epoch + 1}/{epochs} batch={offset + 1}/{steps_per_epoch} "
+                  f"step={current}/{target_steps} G_loss={scalar_losses['generator_total']:.4f} "
+                  f"D_photo_loss={scalar_losses['discriminator_photo']:.4f} "
+                  f"D_monet_loss={scalar_losses['discriminator_monet']:.4f} "
+                  f"step_seconds={duration:.3f} elapsed={elapsed:.1f}s eta_steps_est={eta:.1f}s", flush=True)
         epoch_done = current % steps_per_epoch == 0
         if current % interval == 0 or current == target_steps or epoch_done:
             save_grid(models, data, output_dir / "grids" / f"step_{current:07d}.png", device)
             save_checkpoint(output_dir / "last.pt", models, optimizers, schedulers, pools, config, state)
         if provenance["class_results"] and config.get("select_best", True) and epoch_done and (current // steps_per_epoch) % validation_epochs == 0:
+            print(f"cyclegan/{mode} step={current} validating", flush=True)
             preserved = rng_state()
             validation = evaluate_models(models, data, provenance, output_dir / "validation" / f"step_{current:07d}", device, "val", config.get("evaluation", {}))
             restore_rng(preserved)

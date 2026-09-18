@@ -177,7 +177,8 @@ def test_interrupted_training_is_exact_and_portable(tmp_path, config, monkeypatc
     with pytest.raises(Interrupted):
         sentiment.run(config, partial, "cpu")
     monkeypatch.setattr(sentiment, "_atomic_checkpoint", original_save)
-    settings = dict(config, raw_data_cache=str(tmp_path / "new_machine_cache"), checkpoint_every_steps=2)
+    settings = dict(config, raw_data_cache=str(tmp_path / "new_machine_cache"), checkpoint_every_steps=2,
+                    log_every_steps=1)
     sentiment.run(settings, relocated, "cpu", resume=partial)
     for name in sentiment.MODEL_NAMES:
         left = torch.load(baseline / name / "checkpoints" / "last.pt", weights_only=False)
