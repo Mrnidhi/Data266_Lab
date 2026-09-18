@@ -1,0 +1,238 @@
+{
+  "task": "cyclegan",
+  "mode": "smoke",
+  "device": "cpu",
+  "started_utc": "2026-09-18T22:31:28.629121+00:00",
+  "status": "completed",
+  "is_final_result": false,
+  "config": {
+    "mode": "smoke",
+    "seed": 2342,
+    "image_size": 32,
+    "base_channels": 8,
+    "residual_blocks": 1,
+    "batch_size": 1,
+    "learning_rate": 0.0001,
+    "betas": [
+      0.5,
+      0.999
+    ],
+    "cycle_weight": 10.0,
+    "identity_weight": 5.0,
+    "replay_size": 2,
+    "epochs": 2,
+    "constant_epochs": 1,
+    "max_steps": 2,
+    "checkpoint_every": 1,
+    "log_every": 1,
+    "cpu_threads": 2,
+    "allow_synthetic": true,
+    "synthetic_images": 4,
+    "select_best": false,
+    "evaluate_after_run": true,
+    "evaluation": {
+      "allow_metric_downloads": false,
+      "max_images": 2,
+      "seed": 2342
+    },
+    "data": {
+      "monet_dir": null,
+      "photo_dir": null,
+      "manifest_dir": null
+    }
+  },
+  "source_sha256": {
+    "src/lab1/__init__.py": "044ce07e71a22513be8f557ba7ab7c8994657d9340ea495e649041bdf329dca5",
+    "src/lab1/common.py": "ecec0fbb3cbefdb860a001a11fdbd1e9194f34bcb54294ad8164440a0890dfec",
+    "src/lab1/run.py": "571163444bc3331b59263ba9bde6f4c027360a25983ab846dfb4e052b5a5bb39",
+    "task1_llm/srinidhi/config.json": "97037a5652b5118b75e60b9cbe7a102cdb1191a0c644e4248001ad8ef10705bc",
+    "task1_llm/srinidhi/src/gpt.py": "0452b4c406feaa5c07e7b2cac4ba1c910081c5c337605e0cbdca462f0f92f508",
+    "task2_sentiment/srinidhi/config.json": "abbb3abe01a3e2deca7238973a19bac33e4c184ba63247365528fab37ccccbef",
+    "task2_sentiment/srinidhi/src/sentiment.py": "2c4a7aa7f3458c7d93cb47256e9ba126b232d3f00709c05c528ad1ca282dd124",
+    "task3_gan/srinidhi/config.json": "0c88cb843e6c2abf42561cb6ceaf557787357646fb464a6c97632e0fefb83100",
+    "task3_gan/srinidhi/src/cyclegan.py": "f149aac9a5ad119d52b5cbed8e2f890322792a8da16d0fbe0adf07edd5944e20"
+  },
+  "environment": {
+    "captured_utc": "2026-09-18T22:31:28.639321+00:00",
+    "python": "3.12.14",
+    "platform": "macOS-27.0-arm64-arm-64bit",
+    "machine": "arm64",
+    "packages": {
+      "torch": "2.11.0",
+      "torchvision": "0.26.0",
+      "numpy": "2.5.3",
+      "pandas": "3.0.6",
+      "scikit-learn": "1.9.1",
+      "scipy": "1.16.3",
+      "matplotlib": "3.11.2",
+      "datasets": "5.0.1",
+      "Pillow": "12.3.0",
+      "clean-fid": "0.1.35",
+      "lpips": "0.1.4",
+      "prdc": "0.2"
+    },
+    "cuda_available": false,
+    "cuda_build": null,
+    "cudnn": null,
+    "gpus": [],
+    "mps_available": true
+  },
+  "resumed": false,
+  "ended_utc": "2026-09-18T22:31:29.242000+00:00",
+  "elapsed_seconds": 0.6022270829998888,
+  "summary": {
+    "part": 3,
+    "mode": "smoke",
+    "device": "cpu",
+    "seed": 2342,
+    "data_kind": "synthetic_pipeline_check",
+    "class_results": false,
+    "completed_updates": 2,
+    "completed_epoch_fraction": 0.5,
+    "steps_per_epoch": 4,
+    "epoch_definition": "one shuffled pass through larger training domain; smaller domain sampled independently with replacement",
+    "parameter_counts": {
+      "G_photo_to_monet": 32451,
+      "G_monet_to_photo": 32451,
+      "D_photo": 44537,
+      "D_monet": 44537
+    },
+    "training_seconds": 0.03415320799831534,
+    "session_wall_seconds": 0.07096795799589017,
+    "training_source_images_per_second": 117.11930546018712,
+    "throughput_definition": "two source images per complete paired-domain G/D update; excludes data loading and evaluation",
+    "peak_gpu_memory_bytes": null,
+    "memory_note": "CUDA peak allocated training memory; CPU/MPS metric unavailable",
+    "nan_events": 0,
+    "checkpoint": "reproducibility/raw_logs/srinidhi/notebook-smoke-2026-09-18T22-31-28.626070+00-00/cyclegan/last.pt",
+    "best_checkpoint": null,
+    "best_selection": null,
+    "metrics_status": "Run evaluate_checkpoint for held-out evaluation; no scores inferred from loss",
+    "human_audit_status": "Requires independent real ratings by two humans",
+    "kaggle_submission_status": "Not submitted; actual class format unverified",
+    "evaluation": {
+      "split": "val",
+      "data_kind": "synthetic_pipeline_check",
+      "class_results": false,
+      "manifest_fingerprint": "synthetic:2342:32:4",
+      "directions": {
+        "photo_to_monet": {
+          "source_count": 2,
+          "generated_count": 2,
+          "real_reference_count": 2,
+          "metrics": {
+            "fid": {
+              "status": "unavailable",
+              "value": null,
+              "reason": "Synthetic data are pipeline checks, not class quality results"
+            },
+            "kid": {
+              "status": "unavailable",
+              "value": null,
+              "reason": "Synthetic data are pipeline checks, not class quality results"
+            },
+            "precision": {
+              "status": "unavailable",
+              "value": null,
+              "reason": "Synthetic data are pipeline checks, not class quality results"
+            },
+            "recall": {
+              "status": "unavailable",
+              "value": null,
+              "reason": "Synthetic data are pipeline checks, not class quality results"
+            },
+            "density": {
+              "status": "unavailable",
+              "value": null,
+              "reason": "Synthetic data are pipeline checks, not class quality results"
+            },
+            "coverage": {
+              "status": "unavailable",
+              "value": null,
+              "reason": "Synthetic data are pipeline checks, not class quality results"
+            },
+            "lpips_cycle": {
+              "status": "unavailable",
+              "value": null,
+              "reason": "Synthetic data are pipeline checks, not class quality results"
+            },
+            "content_cosine": {
+              "status": "unavailable",
+              "value": null,
+              "reason": "Synthetic data are pipeline checks, not class quality results"
+            },
+            "cycle_l1": {
+              "status": "computed",
+              "value": 0.5317735970020294,
+              "count": 2,
+              "pixel_range": "[-1,1]"
+            }
+          },
+          "inference_seconds": 0.0011433749969000928,
+          "inference_images_per_second": 1749.2073951436585,
+          "generation_and_pair_metrics_seconds": 0.004545958996459376
+        },
+        "monet_to_photo": {
+          "source_count": 2,
+          "generated_count": 2,
+          "real_reference_count": 2,
+          "metrics": {
+            "fid": {
+              "status": "unavailable",
+              "value": null,
+              "reason": "Synthetic data are pipeline checks, not class quality results"
+            },
+            "kid": {
+              "status": "unavailable",
+              "value": null,
+              "reason": "Synthetic data are pipeline checks, not class quality results"
+            },
+            "precision": {
+              "status": "unavailable",
+              "value": null,
+              "reason": "Synthetic data are pipeline checks, not class quality results"
+            },
+            "recall": {
+              "status": "unavailable",
+              "value": null,
+              "reason": "Synthetic data are pipeline checks, not class quality results"
+            },
+            "density": {
+              "status": "unavailable",
+              "value": null,
+              "reason": "Synthetic data are pipeline checks, not class quality results"
+            },
+            "coverage": {
+              "status": "unavailable",
+              "value": null,
+              "reason": "Synthetic data are pipeline checks, not class quality results"
+            },
+            "lpips_cycle": {
+              "status": "unavailable",
+              "value": null,
+              "reason": "Synthetic data are pipeline checks, not class quality results"
+            },
+            "content_cosine": {
+              "status": "unavailable",
+              "value": null,
+              "reason": "Synthetic data are pipeline checks, not class quality results"
+            },
+            "cycle_l1": {
+              "status": "computed",
+              "value": 0.5292566418647766,
+              "count": 2,
+              "pixel_range": "[-1,1]"
+            }
+          },
+          "inference_seconds": 0.0009043760001077317,
+          "inference_images_per_second": 2211.4695654924,
+          "generation_and_pair_metrics_seconds": 0.003441667002334725
+        }
+      },
+      "lpips_pairing": "original versus cycle reconstruction (not arbitrary unpaired target)",
+      "content_encoder": "torchvision ResNet18 IMAGENET1K_V1, frozen, pooled512; input versus translation",
+      "distribution_encoder": "Clean-FID clean-mode InceptionV3 2048 features",
+      "caveat": "Small reference sets make FID and neighborhood metrics uncertain; fixed counts do not remove FID bias."
+    }
+  }
+}

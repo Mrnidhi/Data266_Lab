@@ -1,0 +1,82 @@
+[
+  {
+    "prompt": "Once upon a time, a little bird",
+    "continuation": "wwwwwwwwwwwwwwwwwwww",
+    "full_text": "Once upon a time, a little birdwwwwwwwwwwwwwwwwwwww",
+    "decoding": "greedy",
+    "temperature": 0.0,
+    "top_k": 0,
+    "seed": 3342,
+    "metrics": {
+      "tokenization": "lowercase regex words; exclude prompt",
+      "distinct_1": 1.0,
+      "total_1grams": 1,
+      "distinct_2": null,
+      "total_2grams": 0,
+      "distinct_3": null,
+      "total_3grams": 0,
+      "repeated_4gram_fraction": null,
+      "total_4grams": 0
+    }
+  },
+  {
+    "prompt": "Once upon a time, a little bird",
+    "continuation": "sTtnI2Ifhb0wraceddwd",
+    "full_text": "Once upon a time, a little birdsTtnI2Ifhb0wraceddwd",
+    "decoding": "sampled",
+    "temperature": 0.8,
+    "top_k": 40,
+    "seed": 3343,
+    "metrics": {
+      "tokenization": "lowercase regex words; exclude prompt",
+      "distinct_1": 1.0,
+      "total_1grams": 1,
+      "distinct_2": null,
+      "total_2grams": 0,
+      "distinct_3": null,
+      "total_3grams": 0,
+      "repeated_4gram_fraction": null,
+      "total_4grams": 0
+    }
+  },
+  {
+    "prompt": "Lily found a small red box. Inside",
+    "continuation": "wwwwwwwwwwwwwwwwwwww",
+    "full_text": "Lily found a small red box. Insidewwwwwwwwwwwwwwwwwwww",
+    "decoding": "greedy",
+    "temperature": 0.0,
+    "top_k": 0,
+    "seed": 3352,
+    "metrics": {
+      "tokenization": "lowercase regex words; exclude prompt",
+      "distinct_1": 1.0,
+      "total_1grams": 1,
+      "distinct_2": null,
+      "total_2grams": 0,
+      "distinct_3": null,
+      "total_3grams": 0,
+      "repeated_4gram_fraction": null,
+      "total_4grams": 0
+    }
+  },
+  {
+    "prompt": "Lily found a small red box. Inside",
+    "continuation": "f6linf Ac.hdg",
+    "full_text": "Lily found a small red box. Insidef6linf Ac.hdg",
+    "decoding": "sampled",
+    "temperature": 0.8,
+    "top_k": 40,
+    "seed": 3353,
+    "metrics": {
+      "tokenization": "lowercase regex words; exclude prompt",
+      "distinct_1": 1.0,
+      "total_1grams": 3,
+      "distinct_2": 1.0,
+      "total_2grams": 2,
+      "distinct_3": 1.0,
+      "total_3grams": 1,
+      "repeated_4gram_fraction": null,
+      "total_4grams": 0
+    }
+  }
+]

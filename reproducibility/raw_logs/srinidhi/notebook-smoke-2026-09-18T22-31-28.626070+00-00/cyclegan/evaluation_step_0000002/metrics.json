@@ -1,0 +1,124 @@
+{
+  "split": "val",
+  "data_kind": "synthetic_pipeline_check",
+  "class_results": false,
+  "manifest_fingerprint": "synthetic:2342:32:4",
+  "directions": {
+    "photo_to_monet": {
+      "source_count": 2,
+      "generated_count": 2,
+      "real_reference_count": 2,
+      "metrics": {
+        "fid": {
+          "status": "unavailable",
+          "value": null,
+          "reason": "Synthetic data are pipeline checks, not class quality results"
+        },
+        "kid": {
+          "status": "unavailable",
+          "value": null,
+          "reason": "Synthetic data are pipeline checks, not class quality results"
+        },
+        "precision": {
+          "status": "unavailable",
+          "value": null,
+          "reason": "Synthetic data are pipeline checks, not class quality results"
+        },
+        "recall": {
+          "status": "unavailable",
+          "value": null,
+          "reason": "Synthetic data are pipeline checks, not class quality results"
+        },
+        "density": {
+          "status": "unavailable",
+          "value": null,
+          "reason": "Synthetic data are pipeline checks, not class quality results"
+        },
+        "coverage": {
+          "status": "unavailable",
+          "value": null,
+          "reason": "Synthetic data are pipeline checks, not class quality results"
+        },
+        "lpips_cycle": {
+          "status": "unavailable",
+          "value": null,
+          "reason": "Synthetic data are pipeline checks, not class quality results"
+        },
+        "content_cosine": {
+          "status": "unavailable",
+          "value": null,
+          "reason": "Synthetic data are pipeline checks, not class quality results"
+        },
+        "cycle_l1": {
+          "status": "computed",
+          "value": 0.5317735970020294,
+          "count": 2,
+          "pixel_range": "[-1,1]"
+        }
+      },
+      "inference_seconds": 0.0011433749969000928,
+      "inference_images_per_second": 1749.2073951436585,
+      "generation_and_pair_metrics_seconds": 0.004545958996459376
+    },
+    "monet_to_photo": {
+      "source_count": 2,
+      "generated_count": 2,
+      "real_reference_count": 2,
+      "metrics": {
+        "fid": {
+          "status": "unavailable",
+          "value": null,
+          "reason": "Synthetic data are pipeline checks, not class quality results"
+        },
+        "kid": {
+          "status": "unavailable",
+          "value": null,
+          "reason": "Synthetic data are pipeline checks, not class quality results"
+        },
+        "precision": {
+          "status": "unavailable",
+          "value": null,
+          "reason": "Synthetic data are pipeline checks, not class quality results"
+        },
+        "recall": {
+          "status": "unavailable",
+          "value": null,
+          "reason": "Synthetic data are pipeline checks, not class quality results"
+        },
+        "density": {
+          "status": "unavailable",
+          "value": null,
+          "reason": "Synthetic data are pipeline checks, not class quality results"
+        },
+        "coverage": {
+          "status": "unavailable",
+          "value": null,
+          "reason": "Synthetic data are pipeline checks, not class quality results"
+        },
+        "lpips_cycle": {
+          "status": "unavailable",
+          "value": null,
+          "reason": "Synthetic data are pipeline checks, not class quality results"
+        },
+        "content_cosine": {
+          "status": "unavailable",
+          "value": null,
+          "reason": "Synthetic data are pipeline checks, not class quality results"
+        },
+        "cycle_l1": {
+          "status": "computed",
+          "value": 0.5292566418647766,
+          "count": 2,
+          "pixel_range": "[-1,1]"
+        }
+      },
+      "inference_seconds": 0.0009043760001077317,
+      "inference_images_per_second": 2211.4695654924,
+      "generation_and_pair_metrics_seconds": 0.003441667002334725
+    }
+  },
+  "lpips_pairing": "original versus cycle reconstruction (not arbitrary unpaired target)",
+  "content_encoder": "torchvision ResNet18 IMAGENET1K_V1, frozen, pooled512; input versus translation",
+  "distribution_encoder": "Clean-FID clean-mode InceptionV3 2048 features",
+  "caveat": "Small reference sets make FID and neighborhood metrics uncertain; fixed counts do not remove FID bias."
+}

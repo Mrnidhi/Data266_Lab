@@ -1,0 +1,5 @@
+{"event": "start", "task": "sentiment", "mode": "smoke", "utc": "2026-09-18T22:31:24.210780+00:00", "device": "cpu"}
+sentiment/maxpool_mlp epoch=1 train_loss=0.6551 val_macro_f1=0.6571
+sentiment/bilstm epoch=1 train_loss=0.6949 val_macro_f1=0.3333
+sentiment/dilated_cnn epoch=1 train_loss=0.6704 val_macro_f1=0.3333
+{"event": "completed", "task": "sentiment", "mode": "smoke", "elapsed_seconds": 2.6425223749974975}

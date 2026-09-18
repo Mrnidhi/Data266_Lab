@@ -1,0 +1,39 @@
+{
+  "mode": "smoke",
+  "seed": 2342,
+  "dataset": "fancyzhx/yelp_polarity",
+  "dataset_revision": "main",
+  "data_dir": null,
+  "train_limit": 24,
+  "validation_limit": 12,
+  "test_limit": 16,
+  "vocabulary_size": 128,
+  "min_frequency": 1,
+  "embedding_dim": 16,
+  "max_length": 32,
+  "batch_size": 8,
+  "epochs": 1,
+  "early_stopping_patience": 2,
+  "early_stopping_min_delta": 0.0001,
+  "mlp_hidden": 8,
+  "lstm_hidden": 8,
+  "cnn_channels": 16,
+  "dilations": [
+    1,
+    2,
+    4,
+    8
+  ],
+  "dropout": 0.3,
+  "cnn_dropout": 0.2,
+  "learning_rates": {
+    "maxpool_mlp": 0.0015,
+    "bilstm": 0.001,
+    "dilated_cnn": 0.0008
+  },
+  "weight_decay": 0.0001,
+  "gradient_clip": 1.0,
+  "amp": true,
+  "bootstrap_samples": 20,
+  "cpu_threads": 2
+}

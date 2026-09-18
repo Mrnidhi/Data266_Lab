@@ -1,0 +1,17 @@
+example_id,true_label,predicted_label,positive_probability,original_token_length,oov_rate,has_negation
+synthetic:test:0,0,0,0.4599977433681488,7,0.0,True
+synthetic:test:1,1,0,0.4771084189414978,8,0.0,True
+synthetic:test:2,0,0,0.4726390540599823,8,0.0,False
+synthetic:test:3,1,0,0.4538677930831909,6,0.0,False
+synthetic:test:4,0,0,0.4578227698802948,7,0.0,False
+synthetic:test:5,1,0,0.4796661138534546,8,0.0,False
+synthetic:test:6,0,0,0.47187474370002747,6,0.0,True
+synthetic:test:7,1,0,0.44699859619140625,7,0.0,True
+synthetic:test:8,0,0,0.4580784738063812,7,0.0,True
+synthetic:test:9,1,0,0.4757966995239258,8,0.0,True
+synthetic:test:10,0,0,0.4729802906513214,8,0.0,False
+synthetic:test:11,1,0,0.4614832401275635,6,0.0,False
+synthetic:test:12,0,0,0.4630456268787384,7,0.0,False
+synthetic:test:13,1,0,0.48635756969451904,8,0.0,False
+synthetic:test:14,0,0,0.47099846601486206,6,0.0,True
+synthetic:test:15,1,0,0.4550078213214874,7,0.0,True

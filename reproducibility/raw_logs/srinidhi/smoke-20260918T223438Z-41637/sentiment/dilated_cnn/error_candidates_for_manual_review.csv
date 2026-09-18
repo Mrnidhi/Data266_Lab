@@ -1,0 +1,9 @@
+example_id,true_label,predicted_label,positive_probability,original_token_length,oov_rate,has_negation,text,manual_group,manual_explanation,reviewed_by
+synthetic:test:7,1,0,0.44699859619140625,7,0.0,True,I never had a bad meal and the staff were lovely visit 9,,,
+synthetic:test:3,1,0,0.4538677930831909,6,0.0,False,"Excellent value, I will happily return visit 5",,,
+synthetic:test:15,1,0,0.4550078213214874,7,0.0,True,I never had a bad meal and the staff were lovely visit 17,,,
+synthetic:test:11,1,0,0.4614832401275635,6,0.0,False,"Excellent value, I will happily return visit 13",,,
+synthetic:test:9,1,0,0.4757966995239258,8,0.0,True,Not disappointing: delicious food and warm service visit 11,,,
+synthetic:test:1,1,0,0.4771084189414978,8,0.0,True,Not disappointing: delicious food and warm service visit 3,,,
+synthetic:test:5,1,0,0.4796661138534546,8,0.0,False,Wonderful friendly service and excellent tasty food visit 7,,,
+synthetic:test:13,1,0,0.48635756969451904,8,0.0,False,Wonderful friendly service and excellent tasty food visit 15,,,

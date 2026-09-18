@@ -1,0 +1,219 @@
+{
+  "length_lt50": {
+    "count": 16,
+    "accuracy": 0.5,
+    "mcc": 0.0,
+    "brier": 0.25035119918552745,
+    "confusion_matrix": [
+      [
+        8,
+        0
+      ],
+      [
+        8,
+        0
+      ]
+    ],
+    "threshold": 0.5,
+    "macro": {
+      "precision": 0.25,
+      "recall": 0.5,
+      "f1": 0.3333333333333333
+    },
+    "micro": {
+      "precision": 0.5,
+      "recall": 0.5,
+      "f1": 0.5
+    },
+    "weighted": {
+      "precision": 0.25,
+      "recall": 0.5,
+      "f1": 0.3333333333333333
+    },
+    "per_class": [
+      {
+        "label": 0,
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6666666666666666,
+        "support": 8
+      },
+      {
+        "label": 1,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 8
+      }
+    ],
+    "ece_15": 0.07994223199784756,
+    "ece_definition": "Top-label confidence ECE; 15 equal-width bins on [0,1]; threshold 0.5.",
+    "roc_auc": 0.640625,
+    "pr_auc_trapezoidal": 0.5184929653679653
+  },
+  "length_50_199": {
+    "count": 0
+  },
+  "length_ge200": {
+    "count": 0
+  },
+  "negation_present": {
+    "count": 8,
+    "accuracy": 0.5,
+    "mcc": 0.0,
+    "brier": 0.25484368398497215,
+    "confusion_matrix": [
+      [
+        4,
+        0
+      ],
+      [
+        4,
+        0
+      ]
+    ],
+    "threshold": 0.5,
+    "macro": {
+      "precision": 0.25,
+      "recall": 0.5,
+      "f1": 0.3333333333333333
+    },
+    "micro": {
+      "precision": 0.5,
+      "recall": 0.5,
+      "f1": 0.5
+    },
+    "weighted": {
+      "precision": 0.25,
+      "recall": 0.5,
+      "f1": 0.3333333333333333
+    },
+    "per_class": [
+      {
+        "label": 0,
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6666666666666666,
+        "support": 4
+      },
+      {
+        "label": 1,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 4
+      }
+    ],
+    "ece_15": 0.13615586608648297,
+    "ece_definition": "Top-label confidence ECE; 15 equal-width bins on [0,1]; threshold 0.5.",
+    "roc_auc": 0.25,
+    "pr_auc_trapezoidal": 0.35892857142857143
+  },
+  "negation_absent": {
+    "count": 8,
+    "accuracy": 0.5,
+    "mcc": 0.0,
+    "brier": 0.24585871438608276,
+    "confusion_matrix": [
+      [
+        4,
+        0
+      ],
+      [
+        4,
+        0
+      ]
+    ],
+    "threshold": 0.5,
+    "macro": {
+      "precision": 0.25,
+      "recall": 0.5,
+      "f1": 0.3333333333333333
+    },
+    "micro": {
+      "precision": 0.5,
+      "recall": 0.5,
+      "f1": 0.5
+    },
+    "weighted": {
+      "precision": 0.25,
+      "recall": 0.5,
+      "f1": 0.3333333333333333
+    },
+    "per_class": [
+      {
+        "label": 0,
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6666666666666666,
+        "support": 4
+      },
+      {
+        "label": 1,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 4
+      }
+    ],
+    "ece_15": 0.023728597909212112,
+    "ece_definition": "Top-label confidence ECE; 15 equal-width bins on [0,1]; threshold 0.5.",
+    "roc_auc": 1.0,
+    "pr_auc_trapezoidal": 1.0
+  },
+  "oov_lt10pct": {
+    "count": 16,
+    "accuracy": 0.5,
+    "mcc": 0.0,
+    "brier": 0.25035119918552745,
+    "confusion_matrix": [
+      [
+        8,
+        0
+      ],
+      [
+        8,
+        0
+      ]
+    ],
+    "threshold": 0.5,
+    "macro": {
+      "precision": 0.25,
+      "recall": 0.5,
+      "f1": 0.3333333333333333
+    },
+    "micro": {
+      "precision": 0.5,
+      "recall": 0.5,
+      "f1": 0.5
+    },
+    "weighted": {
+      "precision": 0.25,
+      "recall": 0.5,
+      "f1": 0.3333333333333333
+    },
+    "per_class": [
+      {
+        "label": 0,
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1": 0.6666666666666666,
+        "support": 8
+      },
+      {
+        "label": 1,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 8
+      }
+    ],
+    "ece_15": 0.07994223199784756,
+    "ece_definition": "Top-label confidence ECE; 15 equal-width bins on [0,1]; threshold 0.5.",
+    "roc_auc": 0.640625,
+    "pr_auc_trapezoidal": 0.5184929653679653
+  },
+  "oov_ge10pct": {
+    "count": 0
+  }
+}

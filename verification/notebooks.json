@@ -1,0 +1,26 @@
+{
+  "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+  "notebooks": [
+    {
+      "notebook": "task1_llm/srinidhi/src/gpt.ipynb",
+      "executed_code_cells": 5,
+      "errors": 0,
+      "seconds": 3.496121582997148,
+      "mode": "synthetic_cpu_smoke"
+    },
+    {
+      "notebook": "task2_sentiment/srinidhi/src/sentiment.ipynb",
+      "executed_code_cells": 5,
+      "errors": 0,
+      "seconds": 4.289733249999699,
+      "mode": "synthetic_cpu_smoke"
+    },
+    {
+      "notebook": "task3_gan/srinidhi/src/cyclegan.ipynb",
+      "executed_code_cells": 5,
+      "errors": 0,
+      "seconds": 2.178318833000958,
+      "mode": "synthetic_cpu_smoke"
+    }
+  ]
+}

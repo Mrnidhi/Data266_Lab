@@ -1,0 +1,34 @@
+{
+  "mode": "smoke",
+  "tasks": [
+    {
+      "task": "gpt",
+      "status": "passed",
+      "returncode": 0,
+      "elapsed_seconds": 6.4876043329932145
+    },
+    {
+      "task": "sentiment",
+      "status": "passed",
+      "returncode": 0,
+      "elapsed_seconds": 17.75144333299977
+    },
+    {
+      "task": "cyclegan",
+      "status": "passed",
+      "returncode": 0,
+      "elapsed_seconds": 2.1646064999949886
+    }
+  ],
+  "elapsed_seconds": 26.40392262500245,
+  "gpu_time_cost_estimate_usd": 0.0,
+  "cost_excludes": [
+    "pod startup",
+    "idle time",
+    "storage",
+    "taxes"
+  ],
+  "pod_stopped": false,
+  "billing_cutoff": false,
+  "all_requested_tasks_passed": true
+}

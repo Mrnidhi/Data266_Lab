@@ -1,0 +1,2 @@
+{"event": "start", "task": "gpt", "mode": "smoke", "utc": "2026-09-18T22:31:21.315161+00:00", "device": "cpu"}
+{"event": "completed", "task": "gpt", "mode": "smoke", "elapsed_seconds": 1.3556434160054778}

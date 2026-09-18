@@ -1,0 +1,9 @@
+{
+  "command": "bash scripts/smoke.sh",
+  "status": "passed",
+  "device": "cpu",
+  "data": "synthetic",
+  "summary_path": "reproducibility/raw_logs/srinidhi/smoke-20260918T223438Z-41637/rehearsal_summary.json",
+  "models_checked": 5,
+  "cuda_verified": false
+}

@@ -1,0 +1,38 @@
+{
+  "smoke": {
+    "mode": "smoke", "seed": 2342, "dataset": "synthetic", "dataset_revision": "main",
+    "selection": "synthetic", "shuffle_buffer": 1000, "data_cache": ".cache/tinystories", "offline": true,
+    "train_stories": 8, "validation_stories": 4,
+    "layers": 2, "heads": 2, "embedding_dim": 32, "feedforward_dim": 128, "context_length": 32,
+    "dropout": 0.15, "batch_size": 4, "learning_rate": 0.0004, "adam_betas": [0.9, 0.95],
+    "weight_decay": 0.01, "warmup_fraction": 0.05, "minimum_lr_ratio": 0.1,
+    "epochs": 1, "max_steps": 6, "gradient_clip": 1.0,
+    "mixed_precision": false, "deterministic": true, "num_workers": 0, "cpu_threads": 2,
+    "log_every_steps": 1, "checkpoint_every_steps": 2,
+    "generation_prompts": 2, "generation_characters": 20, "temperature": 0.8, "top_k": 40
+  },
+  "rehearsal": {
+    "mode": "rehearsal", "seed": 2342, "dataset": "roneneldan/TinyStories", "dataset_revision": "main",
+    "selection": "streaming_buffer_shuffle", "shuffle_buffer": 1000, "data_cache": ".cache/tinystories", "offline": false,
+    "train_stories": 512, "validation_stories": 64,
+    "layers": 3, "heads": 6, "embedding_dim": 192, "feedforward_dim": 768, "context_length": 256,
+    "dropout": 0.15, "batch_size": 32, "learning_rate": 0.0004, "adam_betas": [0.9, 0.95],
+    "weight_decay": 0.01, "warmup_fraction": 0.05, "minimum_lr_ratio": 0.1,
+    "epochs": 2, "max_steps": 64, "gradient_clip": 1.0,
+    "mixed_precision": true, "deterministic": true, "num_workers": 0, "cpu_threads": 2,
+    "log_every_steps": 10, "checkpoint_every_steps": 20,
+    "generation_prompts": 3, "generation_characters": 80, "temperature": 0.8, "top_k": 40
+  },
+  "full": {
+    "mode": "full", "seed": 2342, "dataset": "roneneldan/TinyStories", "dataset_revision": "main",
+    "selection": "indexed_permutation", "shuffle_buffer": 1000, "data_cache": ".cache/tinystories", "offline": false,
+    "train_stories": 100000, "validation_stories": 10000,
+    "layers": 3, "heads": 6, "embedding_dim": 192, "feedforward_dim": 768, "context_length": 256,
+    "dropout": 0.15, "batch_size": 32, "learning_rate": 0.0004, "adam_betas": [0.9, 0.95],
+    "weight_decay": 0.01, "warmup_fraction": 0.05, "minimum_lr_ratio": 0.1,
+    "epochs": 12, "max_steps": null, "gradient_clip": 1.0,
+    "mixed_precision": true, "deterministic": true, "num_workers": 0, "cpu_threads": 2,
+    "log_every_steps": 50, "checkpoint_every_steps": 250,
+    "generation_prompts": 5, "generation_characters": 256, "temperature": 0.8, "top_k": 40
+  }
+}

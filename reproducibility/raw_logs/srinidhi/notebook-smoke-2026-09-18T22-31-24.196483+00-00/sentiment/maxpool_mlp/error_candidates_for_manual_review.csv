@@ -1,0 +1,7 @@
+example_id,true_label,predicted_label,positive_probability,original_token_length,oov_rate,has_negation,text,manual_group,manual_explanation,reviewed_by
+synthetic:test:10,0,1,0.5307246446609497,8,0.0,False,"Bad value, slow service, and unpleasant staff visit 12",,,
+synthetic:test:0,0,1,0.5272040367126465,7,0.0,True,"Not good at all, the meal was awful visit 2",,,
+synthetic:test:2,0,1,0.5241102576255798,8,0.0,False,"Bad value, slow service, and unpleasant staff visit 4",,,
+synthetic:test:8,0,1,0.5238695740699768,7,0.0,True,"Not good at all, the meal was awful visit 10",,,
+synthetic:test:3,1,0,0.4818062484264374,6,0.0,False,"Excellent value, I will happily return visit 5",,,
+synthetic:test:11,1,0,0.4822911024093628,6,0.0,False,"Excellent value, I will happily return visit 13",,,

@@ -1,0 +1,76 @@
+{
+  "count": 16,
+  "accuracy": 0.5,
+  "mcc": 0.0,
+  "brier": 0.25068240208395753,
+  "confusion_matrix": [
+    [
+      8,
+      0
+    ],
+    [
+      8,
+      0
+    ]
+  ],
+  "threshold": 0.5,
+  "macro": {
+    "precision": 0.25,
+    "recall": 0.5,
+    "f1": 0.3333333333333333
+  },
+  "micro": {
+    "precision": 0.5,
+    "recall": 0.5,
+    "f1": 0.5
+  },
+  "weighted": {
+    "precision": 0.25,
+    "recall": 0.5,
+    "f1": 0.3333333333333333
+  },
+  "per_class": [
+    {
+      "label": 0,
+      "precision": 0.5,
+      "recall": 1.0,
+      "f1": 0.6666666666666666,
+      "support": 8
+    },
+    {
+      "label": 1,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "support": 8
+    }
+  ],
+  "ece_15": 0.03351728618144989,
+  "ece_definition": "Top-label confidence ECE; 15 equal-width bins on [0,1]; threshold 0.5.",
+  "roc_auc": 0.546875,
+  "pr_auc_trapezoidal": 0.7262210012210013,
+  "bootstrap_95_percentile": {
+    "accuracy": {
+      "low": 0.3125,
+      "high": 0.5953124999999999
+    },
+    "macro_f1": {
+      "low": 0.23809523809523808,
+      "high": 0.3729230769230769
+    },
+    "mcc": {
+      "low": 0.0,
+      "high": 0.0
+    }
+  },
+  "bootstrap_samples": 20,
+  "uncertainty_scope": "IID test-row resampling; does not include training-seed uncertainty.",
+  "test_loss": 0.6945340931415558,
+  "selected_epoch": 1,
+  "selected_validation_macro_f1": 0.3333333333333333,
+  "parameter_count": 7553,
+  "train_seconds": 0.00918120799906319,
+  "peak_cuda_memory_bytes": null,
+  "mode": "smoke",
+  "synthetic": true
+}

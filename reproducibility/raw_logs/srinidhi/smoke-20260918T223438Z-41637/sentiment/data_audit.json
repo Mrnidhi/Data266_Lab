@@ -1,0 +1,22 @@
+{
+  "split_counts": {
+    "train": 24,
+    "validation": 12,
+    "test": 16
+  },
+  "within_split_duplicate_rows": {
+    "train": 0,
+    "validation": 0,
+    "test": 0
+  },
+  "cross_split_shared_text_hashes": {
+    "train__validation": 0,
+    "train__test": 0,
+    "validation__test": 0
+  },
+  "duplicate_policy": "Audit only; official test rows are preserved unchanged.",
+  "label_mapping": {
+    "0": "negative",
+    "1": "positive"
+  }
+}
