@@ -36,14 +36,15 @@
     "gradient_clip": 1.0,
     "amp": true,
     "bootstrap_samples": 20,
-    "cpu_threads": 2
+    "cpu_threads": 2,
+    "raw_data_cache": "task2_sentiment/data/huggingface"
   },
   "rehearsal": {
     "mode": "rehearsal",
     "seed": 2342,
     "dataset": "fancyzhx/yelp_polarity",
     "dataset_revision": "main",
-    "data_dir": null,
+    "data_dir": "task2_sentiment/srinidhi/data_processed/rehearsal",
     "train_limit": 2048,
     "validation_limit": 256,
     "test_limit": 512,
@@ -75,7 +76,8 @@
     "gradient_clip": 1.0,
     "amp": true,
     "bootstrap_samples": 100,
-    "cpu_threads": 2
+    "cpu_threads": 2,
+    "raw_data_cache": "task2_sentiment/data/huggingface"
   },
   "full": {
     "mode": "full",
@@ -114,6 +116,7 @@
     "gradient_clip": 1.0,
     "amp": true,
     "bootstrap_samples": 1000,
-    "cpu_threads": 2
+    "cpu_threads": 2,
+    "raw_data_cache": "task2_sentiment/data/huggingface"
   }
 }

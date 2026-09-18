@@ -14,11 +14,11 @@ from lab1.sentiment import prefetch_data
 stamp = utc_now().replace(":", "-")
 output = ROOT / "runs" / ("real-data-cpu-check-" + stamp)
 gpt = execute("gpt", "rehearsal", output / "gpt", "cpu", overrides=[
-    'data_cache="data/rehearsal/tinystories"', "offline=true", "max_steps=2",
+    'data_cache="task1_llm/srinidhi/data_processed/rehearsal"', "offline=true", "max_steps=2",
     "generation_prompts=1", "generation_characters=20"])
 cfg = json.loads(task_config_path("sentiment").read_text())["rehearsal"]
 cfg.update(train_limit=64, validation_limit=32, test_limit=64)
-cache = ROOT / "data/local_checks/yelp"
+cache = ROOT / "task2_sentiment/srinidhi/data_processed/local_checks"
 prefetch_data(cfg, cache)
 sentiment = execute("sentiment", "rehearsal", output / "sentiment", "cpu", overrides=[
     "data_dir=" + json.dumps(str(cache)), "train_limit=64", "validation_limit=32", "test_limit=64",

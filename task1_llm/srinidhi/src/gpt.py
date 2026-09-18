@@ -264,7 +264,8 @@ def prepare_data(config: dict[str, Any], previous: dict[str, Any] | None = None
         if not revision:
             revision = HfApi().dataset_info(repo, revision=config["dataset_revision"]).sha
         streaming = config["selection"] == "streaming_buffer_shuffle"
-        source = load_dataset(repo, revision=revision, streaming=streaming)
+        source = load_dataset(repo, revision=revision, streaming=streaming,
+                              cache_dir=config.get("raw_data_cache"))
         manifest = {"dataset": repo, "requested_revision": config["dataset_revision"],
                     "resolved_revision": revision, "seed": config["seed"],
                     "source_url": "https://huggingface.co/datasets/" + repo,

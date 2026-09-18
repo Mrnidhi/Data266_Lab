@@ -13,13 +13,28 @@ args = parser.parse_args()
 DIST = ROOT / "dist"
 DIST.mkdir(exist_ok=True)
 paths = set()
-for pattern in ("*.md", "*.toml", "requirements*.txt", "scripts/*.py", "scripts/*.sh", "src/lab1/*.py", "tests/*.py", "task*/srinidhi/README.md", "task*/srinidhi/config.json", "task*/srinidhi/src/*.py", "task*/srinidhi/src/*.ipynb", "verification/*.json", "verification/*.xml", "verification/*.txt", "data/rehearsal/**/*.json", "data/rehearsal/**/*.jsonl"):
+for pattern in (
+    "*.md", "*.toml", "requirements*.txt", "scripts/*.py", "scripts/*.sh",
+    "src/lab1/*.py", "tests/*.py", "task*/data/**/README.md", "task*/data/**/.gitkeep",
+    "task*/srinidhi/*.md", "task*/srinidhi/*.csv", "task*/srinidhi/config.json",
+    "task*/srinidhi/*.py", "task*/srinidhi/src/*.py", "task*/srinidhi/src/*.ipynb",
+    "task*/srinidhi/checkpoints/README.md", "task*/srinidhi/outputs/**/README.md",
+    "task*/srinidhi/outputs/**/.gitkeep", "task*/srinidhi/data_processed/README.md",
+    "task*/srinidhi/data_processed/rehearsal/**/*.json",
+    "task*/srinidhi/data_processed/rehearsal/**/*.jsonl",
+    "report/*.md", "report/*.csv", "reproducibility/README.md",
+    "reproducibility/manifests/**/*.md", "reproducibility/manifests/**/*.json",
+    "reproducibility/manifests/**/*.jsonl", "reproducibility/manifests/**/*.txt",
+    "reproducibility/manifests/**/*.csv", "verification/*.json",
+    "verification/*.xml", "verification/*.txt",
+):
     paths.update(p for p in ROOT.glob(pattern) if p.is_file())
 paths.add(ROOT / ".gitignore")
-# Local smoke evidence is small; preserve logs/metrics/plots but omit model weights.
+paths.add(ROOT / ".gitattributes")
+# Preserve raw logs/metrics/plots; model weights are backed up separately.
 # Real-data check weights remain local and are not final-model deliverables.
-for run in ROOT.glob("reproducibility/raw_logs/srinidhi/notebook-smoke-*/*"):
-    paths.update(p for p in run.rglob("*") if p.is_file() and p.suffix in {".json", ".jsonl", ".csv", ".txt", ".md", ".png"})
+for run in ROOT.glob("reproducibility/raw_logs/srinidhi/*"):
+    paths.update(p for p in run.rglob("*") if p.is_file() and p.suffix in {".json", ".jsonl", ".csv", ".txt", ".log", ".md", ".png"})
 manifest = {str(p.relative_to(ROOT)): {"bytes": p.stat().st_size, "sha256": hashlib.sha256(p.read_bytes()).hexdigest()} for p in sorted(paths)}
 archive = DIST / "lab1-2342-prepared.zip"
 with zipfile.ZipFile(archive, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=6) as handle:

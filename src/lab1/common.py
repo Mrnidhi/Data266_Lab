@@ -39,7 +39,7 @@ def write_json(path: Path, value) -> None:
 def code_manifest(root: Path | None = None) -> dict:
     root = root or project_root()
     files = sorted([*root.glob("src/**/*.py"), *root.glob("task*/srinidhi/src/*.py"),
-                    *root.glob("task*/srinidhi/config.json")])
+                    *root.glob("task*/srinidhi/*.py"), *root.glob("task*/srinidhi/config.json")])
     return {str(p.relative_to(root)): hashlib.sha256(p.read_bytes()).hexdigest() for p in files}
 
 

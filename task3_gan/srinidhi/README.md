@@ -46,6 +46,14 @@ PYTHONPATH=src python -m lab1.cyclegan train --mode rehearsal --device cuda --ou
 
 ## Held-out evaluation
 
+The PDF's member-level entry point is available. From the repository root:
+
+```sh
+.venv/bin/python task3_gan/srinidhi/evaluate_local.py --mode full --device cuda --checkpoint task3_gan/srinidhi/checkpoints/best.pt --split test --output-dir task3_gan/srinidhi/outputs/evaluation-final --report task3_gan/srinidhi/full_metrics_report.csv
+```
+
+This exports the full directional metrics CSV while preserving unavailable values and reasons. It refuses to overwrite a populated report. The checked-in header-only CSV is a pending-results placeholder. The checkpoint and actual data must exist before this command runs.
+
 ```sh
 PYTHONPATH=src python -m lab1.cyclegan evaluate --mode full --device cuda --checkpoint runs/cyclegan_full/best.pt --split test --output-dir runs/cyclegan_test
 ```
@@ -82,6 +90,8 @@ PYTHONPATH=src python -m lab1.cyclegan export --checkpoint runs/cyclegan_full/be
 ```
 
 Export writes direct-inference RGB PNG images and a checkpoint-hashed manifest into a neutral folder. Synthetic checkpoints are refused. This is **not** a Kaggle-ready package: verify the actual class requirements before choosing filenames, image count/resolution, JPEG/PNG conversion, and ZIP/CSV packaging. No account operation or submission occurs.
+
+The required prediction directories are `outputs/pred_A2B/` and `outputs/pred_B2A/`. For this member, A means Photo and B means Monet. Use a fresh run subdirectory under the appropriate direction (for example `outputs/pred_A2B/run-001`) because export rejects a nonempty destination. `submission.csv` is intentionally pending until the real competition schema and inference outputs are available.
 
 ## References
 

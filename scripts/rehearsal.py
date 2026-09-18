@@ -41,10 +41,10 @@ def main():
         command = [sys.executable, "-m", "lab1.run", "--task", task, "--mode", args.mode,
                    "--device", args.device, "--output", str(output / task)]
         if args.mode == "rehearsal":
-            if task == "gpt" and (ROOT / "data/rehearsal/tinystories").is_dir():
-                command += ["--set", "data_cache=" + json.dumps(str(ROOT / "data/rehearsal/tinystories")), "--set", "offline=true"]
-            if task == "sentiment" and (ROOT / "data/rehearsal/yelp/manifest.json").is_file():
-                command += ["--set", "data_dir=" + json.dumps(str(ROOT / "data/rehearsal/yelp"))]
+            if task == "gpt" and (ROOT / "task1_llm/srinidhi/data_processed/rehearsal").is_dir():
+                command += ["--set", 'data_cache="task1_llm/srinidhi/data_processed/rehearsal"', "--set", "offline=true"]
+            if task == "sentiment" and (ROOT / "task2_sentiment/srinidhi/data_processed/rehearsal/manifest.json").is_file():
+                command += ["--set", 'data_dir="task2_sentiment/srinidhi/data_processed/rehearsal"']
         task_started = time.monotonic()
         try:
             completed = subprocess.run(command, cwd=ROOT, env=environment, timeout=remaining)

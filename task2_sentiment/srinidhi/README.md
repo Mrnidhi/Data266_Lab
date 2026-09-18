@@ -35,13 +35,13 @@ import json
 from pathlib import Path
 from lab1.sentiment import prefetch_data
 config = json.loads(Path("task2_sentiment/srinidhi/config.json").read_text())["rehearsal"]
-prefetch_data(config, Path("data/yelp-rehearsal"))
+prefetch_data(config, Path("task2_sentiment/srinidhi/data_processed/rehearsal"))
 ```
 
 This explicit function downloads the official dataset via Hugging Face, selects the frozen rows, and writes only the selected JSONL splits plus checksums. It does not start training. A prepared cache can be copied to another machine and passed through `data_dir`:
 
 ```bash
-.venv/bin/python -m lab1.run --task sentiment --mode rehearsal --device cuda --set 'data_dir="data/yelp-rehearsal"' --output runs/sentiment-rehearsal
+.venv/bin/python -m lab1.run --task sentiment --mode rehearsal --device cuda --set 'data_dir="task2_sentiment/srinidhi/data_processed/rehearsal"' --output runs/sentiment-rehearsal
 ```
 
 For final training, prefetch the `full` profile separately or leave its `data_dir` unset for a normal official-dataset download. Rehearsal data cannot be used as full data; counts, seed, mode, and file hashes are checked.
@@ -51,7 +51,7 @@ For final training, prefetch the `full` profile separately or leave its `data_di
 Every model writes `checkpoints/best.pt` and `checkpoints/last.pt`, containing model/optimizer/scheduler/scaler state, epoch history, vocabulary, configuration, Python/NumPy/PyTorch/CUDA RNG states, and the shuffle-generator state. Resume works at **completed epoch boundaries**; an interrupted partial epoch repeats. Model checkpoints are local trusted artifacts; do not load arbitrary third-party pickle checkpoints.
 
 ```bash
-.venv/bin/python -m lab1.run --task sentiment --mode rehearsal --device cuda --set 'data_dir="data/yelp-rehearsal"' --output runs/sentiment-rehearsal --resume runs/sentiment-rehearsal
+.venv/bin/python -m lab1.run --task sentiment --mode rehearsal --device cuda --set 'data_dir="task2_sentiment/srinidhi/data_processed/rehearsal"' --output runs/sentiment-rehearsal --resume runs/sentiment-rehearsal
 ```
 
 Use the same profile/configuration and data. Local cache paths may change when moving machines. The resume fingerprint verifies configuration, vocabulary, IDs, labels, and review content. A completed model is evaluated from its best checkpoint; unfinished models continue. A run never overwrites existing training checkpoints unless `resume` is supplied.

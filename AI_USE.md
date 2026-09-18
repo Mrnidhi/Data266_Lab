@@ -1,4 +1,4 @@
-# Assistance and ownership
+# Lab Pair 49 — assistance and ownership
 
 An AI coding assistant helped research candidate architectures, prepare code/configurations, build notebook entry points, and run local verification. The package is a draft implementation to inspect and understand. Its local synthetic smoke outputs are not evidence of final training, model quality, cloud execution or a college-lab visit.
 

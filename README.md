@@ -1,4 +1,4 @@
-# DATA266 Lab 1 — team repository
+# DATA266 Lab 1 — Lab Pair 49
 
 Shared repository: https://github.com/Mrnidhi/Data266_Lab
 
@@ -11,17 +11,42 @@ Srinidhi's implementation is prepared and locally tested. Committed notebook out
 ## Layout
 
 ```text
-task1_llm/srinidhi/       # Character GPT: source, notebook, config, results
-task2_sentiment/srinidhi/ # Three Yelp classifiers
-task3_gan/srinidhi/       # CycleGAN training/evaluation/inference
-src/lab1/               # Runner and provenance utilities
-scripts/                # Setup, data preparation and verification
-tests/                  # Correctness and resume tests
-reproducibility/         # Unedited run logs and manifests, grouped by member
-report/                 # Combined team report (pending)
+Data266_Lab/
+├── README.md
+├── task1_llm/
+│   ├── data/
+│   └── srinidhi/
+├── task2_sentiment/
+│   ├── data/
+│   └── srinidhi/
+├── task3_gan/
+│   ├── data/
+│   │   ├── monet_jpg/
+│   │   └── photo_jpg/
+│   └── srinidhi/
+├── reproducibility/
+│   ├── manifests/
+│   └── raw_logs/
+└── report/
+    └── REPORT_TEMPLATE.md
 ```
 
-Only Srinidhi's member folders currently exist. Teammates should use the same structure with their own names. Shared tooling does not replace independent model implementations. See [team workflow](TEAM_WORKFLOW.md).
+Each named member folder follows the PDF:
+
+```text
+srinidhi/
+├── src/                     # Task code and executed notebook
+├── data_processed/          # This member's preprocessing only
+├── checkpoints/
+├── outputs/
+├── metrics_report.csv
+├── failure_analysis.md
+└── results.md
+```
+
+Srinidhi's task folders additionally contain a configuration and README. Task 3 also contains `evaluate_local.py`, `full_metrics_report.csv`, and `outputs/pred_A2B/` / `outputs/pred_B2A/`, as shown in the PDF's GAN tree. `submission.csv` is a generated deliverable; its schema and actual class outputs must be verified before creating it. The final team PDF will be `report/DATA266_Lab1_Report_Team_49.pdf` after real experiments.
+
+Only Srinidhi's member folders currently exist. Teammates should add the same structure with their actual names. Shared runner/setup/test utilities remain in `src/`, `scripts/`, and `tests/`; execution receipts are in `verification/`. See [team workflow](TEAM_WORKFLOW.md).
 
 ## Reproduce a smoke test with one command
 
@@ -63,8 +88,8 @@ See each task's member README for full training, resume and evaluation. See [Run
 
 ## Data, evidence and submission
 
-Datasets, environments, caches, preparation ZIPs and model binaries are ignored by Git. Prepare data with the scripts or supply verified class data. Save large weights outside ordinary Git and document an accessible download location and checksum in each member's `checkpoints/README.md`; the final Canvas ZIP must contain required weights. Never commit credentials, API keys or personal absolute paths.
+Raw text datasets are cached under each task's `data/huggingface/`; Srinidhi's selected rehearsal rows and preprocessing stay in his own `data_processed/`. Verified GAN images belong in `task3_gan/data/monet_jpg/` and `photo_jpg/`, with individual split manifests under the member's `data_processed/`. Data-folder READMEs are tracked so the required structure is visible on GitHub; large data, environments, caches, ZIPs and model binaries are ignored. Save weights separately and document their accessible location/checksum in `checkpoints/README.md`; include required weights in the final Canvas ZIP. Never commit credentials or personal absolute paths.
 
 Commit raw logs/manifests without editing them after a run. Preserve original local evidence for earlier checks; new committed checks are generated with portable relative paths. Each member must complete `results.md`, `failure_analysis.md` and `metrics_report.csv` using actual full-run evidence. Agree on the evaluation protocol before comparing models.
 
-Finish `report/DATA266_Lab1_Report_Team_<number>.pdf`, include this repository link, compare all members and package the final Canvas submission. See [submission checklist](SUBMISSION_CHECKLIST.md), [report outline](report/REPORT_TEMPLATE.md), [research notes](RESEARCH_NOTES.md), and [AI assistance disclosure](AI_USE.md).
+Finish `report/DATA266_Lab1_Report_Team_49.pdf`, include this repository link, compare all members and package the final Canvas submission. See [submission checklist](SUBMISSION_CHECKLIST.md), [report outline](report/REPORT_TEMPLATE.md), [research notes](RESEARCH_NOTES.md), and [AI assistance disclosure](AI_USE.md).

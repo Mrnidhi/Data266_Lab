@@ -1,4 +1,4 @@
-# RunPod handoff — review before starting
+# Lab Pair 49 — RunPod handoff
 
 No pod is started by any script in this package. The current preparation step does not authorize a paid run.
 

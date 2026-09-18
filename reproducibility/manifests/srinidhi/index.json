@@ -1,0 +1,36 @@
+{
+  "member": "srinidhi",
+  "note": "Byte-identical copies; original raw evidence unchanged.",
+  "manifests": [
+    {
+      "manifest": "reproducibility/manifests/srinidhi/notebook-smoke-2026-09-18T22-31-21.299149+00-00/gpt/provenance/2026-09-18T22-31-21.303821+00-00.json",
+      "original": "reproducibility/raw_logs/srinidhi/notebook-smoke-2026-09-18T22-31-21.299149+00-00/gpt/provenance/2026-09-18T22-31-21.303821+00-00.json",
+      "sha256": "a109ac1cfc20874957fb5930a208c657aac49a405270c271a309e4a42c2846a9"
+    },
+    {
+      "manifest": "reproducibility/manifests/srinidhi/notebook-smoke-2026-09-18T22-31-24.196483+00-00/sentiment/provenance/2026-09-18T22-31-24.200748+00-00.json",
+      "original": "reproducibility/raw_logs/srinidhi/notebook-smoke-2026-09-18T22-31-24.196483+00-00/sentiment/provenance/2026-09-18T22-31-24.200748+00-00.json",
+      "sha256": "61c93ec2262d0a68998c8d9d39cf663d4ae81946afdbae8ffb8c4990a9d72a3e"
+    },
+    {
+      "manifest": "reproducibility/manifests/srinidhi/notebook-smoke-2026-09-18T22-31-28.626070+00-00/cyclegan/provenance/2026-09-18T22-31-28.629121+00-00.json",
+      "original": "reproducibility/raw_logs/srinidhi/notebook-smoke-2026-09-18T22-31-28.626070+00-00/cyclegan/provenance/2026-09-18T22-31-28.629121+00-00.json",
+      "sha256": "504ffef1d42199a12a8418d92754d99d8bf45eb66977965c60a768fc96c5812e"
+    },
+    {
+      "manifest": "reproducibility/manifests/srinidhi/smoke-20260918T223438Z-41637/cyclegan/provenance/2026-09-18T22-35-03.468449+00-00.json",
+      "original": "reproducibility/raw_logs/srinidhi/smoke-20260918T223438Z-41637/cyclegan/provenance/2026-09-18T22-35-03.468449+00-00.json",
+      "sha256": "da161a1fee92490bbce25f41d11e90df14a8facf86da95efee206410d4768cbe"
+    },
+    {
+      "manifest": "reproducibility/manifests/srinidhi/smoke-20260918T223438Z-41637/gpt/provenance/2026-09-18T22-34-42.284825+00-00.json",
+      "original": "reproducibility/raw_logs/srinidhi/smoke-20260918T223438Z-41637/gpt/provenance/2026-09-18T22-34-42.284825+00-00.json",
+      "sha256": "ce36bf7eaabf24b6bd1033c55b95cb75bc8f9aebd29cf33c118e50e231720758"
+    },
+    {
+      "manifest": "reproducibility/manifests/srinidhi/smoke-20260918T223438Z-41637/sentiment/provenance/2026-09-18T22-34-45.444476+00-00.json",
+      "original": "reproducibility/raw_logs/srinidhi/smoke-20260918T223438Z-41637/sentiment/provenance/2026-09-18T22-34-45.444476+00-00.json",
+      "sha256": "11d9a6906b9083895b8b428d8c60001e8cbe725e21d4e8b5508592279496e352"
+    }
+  ]
+}

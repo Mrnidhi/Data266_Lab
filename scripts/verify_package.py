@@ -37,17 +37,17 @@ from lab1.sentiment import prefetch_data
 root = Path.cwd()
 assert Path(lab1.__file__).resolve().is_relative_to(root)
 caches = {}
-if (root / "data/rehearsal/tinystories").is_dir():
+if (root / "task1_llm/srinidhi/data_processed/rehearsal").is_dir():
     cfg = json.loads(task_config_path("gpt").read_text())["rehearsal"]
-    cfg.update(data_cache=str(root / "data/rehearsal/tinystories"), offline=True)
+    cfg.update(data_cache=str(root / "task1_llm/srinidhi/data_processed/rehearsal"), offline=True)
     a, b, _ = prepare_data(cfg)
     assert (len(a), len(b)) == (512, 64)
     caches["tinystories"] = "passed"
 else:
     caches["tinystories"] = "not_in_source_bundle"
-if (root / "data/rehearsal/yelp/manifest.json").is_file():
+if (root / "task2_sentiment/srinidhi/data_processed/rehearsal/manifest.json").is_file():
     cfg = json.loads(task_config_path("sentiment").read_text())["rehearsal"]
-    manifest = prefetch_data(cfg, root / "data/rehearsal/yelp")
+    manifest = prefetch_data(cfg, root / "task2_sentiment/srinidhi/data_processed/rehearsal")
     assert manifest["split_counts"] == {"train": 2048, "validation": 256, "test": 512}
     caches["yelp"] = "passed"
 else:

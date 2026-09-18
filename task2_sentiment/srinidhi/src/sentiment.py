@@ -205,7 +205,8 @@ def _load_records(cfg: dict):
         return records
     from datasets import load_dataset
     from sklearn.model_selection import train_test_split
-    data = load_dataset(cfg["dataset"], revision=cfg.get("dataset_revision", "main"))
+    data = load_dataset(cfg["dataset"], revision=cfg.get("dataset_revision", "main"),
+                        cache_dir=cfg.get("raw_data_cache"))
     if len(data["train"]) != 560000 or len(data["test"]) != 38000:
         raise ValueError("Expected official Yelp Polarity splits of 560000 and 38000 rows")
     labels = np.asarray(data["train"]["label"])
@@ -243,7 +244,7 @@ def prefetch_data(config: dict, output_dir: Path) -> dict:
         _load_records({**config, "data_dir": str(output_dir)})
         return json.loads((output_dir / "manifest.json").read_text())
     records = _load_records(cfg)
-    manifest = {"mode": cfg["mode"], "seed": cfg["seed"], "dataset": cfg["dataset"], "requested_revision": cfg.get("dataset_revision", "main"), "split_counts": {}, "sha256": {}, "data_dir": str(output_dir.resolve())}
+    manifest = {"mode": cfg["mode"], "seed": cfg["seed"], "dataset": cfg["dataset"], "requested_revision": cfg.get("dataset_revision", "main"), "split_counts": {}, "sha256": {}, "data_dir": str(output_dir)}
     for name, rows in records.items():
         path = output_dir / f"{name}.jsonl"
         with path.open("w") as stream:

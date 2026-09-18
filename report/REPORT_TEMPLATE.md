@@ -1,6 +1,6 @@
-# Lab 1 report outline — complete after real experiments
+# Lab Pair 49 — Lab 1 report outline
 
-This outline has no final results. Replace every pending field using actual outputs and your own explanation. Export the finished combined report to `Report.pdf` with the GitHub repository link.
+This outline has no final results. Replace every pending field using actual outputs and your own explanation. Export the finished combined report to `DATA266_Lab1_Report_Team_49.pdf` with the GitHub repository link.
 
 ## Reproducibility
 

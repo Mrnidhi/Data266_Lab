@@ -1,4 +1,4 @@
-# Team Git workflow
+# Lab Pair 49 — team Git workflow
 
 Everyone uses **https://github.com/Mrnidhi/Data266_Lab**. Each person needs their own GitHub account added as a collaborator by the repository owner. Do not share credentials. Collaborator invitations have not been sent by this preparation.
 

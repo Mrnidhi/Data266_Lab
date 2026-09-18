@@ -1,10 +1,10 @@
-# Lab 1 preparation status
+# Lab Pair 49 — preparation status
 
 This is the shared team repository. Srinidhi's code and configurations live inside his named task folders; teammates still need to add their independent work. The initial commit contains prepared code and synthetic CPU verification, not final submission results.
 
 ## Verified locally
 
-- 31 automated tests passed after moving the modules/configurations into the team layout.
+- 32 automated tests passed after moving the modules/configurations into the team layout.
 - All three notebooks executed successfully: 15 code cells total, zero errors.
 - All five model pipelines passed smoke training, evaluation and checkpoint checks.
 - A relocated source archive passed import and smoke verification.
