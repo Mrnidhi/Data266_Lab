@@ -4,11 +4,20 @@ This implementation is a proposed individual experiment. Local smoke results do
 not establish that full TinyStories training has completed or that stories are coherent.
 
 The full candidate uses 3 pre-LayerNorm Transformer blocks, 6 heads, width 192,
-feedforward width 768, context 256 characters, dropout 0.15, batch size 32,
+feedforward width 768, context 256 characters, dropout 0.15, batch size 256,
 AdamW at 0.0004, 5% warm-up and cosine decay, and 12 complete epochs. The seed is
 2342. Unlike the teammate's 4-layer, 4-head, width-256, context-128 model, this
 tests a narrower model with more character context. These choices are not a
 claim of optimality; validate them against the actual compute budget.
+
+An RTX 4090 rehearsal on September 18 measured approximately 207K, 612K,
+701K, and 755K character targets/second at batch sizes 32, 128, 256, and 512.
+Batch 256 was selected for throughput with about 4 GB peak tensor memory;
+512 gave only another 8% while doubling memory and halving updates per epoch.
+These short rehearsals establish speed, not final quality. The learning rate
+and 12 full epochs remain unchanged. The initial batch-32 full-run attempt
+was deliberately interrupted for this tuning and is retained as an incomplete
+experiment, separate from the new batch-256 run.
 
 The attention implementation explicitly calculates QK-transpose, scaling,
 causal masking, softmax, and multiplication by V. Positions are learned. There

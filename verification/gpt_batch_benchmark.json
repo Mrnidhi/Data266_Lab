@@ -1,0 +1,41 @@
+{
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "purpose": "throughput comparison, not full-data quality comparison",
+  "selected_batch_size": 256,
+  "unchanged": [
+    "architecture",
+    "learning_rate",
+    "full_data_split",
+    "12_full_epochs"
+  ],
+  "rows": [
+    {
+      "batch_size": 32,
+      "character_targets_per_second": 206627.85265696066,
+      "cuda_peak_allocated_mb": 588.25,
+      "run": "reproducibility/raw_logs/srinidhi/runpod-20260918/gpu-rehearsal/gpt",
+      "optimizer_steps": 64
+    },
+    {
+      "batch_size": 128,
+      "character_targets_per_second": 611805.8729742897,
+      "cuda_peak_allocated_mb": 2089.3984375,
+      "run": "reproducibility/raw_logs/srinidhi/runpod-20260918/batch-benchmark-128",
+      "optimizer_steps": 64
+    },
+    {
+      "batch_size": 256,
+      "character_targets_per_second": 701367.6847397479,
+      "cuda_peak_allocated_mb": 4094.35546875,
+      "run": "reproducibility/raw_logs/srinidhi/runpod-20260918/batch-benchmark-256",
+      "optimizer_steps": 64
+    },
+    {
+      "batch_size": 512,
+      "character_targets_per_second": 754681.149493221,
+      "cuda_peak_allocated_mb": 8103.1796875,
+      "run": "reproducibility/raw_logs/srinidhi/runpod-20260918/batch-benchmark-512",
+      "optimizer_steps": 64
+    }
+  ]
+}
