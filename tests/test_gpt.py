@@ -83,6 +83,11 @@ def test_checkpoint_reload_and_interrupted_resume_exact(config, tmp_path, monkey
     b = gpt.load_checkpoint(tmp_path / "resumed" / "checkpoints" / "last.pt")
     assert baseline["inference_reload_verified"] and resumed["inference_reload_verified"]
     assert baseline["is_final_training_run"] is False
+    generated = json.loads((baseline_dir / "generations.json").read_text())
+    assert all(g["generation_seconds"] > 0 for g in generated)
+    assert all(g["generated_character_tokens"] == len(g["continuation"]) for g in generated)
+    assert baseline["generation_tokens_per_second"] == pytest.approx(
+        sum(len(g["continuation"]) for g in generated) / sum(g["generation_seconds"] for g in generated))
     assert a["progress"]["global_step"] == b["progress"]["global_step"] == config["max_steps"]
     for key in a["model"]:
         torch.testing.assert_close(a["model"][key], b["model"][key], rtol=0, atol=0)

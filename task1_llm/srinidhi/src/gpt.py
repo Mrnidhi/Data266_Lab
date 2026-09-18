@@ -717,11 +717,20 @@ def run(config: dict, output_dir: Path, device: str, resume: Path | None = None)
         for decoding_index, (name, temperature, top_k) in enumerate([
                 ("greedy", 0.0, 0), ("sampled", config["temperature"], config["top_k"]) ]):
             generation_seed = config["seed"] + 1000 + prompt_index * 10 + decoding_index
+            if target.type == "cuda":
+                torch.cuda.synchronize(target)
+            generation_started = time.perf_counter()
             continuation = generate(model, vocabulary, prompt, config["generation_characters"], target,
                                     generation_seed, temperature, top_k)
+            if target.type == "cuda":
+                torch.cuda.synchronize(target)
+            generation_seconds = time.perf_counter() - generation_started
             generations.append({"prompt": prompt, "continuation": continuation,
                                 "full_text": prompt + continuation, "decoding": name,
                                 "temperature": temperature, "top_k": top_k, "seed": generation_seed,
+                                "generation_seconds": generation_seconds,
+                                "generated_character_tokens": len(continuation),
+                                "generation_tokens_per_second": len(continuation) / max(generation_seconds, 1e-9),
                                 "metrics": diversity([continuation])})
     _json(output_dir / "generations.json", generations)
     _json(output_dir / "history.json", state["history"])
@@ -766,6 +775,9 @@ def run(config: dict, output_dir: Path, device: str, resume: Path | None = None)
                "throughput_scope": "training step including device transfer; excludes loading, validation and checkpoint I/O",
                "elapsed_seconds_including_prior_sessions": state["elapsed_seconds_before_resume"] + time.perf_counter() - started,
                "inference_reload_verified": reload_match,
+               "generation_tokens_per_second": sum(g["generated_character_tokens"] for g in generations) /
+                   max(sum(g["generation_seconds"] for g in generations), 1e-9),
+               "generation_throughput_scope": "emitted character tokens excluding prompt and EOS; synchronized wall time includes all decoding work",
                "generation_metrics": {name: diversity([g["continuation"] for g in generations if g["decoding"] == name])
                                       for name in ["greedy", "sampled"]},
                "failure_analysis_status": "requires_student_review",

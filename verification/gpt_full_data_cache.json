@@ -1,0 +1,14 @@
+{
+  "status": "verified_offline",
+  "counts": {
+    "train": 100000,
+    "validation": 10000
+  },
+  "manifest_sha256": "0a7edd96782498ba83bdab0599119d9f216c53b8ff11e1aba30aa3a03fc2ac0b",
+  "paths": {
+    "train": "task1_llm/srinidhi/data_processed/full/gpt_641f4529e37b28d2/train.jsonl",
+    "validation": "task1_llm/srinidhi/data_processed/full/gpt_641f4529e37b28d2/validation.jsonl",
+    "manifest": "task1_llm/srinidhi/data_processed/full/gpt_641f4529e37b28d2/manifest.json"
+  },
+  "training_started": false
+}

@@ -1,0 +1,17 @@
+{
+  "mode": "full",
+  "seed": 2342,
+  "dataset": "fancyzhx/yelp_polarity",
+  "requested_revision": "main",
+  "split_counts": {
+    "train": 504000,
+    "validation": 56000,
+    "test": 38000
+  },
+  "sha256": {
+    "train": "351ceef6a7c81234ce27a9ce1b8ac79b9e0f21e0465417ccf0110e83a018868c",
+    "validation": "d603117b394419c5629d632a7e0be0410783530889e6d75421694041370b9525",
+    "test": "573d8a723e1626129ddbf818a6eb96ad932821e13293abbed106bd941ccb45af"
+  },
+  "data_dir": "task2_sentiment/srinidhi/data_processed/full"
+}
