@@ -9,6 +9,7 @@ No pretrained weights are used by the four trainable networks.
 from __future__ import annotations
 
 import argparse
+from contextlib import nullcontext
 import csv
 import hashlib
 import json
@@ -33,7 +34,32 @@ from .common import project_root, task_config_path
 DIRECTIONS = ("photo_to_monet", "monet_to_photo")
 METRICS = ("fid", "kid", "precision", "recall", "density", "coverage", "lpips_cycle", "content_cosine")
 RESUME_FIELDS = ("seed", "image_size", "base_channels", "residual_blocks", "learning_rate", "betas",
-                 "cycle_weight", "identity_weight", "epochs", "constant_epochs", "batch_size", "replay_size")
+                 "cycle_weight", "identity_weight", "epochs", "constant_epochs", "batch_size", "replay_size", "precision")
+
+
+def _recipe_value(config, field):
+    # Checkpoints predating mixed precision were always FP32.
+    return config.get(field, "fp32" if field == "precision" else None)
+
+
+def _training_options(config, device):
+    precision = config.get("precision", "fp32")
+    replay_device = config.get("replay_device", "cpu")
+    if precision not in ("fp32", "bf16"):
+        raise ValueError("precision must be 'fp32' or 'bf16'; fp16 scaling is not implemented")
+    if replay_device not in ("cpu", "device"):
+        raise ValueError("replay_device must be 'cpu' or 'device'")
+    if precision == "bf16":
+        if torch.device(device).type != "cuda" or not torch.cuda.is_available():
+            raise ValueError("bf16 training requires a CUDA device with native BF16 support")
+        with torch.cuda.device(device):
+            if not torch.cuda.is_bf16_supported(including_emulation=False):
+                raise ValueError("bf16 training requires a CUDA device with native BF16 support")
+    return precision, replay_device
+
+
+def _training_autocast(precision):
+    return torch.autocast(device_type="cuda", dtype=torch.bfloat16) if precision == "bf16" else nullcontext()
 
 
 def _json(path, value):
@@ -120,8 +146,9 @@ def build_models(config, device):
 
 
 class ReplayPool:
-    def __init__(self, capacity=50):
+    def __init__(self, capacity=50, device="cpu"):
         self.capacity, self.images = int(capacity), []
+        self.device = torch.device(device)
 
     def query(self, batch):
         result = []
@@ -130,22 +157,22 @@ class ReplayPool:
             if self.capacity == 0:
                 result.append(image)
             elif len(self.images) < self.capacity:
-                self.images.append(image.cpu().clone())
+                self.images.append(image.to(self.device).clone())
                 result.append(image)
             elif random.random() < 0.5:
                 index = random.randrange(self.capacity)
                 result.append(self.images[index].to(image.device).clone())
-                self.images[index] = image.cpu().clone()
+                self.images[index] = image.to(self.device).clone()
             else:
                 result.append(image)
         return torch.cat(result, 0).detach()
 
     def state_dict(self):
-        return {"capacity": self.capacity, "images": self.images}
+        return {"capacity": self.capacity, "images": [x.detach().cpu().clone() for x in self.images]}
 
     def load_state_dict(self, state):
         self.capacity = state["capacity"]
-        self.images = [x.detach().cpu().clone() for x in state["images"]]
+        self.images = [x.detach().to(self.device).clone() for x in state["images"]]
 
 
 def cycle_forward(models, photo, monet):
@@ -161,12 +188,12 @@ def cycle_forward(models, photo, monet):
 def generator_losses(models, photo, monet, output, cycle_weight=10., identity_weight=5.):
     """identity_weight is absolute, unlike the original repo's relative flag."""
     raw = {
-        "gan_photo_to_monet": ((models["D_monet"](output["fake_monet"]) - 1) ** 2).mean(),
-        "gan_monet_to_photo": ((models["D_photo"](output["fake_photo"]) - 1) ** 2).mean(),
-        "cycle_photo_l1": F.l1_loss(output["cycle_photo"], photo),
-        "cycle_monet_l1": F.l1_loss(output["cycle_monet"], monet),
-        "identity_photo_l1": F.l1_loss(output["identity_photo"], photo),
-        "identity_monet_l1": F.l1_loss(output["identity_monet"], monet)}
+        "gan_photo_to_monet": ((models["D_monet"](output["fake_monet"]).float() - 1) ** 2).mean(),
+        "gan_monet_to_photo": ((models["D_photo"](output["fake_photo"]).float() - 1) ** 2).mean(),
+        "cycle_photo_l1": F.l1_loss(output["cycle_photo"].float(), photo.float()),
+        "cycle_monet_l1": F.l1_loss(output["cycle_monet"].float(), monet.float()),
+        "identity_photo_l1": F.l1_loss(output["identity_photo"].float(), photo.float()),
+        "identity_monet_l1": F.l1_loss(output["identity_monet"].float(), monet.float())}
     raw["generator_total"] = (raw["gan_photo_to_monet"] + raw["gan_monet_to_photo"]
                               + cycle_weight * (raw["cycle_photo_l1"] + raw["cycle_monet_l1"])
                               + identity_weight * (raw["identity_photo_l1"] + raw["identity_monet_l1"]))
@@ -174,7 +201,7 @@ def generator_losses(models, photo, monet, output, cycle_weight=10., identity_we
 
 
 def discriminator_loss(discriminator, real, fake):
-    return 0.5 * (((discriminator(real) - 1) ** 2).mean() + (discriminator(fake.detach()) ** 2).mean())
+    return 0.5 * (((discriminator(real).float() - 1) ** 2).mean() + (discriminator(fake.detach()).float() ** 2).mean())
 
 
 def rng_state():
@@ -249,7 +276,7 @@ def _preserve_best_checkpoint(resume, output_dir, restored, provenance):
     candidate = torch.load(source, map_location="cpu", weights_only=False)
     candidate_state = candidate.get("state", {})
     valid = (candidate.get("format_version") == 1
-             and all(candidate.get("config", {}).get(key) == restored["config"].get(key) for key in RESUME_FIELDS)
+             and all(_recipe_value(candidate.get("config", {}), key) == _recipe_value(restored["config"], key) for key in RESUME_FIELDS)
              and candidate_state.get("manifest_fingerprint") == provenance["manifest_fingerprint"]
              and candidate_state.get("best_selection") == selection
              and candidate_state.get("best_validation_score") == restored["state"].get("best_validation_score")
@@ -654,6 +681,8 @@ def score_human_audit(rater_one, rater_two):
 
 def run(config: dict, output_dir: Path, device: str, resume: Path | None = None) -> dict:
     config, output_dir = resolve_config(config), Path(output_dir)
+    precision, replay_device = _training_options(config, device)
+    config["precision"], config["replay_device"] = precision, replay_device
     mode, seed = config.get("mode", "smoke"), int(config.get("seed", 2342))
     output_dir.mkdir(parents=True, exist_ok=True)
     if resume is None and ((output_dir / "last.pt").exists() or (output_dir / "training_log.jsonl").exists()):
@@ -672,7 +701,7 @@ def run(config: dict, output_dir: Path, device: str, resume: Path | None = None)
     if resume is not None:
         restored = torch.load(resume, map_location="cpu", weights_only=False)
         for field in RESUME_FIELDS:
-            if restored["config"].get(field) != config.get(field):
+            if _recipe_value(restored["config"], field) != _recipe_value(config, field):
                 raise ValueError(f"Resume must preserve {field}; create a new run for a changed training recipe")
         if restored["state"]["manifest_fingerprint"] != provenance["manifest_fingerprint"]:
             raise ValueError("Resume data manifest mismatch")
@@ -703,7 +732,8 @@ def run(config: dict, output_dir: Path, device: str, resume: Path | None = None)
         epoch_fraction = step / steps_per_epoch
         return max(0., 1. - max(0., epoch_fraction - constant) / max(1, epochs - constant))
     schedulers = {name: torch.optim.lr_scheduler.LambdaLR(opt, decay) for name, opt in optimizers.items()}
-    pools = {domain: ReplayPool(config.get("replay_size", 50)) for domain in ("photo", "monet")}
+    pool_device = device if replay_device == "device" else "cpu"
+    pools = {domain: ReplayPool(config.get("replay_size", 50), device=pool_device) for domain in ("photo", "monet")}
     state = {"global_step": 0, "training_seconds": 0., "nan_events": 0, "peak_gpu_memory_bytes": 0,
              "best_validation_score": None, "manifest_fingerprint": provenance["manifest_fingerprint"]}
     if restored is not None:
@@ -742,13 +772,15 @@ def run(config: dict, output_dir: Path, device: str, resume: Path | None = None)
             optimizer.zero_grad(set_to_none=True)
         for name in ("D_photo", "D_monet"):
             models[name].requires_grad_(False)
-        output = cycle_forward(models, photo, monet)
-        losses = generator_losses(models, photo, monet, output, config.get("cycle_weight", 10.), config.get("identity_weight", 5.))
+        with _training_autocast(precision):
+            output = cycle_forward(models, photo, monet)
+            losses = generator_losses(models, photo, monet, output, config.get("cycle_weight", 10.), config.get("identity_weight", 5.))
         losses["generator_total"].backward()
         for name in ("D_photo", "D_monet"):
             models[name].requires_grad_(True)
-        for domain, real in (("photo", photo), ("monet", monet)):
-            losses[f"discriminator_{domain}"] = discriminator_loss(models[f"D_{domain}"], real, pools[domain].query(output[f"fake_{domain}"]))
+        with _training_autocast(precision):
+            for domain, real in (("photo", photo), ("monet", monet)):
+                losses[f"discriminator_{domain}"] = discriminator_loss(models[f"D_{domain}"], real, pools[domain].query(output[f"fake_{domain}"]))
         (losses["discriminator_photo"] + losses["discriminator_monet"]).backward()
         norms = {name: _grad_norm(model) for name, model in models.items()}
         scalar_losses = {name: float(value.detach()) for name, value in losses.items()}
@@ -802,7 +834,8 @@ def run(config: dict, output_dir: Path, device: str, resume: Path | None = None)
             save_checkpoint(output_dir / "last.pt", models, optimizers, schedulers, pools, config, state)
             if str(device).startswith("cuda"):
                 torch.cuda.reset_peak_memory_stats()
-    report = {"part": 3, "mode": mode, "device": str(device), "seed": seed, "data_kind": provenance["kind"],
+    report = {"part": 3, "mode": mode, "device": str(device), "precision": precision, "replay_device": replay_device,
+              "seed": seed, "data_kind": provenance["kind"],
               "class_results": provenance["class_results"], "completed_updates": state["global_step"],
               "completed_epoch_fraction": state["global_step"] / steps_per_epoch, "steps_per_epoch": steps_per_epoch,
               "epoch_definition": "one shuffled pass through larger training domain; smaller domain sampled independently with replacement",

@@ -14,7 +14,7 @@ from PIL import Image
 
 from lab1.cyclegan import (Generator, PatchDiscriminator, ReplayPool, build_models,
                           cycle_forward, generator_losses, prepare_data, run,
-                          score_human_audit, export_checkpoint, restore_rng)
+                          score_human_audit, export_checkpoint, restore_rng, discriminator_loss)
 
 
 @pytest.fixture(autouse=True)
@@ -91,6 +91,50 @@ def test_replay_detaches_and_roundtrips():
     assert all(torch.equal(a, b) for a, b in zip(pool.images, restored.images))
 
 
+def test_bfloat16_losses_reduce_in_fp32_and_replay_serialization_is_independent():
+    photo = torch.zeros(1, 3, 4, 4, dtype=torch.bfloat16)
+    monet = torch.ones_like(photo)
+    output = {"fake_monet": monet, "fake_photo": photo,
+              "cycle_photo": photo, "cycle_monet": monet,
+              "identity_photo": photo + 1, "identity_monet": monet + 1}
+    losses = generator_losses({"D_photo": Add(1), "D_monet": Add(0)}, photo, monet, output)
+    assert all(value.dtype == torch.float32 for value in losses.values())
+    assert losses["generator_total"].item() == pytest.approx(10)
+    assert discriminator_loss(Add(0), monet, photo).dtype == torch.float32
+    pool = ReplayPool(2)
+    pool.query(monet)
+    state = pool.state_dict()
+    assert state["images"][0].device.type == "cpu"
+    assert state["images"][0].dtype == torch.bfloat16
+    state["images"][0].zero_()
+    assert pool.images[0].sum() > 0
+
+
+@pytest.mark.parametrize("options,device,match", [
+    ({"precision": "fp16"}, "cpu", "precision must"),
+    ({"precision": "unknown"}, "cpu", "precision must"),
+    ({"precision": "bf16"}, "cpu", "native BF16 support"),
+    ({"replay_device": "unknown"}, "cpu", "replay_device must"),
+])
+def test_invalid_training_options_fail_before_creating_run(tmp_path, options, device, match):
+    output = tmp_path / "invalid"
+    with pytest.raises(ValueError, match=match):
+        run(dict(smoke_config(), **options), output, device)
+    assert not output.exists()
+
+
+def test_bf16_requires_available_native_cuda(monkeypatch):
+    monkeypatch.setattr(torch.cuda, "is_available", lambda: False)
+    with pytest.raises(ValueError, match="native BF16 support"):
+        cyclegan._training_options({"precision": "bf16"}, "cuda")
+    from contextlib import nullcontext
+    monkeypatch.setattr(torch.cuda, "is_available", lambda: True)
+    monkeypatch.setattr(torch.cuda, "device", lambda device: nullcontext())
+    monkeypatch.setattr(torch.cuda, "is_bf16_supported", lambda including_emulation: False)
+    with pytest.raises(ValueError, match="native BF16 support"):
+        cyclegan._training_options({"precision": "bf16"}, "cuda")
+
+
 @pytest.mark.parametrize("source_count,destination_count", [(2, 1), (1, 2)])
 def test_resume_restores_only_available_cuda_rng_devices(monkeypatch, capsys, source_count, destination_count):
     restored = []
@@ -160,6 +204,39 @@ def test_resume_matches_uninterrupted_all_networks_optimizers_and_pools(tmp_path
     assert resumed["best_checkpoint"] is None
     with pytest.raises(ValueError, match="Synthetic rehearsal"):
         export_checkpoint(tmp_path / "resumed" / "last.pt", tmp_path, tmp_path / "absent.txt", tmp_path / "export", "cpu")
+
+
+def test_old_fp32_checkpoint_resumes_and_replay_placement_can_change(tmp_path):
+    config = smoke_config()
+    run(dict(config, max_steps=1), tmp_path / "old", "cpu")
+    checkpoint = tmp_path / "old" / "last.pt"
+    state = torch.load(checkpoint, weights_only=False)
+    state["config"].pop("precision")
+    state["config"].pop("replay_device")
+    torch.save(state, checkpoint)
+    report = run(dict(config, precision="fp32", replay_device="device"), tmp_path / "new", "cpu", checkpoint)
+    assert report["completed_updates"] == 2
+    assert report["precision"] == "fp32"
+    assert report["replay_device"] == "device"
+    state["config"]["precision"] = "bf16"
+    torch.save(state, checkpoint)
+    with pytest.raises(ValueError, match="preserve precision"):
+        run(config, tmp_path / "changed", "cpu", checkpoint)
+
+
+@pytest.mark.skipif(not torch.cuda.is_available(), reason="CUDA training check requires a GPU")
+def test_cuda_bf16_training_replay_and_checkpoint_portability(tmp_path):
+    if not torch.cuda.is_bf16_supported(including_emulation=False):
+        pytest.skip("GPU has no native BF16 support")
+    config = dict(smoke_config(), precision="bf16", replay_device="device")
+    first = run(dict(config, max_steps=1), tmp_path / "gpu", "cuda")
+    assert first["nan_events"] == 0
+    checkpoint = torch.load(tmp_path / "gpu" / "last.pt", map_location="cpu", weights_only=False)
+    assert all(value.device.type == "cpu" for pool in checkpoint["replay_pools"].values() for value in pool["images"])
+    assert all(value.dtype == torch.float32 for model in checkpoint["models"].values() for value in model.values())
+    resumed = run(dict(config, replay_device="cpu"), tmp_path / "resumed", "cuda", tmp_path / "gpu" / "last.pt")
+    assert resumed["completed_updates"] == 2
+    assert resumed["nan_events"] == 0
 
 
 @pytest.fixture

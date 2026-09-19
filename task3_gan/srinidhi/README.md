@@ -1,6 +1,6 @@
 # Part 3 — Srinidhi's CycleGAN (seed 2342)
 
-This is a prepared training/evaluation pipeline, not a completed lab result. No class Kaggle submission is generated or sent automatically.
+The real class data and frozen splits are prepared for Colab training. Full training and final evaluation are not completed yet. No class Kaggle submission is generated or sent automatically.
 
 ## Configuration
 
@@ -9,6 +9,8 @@ The full and rehearsal architectures have two 9-block ResNet generators and two 
 The generator objective is the sum of both least-squares adversarial losses, plus `10 × (photo cycle L1 + Monet cycle L1)`, plus `5 × (photo identity L1 + Monet identity L1)`. The identity coefficient here is **absolute 5**; it corresponds to the official reference implementation's relative `lambda_identity=0.5` when cycle weight is 10. Each discriminator minimizes half the sum of its real and replayed-fake least-squares losses. Each domain has a replay pool of 50.
 
 This differs from the teammate's 6-block / 128px model in depth, resolution, learning rate, and schedule. These choices are hypotheses to evaluate, not claims of improved performance.
+
+The Colab A100 configuration uses `precision="bf16"` and `replay_device="device"`. Generator/discriminator forward passes use bfloat16 autocast, while model parameters, Adam state, and loss reductions stay FP32. Native CUDA BF16 support is checked before training. Replay buffers stay on the GPU during training and are serialized as CPU tensors for portable checkpoints. Precision cannot change on resume. CPU smoke tests remain FP32; the CUDA-specific regression test must pass on the allocated GPU before the full run.
 
 ## Three run modes
 
@@ -28,7 +30,7 @@ Prepare the actual class data and edit only the chosen mode's `data` object in `
 {"monet_dir": "/path/to/class/monet", "photo_dir": "/path/to/class/photos", "manifest_dir": "/path/to/manifests", "source_note": "actual verified class dataset/version"}
 ```
 
-`manifest_dir` must contain `train_monet.txt`, `val_monet.txt`, `test_monet.txt`, `train_photo.txt`, `val_photo.txt`, and `test_photo.txt`. Each line is a relative image path under the appropriate domain directory. Preserve official splits if given; otherwise freeze independent train/validation/test lists before training. Content hashes reject duplicate images within/across splits of a domain. The complete resolved manifest and its fingerprint are saved. The class competition is accessible using the updated Canvas invitation; see [verified class protocol and remaining gaps](../CLASS_PROTOCOL.md). Download is currently blocked, and the exact scoring script and CSV schema remain unresolved. The public tutorial competition is not assumed equivalent.
+`manifest_dir` must contain `train_monet.txt`, `val_monet.txt`, `test_monet.txt`, `train_photo.txt`, `val_photo.txt`, and `test_photo.txt`. Each line is a relative image path under the appropriate domain directory. Preserve official splits if given; otherwise freeze independent train/validation/test lists before training. Content hashes reject duplicate images within/across splits of a domain. The complete resolved manifest and its fingerprint are saved. The class competition is accessible using the updated Canvas invitation; see [verified class protocol and remaining gaps](../CLASS_PROTOCOL.md). The supplied class archive has been verified and split; the exact scoring script and CSV columns remain unresolved. The public tutorial competition is not assumed equivalent.
 
 Before a long run, measure 100–200 updates on the intended GPU. Estimate compute time as `updates × measured_seconds_per_update`, then allow for data loading, periodic validation, exports, and setup. This is more reliable than predicting time from the GPU name. Check peak memory before changing width; any fallback is a new explicitly recorded experiment.
 

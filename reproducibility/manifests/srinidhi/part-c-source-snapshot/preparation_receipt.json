@@ -1,0 +1,50 @@
+{
+  "all_raw_images_preserved": true,
+  "class_official_splits": false,
+  "counts": {
+    "test_monet": 30,
+    "test_photo": 702,
+    "train_monet": 240,
+    "train_photo": 5624,
+    "val_monet": 30,
+    "val_photo": 702
+  },
+  "data_paths": {
+    "manifest_dir": "task3_gan/srinidhi/data_processed/part3_manifests",
+    "monet_dir": "task3_gan/data/monet_jpg",
+    "photo_dir": "task3_gan/data/photo_jpg"
+  },
+  "excluded_duplicate_counts": {
+    "photo": 10
+  },
+  "manifest_fingerprint": "35184a0643321f99efc8df06544328b25c3364b66f29c76545ab47e01fe3438a",
+  "manifest_sha256": {
+    "manifest.json": "fdf702fce02f36fb7da0271b3d8f25d6eb8c92f682b3137dee22f1ac3a476adc",
+    "test_monet.txt": "cdc54acffd08342c73a831fa982fe47f3fca07f5d1d6851cbb01c8331007dee7",
+    "test_photo.txt": "0cd1c28eb328c16023ef26c477fe3311accb5750774c31b6c8a2e7045cabb278",
+    "train_monet.txt": "40397d0e8aefb33796f2645d4838ef6ab248035944018bc38c87ef91151ec7fa",
+    "train_photo.txt": "c4a885cb513792d6924e3ef0ed97f5e5f37283a44b4eae8577bdd105d5cd7227",
+    "val_monet.txt": "86a36635b055f12115555d13ad0dc552cc0926a372dfa792948f3cd444c6246b",
+    "val_photo.txt": "0d9da1cf0157ecd114ceda58e3550216f749bb000c0707bd9767a0516527fabe"
+  },
+  "raw_counts": {
+    "monet": 300,
+    "photo": 7038
+  },
+  "real_stats_usage": "Preserved unchanged; class scoring protocol must establish its appropriate use. Held-out evaluation uses the frozen validation/test split.",
+  "seed": 2342,
+  "source_archive_bytes": 137663896,
+  "source_archive_filename": "data-266-fall-2026-gan-image-style-transfer.zip",
+  "source_archive_modified": false,
+  "source_archive_sha256": "5060b62d4a6a0194de10b849ea43b649f308ae516f0bf659b62ee404ca153e1d",
+  "split_policy": "After exact deduplication, independently shuffle Monet with seed and photos with seed+1. Validation and test each receive floor(10%); training receives the remainder.",
+  "unique_counts": {
+    "monet": 300,
+    "photo": 7028
+  },
+  "validation": {
+    "actual_training_loader": "passed",
+    "cross_domain_duplicates": 0,
+    "six_domain_split_tensors": "passed"
+  }
+}
