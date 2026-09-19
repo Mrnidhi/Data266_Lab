@@ -1,0 +1,16 @@
+{
+  "selection_metric": "validation macro-F1",
+  "test_access_policy": "Candidate training never evaluates test. Reference run already has ordinary final test evaluations; those are not used for tuning decisions.",
+  "max_candidates_per_family": 2,
+  "baseline_controls": "original family recipe with12epochs andpatience4",
+  "practical_gain_threshold": 0.001,
+  "rule": "Choose highest validation macro-F1; if within0.001 prefer smaller model. A threshold is a practical preference, not a significance test. Check stability of chosen improvement with one further initialization on same frozen split if needed.",
+  "initialization_seed": 2342,
+  "frozen_split_seed": 2342,
+  "sources": [
+    "https://aclanthology.org/P17-1052.pdf",
+    "https://arxiv.org/abs/1803.01271",
+    "https://aclanthology.org/I17-1026.pdf",
+    "https://aclanthology.org/2026.acl-srw.38.pdf"
+  ]
+}

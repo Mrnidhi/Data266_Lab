@@ -1,0 +1,14 @@
+{
+  "reference-9105889.py": {
+    "sha256": "24619af4a8f2faa814e0715a7307568ea4e5063a2644ceb12e81b19ee2fabafc",
+    "original_path": "task2_sentiment/srinidhi/src/sentiment.py"
+  },
+  "validation-gate.py": {
+    "sha256": "077bcd284ab80f2ad6f4ba96fd0449469a6c05253c2d2f5715a65b208375436e",
+    "original_path": "task2_sentiment/srinidhi/src/sentiment.py"
+  },
+  "evaluation-refactor.py": {
+    "sha256": "f381634c3d8ea45e1f0073734516699047656ea5aa61ba31f7955de4f50b6b1b",
+    "original_path": "task2_sentiment/srinidhi/src/sentiment.py"
+  }
+}

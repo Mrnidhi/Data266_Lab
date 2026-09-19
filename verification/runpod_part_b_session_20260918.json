@@ -1,0 +1,36 @@
+{
+  "pod_id": "2jh3s1o6ud6tb1",
+  "gpu": "RTX 5090",
+  "gpu_count": 1,
+  "gpu_rate_usd_hour": 0.99,
+  "container_storage_estimate_usd_hour": 0.004,
+  "observed_allocated_utc": "2026-09-19T01:32:44+00:00",
+  "initial_operating_allowance_usd": 3.0,
+  "status": "reference_and_validation_candidates_running",
+  "scope": "Part 2 only. User explicitly chose to retain this single RTX 5090, finish Part 2, verify backups and stop; discuss Part 3 later.",
+  "stop_policy": "Back up and verify Part 2 trained models and all experiment evidence, then stop the pod before Part 3.",
+  "automatic_shutdown": false,
+  "full_training_started": true,
+  "source_commit": "9105889",
+  "full_run": "runs/part-b-full",
+  "num_workers": 2,
+  "benchmark": "verification/sentiment_5090_benchmark.json",
+  "expected_remaining_minutes": [
+    30,
+    45
+  ],
+  "estimated_total_cost_usd": [
+    1,
+    1.5
+  ],
+  "budget_policy": "User explicitly removed the $3 operating limit and authorized continued research-guided work for better Part 2 results. Keep spending proportionate, record costs, and stop idle resources.",
+  "initial_operating_allowance_superseded": true,
+  "active_resource_limit": "One RTX 5090; extra paid GPUs not selected",
+  "optimization_policy": "Choose candidates by validation only; preserve reference run and all raw evidence; no promise of a global optimum.",
+  "concurrent_jobs": [
+    "part-b-full",
+    "part-b-tuning/cnn_long_context",
+    "part-b-tuning/mlp_wider"
+  ],
+  "observed_parallel_gpu_utilization_percent": 91
+}

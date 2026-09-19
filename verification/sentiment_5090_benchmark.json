@@ -1,0 +1,110 @@
+{
+  "purpose": "timing only, not final training",
+  "utc": "2026-09-19T01:37:43.672962+00:00",
+  "environment": {
+    "captured_utc": "2026-09-19T01:37:43.688371+00:00",
+    "python": "3.12.3",
+    "platform": "Linux-6.11.0-26-generic-x86_64-with-glibc2.39",
+    "machine": "x86_64",
+    "packages": {
+      "torch": "2.11.0+cu128",
+      "torchvision": "0.26.0+cu128",
+      "numpy": "2.5.3",
+      "pandas": "3.0.6",
+      "scikit-learn": "1.9.1",
+      "scipy": "1.16.3",
+      "matplotlib": "3.11.2",
+      "datasets": "5.0.1",
+      "Pillow": "12.3.0",
+      "clean-fid": "0.1.35",
+      "lpips": "0.1.4",
+      "prdc": "0.2"
+    },
+    "cuda_available": true,
+    "cuda_build": "12.8",
+    "cudnn": 91900,
+    "gpus": [
+      {
+        "index": 0,
+        "name": "NVIDIA GeForce RTX 5090",
+        "memory_bytes": 33680326656,
+        "compute_capability": [
+          12,
+          0
+        ]
+      }
+    ],
+    "mps_available": false,
+    "nvidia_smi": "name, uuid, driver_version, memory.total [MiB]\nNVIDIA GeForce RTX 5090, GPU-1f89be66-27b1-f3fd-debe-6a3213d26d35, 570.153.02, 32607 MiB"
+  },
+  "results": [
+    {
+      "model": "maxpool_mlp",
+      "num_workers": 0,
+      "measured_training_steps": 80,
+      "train_seconds_per_batch": 0.005046527362719644,
+      "eval_seconds_per_batch": 0.0018479298974853008,
+      "maximum_six_epoch_train_eval_seconds": 124.64454347648424,
+      "peak_cuda_memory_bytes": 162651648,
+      "parameter_count": 5128321
+    },
+    {
+      "model": "bilstm",
+      "num_workers": 0,
+      "measured_training_steps": 80,
+      "train_seconds_per_batch": 0.04528181776113342,
+      "eval_seconds_per_batch": 0.017786692047957332,
+      "maximum_six_epoch_train_eval_seconds": 1121.9448643003357,
+      "peak_cuda_memory_bytes": 224454144,
+      "parameter_count": 5305985
+    },
+    {
+      "model": "dilated_cnn",
+      "num_workers": 0,
+      "measured_training_steps": 80,
+      "train_seconds_per_batch": 0.012330145150190219,
+      "eval_seconds_per_batch": 0.0033139446983113884,
+      "maximum_six_epoch_train_eval_seconds": 301.0299578512553,
+      "peak_cuda_memory_bytes": 470373376,
+      "parameter_count": 5539073
+    },
+    {
+      "model": "maxpool_mlp",
+      "num_workers": 2,
+      "measured_training_steps": 80,
+      "train_seconds_per_batch": 0.008704193224548362,
+      "eval_seconds_per_batch": 0.012736755149671809,
+      "maximum_six_epoch_train_eval_seconds": 242.91768632241872,
+      "peak_cuda_memory_bytes": 162651648,
+      "parameter_count": 5128321
+    },
+    {
+      "model": "bilstm",
+      "num_workers": 2,
+      "measured_training_steps": 80,
+      "train_seconds_per_batch": 0.03483084371255245,
+      "eval_seconds_per_batch": 0.022573704097885637,
+      "maximum_six_epoch_train_eval_seconds": 889.0112597265047,
+      "peak_cuda_memory_bytes": 225478144,
+      "parameter_count": 5305985
+    },
+    {
+      "model": "dilated_cnn",
+      "num_workers": 2,
+      "measured_training_steps": 80,
+      "train_seconds_per_batch": 0.008962259137479122,
+      "eval_seconds_per_batch": 0.01184245454496704,
+      "maximum_six_epoch_train_eval_seconds": 246.39943844438528,
+      "peak_cuda_memory_bytes": 470864896,
+      "parameter_count": 5539073
+    }
+  ],
+  "estimate_excludes": [
+    "setup",
+    "data transfer",
+    "checkpoint serialization",
+    "bootstrap metrics",
+    "plots and export"
+  ],
+  "recommended_headroom_fraction": 0.25
+}

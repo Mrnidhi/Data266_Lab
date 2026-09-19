@@ -9,19 +9,19 @@ Updated September 18, 2026 after the user reported that the college lab is close
 | Work | Placement and status |
 |---|---|
 | Part 1: character GPT | Completed on RunPod RTX 4090. Checkpoints, executed notebook, metrics and logs verified locally; pod stopped. |
-| Part 2: Yelp sentiment | User selected one RunPod RTX 5090 at $0.99/hour. Prepare text features locally, benchmark all three models, then train sequentially with live SSH progress. |
-| Part 3: CycleGAN | Cloud GPU selection and cost remain pending the actual class dataset and a measured rehearsal. The blocked class download remains unresolved; do not substitute synthetic data for final results. |
+| Part 2: Yelp sentiment | User selected one RunPod RTX 5090 at $0.99/hour. Prepare text features locally, benchmark all three models, then run independent validation trials in parallel with live SSH progress. |
+| Part 3: CycleGAN | Class archive received. Training and any GPU decision are deferred until Part 2 finishes and its pod stops. |
 | Reports, notebooks, packaging, checksums | Local Mac, with verified local backups of every cloud training run. |
 
 The earlier college/free-GPU allocation is superseded. No final submission may claim a college-GPU run that did not occur. Each task retains actual hardware, environment, source and training provenance.
 
 ## Part 2 cost and stopping policy
 
-The user authorized continuing with RunPod RTX 5090 after discussion of roughly $3 for a provisional two-to-three-hour session. Use **$3 as the initial operating allowance**, including setup and running storage, and obtain an extension before exceeding it. This is an assistant-managed limit, not a provider-enforced cap. The current on-demand quote is $0.99/hour plus approximately $0.004/hour for a 30 GB container disk, before any applicable tax. Runtime has not yet been measured; the provisional estimate is not a completion guarantee.
+The user explicitly removed the initial $3 allowance and authorized continued research-guided experiments for better Part 2 results. Keep one RTX 5090 active, measure throughput and costs, preserve checkpoints, and stop after useful work finishes. This is not authorization for unrelated purchases or an unbounded resource fleet. The current on-demand quote is $0.99/hour plus approximately $0.004/hour for a 30 GB container disk, before any applicable tax. A real-data benchmark is in verification/sentiment_5090_benchmark.json. Candidate runtimes depend on their actual architecture, stopping epoch and concurrent workload.
 
-Use a single GPU initially. More selected GPUs do not accelerate the sequential runner. Independent-model parallelism would require a changed launcher and a new cost calculation; do not allocate additional GPUs without user authorization.
+Use a single GPU initially. The user authorized parallel independent work; separate validation-only candidate processes can share the existing GPU if measured throughput improves. More selected GPUs do not accelerate one single-device model. Quote any additional GPU allocation before starting it.
 
-A paused Python process still incurs pod charges. Before stopping, copy checkpoints, logs and outputs to the Mac and verify their hashes. RunPod container storage is erased when the pod stops. No persistent volume is needed for this bounded run; retain complete portable checkpoints locally and stop the pod after the task or at the allowance boundary. Confirm the console shows no running compute or storage charges.
+A paused Python process still incurs pod charges. Before stopping, copy checkpoints, logs and outputs to the Mac and verify their hashes. RunPod container storage is erased when the pod stops. No persistent volume is needed for this bounded run; retain complete portable checkpoints locally and stop the pod after the experiments and verified backups finish. Confirm the console shows no running compute or storage charges.
 
 Sources: [RunPod pricing](https://www.runpod.io/pricing), [billing and storage behavior](https://docs.runpod.io/pods/pricing).
 
@@ -30,7 +30,7 @@ Sources: [RunPod pricing](https://www.runpod.io/pricing), [billing and storage b
 1. Prepare frozen data and evaluator weights on CPU, record the code revision, then run setup and a brief CUDA smoke check on the assigned device.
 2. Time representative full-architecture training batches after warm-up. Synchronize CUDA at timing boundaries; include the real data loader. Measure validation separately. Rehearsal is for timing/correctness and is not a final trained model.
 3. Compute `remaining batches × measured seconds/batch + validation + final evaluation + checkpoint/export time`. Add at least 25% scheduling headroom and data/setup time separately. Use peak VRAM, examples/second and total wall time to decide allocation.
-4. Full sentiment has 504,000 training rows: `ceil(504000 / 128) = 3,938` batches per epoch per model, at most six epochs each. The MLP, BiLSTM and CNN must be timed separately; early stopping may shorten training. Full GPT batches depend on the frozen stories' character-window count. GAN has `30 × max(training photos, training Monet images)` updates; the actual image counts are not known yet.
+4. Full sentiment has 504,000 training rows: `ceil(504000 / 128) = 3,938` batches per epoch per model, at most six epochs in the reference and twelve in validation trials, with early stopping. The MLP, BiLSTM and CNN must be timed separately; early stopping may shorten training. Full GPT batches depend on the frozen stories' character-window count. GAN has `30 × max(training photos, training Monet images)` updates; the class archive has 300 Monet and 7,038 photo files; image splits still need preparation.
 
 No full-run hours or convergence guarantee is available before those measurements. Change GPU placement freely, but do not silently shrink the model, batch size, data or epoch schedule to meet a price estimate; changed training settings define a new experiment.
 

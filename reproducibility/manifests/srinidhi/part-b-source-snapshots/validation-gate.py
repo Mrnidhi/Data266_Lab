@@ -513,53 +513,8 @@ def _plot(model_dir, history, metrics, curves):
     fig.tight_layout(); fig.savefig(model_dir / "confusion_matrix.png", dpi=150); plt.close(fig)
 
 
-def evaluate_trained(model, best, dataset, model_dir, device, *, history=None, training_metadata=None):
-    """Evaluate a selected model without optimization and export the standard artifacts."""
-    cfg = best["config"]
-    history = best["history"] if history is None else history
-    model_dir = Path(model_dir)
-    model_dir.mkdir(parents=True, exist_ok=True)
-    defaults = {"train_seconds": sum(row["train_seconds"] for row in history),
-                "peak_cuda_memory_bytes": None, "resume_scaler_status": "checkpoint_evaluation_only",
-                "completed_training_steps": best.get("global_step")}
-    if training_metadata and not set(training_metadata) <= set(defaults):
-        raise ValueError("Unexpected training metadata field")
-    loader_settings = {"device": device, "num_workers": cfg.get("num_workers", 0)}
-    y, probabilities, test_loss = _predict(model, _loader(dataset, cfg["batch_size"], **loader_settings), device)
-    defaults["peak_cuda_memory_bytes"] = int(torch.cuda.max_memory_allocated(device)) if str(device).startswith("cuda") else None
-    training_metadata = {**defaults, **(training_metadata or {})}
-    metrics, curves = compute_metrics(y, probabilities, cfg["bootstrap_samples"], cfg["seed"])
-    metrics.update(test_loss=test_loss, selected_epoch=best["epoch"], selected_validation_macro_f1=best["best_f1"], parameter_count=sum(p.numel() for p in model.parameters()), mode=cfg["mode"], synthetic=cfg["mode"] == "smoke", **training_metadata)
-    _dump(model_dir / "metrics.json", metrics)
-    _dump(model_dir / "curves.json", curves)
-    _dump(model_dir / "slices.json", _slice_metrics(dataset, y, probabilities))
-    rows = [{"example_id": row["id"], "true_label": int(y[i]), "predicted_label": int(probabilities[i] >= 0.5), "positive_probability": float(probabilities[i]), "original_token_length": dataset.lengths[i], "oov_rate": dataset.oov_rates[i], "has_negation": dataset.negations[i]} for i, row in enumerate(dataset.records)]
-    _csv(model_dir / "test_predictions.csv", rows)
-    errors = np.flatnonzero((probabilities >= 0.5) != y)
-    errors = sorted(errors, key=lambda i: (-max(probabilities[i], 1 - probabilities[i]), dataset.records[i]["id"]))[:20]
-    error_rows = [{**rows[i], "text": dataset.records[i]["text"], "manual_group": "", "manual_explanation": "", "reviewed_by": ""} for i in errors]
-    error_columns = list(rows[0]) + ["text", "manual_group", "manual_explanation", "reviewed_by"]
-    _csv(model_dir / "error_candidates_for_manual_review.csv", error_rows, error_columns)
-    _dump(model_dir / "error_review_instructions.json", {"required_review_count": 20, "available_error_candidates": len(error_rows), "status": "Manual interpretation required; no explanations or group assignments have been fabricated.", "suggested_groups": ["negation", "sarcasm", "mixed sentiment", "truncation or missed context", "ambiguous or noisy label"], "selection": "Up to 20 most confidently incorrect test predictions; list does not represent an unbiased sample of errors."})
-    _plot(model_dir, history, metrics, curves)
-    return metrics, y, probabilities
-
-
-def evaluate_checkpoint(checkpoint, dataset, model_dir, device="cpu", *, history=None, training_metadata=None):
-    """Evaluate a checkpoint path or an already verified checkpoint state; never train."""
-    state = torch.load(checkpoint, map_location="cpu", weights_only=False) if isinstance(checkpoint, (str, Path)) else checkpoint
-    model = build_model(state["model_name"], len(state["vocabulary"]), state["config"]).to(device)
-    model.load_state_dict(state["model"], strict=True)
-    result = evaluate_trained(model, state, dataset, model_dir, device,
-                              history=history, training_metadata={"peak_cuda_memory_bytes": None, **(training_metadata or {})})
-    del model
-    if str(device).startswith("cuda"):
-        torch.cuda.empty_cache()
-    return result
-
-
 def _train_one(name, cfg, datasets, vocabulary, output, device, fingerprint, resume, accepted_fingerprints=None):
-    _seed(cfg.get("model_seed", cfg["seed"]))
+    _seed(cfg["seed"])
     model = build_model(name, len(vocabulary), cfg).to(device)
     optimizer = torch.optim.AdamW(model.parameters(), lr=cfg["learning_rates"][name], weight_decay=cfg["weight_decay"])
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode="min", factor=0.5, patience=1)
@@ -708,11 +663,21 @@ def _train_one(name, cfg, datasets, vocabulary, output, device, fingerprint, res
         if cuda:
             torch.cuda.empty_cache()
         return metrics, None, None
-    metrics, y, probabilities = evaluate_trained(
-        model, {**best, "config": cfg}, datasets["test"], model_dir, device, history=history,
-        training_metadata={"train_seconds": sum(row["train_seconds"] for row in history),
-                           "resume_scaler_status": resume_scaler_status,
-                           "completed_training_steps": global_step})
+    y, probabilities, test_loss = _predict(model, _loader(datasets["test"], cfg["batch_size"], **loader_settings), device)
+    metrics, curves = compute_metrics(y, probabilities, cfg["bootstrap_samples"], cfg["seed"])
+    metrics.update(test_loss=test_loss, selected_epoch=best["epoch"], selected_validation_macro_f1=best["best_f1"], parameter_count=sum(p.numel() for p in model.parameters()), train_seconds=sum(row["train_seconds"] for row in history), peak_cuda_memory_bytes=int(torch.cuda.max_memory_allocated(device)) if cuda else None, mode=cfg["mode"], synthetic=cfg["mode"] == "smoke", resume_scaler_status=resume_scaler_status, completed_training_steps=global_step)
+    _dump(model_dir / "metrics.json", metrics)
+    _dump(model_dir / "curves.json", curves)
+    _dump(model_dir / "slices.json", _slice_metrics(datasets["test"], y, probabilities))
+    rows = [{"example_id": row["id"], "true_label": int(y[i]), "predicted_label": int(probabilities[i] >= 0.5), "positive_probability": float(probabilities[i]), "original_token_length": datasets["test"].lengths[i], "oov_rate": datasets["test"].oov_rates[i], "has_negation": datasets["test"].negations[i]} for i, row in enumerate(datasets["test"].records)]
+    _csv(model_dir / "test_predictions.csv", rows)
+    errors = np.flatnonzero((probabilities >= 0.5) != y)
+    errors = sorted(errors, key=lambda i: (-max(probabilities[i], 1 - probabilities[i]), datasets["test"].records[i]["id"]))[:20]
+    error_rows = [{**rows[i], "text": datasets["test"].records[i]["text"], "manual_group": "", "manual_explanation": "", "reviewed_by": ""} for i in errors]
+    error_columns = list(rows[0]) + ["text", "manual_group", "manual_explanation", "reviewed_by"]
+    _csv(model_dir / "error_candidates_for_manual_review.csv", error_rows, error_columns)
+    _dump(model_dir / "error_review_instructions.json", {"required_review_count": 20, "available_error_candidates": len(error_rows), "status": "Manual interpretation required; no explanations or group assignments have been fabricated.", "suggested_groups": ["negation", "sarcasm", "mixed sentiment", "truncation or missed context", "ambiguous or noisy label"], "selection": "Up to 20 most confidently incorrect test predictions; list does not represent an unbiased sample of errors."})
+    _plot(model_dir, history, metrics, curves)
     del model, optimizer
     if cuda:
         torch.cuda.empty_cache()

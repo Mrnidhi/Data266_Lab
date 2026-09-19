@@ -118,6 +118,19 @@ def test_cpu_lengths_preserve_lstm_outputs_and_gradients(config):
         torch.testing.assert_close(p.grad, expected_gradient, rtol=0, atol=0)
 
 
+def test_validation_only_candidate_cannot_access_test_split(tmp_path, config):
+    cfg = dict(config, validation_only=True)
+    records = sentiment._load_records(cfg)
+    vocabulary = sentiment.build_vocabulary((r["text"] for r in records["train"]), 128)
+    datasets = {name: sentiment.Reviews(records[name], vocabulary, cfg["max_length"])
+                for name in ("train", "validation")}
+    metrics, y, probability = sentiment._train_one("maxpool_mlp", cfg, datasets, vocabulary,
+                                                 tmp_path, "cpu", "test-only", None)
+    assert metrics["test_evaluated"] is False and y is None and probability is None
+    assert (tmp_path / "maxpool_mlp/checkpoints/best.pt").exists()
+    assert not (tmp_path / "maxpool_mlp/test_predictions.csv").exists()
+
+
 def test_synthetic_suite_checkpoint_reload_and_resume(tmp_path, config, monkeypatch):
     # No datasets package/network path is used in smoke mode.
     result = sentiment.run(config, tmp_path, "cpu")

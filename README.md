@@ -8,7 +8,7 @@ Each member independently implements and trains all three tasks. Members keep co
 
 Srinidhi's **Part A full training completed on an RTX 4090**: 12 epochs, 100,000 training stories and 10,000 validation stories. The selected epoch-12 checkpoint has validation cross-entropy 0.7197, character perplexity 2.0538 and next-character accuracy 77.38%. See the [executed notebook](task1_llm/srinidhi/src/gpt.ipynb), [results](task1_llm/srinidhi/results.md), [metrics](task1_llm/srinidhi/metrics_report.csv), and [observed failure cases](task1_llm/srinidhi/failure_analysis.md). GPU reload and fresh local CPU inference passed. The pod was stopped after a verified local checkpoint backup.
 
-Parts B and C have **not completed full training**; their notebooks contain CPU smoke checks. Part B was not started on the paid GPU, as requested. Revanth's independent implementation and results are pending. The updated Canvas invitation resolves class Kaggle access, but the dataset download is blocked. See the [class protocol](task3_gan/CLASS_PROTOCOL.md) for verified requirements and remaining gaps. Student review and the combined team report remain outstanding.
+Part B full training and a bounded validation-only comparison are running on one RTX 5090. Candidate recipes, research rationale and the frozen selection rule are in [Part B research and search](task2_sentiment/srinidhi/RESEARCH_AND_SEARCH.md). The pod will stop after Part B evaluation and verified local backups. Part C training is deferred; the class archive has now been supplied. Revanth's independent implementation and results, student review and the combined team report remain outstanding.
 
 ## Layout
 

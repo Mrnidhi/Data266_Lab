@@ -1,0 +1,12 @@
+{
+  "name": "maxpool_mlp_long_schedule_control",
+  "model": "maxpool_mlp",
+  "hypothesis": "Control for longer schedule and patience before attributing gains to architecture.",
+  "overrides": {
+    "epochs": 12,
+    "early_stopping_patience": 4,
+    "num_workers": 2,
+    "checkpoint_every_steps": 1000,
+    "log_every_steps": 100
+  }
+}
