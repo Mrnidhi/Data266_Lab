@@ -77,6 +77,47 @@ def test_empty_reviews_get_unknown_token(config):
     assert ids.tolist() == [[1]] and labels.tolist() == [0.0] and indices.tolist() == [0]
 
 
+def test_preencoded_cache_matches_raw_and_rejects_stale_data(tmp_path, config):
+    folder = tmp_path / "features"
+    sentiment.prepare_features(config, folder)
+    cached_config = dict(config, encoded_cache=str(folder))
+    records = sentiment._load_records(config)
+    vocabulary, datasets = sentiment._load_features(cached_config, records)
+    assert vocabulary == sentiment.build_vocabulary((r["text"] for r in records["train"]),
+                                                    config["vocabulary_size"], config["min_frequency"])
+    for name, rows in records.items():
+        original = sentiment.Reviews(rows, vocabulary, config["max_length"])
+        for actual, expected in zip(datasets[name].encoded, original.encoded):
+            np.testing.assert_array_equal(actual, expected)
+        for key in ("lengths", "oov_rates", "negations"):
+            assert getattr(datasets[name], key) == getattr(original, key)
+    changed_records = {name: [dict(r) for r in rows] for name, rows in records.items()}
+    changed_records["train"][0]["text"] += " changed"
+    with pytest.raises(ValueError, match="fingerprint"):
+        sentiment._load_features(cached_config, changed_records)
+    with pytest.raises(ValueError, match="fingerprint"):
+        sentiment._load_features(dict(cached_config, max_length=16), records)
+    path = folder / "train.npz"
+    path.write_bytes(path.read_bytes() + b"corrupt")
+    with pytest.raises(ValueError, match="checksum"):
+        sentiment._load_features(cached_config, records)
+
+
+def test_cpu_lengths_preserve_lstm_outputs_and_gradients(config):
+    torch.manual_seed(2342)
+    model = sentiment.build_model("bilstm", 20, config).eval()
+    ids = torch.tensor([[2, 3, 4, 0], [5, 6, 0, 0]])
+    expected = model(ids)
+    expected.sum().backward()
+    gradients = [p.grad.clone() for p in model.parameters()]
+    model.zero_grad(set_to_none=True)
+    actual = sentiment._forward(model, ids, "cpu")
+    actual.sum().backward()
+    torch.testing.assert_close(actual, expected, rtol=0, atol=0)
+    for p, expected_gradient in zip(model.parameters(), gradients):
+        torch.testing.assert_close(p.grad, expected_gradient, rtol=0, atol=0)
+
+
 def test_synthetic_suite_checkpoint_reload_and_resume(tmp_path, config, monkeypatch):
     # No datasets package/network path is used in smoke mode.
     result = sentiment.run(config, tmp_path, "cpu")

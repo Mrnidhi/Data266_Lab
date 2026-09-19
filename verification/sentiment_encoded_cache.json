@@ -1,0 +1,20 @@
+{
+  "vocabulary_size": 40000,
+  "split_counts": {
+    "train": 504000,
+    "validation": 56000,
+    "test": 38000
+  },
+  "fingerprint": "46cab25959c841830bee44977b7bb78bf829d5420c90869e8d073736efa09e31",
+  "raw_and_encoded_checksums_verified": true,
+  "files": {
+    "task2_sentiment/srinidhi/data_processed/full/train.jsonl": 394848907,
+    "task2_sentiment/srinidhi/data_processed/full/test.jsonl": 29584416,
+    "task2_sentiment/srinidhi/data_processed/full/validation.jsonl": 43811890,
+    "task2_sentiment/srinidhi/data_processed/full/manifest.json": 524,
+    "task2_sentiment/srinidhi/data_processed/full_encoded/train.npz": 77422574,
+    "task2_sentiment/srinidhi/data_processed/full_encoded/test.npz": 5955131,
+    "task2_sentiment/srinidhi/data_processed/full_encoded/manifest.json": 864685,
+    "task2_sentiment/srinidhi/data_processed/full_encoded/validation.npz": 8760070
+  }
+}

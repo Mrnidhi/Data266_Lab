@@ -46,6 +46,18 @@ This explicit function downloads the official dataset via Hugging Face, selects 
 
 For final training, prefetch the `full` profile separately or leave its `data_dir` unset for a normal official-dataset download. Rehearsal data cannot be used as full data; counts, seed, mode, and file hashes are checked.
 
+The full dataset is now cached locally. Prepare exact encoded features on CPU before paid training:
+
+```bash
+.venv/bin/python scripts/prepare_sentiment_features.py --mode full \
+  --data-dir task2_sentiment/srinidhi/data_processed/full \
+  --output task2_sentiment/srinidhi/data_processed/full_encoded
+```
+
+Pass `--set 'encoded_cache="task2_sentiment/srinidhi/data_processed/full_encoded"'` together with the full `data_dir` override when training. The cache uses NumPy arrays without pickle and verifies file checksums, preprocessing source, vocabulary, complete row content, and configuration. Changing the model recipe requires rebuilding this cache. It preserves tokens, splits, and evaluation statistics exactly.
+
+CUDA data loaders use pinned memory and asynchronous transfers. The BiLSTM computes sequence lengths on CPU before transfer, avoiding a GPU-to-CPU synchronization. `num_workers` can be tuned after benchmarking; its default remains zero. These changes preserve the training recipe. `scripts/benchmark_sentiment.py` measures each full-size model on real cached reviews, compares worker counts, and reports timing estimates separately from final model results.
+
 ## Checkpoints and resume
 
 Every model writes `checkpoints/best.pt` and `checkpoints/last.pt`, containing model/optimizer/scheduler/scaler state, epoch history, vocabulary, configuration, Python/NumPy/PyTorch/CUDA RNG states, and the shuffle-generator state. New runs also save `last.pt` every **250 training batches** by default (`checkpoint_every_steps`), including the within-epoch position and loss/count totals. Resume reconstructs the batch order and continues after the saved batch. Only work since the last saved checkpoint repeats. Older checkpoints remain supported at their saved epoch boundaries. Model checkpoints are local trusted artifacts; do not load arbitrary third-party pickle checkpoints.

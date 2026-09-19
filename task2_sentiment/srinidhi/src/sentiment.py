@@ -8,6 +8,7 @@ from __future__ import annotations
 import csv
 import hashlib
 import html
+import inspect
 import json
 import random
 import re
@@ -99,9 +100,10 @@ class BiLSTM(nn.Module):
         self.encoder = nn.LSTM(cfg["embedding_dim"], cfg["lstm_hidden"], num_layers=1, batch_first=True, bidirectional=True)
         self.head = nn.Sequential(nn.Linear(2 * cfg["lstm_hidden"], cfg["mlp_hidden"]), nn.ReLU(), nn.Dropout(cfg["dropout"]), nn.Linear(cfg["mlp_hidden"], 1))
 
-    def forward(self, ids):
+    def forward(self, ids, lengths=None):
         mask = ids.ne(PAD)
-        lengths = mask.sum(dim=1).clamp_min(1).cpu()
+        if lengths is None:
+            lengths = mask.sum(dim=1).clamp_min(1).cpu()
         packed = pack_padded_sequence(self.embedding_dropout(self.embedding(ids)), lengths, batch_first=True, enforce_sorted=False)
         encoded, _ = self.encoder(packed)
         values, _ = pad_packed_sequence(encoded, batch_first=True, total_length=ids.shape[1])
@@ -192,7 +194,7 @@ def _restore_scaler(scaler, saved_state):
 
 def _resume_contract(config):
     local_settings = {"data_dir", "raw_data_cache", "offline", "num_workers", "cpu_threads",
-                      "checkpoint_every_steps", "log_every_steps"}
+                      "checkpoint_every_steps", "log_every_steps", "encoded_cache"}
     return {key: value for key, value in config.items() if key not in local_settings}
 
 
@@ -290,6 +292,70 @@ def audit_splits(records):
     return {"split_counts": {name: len(rows) for name, rows in records.items()}, "within_split_duplicate_rows": {name: sum(n - 1 for n in counts.values()) for name, counts in hashes.items()}, "cross_split_shared_text_hashes": {f"{a}__{b}": len(hashes[a].keys() & hashes[b].keys()) for a, b in (("train", "validation"), ("train", "test"), ("validation", "test"))}, "duplicate_policy": "Audit only; official test rows are preserved unchanged.", "label_mapping": {"0": "negative", "1": "positive"}}
 
 
+def _preprocessing_signature():
+    source = "\n".join(inspect.getsource(function) for function in (tokenize, build_vocabulary, Reviews.__init__))
+    return hashlib.sha256((source + json.dumps(sorted(STOPWORDS))).encode()).hexdigest()
+
+
+def prepare_features(cfg, output_dir):
+    """Prepare portable, checksum-verified NumPy features without starting training."""
+    output_dir = Path(output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    if any(output_dir.iterdir()):
+        raise FileExistsError("Feature cache destination must be empty")
+    records = _load_records(cfg)
+    audit = audit_splits(records)
+    print("Fitting vocabulary on training reviews", flush=True)
+    vocabulary = build_vocabulary((row["text"] for row in records["train"]), cfg["vocabulary_size"], cfg["min_frequency"])
+    manifest = {"format_version": 1, "fingerprint": _fingerprint(cfg, vocabulary, records),
+                "preprocessing_signature": _preprocessing_signature(), "vocabulary": vocabulary,
+                "audit": audit, "sha256": {}}
+    for name, rows in records.items():
+        print(f"Encoding {name}: {len(rows)} reviews", flush=True)
+        dataset = Reviews(rows, vocabulary, cfg["max_length"])
+        offsets = np.concatenate(([0], np.cumsum([len(ids) for ids in dataset.encoded], dtype=np.int64)))
+        path = output_dir / f"{name}.npz"
+        np.savez_compressed(path, tokens=np.concatenate(dataset.encoded), offsets=offsets,
+                            lengths=np.asarray(dataset.lengths, dtype=np.int64),
+                            oov_rates=np.asarray(dataset.oov_rates, dtype=np.float64),
+                            negations=np.asarray(dataset.negations, dtype=np.bool_))
+        manifest["sha256"][name] = hashlib.sha256(path.read_bytes()).hexdigest()
+    _dump(output_dir / "manifest.json", manifest)
+    return {"fingerprint": manifest["fingerprint"], "split_counts": audit["split_counts"],
+            "sha256": manifest["sha256"], "output_dir": str(output_dir)}
+
+
+def _load_features(cfg, records):
+    folder = Path(cfg["encoded_cache"])
+    manifest = json.loads((folder / "manifest.json").read_text())
+    vocabulary = manifest["vocabulary"]
+    if (manifest["format_version"] != 1 or manifest["preprocessing_signature"] != _preprocessing_signature()
+            or manifest["fingerprint"] != _fingerprint(cfg, vocabulary, records)):
+        raise ValueError("Encoded cache configuration/data/preprocessing fingerprint mismatch")
+    datasets = {}
+    for name, rows in records.items():
+        path = folder / f"{name}.npz"
+        if hashlib.sha256(path.read_bytes()).hexdigest() != manifest["sha256"][name]:
+            raise ValueError("Encoded cache checksum mismatch")
+        with np.load(path, allow_pickle=False) as arrays:
+            tokens, offsets = arrays["tokens"], arrays["offsets"]
+            widths = np.diff(offsets)
+            if (offsets.shape != (len(rows) + 1,) or offsets[0] != 0 or offsets[-1] != len(tokens)
+                    or np.any(widths < 1) or np.any(widths > cfg["max_length"])
+                    or np.any(tokens < 0) or np.any(tokens >= len(vocabulary))):
+                raise ValueError("Invalid encoded cache token arrays")
+            dataset = Reviews.__new__(Reviews)
+            dataset.records = rows
+            dataset.encoded = [tokens[offsets[i]:offsets[i + 1]] for i in range(len(rows))]
+            for key in ("lengths", "oov_rates", "negations"):
+                values = arrays[key]
+                if values.shape != (len(rows),):
+                    raise ValueError("Invalid encoded cache statistics")
+                setattr(dataset, key, values.tolist())
+            datasets[name] = dataset
+    return vocabulary, datasets
+
+
 def reliability_bins(y, probabilities, bins=15):
     y, probabilities = np.asarray(y), np.asarray(probabilities)
     confidence = np.maximum(probabilities, 1 - probabilities)
@@ -373,8 +439,16 @@ def _slice_metrics(dataset, y, probabilities):
     return {name: compute_metrics(y[mask], probabilities[mask])[0] if mask.any() else {"count": 0} for name, mask in masks.items()}
 
 
-def _loader(dataset, batch_size, shuffle=False, generator=None):
-    return DataLoader(dataset, batch_size=batch_size, shuffle=shuffle, generator=generator, num_workers=0, collate_fn=collate_reviews)
+def _loader(dataset, batch_size, shuffle=False, generator=None, *, device="cpu", num_workers=0):
+    return DataLoader(dataset, batch_size=batch_size, shuffle=shuffle, generator=generator,
+                      num_workers=num_workers, pin_memory=str(device).startswith("cuda"), collate_fn=collate_reviews)
+
+
+def _forward(model, cpu_ids, device):
+    # Packed LSTM requires CPU lengths; calculate before copying IDs to the GPU.
+    lengths = cpu_ids.ne(PAD).sum(dim=1).clamp_min(1) if isinstance(model, BiLSTM) else None
+    ids = cpu_ids.to(device, non_blocking=True)
+    return model(ids, lengths=lengths) if lengths is not None else model(ids)
 
 
 def _predict(model, loader, device):
@@ -382,8 +456,8 @@ def _predict(model, loader, device):
     probabilities, labels, indices, loss_sum = [], [], [], 0.0
     with torch.inference_mode():
         for ids, y, index in loader:
-            logits = model(ids.to(device))
-            loss_sum += nn.functional.binary_cross_entropy_with_logits(logits.float(), y.to(device), reduction="sum").item()
+            logits = _forward(model, ids, device)
+            loss_sum += nn.functional.binary_cross_entropy_with_logits(logits.float(), y.to(device, non_blocking=True), reduction="sum").item()
             probabilities.append(torch.sigmoid(logits.float()).cpu().numpy())
             labels.append(y.numpy().astype(np.int64))
             indices.append(index.numpy())
@@ -501,7 +575,8 @@ def _train_one(name, cfg, datasets, vocabulary, output, device, fingerprint, res
                 "epoch": completed_epochs, "epoch_progress": progress, "global_step": global_step,
                 "history": history, "best_f1": best_f1, "bad_epochs": bad_epochs, "stopped_early": stopped}
 
-    validation_loader = _loader(datasets["validation"], cfg["batch_size"])
+    loader_settings = {"device": device, "num_workers": cfg.get("num_workers", 0)}
+    validation_loader = _loader(datasets["validation"], cfg["batch_size"], **loader_settings)
     if cuda:
         torch.cuda.reset_peak_memory_stats(device)
     batches_per_epoch = (len(datasets["train"]) + cfg["batch_size"] - 1) // cfg["batch_size"]
@@ -516,7 +591,7 @@ def _train_one(name, cfg, datasets, vocabulary, output, device, fingerprint, res
         if progress:
             generator.set_state(progress["epoch_start_loader_rng"].cpu())
         epoch_start_loader_rng = generator.get_state().clone()
-        train_loader = _loader(datasets["train"], cfg["batch_size"], True, generator)
+        train_loader = _loader(datasets["train"], cfg["batch_size"], True, generator, **loader_settings)
         next_batch = progress.get("next_batch", 0)
         if not 0 <= next_batch <= len(train_loader):
             raise ValueError("Saved sentiment batch position is outside the epoch")
@@ -528,11 +603,11 @@ def _train_one(name, cfg, datasets, vocabulary, output, device, fingerprint, res
             # Replay only the deterministic sampler/collation, never completed updates.
             if batch_index < next_batch:
                 continue
-            ids, y = ids.to(device), y.to(device)
+            y = y.to(device, non_blocking=True)
             optimizer.zero_grad(set_to_none=True)
             context = torch.autocast("cuda", dtype=amp_dtype) if cuda and cfg["amp"] else nullcontext()
             with context:
-                logits = model(ids)
+                logits = _forward(model, ids, device)
                 loss = nn.functional.binary_cross_entropy_with_logits(logits, y)
             if not torch.isfinite(loss):
                 raise FloatingPointError(f"Non-finite training loss in {name}")
@@ -576,7 +651,7 @@ def _train_one(name, cfg, datasets, vocabulary, output, device, fingerprint, res
         print(f"sentiment/{name} epoch={epoch + 1} train_loss={train_loss/count:.4f} val_macro_f1={f1:.4f}", flush=True)
     best = torch.load(checkpoint_dir / "best.pt", map_location="cpu", weights_only=False)
     model.load_state_dict(best["model"])
-    y, probabilities, test_loss = _predict(model, _loader(datasets["test"], cfg["batch_size"]), device)
+    y, probabilities, test_loss = _predict(model, _loader(datasets["test"], cfg["batch_size"], **loader_settings), device)
     metrics, curves = compute_metrics(y, probabilities, cfg["bootstrap_samples"], cfg["seed"])
     metrics.update(test_loss=test_loss, selected_epoch=best["epoch"], selected_validation_macro_f1=best["best_f1"], parameter_count=sum(p.numel() for p in model.parameters()), train_seconds=sum(row["train_seconds"] for row in history), peak_cuda_memory_bytes=int(torch.cuda.max_memory_allocated(device)) if cuda else None, mode=cfg["mode"], synthetic=cfg["mode"] == "smoke", resume_scaler_status=resume_scaler_status, completed_training_steps=global_step)
     _dump(model_dir / "metrics.json", metrics)
@@ -618,7 +693,12 @@ def run(config: dict, output_dir: Path, device: str, resume: Path | None = None)
     _seed(cfg["seed"])
     records = _load_records(cfg)
     audit = audit_splits(records)
-    vocabulary = build_vocabulary((row["text"] for row in records["train"]), cfg["vocabulary_size"], cfg["min_frequency"])
+    if cfg.get("encoded_cache"):
+        vocabulary, datasets = _load_features(cfg, records)
+        print("Loaded verified pre-encoded review cache", flush=True)
+    else:
+        vocabulary = build_vocabulary((row["text"] for row in records["train"]), cfg["vocabulary_size"], cfg["min_frequency"])
+        datasets = {name: Reviews(rows, vocabulary, cfg["max_length"]) for name, rows in records.items()}
     # Paths may change between local/cloud/college machines; data bytes may not.
     fingerprint = _fingerprint(cfg, vocabulary, records)
     accepted_fingerprints = {fingerprint}
@@ -651,7 +731,6 @@ def run(config: dict, output_dir: Path, device: str, resume: Path | None = None)
                 if filename == "last.pt":
                     last_state = {"history": state["history"], "epoch_progress": state.get("epoch_progress")}
                 del state
-    datasets = {name: Reviews(rows, vocabulary, cfg["max_length"]) for name, rows in records.items()}
     _dump(output_dir / "data_audit.json", audit)
     _dump(output_dir / "vocabulary.json", vocabulary)
     _dump(output_dir / "preprocessing.json", {"description": "HTML/whitespace normalization, lowercase, contraction expansion, punctuation removal, customized stopword removal preserving negation; vocabulary fitted only on training rows.", "stopwords": sorted(STOPWORDS), "max_length": cfg["max_length"], "padding_id": PAD, "unknown_id": UNK})

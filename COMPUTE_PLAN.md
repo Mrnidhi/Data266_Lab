@@ -2,43 +2,28 @@
 
 Checked September 18, 2026. This is an adaptive plan, not a reservation or a paid-resource authorization. The prepared models and dataset splits stay the same across platforms.
 
-## Allocation
+## Current allocation
 
-| Work | Preferred placement | Fallback and reason |
-|---|---|---|
-| Dataset preparation, packaging, plots and report | Local CPU or college CPU | Finish downloads/tokenization before renting a GPU. |
-| Part 3: CycleGAN | College NVIDIA GPU, ideally the expected 24 GB RTX 4090 | Give the longest image job a stable session. Actual class images and split manifests are still missing, so do not start full GAN training yet. |
-| Part 1: character GPT | Free Colab GPU while the college GPU runs GAN | Use the college GPU when free access is unavailable. Until GAN data are ready, GPT can use the college GPU immediately. |
-| Part 2: all three Yelp models | A second available free platform, preferably Kaggle after verification | Otherwise run after GPT on Colab or on the college GPU. The current runner trains its three models sequentially and computes paired comparisons in one run. |
-| Short CUDA rehearsal or deadline overflow | One RunPod RTX 4090, only if college/free resources are insufficient | Quote the actual GPU/storage rate and expected powered-on duration before starting. Do not start three paid Pods just to parallelize. |
+Updated September 18, 2026 after the user reported that the college lab is closed for the next seven days. Complete training and submission preparation using the local Mac plus authorized cloud GPUs.
 
-Each platform runs an independent task, with a separate output directory. This does not require distributed training or networking between notebook runtimes. Do not run competing training jobs on a single GPU until a benchmark shows useful spare capacity. Extra GPUs in a Kaggle session do not automatically accelerate this single-device code.
+| Work | Placement and status |
+|---|---|
+| Part 1: character GPT | Completed on RunPod RTX 4090. Checkpoints, executed notebook, metrics and logs verified locally; pod stopped. |
+| Part 2: Yelp sentiment | User selected one RunPod RTX 5090 at $0.99/hour. Prepare text features locally, benchmark all three models, then train sequentially with live SSH progress. |
+| Part 3: CycleGAN | Cloud GPU selection and cost remain pending the actual class dataset and a measured rehearsal. The blocked class download remains unresolved; do not substitute synthetic data for final results. |
+| Reports, notebooks, packaging, checksums | Local Mac, with verified local backups of every cloud training run. |
 
-## Availability observed
+The earlier college/free-GPU allocation is superseded. No final submission may claim a college-GPU run that did not occur. Each task retains actual hardware, environment, source and training provenance.
 
-- **College:** GPU model, driver, permitted session length, free disk and access remain unverified. The 4090 is the user's expectation. Run `nvidia-smi` and a CUDA smoke check there. Assumed personal compute charge: $0 under normal course access.
-- **Kaggle:** the signed-in notebook currently has GPU/internet features behind **phone verification**. It is not a usable GPU allocation yet. User verification, quota and a successful session must precede scheduling work there.
-- **Colab:** free access is an option, but this task has not allocated or benchmarked a runtime. GPU model and uninterrupted runtime are not guaranteed. Use the notebook normally; do not build remote workers, bypass limits, or rely on a fixed quota.
-- **RunPod:** the existing RTX 4090 Pod is **not running** and its console offers **$0.74/hour**, with a 30 GB container disk and no persistent volume shown. The console currently shows $0/hour. A stopped Pod is not a guarantee that the GPU will be available when resumed.
+## Part 2 cost and stopping policy
 
-If free setup or queuing takes longer than about 10–15 minutes, continue useful work on the college machine rather than spending the session trying more providers. This threshold is a planning choice, not a platform limit.
+The user authorized continuing with RunPod RTX 5090 after discussion of roughly $3 for a provisional two-to-three-hour session. Use **$3 as the initial operating allowance**, including setup and running storage, and obtain an extension before exceeding it. This is an assistant-managed limit, not a provider-enforced cap. The current on-demand quote is $0.99/hour plus approximately $0.004/hour for a 30 GB container disk, before any applicable tax. Runtime has not yet been measured; the provisional estimate is not a completion guarantee.
 
-## Cost before any paid start
+Use a single GPU initially. More selected GPUs do not accelerate the sequential runner. Independent-model parallelism would require a changed launcher and a new cost calculation; do not allocate additional GPUs without user authorization.
 
-The target incremental compute spend is **$0** using college access plus free notebooks. Keep RunPod as optional overflow. At the observed $0.74/hour GPU rate:
+A paused Python process still incurs pod charges. Before stopping, copy checkpoints, logs and outputs to the Mac and verify their hashes. RunPod container storage is erased when the pod stops. No persistent volume is needed for this bounded run; retain complete portable checkpoints locally and stop the pod after the task or at the allowance boundary. Confirm the console shows no running compute or storage charges.
 
-| Powered-on duration, including setup and idle time | GPU compute |
-|---|---:|
-| 30 minutes | $0.37 |
-| 1 hour | $0.74 |
-| 2 hours | $1.48 |
-| 4 hours | $2.96 |
-
-RunPod documents container storage at $0.10/GB/month while running; its 30 GB disk adds about $0.004/hour using a 730-hour month. Thus a two-hour contingency is approximately **$1.49 before tax**, or a **$2 planning allowance**. This is not a provider-enforced spending cap and is not a claim that all full training fits in two hours. Attached persistent storage can continue to cost money after compute stops. Recheck the console before starting; this estimate assumes the current configuration.
-
-Stopping a Python script does not stop the Pod or its charges. Download and verify artifacts first, stop the Pod, and verify the console state. **RunPod erases the current container disk when the Pod stops**, so it must not hold the only copy of checkpoints. A larger GPU is worth renting only if its measured speedup exceeds its total hourly-price ratio and the task actually uses that capacity.
-
-Sources: [RunPod GPU pricing](https://www.runpod.io/gpu-models/rtx-4090), [compute/storage billing and persistence](https://docs.runpod.io/pods/pricing), [Colab limits and VM lifetime](https://research.google.com/colaboratory/faq.html), [Kaggle notebook sessions](https://www.kaggle.com/docs/notebooks).
+Sources: [RunPod pricing](https://www.runpod.io/pricing), [billing and storage behavior](https://docs.runpod.io/pods/pricing).
 
 ## Measure time rather than infer it from GPU names
 
@@ -89,4 +74,4 @@ After transferring code, run, and data, run from the cloned repository root and 
   --output runs/cyclegan-full --resume runs/cyclegan-full/last.pt
 ```
 
-These commands require actual existing full-run checkpoints; none has been produced yet. Reapply any original configuration override (for example data locations). Preserve a run with logs beyond its saved checkpoint as evidence and resume into a fresh directory if the task's history guard rejects it. Validate one resumed batch and inference on the destination before committing a long session. Local CPU and mocked-device checks establish code behavior; real 4090-to-T4 migration still requires an actual GPU test.
+These commands require actual existing full-run checkpoints. Part 1 checkpoints are available; Part 2 and Part 3 completion must be checked against their own run records. Reapply any original configuration override (for example data locations). Preserve a run with logs beyond its saved checkpoint as evidence and resume into a fresh directory if the task's history guard rejects it. Validate one resumed batch and inference on the destination before committing a long session. Local CPU and mocked-device checks establish code behavior; real 4090-to-T4 migration still requires an actual GPU test.

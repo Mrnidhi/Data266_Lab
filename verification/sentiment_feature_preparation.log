@@ -1,0 +1,18 @@
+Fitting vocabulary on training reviews
+Encoding train: 504000 reviews
+Encoding validation: 56000 reviews
+Encoding test: 38000 reviews
+{
+  "fingerprint": "46cab25959c841830bee44977b7bb78bf829d5420c90869e8d073736efa09e31",
+  "split_counts": {
+    "train": 504000,
+    "validation": 56000,
+    "test": 38000
+  },
+  "sha256": {
+    "train": "1e7b9b98a41bc622cce48e1117427119dd90652ef5b3c83e9638b0e0bac96b40",
+    "validation": "d9574145423f372488b0090d9f50be28c18b9f6d1aca3f6c4899050f0195760e",
+    "test": "73ee0ff0fb43a32e5613f026dc6ef4283f7f4889c84b811b5d692919d68a7f6f"
+  },
+  "output_dir": "task2_sentiment/srinidhi/data_processed/full_encoded"
+}
