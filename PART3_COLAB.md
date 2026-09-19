@@ -76,6 +76,16 @@ CSV column names and the class scoring script still need to be verified; the
 competition dialog currently specifies one data row plus a header. Local
 Clean-FID results must not be relabeled as class leaderboard scores.
 
+`scripts/publish_cyclegan_results.py` validates the completed schedule, frozen
+data, selected checkpoint and complete training history before producing a fresh
+staging directory. It exports both metrics CSVs, plots, saved evidence and an
+executed notebook that reads the actual results. Run without `--write` first;
+provide a JSON file containing the exact training commands and evaluation command.
+For a restart into a new run directory, add each earlier `--history-run-dir`.
+If an interruption left unsaved updates in an old log, use
+`--history-cutoff OLD_RUN_DIR=SAVED_STEP`. The original logs remain unchanged;
+the derived report excludes only the explicitly identified unsaved tail.
+
 Download checkpoints and all evidence, verify hashes, then release the runtime:
 
 ```bash
