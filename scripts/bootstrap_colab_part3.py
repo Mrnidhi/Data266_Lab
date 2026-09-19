@@ -7,6 +7,7 @@ to the workstation between training segments, before releasing this runtime.
 from __future__ import annotations
 
 import hashlib
+import importlib.util
 import json
 import os
 from pathlib import Path
@@ -39,7 +40,12 @@ def main():
     os.chdir(destination)
     subprocess.run(['nvidia-smi'], check=True)
     # Keep the Colab notebook environment intact by using a separate environment.
-    subprocess.run([sys.executable, '-m', 'venv', '.venv'], check=True)
+    if importlib.util.find_spec('ensurepip') is not None:
+        subprocess.run([sys.executable, '-m', 'venv', '.venv'], check=True)
+    else:
+        # Colab's Python can omit ensurepip, which stdlib venv needs to seed pip.
+        subprocess.run([sys.executable, '-m', 'pip', 'install', 'virtualenv==20.34.0'], check=True)
+        subprocess.run([sys.executable, '-m', 'virtualenv', '--no-download', '.venv'], check=True)
     python = str(destination / '.venv/bin/python')
     subprocess.run([python, '-m', 'pip', 'install', 'torch==2.11.0', 'torchvision==0.26.0',
                     '--index-url', 'https://download.pytorch.org/whl/cu128'], check=True)
