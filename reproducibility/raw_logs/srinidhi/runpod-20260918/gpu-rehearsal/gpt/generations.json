@@ -1,0 +1,122 @@
+[
+  {
+    "prompt": "Once upon a time, a little bird",
+    "continuation": " the the t the the the the the the the the the the and the the the the the the t",
+    "full_text": "Once upon a time, a little bird the the t the the the the the the the the the the and the the the the the the t",
+    "decoding": "greedy",
+    "temperature": 0.0,
+    "top_k": 0,
+    "seed": 3342,
+    "metrics": {
+      "tokenization": "lowercase regex words; exclude prompt",
+      "distinct_1": 0.14285714285714285,
+      "total_1grams": 21,
+      "distinct_2": 0.25,
+      "total_2grams": 20,
+      "distinct_3": 0.3684210526315789,
+      "total_3grams": 19,
+      "repeated_4gram_fraction": 0.5,
+      "total_4grams": 18
+    }
+  },
+  {
+    "prompt": "Once upon a time, a little bird",
+    "continuation": " theg\"\" it",
+    "full_text": "Once upon a time, a little bird theg\"\" it",
+    "decoding": "sampled",
+    "temperature": 0.8,
+    "top_k": 40,
+    "seed": 3343,
+    "metrics": {
+      "tokenization": "lowercase regex words; exclude prompt",
+      "distinct_1": 1.0,
+      "total_1grams": 2,
+      "distinct_2": 1.0,
+      "total_2grams": 1,
+      "distinct_3": null,
+      "total_3grams": 0,
+      "repeated_4gram_fraction": null,
+      "total_4grams": 0
+    }
+  },
+  {
+    "prompt": "Lily found a small red box. Inside",
+    "continuation": " the the the the the and the the the the the the the the the the the the the the",
+    "full_text": "Lily found a small red box. Inside the the the the the and the the the the the the the the the the the the the the",
+    "decoding": "greedy",
+    "temperature": 0.0,
+    "top_k": 0,
+    "seed": 3352,
+    "metrics": {
+      "tokenization": "lowercase regex words; exclude prompt",
+      "distinct_1": 0.1,
+      "total_1grams": 20,
+      "distinct_2": 0.15789473684210525,
+      "total_2grams": 19,
+      "distinct_3": 0.2222222222222222,
+      "total_3grams": 18,
+      "repeated_4gram_fraction": 0.7058823529411764,
+      "total_4grams": 17
+    }
+  },
+  {
+    "prompt": "Lily found a small red box. Inside",
+    "continuation": "runde ce re wem anuthe waculy to wace wour to minopoHe tgoud tge s the t ame san",
+    "full_text": "Lily found a small red box. Insiderunde ce re wem anuthe waculy to wace wour to minopoHe tgoud tge s the t ame san",
+    "decoding": "sampled",
+    "temperature": 0.8,
+    "top_k": 40,
+    "seed": 3353,
+    "metrics": {
+      "tokenization": "lowercase regex words; exclude prompt",
+      "distinct_1": 0.9444444444444444,
+      "total_1grams": 18,
+      "distinct_2": 1.0,
+      "total_2grams": 17,
+      "distinct_3": 1.0,
+      "total_3grams": 16,
+      "repeated_4gram_fraction": 0.0,
+      "total_4grams": 15
+    }
+  },
+  {
+    "prompt": "Tom wanted to help his friend, but",
+    "continuation": "he the the the the the the the the the the the the the the the the the the the t",
+    "full_text": "Tom wanted to help his friend, buthe the the the the the the the the the the the the the the the the the the the t",
+    "decoding": "greedy",
+    "temperature": 0.0,
+    "top_k": 0,
+    "seed": 3362,
+    "metrics": {
+      "tokenization": "lowercase regex words; exclude prompt",
+      "distinct_1": 0.14285714285714285,
+      "total_1grams": 21,
+      "distinct_2": 0.15,
+      "total_2grams": 20,
+      "distinct_3": 0.15789473684210525,
+      "total_3grams": 19,
+      "repeated_4gram_fraction": 0.8333333333333334,
+      "total_4grams": 18
+    }
+  },
+  {
+    "prompt": "Tom wanted to help his friend, but",
+    "continuation": "he d f tobant tshe fay t f somoun ie preduco wasoucarily acoun tisangoudoe tmold",
+    "full_text": "Tom wanted to help his friend, buthe d f tobant tshe fay t f somoun ie preduco wasoucarily acoun tisangoudoe tmold",
+    "decoding": "sampled",
+    "temperature": 0.8,
+    "top_k": 40,
+    "seed": 3363,
+    "metrics": {
+      "tokenization": "lowercase regex words; exclude prompt",
+      "distinct_1": 0.9333333333333333,
+      "total_1grams": 15,
+      "distinct_2": 1.0,
+      "total_2grams": 14,
+      "distinct_3": 1.0,
+      "total_3grams": 13,
+      "repeated_4gram_fraction": 0.0,
+      "total_4grams": 12
+    }
+  }
+]

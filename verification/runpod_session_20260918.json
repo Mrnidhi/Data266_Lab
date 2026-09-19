@@ -1,0 +1,23 @@
+{
+  "pod_id": "c22bhd8wad6ahp",
+  "gpu": "RTX 4090",
+  "gpu_rate_usd_hour": 0.74,
+  "container_storage_estimate_usd_hour": 0.004,
+  "initial_budget_usd": 1.0,
+  "observed_allocated_utc": "2026-09-18T23:40:35.428138+00:00",
+  "status": "stopped_after_part_a",
+  "automatic_shutdown": false,
+  "approved_total_budget_usd": 2.0,
+  "budget_scope": "User approved finishing Part A within 2 USD total. Further paid tasks require a stated cost estimate.",
+  "active_run": "runs/part-a-full-b256",
+  "gpu_rehearsal_complete": true,
+  "local_checkpoint_backup": "runs/active-backup/checkpoints",
+  "stop_policy": "User explicitly requested stopping the pod after Part A; do not start Part B.",
+  "observed_stopped_utc": "2026-09-19T00:18:28.775745+00:00",
+  "current_gpu_and_storage_usd_hour": 0.0,
+  "part_a_complete": true,
+  "part_b_started": false,
+  "local_backup_verified": "verification/part_a_completed_backup.json",
+  "upper_bound_observed_session_minutes": 37.88912678333334,
+  "estimated_session_cost_usd_before_tax": 0.46982517211333336
+}

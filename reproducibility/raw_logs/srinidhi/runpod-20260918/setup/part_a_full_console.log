@@ -1,0 +1,147 @@
+{"event": "start", "task": "gpt", "mode": "full", "utc": "2026-09-18T23:47:40.648311+00:00", "device": "cuda"}
+gpt/full training device=cuda step=0/149772; ETA estimates cover remaining training steps; evaluation/export may add time
+gpt/full epoch=1/12 batch=50/12481 step=50/149772 loss=4.5774 elapsed=2.0s eta_steps_est=6030.4s
+gpt/full epoch=1/12 batch=100/12481 step=100/149772 loss=4.1779 elapsed=3.6s eta_steps_est=5443.5s
+gpt/full epoch=1/12 batch=150/12481 step=150/149772 loss=3.9169 elapsed=5.2s eta_steps_est=5211.5s
+gpt/full epoch=1/12 batch=200/12481 step=200/149772 loss=3.7413 elapsed=6.8s eta_steps_est=5066.0s
+gpt/full epoch=1/12 batch=250/12481 step=250/149772 loss=3.5168 elapsed=8.2s eta_steps_est=4920.0s
+gpt/full epoch=1/12 batch=300/12481 step=300/149772 loss=3.3391 elapsed=10.1s eta_steps_est=5032.5s
+gpt/full epoch=1/12 batch=350/12481 step=350/149772 loss=3.1817 elapsed=11.6s eta_steps_est=4936.8s
+gpt/full epoch=1/12 batch=400/12481 step=400/149772 loss=3.0293 elapsed=12.9s eta_steps_est=4831.3s
+gpt/full epoch=1/12 batch=450/12481 step=450/149772 loss=2.8751 elapsed=14.6s eta_steps_est=4843.6s
+gpt/full epoch=1/12 batch=500/12481 step=500/149772 loss=2.8145 elapsed=16.2s eta_steps_est=4851.3s
+gpt/full epoch=1/12 batch=550/12481 step=550/149772 loss=2.7259 elapsed=17.9s eta_steps_est=4849.6s
+gpt/full epoch=1/12 batch=600/12481 step=600/149772 loss=2.6141 elapsed=19.4s eta_steps_est=4820.8s
+gpt/full epoch=1/12 batch=650/12481 step=650/149772 loss=2.5788 elapsed=21.1s eta_steps_est=4831.4s
+gpt/full epoch=1/12 batch=700/12481 step=700/149772 loss=2.4703 elapsed=22.7s eta_steps_est=4828.4s
+gpt/full epoch=1/12 batch=750/12481 step=750/149772 loss=2.4960 elapsed=24.2s eta_steps_est=4816.1s
+gpt/full epoch=1/12 batch=800/12481 step=800/149772 loss=2.4381 elapsed=26.1s eta_steps_est=4851.1s
+gpt/full epoch=1/12 batch=850/12481 step=850/149772 loss=2.3902 elapsed=27.7s eta_steps_est=4848.9s
+gpt/full epoch=1/12 batch=900/12481 step=900/149772 loss=2.3765 elapsed=29.3s eta_steps_est=4845.3s
+gpt/full epoch=1/12 batch=950/12481 step=950/149772 loss=2.3583 elapsed=30.9s eta_steps_est=4840.6s
+gpt/full epoch=1/12 batch=1000/12481 step=1000/149772 loss=2.3499 elapsed=32.5s eta_steps_est=4833.6s
+gpt/full epoch=1/12 batch=1050/12481 step=1050/149772 loss=2.2910 elapsed=34.3s eta_steps_est=4854.0s
+gpt/full epoch=1/12 batch=1100/12481 step=1100/149772 loss=2.3434 elapsed=35.8s eta_steps_est=4835.9s
+gpt/full epoch=1/12 batch=1150/12481 step=1150/149772 loss=2.2930 elapsed=37.3s eta_steps_est=4818.7s
+gpt/full epoch=1/12 batch=1200/12481 step=1200/149772 loss=2.2071 elapsed=38.7s eta_steps_est=4792.1s
+gpt/full epoch=1/12 batch=1250/12481 step=1250/149772 loss=2.2829 elapsed=40.1s eta_steps_est=4768.8s
+gpt/full epoch=1/12 batch=1300/12481 step=1300/149772 loss=2.2842 elapsed=41.8s eta_steps_est=4774.4s
+gpt/full epoch=1/12 batch=1350/12481 step=1350/149772 loss=2.2410 elapsed=43.3s eta_steps_est=4763.3s
+gpt/full epoch=1/12 batch=1400/12481 step=1400/149772 loss=2.2640 elapsed=44.8s eta_steps_est=4747.3s
+gpt/full epoch=1/12 batch=1450/12481 step=1450/149772 loss=2.2381 elapsed=46.4s eta_steps_est=4747.2s
+gpt/full epoch=1/12 batch=1500/12481 step=1500/149772 loss=2.2094 elapsed=47.7s eta_steps_est=4713.7s
+gpt/full epoch=1/12 batch=1550/12481 step=1550/149772 loss=2.1953 elapsed=49.3s eta_steps_est=4715.3s
+gpt/full epoch=1/12 batch=1600/12481 step=1600/149772 loss=2.2568 elapsed=50.9s eta_steps_est=4712.5s
+gpt/full epoch=1/12 batch=1650/12481 step=1650/149772 loss=2.1982 elapsed=52.5s eta_steps_est=4712.5s
+gpt/full epoch=1/12 batch=1700/12481 step=1700/149772 loss=2.2075 elapsed=54.1s eta_steps_est=4711.7s
+gpt/full epoch=1/12 batch=1750/12481 step=1750/149772 loss=2.2304 elapsed=55.7s eta_steps_est=4712.2s
+gpt/full epoch=1/12 batch=1800/12481 step=1800/149772 loss=2.2339 elapsed=57.5s eta_steps_est=4727.4s
+gpt/full epoch=1/12 batch=1850/12481 step=1850/149772 loss=2.2088 elapsed=59.1s eta_steps_est=4727.7s
+gpt/full epoch=1/12 batch=1900/12481 step=1900/149772 loss=2.1292 elapsed=60.7s eta_steps_est=4727.0s
+gpt/full epoch=1/12 batch=1950/12481 step=1950/149772 loss=2.1784 elapsed=62.4s eta_steps_est=4726.7s
+gpt/full epoch=1/12 batch=2000/12481 step=2000/149772 loss=2.1831 elapsed=64.0s eta_steps_est=4726.7s
+gpt/full epoch=1/12 batch=2050/12481 step=2050/149772 loss=2.1829 elapsed=65.8s eta_steps_est=4739.3s
+gpt/full epoch=1/12 batch=2100/12481 step=2100/149772 loss=2.0340 elapsed=67.4s eta_steps_est=4738.7s
+gpt/full epoch=1/12 batch=2150/12481 step=2150/149772 loss=2.1196 elapsed=69.0s eta_steps_est=4738.0s
+gpt/full epoch=1/12 batch=2200/12481 step=2200/149772 loss=2.1498 elapsed=70.6s eta_steps_est=4737.7s
+gpt/full epoch=1/12 batch=2250/12481 step=2250/149772 loss=2.0890 elapsed=72.3s eta_steps_est=4737.1s
+gpt/full epoch=1/12 batch=2300/12481 step=2300/149772 loss=2.1440 elapsed=73.9s eta_steps_est=4735.7s
+gpt/full epoch=1/12 batch=2350/12481 step=2350/149772 loss=2.0865 elapsed=75.5s eta_steps_est=4734.8s
+gpt/full epoch=1/12 batch=2400/12481 step=2400/149772 loss=2.0632 elapsed=77.1s eta_steps_est=4734.5s
+gpt/full epoch=1/12 batch=2450/12481 step=2450/149772 loss=1.9934 elapsed=78.7s eta_steps_est=4733.8s
+gpt/full epoch=1/12 batch=2500/12481 step=2500/149772 loss=1.9835 elapsed=80.3s eta_steps_est=4731.5s
+gpt/full epoch=1/12 batch=2550/12481 step=2550/149772 loss=1.9352 elapsed=81.9s eta_steps_est=4726.4s
+Traceback (most recent call last):
+  File "/workspace/lab1-2342/src/lab1/run.py", line 49, in execute
+    summary = module.run(config, output_dir, device, resume=resume)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lab1-2342/task1_llm/srinidhi/src/gpt.py", line 621, in run
+    logits = model(x)
+             ^^^^^^^^
+  File "/workspace/lab1-2342/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lab1-2342/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lab1-2342/task1_llm/srinidhi/src/gpt.py", line 200, in forward
+    x = block(x)
+        ^^^^^^^^
+  File "/workspace/lab1-2342/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lab1-2342/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lab1-2342/task1_llm/srinidhi/src/gpt.py", line 167, in forward
+    x = x + self.attention(self.norm1(x))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lab1-2342/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lab1-2342/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lab1-2342/task1_llm/srinidhi/src/gpt.py", line 141, in forward
+    q, k, v = self.qkv(x).chunk(3, dim=-1)
+              ^^^^^^^^^^^
+  File "/workspace/lab1-2342/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lab1-2342/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lab1-2342/.venv/lib/python3.12/site-packages/torch/nn/modules/linear.py", line 134, in forward
+    return F.linear(input, self.weight, self.bias)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/workspace/lab1-2342/src/lab1/run.py", line 85, in <module>
+    main()
+  File "/workspace/lab1-2342/src/lab1/run.py", line 81, in main
+    execute(args.task, args.mode, output, args.device, args.config, args.overrides, args.resume)
+  File "/workspace/lab1-2342/src/lab1/run.py", line 49, in execute
+    summary = module.run(config, output_dir, device, resume=resume)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lab1-2342/task1_llm/srinidhi/src/gpt.py", line 621, in run
+    logits = model(x)
+             ^^^^^^^^
+  File "/workspace/lab1-2342/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lab1-2342/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lab1-2342/task1_llm/srinidhi/src/gpt.py", line 200, in forward
+    x = block(x)
+        ^^^^^^^^
+  File "/workspace/lab1-2342/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lab1-2342/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lab1-2342/task1_llm/srinidhi/src/gpt.py", line 167, in forward
+    x = x + self.attention(self.norm1(x))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lab1-2342/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lab1-2342/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lab1-2342/task1_llm/srinidhi/src/gpt.py", line 141, in forward
+    q, k, v = self.qkv(x).chunk(3, dim=-1)
+              ^^^^^^^^^^^
+  File "/workspace/lab1-2342/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lab1-2342/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/lab1-2342/.venv/lib/python3.12/site-packages/torch/nn/modules/linear.py", line 134, in forward
+    return F.linear(input, self.weight, self.bias)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt

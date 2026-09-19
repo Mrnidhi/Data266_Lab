@@ -1,6 +1,6 @@
 # Visible training over SSH
 
-Status: SSH preparation only. The dedicated local key has not been registered with RunPod, the Pod is stopped, and no remote connection has been verified. The private key stays outside this repository on the user's Mac.
+Status, September 18: dedicated public-key registration and direct TCP SSH were verified. The shared `data266` tmux session ran Part A through all 12 epochs on an RTX 4090. Both checkpoints and the complete run were downloaded and verified; the pod is now stopped at $0.00/hour. Part B was not started. The private key stays outside this repository on the user's Mac. Connection details can change on a later start; obtain fresh values from RunPod.
 
 ## Recommendation after inspecting RunPod
 
@@ -32,4 +32,4 @@ Use one trainer at a time initially. Measure speed/memory before full training o
 
 ## Validation boundary
 
-The launcher has local syntax, argument and dry-run checks. Live model logging passes the existing CPU model/resume tests. These do not establish successful SSH connectivity, GPU memory fit, throughput or full model quality. The app terminal panel can be opened through the app tool, but direct computer-use control of Codex/macOS Terminal is restricted. Agent SSH execution can use command tools; the user can paste the same connection command into their terminal to watch the shared session.
+The launcher passed local syntax, argument and dry-run checks. This session additionally verified actual SSH, RTX 4090 fit, throughput and the complete Part A training run; receipts are in `verification/`. These checks do not prove consistent story quality or successful full training for Parts B/C. The app terminal panel can be opened through the app tool, but direct computer-use control of Codex/macOS Terminal is restricted. Agent SSH execution uses command tools; the user can paste the same connection command into their terminal to watch the shared session.

@@ -1,0 +1,234 @@
+[
+  {
+    "kind": "epoch",
+    "mode": "rehearsal",
+    "epoch": 1,
+    "epoch_complete": true,
+    "epoch_fraction": 1.0,
+    "step": 8,
+    "train": {
+      "cross_entropy": 3.7409826237201065,
+      "perplexity": 42.13937697920442,
+      "bits_per_character": 5.397097079292781,
+      "next_character_accuracy": 0.169424372114519,
+      "scored_targets_including_eos": 415442
+    },
+    "validation": {
+      "cross_entropy": 3.265939290344164,
+      "perplexity": 26.204713268818054,
+      "bits_per_character": 4.711754418023946,
+      "next_character_accuracy": 0.2188558524651863,
+      "scored_targets_including_eos": 47826
+    },
+    "generalization_gap_cross_entropy": -0.4750433333759423,
+    "gap_definition": "validation eval-mode CE minus online training-mode CE",
+    "mean_gradient_norm_before_clipping": 2.578785687685013,
+    "training_targets_per_second": 373307.72364185954,
+    "learning_rate_next_step": 0.0003940649904624377,
+    "host_peak_rss_mb": 1494.91796875,
+    "cuda_peak_allocated_mb": 4093.9921875
+  },
+  {
+    "kind": "epoch",
+    "mode": "rehearsal",
+    "epoch": 2,
+    "epoch_complete": true,
+    "epoch_fraction": 1.0,
+    "step": 16,
+    "train": {
+      "cross_entropy": 3.1106158279481826,
+      "perplexity": 22.43485615891261,
+      "bits_per_character": 4.48767002909156,
+      "next_character_accuracy": 0.26100394278864436,
+      "scored_targets_including_eos": 415442
+    },
+    "validation": {
+      "cross_entropy": 2.855908658470288,
+      "perplexity": 17.39023181205527,
+      "bits_per_character": 4.120205258806937,
+      "next_character_accuracy": 0.29205871283402335,
+      "scored_targets_including_eos": 47826
+    },
+    "generalization_gap_cross_entropy": -0.2547071694778946,
+    "gap_definition": "validation eval-mode CE minus online training-mode CE",
+    "mean_gradient_norm_before_clipping": 1.4732689335942268,
+    "training_targets_per_second": 795147.6543803519,
+    "learning_rate_next_step": 0.00036114156518380795,
+    "host_peak_rss_mb": 1494.91796875,
+    "cuda_peak_allocated_mb": 4094.35546875
+  },
+  {
+    "kind": "epoch",
+    "mode": "rehearsal",
+    "epoch": 3,
+    "epoch_complete": true,
+    "epoch_fraction": 1.0,
+    "step": 24,
+    "train": {
+      "cross_entropy": 2.808649857186625,
+      "perplexity": 16.5875075892524,
+      "bits_per_character": 4.052025220556639,
+      "next_character_accuracy": 0.29434192980006835,
+      "scored_targets_including_eos": 415442
+    },
+    "validation": {
+      "cross_entropy": 2.6544482211558567,
+      "perplexity": 14.21713917803538,
+      "bits_per_character": 3.829559284958085,
+      "next_character_accuracy": 0.3078869234307699,
+      "scored_targets_including_eos": 47826
+    },
+    "generalization_gap_cross_entropy": -0.15420163603076853,
+    "gap_definition": "validation eval-mode CE minus online training-mode CE",
+    "mean_gradient_norm_before_clipping": 0.8867643028497696,
+    "training_targets_per_second": 802973.4200170271,
+    "learning_rate_next_step": 0.00030459581374491765,
+    "host_peak_rss_mb": 1494.91796875,
+    "cuda_peak_allocated_mb": 4094.35546875
+  },
+  {
+    "kind": "epoch",
+    "mode": "rehearsal",
+    "epoch": 4,
+    "epoch_complete": true,
+    "epoch_fraction": 1.0,
+    "step": 32,
+    "train": {
+      "cross_entropy": 2.647446381390419,
+      "perplexity": 14.117940738649542,
+      "bits_per_character": 3.8194577654513893,
+      "next_character_accuracy": 0.30972073117306387,
+      "scored_targets_including_eos": 415442
+    },
+    "validation": {
+      "cross_entropy": 2.5493599192907626,
+      "perplexity": 12.798908825587308,
+      "bits_per_character": 3.677948913001871,
+      "next_character_accuracy": 0.3134278425960774,
+      "scored_targets_including_eos": 47826
+    },
+    "generalization_gap_cross_entropy": -0.09808646209965666,
+    "gap_definition": "validation eval-mode CE minus online training-mode CE",
+    "mean_gradient_norm_before_clipping": 0.5882031992077827,
+    "training_targets_per_second": 802168.2714413397,
+    "learning_rate_next_step": 0.0002338915831827964,
+    "host_peak_rss_mb": 1494.91796875,
+    "cuda_peak_allocated_mb": 4094.35546875
+  },
+  {
+    "kind": "epoch",
+    "mode": "rehearsal",
+    "epoch": 5,
+    "epoch_complete": true,
+    "epoch_fraction": 1.0,
+    "step": 40,
+    "train": {
+      "cross_entropy": 2.565019983663742,
+      "perplexity": 13.000918173051824,
+      "bits_per_character": 3.7005416102127704,
+      "next_character_accuracy": 0.3134011486561301,
+      "scored_targets_including_eos": 415442
+    },
+    "validation": {
+      "cross_entropy": 2.4928288221887676,
+      "perplexity": 12.095443630079078,
+      "bits_per_character": 3.5963917795568108,
+      "next_character_accuracy": 0.3144942081712876,
+      "scored_targets_including_eos": 47826
+    },
+    "generalization_gap_cross_entropy": -0.0721911614749744,
+    "gap_definition": "validation eval-mode CE minus online training-mode CE",
+    "mean_gradient_norm_before_clipping": 0.4867970645427704,
+    "training_targets_per_second": 803252.5005517809,
+    "learning_rate_next_step": 0.00016086237125604975,
+    "host_peak_rss_mb": 1494.91796875,
+    "cuda_peak_allocated_mb": 4094.35546875
+  },
+  {
+    "kind": "epoch",
+    "mode": "rehearsal",
+    "epoch": 6,
+    "epoch_complete": true,
+    "epoch_fraction": 1.0,
+    "step": 48,
+    "train": {
+      "cross_entropy": 2.519868608411645,
+      "perplexity": 12.426963757798282,
+      "bits_per_character": 3.6354019450472532,
+      "next_character_accuracy": 0.3155964009416477,
+      "scored_targets_including_eos": 415442
+    },
+    "validation": {
+      "cross_entropy": 2.461420043490988,
+      "perplexity": 11.721444688523514,
+      "bits_per_character": 3.5510784902891452,
+      "next_character_accuracy": 0.31963785388700705,
+      "scored_targets_including_eos": 47826
+    },
+    "generalization_gap_cross_entropy": -0.058448564920656754,
+    "gap_definition": "validation eval-mode CE minus online training-mode CE",
+    "mean_gradient_norm_before_clipping": 0.4050501100718975,
+    "training_targets_per_second": 803058.9325508355,
+    "learning_rate_next_step": 9.773079899848725e-05,
+    "host_peak_rss_mb": 1494.91796875,
+    "cuda_peak_allocated_mb": 4094.35546875
+  },
+  {
+    "kind": "epoch",
+    "mode": "rehearsal",
+    "epoch": 7,
+    "epoch_complete": true,
+    "epoch_fraction": 1.0,
+    "step": 56,
+    "train": {
+      "cross_entropy": 2.4955372243978897,
+      "perplexity": 12.128247359120712,
+      "bits_per_character": 3.600299177992644,
+      "next_character_accuracy": 0.3181695639824572,
+      "scored_targets_including_eos": 415442
+    },
+    "validation": {
+      "cross_entropy": 2.4455248583406517,
+      "perplexity": 11.536603092442437,
+      "bits_per_character": 3.5281465854987433,
+      "next_character_accuracy": 0.32062058294651447,
+      "scored_targets_including_eos": 47826
+    },
+    "generalization_gap_cross_entropy": -0.05001236605723802,
+    "gap_definition": "validation eval-mode CE minus online training-mode CE",
+    "mean_gradient_norm_before_clipping": 0.3555751442909241,
+    "training_targets_per_second": 803505.6572264293,
+    "learning_rate_next_step": 5.506295719233917e-05,
+    "host_peak_rss_mb": 1495.66796875,
+    "cuda_peak_allocated_mb": 4094.35546875
+  },
+  {
+    "kind": "epoch",
+    "mode": "rehearsal",
+    "epoch": 8,
+    "epoch_complete": true,
+    "epoch_fraction": 1.0,
+    "step": 64,
+    "train": {
+      "cross_entropy": 2.482588964440927,
+      "perplexity": 11.972219980942088,
+      "bits_per_character": 3.5816187875645924,
+      "next_character_accuracy": 0.3192455264513458,
+      "scored_targets_including_eos": 415442
+    },
+    "validation": {
+      "cross_entropy": 2.4355587180613054,
+      "perplexity": 11.422198719613078,
+      "bits_per_character": 3.5137684843409263,
+      "next_character_accuracy": 0.32381967967214487,
+      "scored_targets_including_eos": 47826
+    },
+    "generalization_gap_cross_entropy": -0.0470302463796215,
+    "gap_definition": "validation eval-mode CE minus online training-mode CE",
+    "mean_gradient_norm_before_clipping": 0.3316422440111637,
+    "training_targets_per_second": 804384.7101825665,
+    "learning_rate_next_step": 4e-05,
+    "host_peak_rss_mb": 1495.66796875,
+    "cuda_peak_allocated_mb": 4094.35546875
+  }
+]

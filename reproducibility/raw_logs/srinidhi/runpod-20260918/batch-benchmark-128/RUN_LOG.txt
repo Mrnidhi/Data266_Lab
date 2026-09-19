@@ -1,0 +1,20 @@
+{"event": "start", "task": "gpt", "mode": "rehearsal", "utc": "2026-09-18T23:49:31.036767+00:00", "device": "cuda"}
+gpt/rehearsal training device=cuda step=0/64; ETA estimates cover remaining training steps; evaluation/export may add time
+gpt/rehearsal epoch=1/16 batch=10/15 step=10/64 loss=3.2201 elapsed=1.0s eta_steps_est=5.3s
+gpt/rehearsal epoch=1 validating
+gpt/rehearsal epoch=1 train_loss=3.4441 val_loss=2.8982 val_perplexity=18.1416
+gpt/rehearsal epoch=2/16 batch=5/15 step=20/64 loss=2.8184 elapsed=1.4s eta_steps_est=3.2s
+gpt/rehearsal epoch=2/16 batch=15/15 step=30/64 loss=2.6277 elapsed=1.8s eta_steps_est=2.1s
+gpt/rehearsal epoch=2 validating
+gpt/rehearsal epoch=2 train_loss=2.7594 val_loss=2.5744 val_perplexity=13.1240
+gpt/rehearsal epoch=3/16 batch=10/15 step=40/64 loss=2.5502 elapsed=2.3s eta_steps_est=1.4s
+gpt/rehearsal epoch=3 validating
+gpt/rehearsal epoch=3 train_loss=2.5604 val_loss=2.4762 val_perplexity=11.8960
+gpt/rehearsal epoch=4/16 batch=5/15 step=50/64 loss=2.4937 elapsed=2.8s eta_steps_est=0.8s
+gpt/rehearsal epoch=4/16 batch=15/15 step=60/64 loss=2.4850 elapsed=3.2s eta_steps_est=0.2s
+gpt/rehearsal epoch=4 validating
+gpt/rehearsal epoch=4 train_loss=2.4992 val_loss=2.4442 val_perplexity=11.5215
+gpt/rehearsal epoch=5/16 batch=4/15 step=64/64 loss=2.4688 elapsed=3.5s eta_steps_est=0.0s
+gpt/rehearsal epoch=5 validating
+gpt/rehearsal epoch=5 train_loss=2.4755 val_loss=2.4398 val_perplexity=11.4711
+{"event": "completed", "task": "gpt", "mode": "rehearsal", "elapsed_seconds": 6.080158553086221}

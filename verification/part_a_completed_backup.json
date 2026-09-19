@@ -1,0 +1,25 @@
+{
+  "verified_utc": "2026-09-19T00:17:32.166380+00:00",
+  "archive": "dist/part-a-srinidhi-20260918-checkpoints.zip",
+  "archive_sha256": "8ee15fca517f0890ca790b3d751e11b65b2330520b18c6e97e02f5a9c2711023",
+  "archive_bytes": 67936299,
+  "run": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-a-full-b256",
+  "files": 16,
+  "full_epochs": 12,
+  "source_hashes_match_local": true,
+  "gpu_inference_reload_verified": true,
+  "checkpoints": {
+    "last.pt": {
+      "sha256": "9fd5e2d049db14380b605c2897068113a4f2a20d56208e90f2a2b2604e85e5fa",
+      "completed_epochs": 12,
+      "step": 18732,
+      "finite_model_tensors": true
+    },
+    "best.pt": {
+      "sha256": "9395976e7491005e5e7108c7ed42d2942269350f0b500b44439919d949e3ac79",
+      "completed_epochs": 12,
+      "step": 18732,
+      "finite_model_tensors": true
+    }
+  }
+}

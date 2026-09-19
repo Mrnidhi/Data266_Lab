@@ -1,0 +1,60 @@
+[
+  {
+    "kind": "epoch",
+    "mode": "rehearsal",
+    "epoch": 1,
+    "epoch_complete": true,
+    "epoch_fraction": 1.0,
+    "step": 59,
+    "train": {
+      "cross_entropy": 2.828428309141602,
+      "perplexity": 16.918848717152823,
+      "bits_per_character": 4.080559495108545,
+      "next_character_accuracy": 0.28307681938754387,
+      "scored_targets_including_eos": 415442
+    },
+    "validation": {
+      "cross_entropy": 2.4606816490376575,
+      "perplexity": 11.7127928334145,
+      "bits_per_character": 3.550013212273105,
+      "next_character_accuracy": 0.31905239827708776,
+      "scored_targets_including_eos": 47826
+    },
+    "generalization_gap_cross_entropy": -0.3677466601039443,
+    "gap_definition": "validation eval-mode CE minus online training-mode CE",
+    "mean_gradient_norm_before_clipping": 1.021657719955606,
+    "training_targets_per_second": 200912.06728938138,
+    "learning_rate_next_step": 4.5935009537562336e-05,
+    "host_peak_rss_mb": 1485.90234375,
+    "cuda_peak_allocated_mb": 588.25
+  },
+  {
+    "kind": "epoch",
+    "mode": "rehearsal",
+    "epoch": 2,
+    "epoch_complete": false,
+    "epoch_fraction": 0.0847457627118644,
+    "step": 64,
+    "train": {
+      "cross_entropy": 2.4944376812992237,
+      "perplexity": 12.114919157247082,
+      "bits_per_character": 3.5987128726169546,
+      "next_character_accuracy": 0.31945581303451975,
+      "scored_targets_including_eos": 35429
+    },
+    "validation": {
+      "cross_entropy": 2.4565887687267387,
+      "perplexity": 11.664951744950084,
+      "bits_per_character": 3.5441084341455906,
+      "next_character_accuracy": 0.3191778530506419,
+      "scored_targets_including_eos": 47826
+    },
+    "generalization_gap_cross_entropy": -0.037848912572485016,
+    "gap_definition": "validation eval-mode CE minus online training-mode CE",
+    "mean_gradient_norm_before_clipping": 0.45644376873970033,
+    "training_targets_per_second": 310064.14481897297,
+    "learning_rate_next_step": 4e-05,
+    "host_peak_rss_mb": 1485.90234375,
+    "cuda_peak_allocated_mb": 588.25
+  }
+]

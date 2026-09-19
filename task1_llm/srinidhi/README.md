@@ -1,7 +1,10 @@
 # Part 1: Character GPT — Srinidhi
 
-This implementation is a proposed individual experiment. Local smoke results do
-not establish that full TinyStories training has completed or that stories are coherent.
+Full training completed on an RTX 4090: 12 epochs on 100,000 training and 10,000
+validation stories. The selected checkpoint is epoch 12, with validation loss
+0.7197, character perplexity 2.0538 and next-character accuracy 77.38%.
+See `results.md`, `metrics_report.csv`, `outputs/full/` and the executed notebook.
+These metrics do not imply that the generated stories are consistently coherent.
 
 The full candidate uses 3 pre-LayerNorm Transformer blocks, 6 heads, width 192,
 feedforward width 768, context 256 characters, dropout 0.15, batch size 256,
@@ -84,11 +87,11 @@ scaler when no saved FP16 scaler exists; this is recorded in the run summary.
 
 ## Student work still required
 
-Review the actual generations and fill `failure_analysis.md` with three real
-failures, exact excerpts, likely causes and proposed fixes. The template deliberately
-does not fabricate failure cases or explanations. Read and explain the attention,
-masking, training and metric code for the viva. Retain bad generations and report
-observed limitations. Full runs and final interpretation are not performed by setup.
+Review the actual generations and the three evidence-based, AI-assisted drafts in
+`failure_analysis.md`. Check their interpretations and explain the attention,
+masking, training and metric code for the viva. The drafts identify repetition,
+broken grammar and character identity drift; they do not claim student review.
+The raw training logs and all ten generated continuations are preserved.
 
 ## Sources informing the design
 

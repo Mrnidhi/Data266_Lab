@@ -1,0 +1,12 @@
+{
+  "best.pt": {
+    "path": "task1_llm/srinidhi/checkpoints/best.pt",
+    "sha256": "9395976e7491005e5e7108c7ed42d2942269350f0b500b44439919d949e3ac79",
+    "bytes": 27184175
+  },
+  "last.pt": {
+    "path": "task1_llm/srinidhi/checkpoints/last.pt",
+    "sha256": "9fd5e2d049db14380b605c2897068113a4f2a20d56208e90f2a2b2604e85e5fa",
+    "bytes": 27184175
+  }
+}

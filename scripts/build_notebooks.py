@@ -11,13 +11,8 @@ for task, folder, title in TASKS:
     cells = [nb.v4.new_markdown_cell(f"# {title}\n\nSrinidhi, SID4 2342. This notebook defaults to **CPU smoke verification**. "
         "Its small synthetic outputs are not final lab results. Review the source and configuration before full training. "
         "Every run writes raw logs, provenance, metrics, outputs, and checkpoints to a new folder."),
-        nb.v4.new_code_cell('''SID4 = 2342
-SEED = SID4
-SLICE = SID4 % 1000
-HP_ID = SID4 % 6
-CLS_A = SID4 % 10
-CLS_B = (CLS_A + 1 + ((SID4 // 10) % 9)) % 10
-print(dict(SID4=SID4, SEED=SEED, SLICE=SLICE, HP_ID=HP_ID, CLS_A=CLS_A, CLS_B=CLS_B))'''),
+        nb.v4.new_code_cell('''SEED = 2342
+print({"SEED": SEED})'''),
         nb.v4.new_code_cell('''from pathlib import Path
 import os
 import sys

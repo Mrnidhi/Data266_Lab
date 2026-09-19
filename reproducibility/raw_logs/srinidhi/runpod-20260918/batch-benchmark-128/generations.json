@@ -1,0 +1,48 @@
+[
+  {
+    "prompt": "Once upon a time, a little bird",
+    "continuation": " the the t the the t",
+    "full_text": "Once upon a time, a little bird the the t the the t",
+    "decoding": "greedy",
+    "temperature": 0.0,
+    "top_k": 0,
+    "seed": 3342,
+    "generation_seconds": 0.12149615120142698,
+    "generated_character_tokens": 20,
+    "generation_tokens_per_second": 164.61426804246864,
+    "metrics": {
+      "tokenization": "lowercase regex words; exclude prompt",
+      "distinct_1": 0.3333333333333333,
+      "total_1grams": 6,
+      "distinct_2": 0.6,
+      "total_2grams": 5,
+      "distinct_3": 0.75,
+      "total_3grams": 4,
+      "repeated_4gram_fraction": 0.0,
+      "total_4grams": 3
+    }
+  },
+  {
+    "prompt": "Once upon a time, a little bird",
+    "continuation": " theg be w",
+    "full_text": "Once upon a time, a little bird theg be w",
+    "decoding": "sampled",
+    "temperature": 0.8,
+    "top_k": 40,
+    "seed": 3343,
+    "generation_seconds": 0.12149772141128778,
+    "generated_character_tokens": 10,
+    "generation_tokens_per_second": 82.30607030191553,
+    "metrics": {
+      "tokenization": "lowercase regex words; exclude prompt",
+      "distinct_1": 1.0,
+      "total_1grams": 3,
+      "distinct_2": 1.0,
+      "total_2grams": 2,
+      "distinct_3": 1.0,
+      "total_3grams": 1,
+      "repeated_4gram_fraction": null,
+      "total_4grams": 0
+    }
+  }
+]

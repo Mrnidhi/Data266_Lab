@@ -1,0 +1,22 @@
+{
+  "mode": "smoke",
+  "tasks": [
+    {
+      "task": "gpt",
+      "status": "passed",
+      "returncode": 0,
+      "elapsed_seconds": 5.524322830140591
+    }
+  ],
+  "elapsed_seconds": 5.524397172033787,
+  "gpu_time_cost_estimate_usd": 0.001135570529806945,
+  "cost_excludes": [
+    "pod startup",
+    "idle time",
+    "storage",
+    "taxes"
+  ],
+  "pod_stopped": false,
+  "billing_cutoff": false,
+  "all_requested_tasks_passed": true
+}

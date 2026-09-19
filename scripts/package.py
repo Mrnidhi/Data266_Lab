@@ -14,11 +14,13 @@ DIST = ROOT / "dist"
 DIST.mkdir(exist_ok=True)
 paths = set()
 for pattern in (
-    "*.md", "*.toml", "requirements*.txt", "scripts/*.py", "scripts/*.sh",
+    "*.md", "*.toml", "requirements*.txt", "scripts/*.py", "scripts/*.sh", "task*/*.md",
     "src/lab1/*.py", "tests/*.py", "task*/data/**/README.md", "task*/data/**/.gitkeep",
     "task*/srinidhi/*.md", "task*/srinidhi/*.csv", "task*/srinidhi/config.json",
     "task*/srinidhi/*.py", "task*/srinidhi/src/*.py", "task*/srinidhi/src/*.ipynb",
     "task*/srinidhi/checkpoints/README.md", "task*/srinidhi/outputs/**/README.md",
+    "task*/srinidhi/checkpoints/*.json", "task*/srinidhi/outputs/full/**/*.json",
+    "task*/srinidhi/outputs/full/**/*.png",
     "task*/srinidhi/outputs/**/.gitkeep", "task*/srinidhi/data_processed/README.md",
     "task*/srinidhi/data_processed/rehearsal/**/*.json",
     "task*/srinidhi/data_processed/rehearsal/**/*.jsonl",

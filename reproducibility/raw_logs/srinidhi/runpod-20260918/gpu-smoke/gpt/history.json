@@ -1,0 +1,31 @@
+[
+  {
+    "kind": "epoch",
+    "mode": "smoke",
+    "epoch": 1,
+    "epoch_complete": true,
+    "epoch_fraction": 1.0,
+    "step": 6,
+    "train": {
+      "cross_entropy": 3.5133462035928975,
+      "perplexity": 33.56037996826601,
+      "bits_per_character": 5.06868714484954,
+      "next_character_accuracy": 0.10381679389312977,
+      "scored_targets_including_eos": 655
+    },
+    "validation": {
+      "cross_entropy": 3.453430922388666,
+      "perplexity": 31.608653321340665,
+      "bits_per_character": 4.982247665782727,
+      "next_character_accuracy": 0.20489296636085627,
+      "scored_targets_including_eos": 327
+    },
+    "generalization_gap_cross_entropy": -0.05991528120423162,
+    "gap_definition": "validation eval-mode CE minus online training-mode CE",
+    "mean_gradient_norm_before_clipping": 1.742710292339325,
+    "training_targets_per_second": 1220.4756775081714,
+    "learning_rate_next_step": 4e-05,
+    "host_peak_rss_mb": 1342.09765625,
+    "cuda_peak_allocated_mb": 66.146484375
+  }
+]

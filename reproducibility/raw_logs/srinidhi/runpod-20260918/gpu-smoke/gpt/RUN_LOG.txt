@@ -1,0 +1,11 @@
+{"event": "start", "task": "gpt", "mode": "smoke", "utc": "2026-09-18T23:45:28.940461+00:00", "device": "cuda"}
+gpt/smoke training device=cuda step=0/6; ETA estimates cover remaining training steps; evaluation/export may add time
+gpt/smoke epoch=1/1 batch=1/6 step=1/6 loss=3.5712 elapsed=0.5s eta_steps_est=2.4s
+gpt/smoke epoch=1/1 batch=2/6 step=2/6 loss=3.5407 elapsed=0.5s eta_steps_est=1.0s
+gpt/smoke epoch=1/1 batch=3/6 step=3/6 loss=3.5167 elapsed=0.5s eta_steps_est=0.5s
+gpt/smoke epoch=1/1 batch=4/6 step=4/6 loss=3.4916 elapsed=0.5s eta_steps_est=0.3s
+gpt/smoke epoch=1/1 batch=5/6 step=5/6 loss=3.4660 elapsed=0.5s eta_steps_est=0.1s
+gpt/smoke epoch=1/1 batch=6/6 step=6/6 loss=3.4923 elapsed=0.6s eta_steps_est=0.0s
+gpt/smoke epoch=1 validating
+gpt/smoke epoch=1 train_loss=3.5133 val_loss=3.4534 val_perplexity=31.6087
+{"event": "completed", "task": "gpt", "mode": "smoke", "elapsed_seconds": 2.9469850016757846}

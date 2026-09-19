@@ -1,0 +1,59 @@
+{
+  "dataset": "synthetic smoke fixture",
+  "seed": 2342,
+  "train": [
+    {
+      "index": 0,
+      "sha256": "e9390db69218f7cb1dfbaa683083c7dada02824e2c0b9307a9cd483a4c511183"
+    },
+    {
+      "index": 1,
+      "sha256": "378151387ece139dab273d6ec9df1ae36e813f2e7cbdfc9811e53eadf243c31f"
+    },
+    {
+      "index": 2,
+      "sha256": "50338aa666862c466c0c6baad5f3083b701360015bb2147feb39b61b15c3924f"
+    },
+    {
+      "index": 3,
+      "sha256": "e7db5a2970f05d3e3964fa818f9e6cbc51d74a2d0b792c0e424c82dccd1a368e"
+    },
+    {
+      "index": 4,
+      "sha256": "1b9f9a616200022ab26c32998dcff2b0557a7479dfd804d12a5374d9b727266a"
+    },
+    {
+      "index": 5,
+      "sha256": "de7b13dc2df507bdeb364f2a688029e974f52f84afd28dc89dc3555c2857ac91"
+    },
+    {
+      "index": 6,
+      "sha256": "23c8557dbb8441609ccc5b432511cb5c00de605a7e831da3a9f5a64a8a6e2a95"
+    },
+    {
+      "index": 7,
+      "sha256": "788286bdf139038dc3c74de09cf89d682fa7f451505aa7d72bbccec8f064c104"
+    }
+  ],
+  "validation": [
+    {
+      "index": 0,
+      "sha256": "88bf3a966015ec54607c6b5f8b3343d61984b60358861acd0ad798aa79313cba"
+    },
+    {
+      "index": 1,
+      "sha256": "a6041c39dda4e39f5d122f55399a777225fd7532994457563321afaf03a6cdb3"
+    },
+    {
+      "index": 2,
+      "sha256": "0cbd2d105727593deac0fb1884512d6d8681cae874b78609f0f0f4328637e51e"
+    },
+    {
+      "index": 3,
+      "sha256": "84329669fe9a7090548354b41b3f87ba1322c5de3e8101bb0473d509895303c3"
+    }
+  ],
+  "train_story_count": 8,
+  "validation_story_count": 4,
+  "manifest_sha256": "4d0824e968a0cb1e2a3d253eb40b1809fd7b7d9aa8ca78381e45a8e404767ee4"
+}
