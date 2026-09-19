@@ -1,0 +1,8 @@
+{
+  "observed_utc": "2026-09-19T02:30:01Z",
+  "nvml_error": "Failed to initialize NVML: Unknown Error",
+  "new_cuda_process_error": "RuntimeError: No CUDA GPUs are available",
+  "existing_training": "Continued advancing steps; wider BiLSTM completed all 12 epochs successfully. Original-width long-schedule trial remained active.",
+  "action": "Preserve running process, back up completed training, perform final frozen-checkpoint evaluation locally on CPU; do not restart or allocate another GPU.",
+  "cpu_timing_evidence": "verification/part_b_cpu_eval_benchmark.json"
+}

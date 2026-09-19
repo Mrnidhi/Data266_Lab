@@ -1,0 +1,1611 @@
+{
+  "task": "sentiment",
+  "mode": "full",
+  "status": "completed",
+  "artifact_type": "assembled_validation_selection",
+  "assembled_results": true,
+  "description": "Derived evaluation of separately selected original checkpoints; no training in this invocation.",
+  "selection_rule": "For each model family find the highest validation macro-F1. Among candidates within 0.001 inclusive of that maximum, prefer fewer parameters, then higher validation macro-F1. Break an exact remaining tie by source path and candidate ID. This is a practical preference, not a statistical significance test; test metrics never enter selection.",
+  "selection_manifest_sha256": "b24b1372d41072e7d703fa2a8a0cee7ff10bbd2fba507a169f8281cf34324ebd",
+  "selection_frozen_utc": "2026-09-19T02:43:55.763594+00:00",
+  "evaluation_started_utc": "2026-09-19T02:44:27.588464+00:00",
+  "source_runs": {
+    "maxpool_mlp": {
+      "candidate_id": "reference:maxpool_mlp",
+      "model_name": "maxpool_mlp",
+      "source_run": "runs/part-b-full",
+      "checkpoint": "runs/part-b-full/maxpool_mlp/checkpoints/best.pt",
+      "sha256": "fc9442519f52db62c292e380fed6285a14e51f2711e7540618314d7675720e08",
+      "config": {
+        "mode": "full",
+        "seed": 2342,
+        "dataset": "fancyzhx/yelp_polarity",
+        "dataset_revision": "main",
+        "data_dir": "task2_sentiment/srinidhi/data_processed/full",
+        "train_limit": null,
+        "validation_limit": null,
+        "test_limit": null,
+        "vocabulary_size": 40000,
+        "min_frequency": 2,
+        "embedding_dim": 128,
+        "max_length": 384,
+        "batch_size": 128,
+        "epochs": 6,
+        "early_stopping_patience": 2,
+        "early_stopping_min_delta": 0.0001,
+        "mlp_hidden": 64,
+        "lstm_hidden": 96,
+        "cnn_channels": 128,
+        "dilations": [
+          1,
+          2,
+          4,
+          8
+        ],
+        "dropout": 0.3,
+        "cnn_dropout": 0.2,
+        "learning_rates": {
+          "maxpool_mlp": 0.0015,
+          "bilstm": 0.001,
+          "dilated_cnn": 0.0008
+        },
+        "weight_decay": 0.0001,
+        "gradient_clip": 1.0,
+        "amp": true,
+        "bootstrap_samples": 1000,
+        "cpu_threads": 2,
+        "raw_data_cache": "task2_sentiment/data/huggingface",
+        "encoded_cache": "task2_sentiment/srinidhi/data_processed/full_encoded",
+        "num_workers": 2,
+        "log_every_steps": 50
+      },
+      "validation_macro_f1": 0.926570295281343,
+      "selected_epoch": 5,
+      "parameter_count": 5128321,
+      "train_seconds": 97.03223231015727,
+      "provenance": {
+        "task": "sentiment",
+        "mode": "full",
+        "device": "cuda",
+        "started_utc": "2026-09-19T01:40:08.215178+00:00",
+        "status": "completed",
+        "is_final_result": false,
+        "config": {
+          "mode": "full",
+          "seed": 2342,
+          "dataset": "fancyzhx/yelp_polarity",
+          "dataset_revision": "main",
+          "data_dir": "task2_sentiment/srinidhi/data_processed/full",
+          "train_limit": null,
+          "validation_limit": null,
+          "test_limit": null,
+          "vocabulary_size": 40000,
+          "min_frequency": 2,
+          "embedding_dim": 128,
+          "max_length": 384,
+          "batch_size": 128,
+          "epochs": 6,
+          "early_stopping_patience": 2,
+          "early_stopping_min_delta": 0.0001,
+          "mlp_hidden": 64,
+          "lstm_hidden": 96,
+          "cnn_channels": 128,
+          "dilations": [
+            1,
+            2,
+            4,
+            8
+          ],
+          "dropout": 0.3,
+          "cnn_dropout": 0.2,
+          "learning_rates": {
+            "maxpool_mlp": 0.0015,
+            "bilstm": 0.001,
+            "dilated_cnn": 0.0008
+          },
+          "weight_decay": 0.0001,
+          "gradient_clip": 1.0,
+          "amp": true,
+          "bootstrap_samples": 1000,
+          "cpu_threads": 2,
+          "raw_data_cache": "task2_sentiment/data/huggingface",
+          "encoded_cache": "task2_sentiment/srinidhi/data_processed/full_encoded",
+          "num_workers": 2,
+          "log_every_steps": 50
+        },
+        "source_sha256": {
+          "src/lab1/__init__.py": "4597cd6743deb8dc143f2be2f7757c8d8d8fb367716dbcb4cb9626a025265217",
+          "src/lab1/common.py": "6659501f6490e5dc1c72decbb48f1c745a2e876bea24a89fea32b381518677ce",
+          "src/lab1/run.py": "571163444bc3331b59263ba9bde6f4c027360a25983ab846dfb4e052b5a5bb39",
+          "task1_llm/srinidhi/config.json": "cf5cda1c11f81ea6837421c565364c0c235ff1483e41dadad9235ba0e8e0238b",
+          "task1_llm/srinidhi/src/gpt.py": "7498de5a36d1e6cb2d851d862dad47152cf73a82dd46fe2f5fbb5aa67a5627d9",
+          "task2_sentiment/srinidhi/config.json": "84c480d132b22cb2606a5f3139702ee75d523f90050f78e0e2772fae82f30ded",
+          "task2_sentiment/srinidhi/src/sentiment.py": "24619af4a8f2faa814e0715a7307568ea4e5063a2644ceb12e81b19ee2fabafc",
+          "task3_gan/srinidhi/config.json": "0c88cb843e6c2abf42561cb6ceaf557787357646fb464a6c97632e0fefb83100",
+          "task3_gan/srinidhi/evaluate_local.py": "4cb02bb71263f3a507562a99dec4b485fbcd0ed1ff08fc3757f1886e015dacfc",
+          "task3_gan/srinidhi/src/cyclegan.py": "9d7348d09246c3923ad150a1d6a297d137d51adae5240a80d38989c7f6a2f927"
+        },
+        "environment": {
+          "captured_utc": "2026-09-19T01:40:08.255173+00:00",
+          "python": "3.12.3",
+          "platform": "Linux-6.11.0-26-generic-x86_64-with-glibc2.39",
+          "machine": "x86_64",
+          "packages": {
+            "torch": "2.11.0+cu128",
+            "torchvision": "0.26.0+cu128",
+            "numpy": "2.5.3",
+            "pandas": "3.0.6",
+            "scikit-learn": "1.9.1",
+            "scipy": "1.16.3",
+            "matplotlib": "3.11.2",
+            "datasets": "5.0.1",
+            "Pillow": "12.3.0",
+            "clean-fid": "0.1.35",
+            "lpips": "0.1.4",
+            "prdc": "0.2"
+          },
+          "cuda_available": true,
+          "cuda_build": "12.8",
+          "cudnn": 91900,
+          "gpus": [
+            {
+              "index": 0,
+              "name": "NVIDIA GeForce RTX 5090",
+              "memory_bytes": 33680326656,
+              "compute_capability": [
+                12,
+                0
+              ]
+            }
+          ],
+          "mps_available": false,
+          "nvidia_smi": "name, uuid, driver_version, memory.total [MiB]\nNVIDIA GeForce RTX 5090, GPU-1f89be66-27b1-f3fd-debe-6a3213d26d35, 570.153.02, 32607 MiB"
+        },
+        "resumed": false,
+        "ended_utc": "2026-09-19T02:02:07.557019+00:00",
+        "elapsed_seconds": 1319.2691325530177,
+        "summary": {
+          "mode": "full",
+          "synthetic": false,
+          "models": {
+            "maxpool_mlp": {
+              "count": 38000,
+              "accuracy": 0.932,
+              "mcc": 0.8640184006764469,
+              "brier": 0.05268637490781428,
+              "confusion_matrix": [
+                [
+                  17770,
+                  1230
+                ],
+                [
+                  1354,
+                  17646
+                ]
+              ],
+              "threshold": 0.5,
+              "macro": {
+                "precision": 0.9320184008723873,
+                "recall": 0.9319999999999999,
+                "f1": 0.9319992759147275
+              },
+              "micro": {
+                "precision": 0.932,
+                "recall": 0.932,
+                "f1": 0.932
+              },
+              "weighted": {
+                "precision": 0.9320184008723874,
+                "recall": 0.932,
+                "f1": 0.9319992759147273
+              },
+              "per_class": [
+                {
+                  "label": 0,
+                  "precision": 0.9291989123614307,
+                  "recall": 0.9352631578947368,
+                  "f1": 0.9322211730143741,
+                  "support": 19000
+                },
+                {
+                  "label": 1,
+                  "precision": 0.9348378893833439,
+                  "recall": 0.9287368421052632,
+                  "f1": 0.9317773788150808,
+                  "support": 19000
+                }
+              ],
+              "ece_15": 0.026869014960735186,
+              "ece_definition": "Top-label confidence ECE; 15 equal-width bins on [0,1]; threshold 0.5.",
+              "roc_auc": 0.9815935180055401,
+              "pr_auc_trapezoidal": 0.9823367584933611,
+              "bootstrap_95_percentile": {
+                "accuracy": {
+                  "low": 0.9291309210526316,
+                  "high": 0.9346059210526315
+                },
+                "macro_f1": {
+                  "low": 0.9291157936160613,
+                  "high": 0.9346058885034065
+                },
+                "mcc": {
+                  "low": 0.8582515617296906,
+                  "high": 0.8692453751576493
+                }
+              },
+              "bootstrap_samples": 1000,
+              "uncertainty_scope": "IID test-row resampling; does not include training-seed uncertainty.",
+              "test_loss": 0.18763503551483154,
+              "selected_epoch": 5,
+              "selected_validation_macro_f1": 0.926570295281343,
+              "parameter_count": 5128321,
+              "train_seconds": 97.03223231015727,
+              "peak_cuda_memory_bytes": 162652160,
+              "mode": "full",
+              "synthetic": false,
+              "resume_scaler_status": "not_resumed",
+              "completed_training_steps": 23628
+            },
+            "bilstm": {
+              "count": 38000,
+              "accuracy": 0.9592631578947368,
+              "mcc": 0.9185422746459667,
+              "brier": 0.031069280768833557,
+              "confusion_matrix": [
+                [
+                  18170,
+                  830
+                ],
+                [
+                  718,
+                  18282
+                ]
+              ],
+              "threshold": 0.5,
+              "macro": {
+                "precision": 0.9592791168898678,
+                "recall": 0.9592631578947368,
+                "f1": 0.9592628040115052
+              },
+              "micro": {
+                "precision": 0.9592631578947368,
+                "recall": 0.9592631578947368,
+                "f1": 0.9592631578947368
+              },
+              "weighted": {
+                "precision": 0.9592791168898678,
+                "recall": 0.9592631578947368,
+                "f1": 0.9592628040115052
+              },
+              "per_class": [
+                {
+                  "label": 0,
+                  "precision": 0.9619864464210081,
+                  "recall": 0.9563157894736842,
+                  "f1": 0.9591427364864865,
+                  "support": 19000
+                },
+                {
+                  "label": 1,
+                  "precision": 0.9565717873587275,
+                  "recall": 0.9622105263157895,
+                  "f1": 0.9593828715365239,
+                  "support": 19000
+                }
+              ],
+              "ece_15": 0.005893806638629606,
+              "ece_definition": "Top-label confidence ECE; 15 equal-width bins on [0,1]; threshold 0.5.",
+              "roc_auc": 0.9925911426592796,
+              "pr_auc_trapezoidal": 0.9928007780284408,
+              "bootstrap_95_percentile": {
+                "accuracy": {
+                  "low": 0.957183552631579,
+                  "high": 0.9612901315789473
+                },
+                "macro_f1": {
+                  "low": 0.9571818259492425,
+                  "high": 0.961286535179993
+                },
+                "mcc": {
+                  "low": 0.914376740922127,
+                  "high": 0.92257854334947
+                }
+              },
+              "bootstrap_samples": 1000,
+              "uncertainty_scope": "IID test-row resampling; does not include training-seed uncertainty.",
+              "test_loss": 0.10942320688147295,
+              "selected_epoch": 4,
+              "selected_validation_macro_f1": 0.9566069090104472,
+              "parameter_count": 5305985,
+              "train_seconds": 881.1853327440331,
+              "peak_cuda_memory_bytes": 228746752,
+              "mode": "full",
+              "synthetic": false,
+              "resume_scaler_status": "not_resumed",
+              "completed_training_steps": 23628
+            },
+            "dilated_cnn": {
+              "count": 38000,
+              "accuracy": 0.9580526315789474,
+              "mcc": 0.9161122114258923,
+              "brier": 0.032042928589741664,
+              "confusion_matrix": [
+                [
+                  18240,
+                  760
+                ],
+                [
+                  834,
+                  18166
+                ]
+              ],
+              "threshold": 0.5,
+              "macro": {
+                "precision": 0.9580595798732947,
+                "recall": 0.9580526315789474,
+                "f1": 0.9580524725036976
+              },
+              "micro": {
+                "precision": 0.9580526315789474,
+                "recall": 0.9580526315789474,
+                "f1": 0.9580526315789474
+              },
+              "weighted": {
+                "precision": 0.9580595798732946,
+                "recall": 0.9580526315789474,
+                "f1": 0.9580524725036976
+              },
+              "per_class": [
+                {
+                  "label": 0,
+                  "precision": 0.9562755583516829,
+                  "recall": 0.96,
+                  "f1": 0.9581341597940852,
+                  "support": 19000
+                },
+                {
+                  "label": 1,
+                  "precision": 0.9598436013949064,
+                  "recall": 0.9561052631578948,
+                  "f1": 0.9579707852133101,
+                  "support": 19000
+                }
+              ],
+              "ece_15": 0.0099814826210208,
+              "ece_definition": "Top-label confidence ECE; 15 equal-width bins on [0,1]; threshold 0.5.",
+              "roc_auc": 0.9921975650969529,
+              "pr_auc_trapezoidal": 0.9924417241296837,
+              "bootstrap_95_percentile": {
+                "accuracy": {
+                  "low": 0.9558947368421052,
+                  "high": 0.9599743421052631
+                },
+                "macro_f1": {
+                  "low": 0.9558939342338848,
+                  "high": 0.9599743397485918
+                },
+                "mcc": {
+                  "low": 0.911803816581789,
+                  "high": 0.9199661087088662
+                }
+              },
+              "bootstrap_samples": 1000,
+              "uncertainty_scope": "IID test-row resampling; does not include training-seed uncertainty.",
+              "test_loss": 0.11467858448154047,
+              "selected_epoch": 6,
+              "selected_validation_macro_f1": 0.9538923913031014,
+              "parameter_count": 5539073,
+              "train_seconds": 228.67676686507184,
+              "peak_cuda_memory_bytes": 470494720,
+              "mode": "full",
+              "synthetic": false,
+              "resume_scaler_status": "not_resumed",
+              "completed_training_steps": 23628
+            }
+          },
+          "output_dir": "runs/part-b-full",
+          "manual_error_review_complete": false
+        }
+      },
+      "selection_metadata_file": "runs/part-b-full/maxpool_mlp/metrics.json",
+      "selection_fields_used": [
+        "selected_epoch",
+        "selected_validation_macro_f1",
+        "parameter_count",
+        "train_seconds"
+      ],
+      "recipe": null,
+      "source_metadata_sha256": {
+        "runs/part-b-full/maxpool_mlp/checkpoints/best.pt": "fc9442519f52db62c292e380fed6285a14e51f2711e7540618314d7675720e08",
+        "runs/part-b-full/maxpool_mlp/checkpoints/last.pt": "16a34b51fd4c4cb7e270e0479a4a30ecef9bb4de16666aeb8b65f956178d7421",
+        "runs/part-b-full/maxpool_mlp/history.json": "87cafb8be8f58c1b1ef11089f0e8ca9d2a530a0c9bd765aa9fe28da2eca6f16b",
+        "runs/part-b-full/maxpool_mlp/metrics.json": "3aec394c7675ac35d50195daf23d894ab12abcb9de284d3c912a39ad8e5a7940",
+        "runs/part-b-full/config.json": "7080e2b6f917a91745dfcb8cccd71830c3c157d80590753ab9ef621008bc51e3",
+        "runs/part-b-full/run_summary.json": "ea5dd604493f70c438b51253ea0611264190a21b160f003869b6fa7aba29a833"
+      },
+      "decision": {
+        "selected": true,
+        "within_practical_band": true,
+        "gap_to_highest_validation_macro_f1": 0.0003883524604003,
+        "reason": "Selected by parameter count, then validation score within the practical band."
+      }
+    },
+    "bilstm": {
+      "candidate_id": "bilstm_long_schedule_control",
+      "model_name": "bilstm",
+      "source_run": "runs/part-b-tuning/bilstm_long_schedule_control",
+      "checkpoint": "runs/part-b-tuning/bilstm_long_schedule_control/bilstm/checkpoints/best.pt",
+      "sha256": "ed03e33534f053c0b12ceb519c719ea9716c4ece948c20715d6a535543003529",
+      "config": {
+        "mode": "full",
+        "seed": 2342,
+        "dataset": "fancyzhx/yelp_polarity",
+        "dataset_revision": "main",
+        "data_dir": "task2_sentiment/srinidhi/data_processed/full",
+        "train_limit": null,
+        "validation_limit": null,
+        "test_limit": null,
+        "vocabulary_size": 40000,
+        "min_frequency": 2,
+        "embedding_dim": 128,
+        "max_length": 384,
+        "batch_size": 128,
+        "epochs": 12,
+        "early_stopping_patience": 4,
+        "early_stopping_min_delta": 0.0001,
+        "mlp_hidden": 64,
+        "lstm_hidden": 96,
+        "cnn_channels": 128,
+        "dilations": [
+          1,
+          2,
+          4,
+          8
+        ],
+        "dropout": 0.3,
+        "cnn_dropout": 0.2,
+        "learning_rates": {
+          "maxpool_mlp": 0.0015,
+          "bilstm": 0.001,
+          "dilated_cnn": 0.0008
+        },
+        "weight_decay": 0.0001,
+        "gradient_clip": 1.0,
+        "amp": true,
+        "bootstrap_samples": 1000,
+        "cpu_threads": 2,
+        "raw_data_cache": "task2_sentiment/data/huggingface",
+        "encoded_cache": "task2_sentiment/srinidhi/data_processed/full_encoded",
+        "num_workers": 2,
+        "checkpoint_every_steps": 1000,
+        "log_every_steps": 100,
+        "validation_only": true
+      },
+      "validation_macro_f1": 0.9588017632122099,
+      "selected_epoch": 10,
+      "parameter_count": 5305985,
+      "train_seconds": 1686.3448840710334,
+      "provenance": {
+        "candidate": {
+          "name": "bilstm_long_schedule_control",
+          "model": "bilstm",
+          "hypothesis": "Control for longer schedule and patience before attributing gains to architecture.",
+          "overrides": {
+            "epochs": 12,
+            "early_stopping_patience": 4,
+            "num_workers": 2,
+            "checkpoint_every_steps": 1000,
+            "log_every_steps": 100
+          }
+        },
+        "config": {
+          "mode": "full",
+          "seed": 2342,
+          "dataset": "fancyzhx/yelp_polarity",
+          "dataset_revision": "main",
+          "data_dir": "task2_sentiment/srinidhi/data_processed/full",
+          "train_limit": null,
+          "validation_limit": null,
+          "test_limit": null,
+          "vocabulary_size": 40000,
+          "min_frequency": 2,
+          "embedding_dim": 128,
+          "max_length": 384,
+          "batch_size": 128,
+          "epochs": 12,
+          "early_stopping_patience": 4,
+          "early_stopping_min_delta": 0.0001,
+          "mlp_hidden": 64,
+          "lstm_hidden": 96,
+          "cnn_channels": 128,
+          "dilations": [
+            1,
+            2,
+            4,
+            8
+          ],
+          "dropout": 0.3,
+          "cnn_dropout": 0.2,
+          "learning_rates": {
+            "maxpool_mlp": 0.0015,
+            "bilstm": 0.001,
+            "dilated_cnn": 0.0008
+          },
+          "weight_decay": 0.0001,
+          "gradient_clip": 1.0,
+          "amp": true,
+          "bootstrap_samples": 1000,
+          "cpu_threads": 2,
+          "raw_data_cache": "task2_sentiment/data/huggingface",
+          "encoded_cache": "task2_sentiment/srinidhi/data_processed/full_encoded",
+          "num_workers": 2,
+          "checkpoint_every_steps": 1000,
+          "log_every_steps": 100,
+          "validation_only": true
+        },
+        "started_utc": "2026-09-19T02:09:12.932851+00:00",
+        "status": "completed",
+        "source_sha256": {
+          "src/lab1/__init__.py": "4597cd6743deb8dc143f2be2f7757c8d8d8fb367716dbcb4cb9626a025265217",
+          "src/lab1/common.py": "6659501f6490e5dc1c72decbb48f1c745a2e876bea24a89fea32b381518677ce",
+          "src/lab1/run.py": "571163444bc3331b59263ba9bde6f4c027360a25983ab846dfb4e052b5a5bb39",
+          "task1_llm/srinidhi/config.json": "cf5cda1c11f81ea6837421c565364c0c235ff1483e41dadad9235ba0e8e0238b",
+          "task1_llm/srinidhi/src/gpt.py": "7498de5a36d1e6cb2d851d862dad47152cf73a82dd46fe2f5fbb5aa67a5627d9",
+          "task2_sentiment/srinidhi/config.json": "84c480d132b22cb2606a5f3139702ee75d523f90050f78e0e2772fae82f30ded",
+          "task2_sentiment/srinidhi/src/sentiment.py": "f381634c3d8ea45e1f0073734516699047656ea5aa61ba31f7955de4f50b6b1b",
+          "task3_gan/srinidhi/config.json": "0c88cb843e6c2abf42561cb6ceaf557787357646fb464a6c97632e0fefb83100",
+          "task3_gan/srinidhi/evaluate_local.py": "4cb02bb71263f3a507562a99dec4b485fbcd0ed1ff08fc3757f1886e015dacfc",
+          "task3_gan/srinidhi/src/cyclegan.py": "9d7348d09246c3923ad150a1d6a297d137d51adae5240a80d38989c7f6a2f927"
+        },
+        "environment": {
+          "captured_utc": "2026-09-19T02:09:12.984184+00:00",
+          "python": "3.12.3",
+          "platform": "Linux-6.11.0-26-generic-x86_64-with-glibc2.39",
+          "machine": "x86_64",
+          "packages": {
+            "torch": "2.11.0+cu128",
+            "torchvision": "0.26.0+cu128",
+            "numpy": "2.5.3",
+            "pandas": "3.0.6",
+            "scikit-learn": "1.9.1",
+            "scipy": "1.16.3",
+            "matplotlib": "3.11.2",
+            "datasets": "5.0.1",
+            "Pillow": "12.3.0",
+            "clean-fid": "0.1.35",
+            "lpips": "0.1.4",
+            "prdc": "0.2"
+          },
+          "cuda_available": true,
+          "cuda_build": "12.8",
+          "cudnn": 91900,
+          "gpus": [
+            {
+              "index": 0,
+              "name": "NVIDIA GeForce RTX 5090",
+              "memory_bytes": 33680326656,
+              "compute_capability": [
+                12,
+                0
+              ]
+            }
+          ],
+          "mps_available": false,
+          "nvidia_smi": "name, uuid, driver_version, memory.total [MiB]\nNVIDIA GeForce RTX 5090, GPU-1f89be66-27b1-f3fd-debe-6a3213d26d35, 570.153.02, 32607 MiB"
+        },
+        "test_policy": "No test predictions or test metrics; selection uses validation macro-F1 only",
+        "result": {
+          "model_name": "bilstm",
+          "selected_epoch": 10,
+          "selected_validation_macro_f1": 0.9588017632122099,
+          "parameter_count": 5305985,
+          "train_seconds": 1686.3448840710334,
+          "peak_cuda_memory_bytes": 229768704,
+          "completed_training_steps": 47256,
+          "test_evaluated": false
+        },
+        "ended_utc": "2026-09-19T02:38:45.741456+00:00",
+        "elapsed_seconds": 1772.7285250489367
+      },
+      "selection_metadata_file": "runs/part-b-tuning/bilstm_long_schedule_control/bilstm/validation_selection.json",
+      "selection_fields_used": [
+        "selected_epoch",
+        "selected_validation_macro_f1",
+        "parameter_count",
+        "train_seconds"
+      ],
+      "recipe": {
+        "name": "bilstm_long_schedule_control",
+        "model": "bilstm",
+        "hypothesis": "Control for longer schedule and patience before attributing gains to architecture.",
+        "overrides": {
+          "epochs": 12,
+          "early_stopping_patience": 4,
+          "num_workers": 2,
+          "checkpoint_every_steps": 1000,
+          "log_every_steps": 100
+        }
+      },
+      "recipe_path": "task2_sentiment/srinidhi/experiments/bilstm_long_schedule_control.json",
+      "recipe_sha256": "abc6a004f45c643cfd7ce8d43dfad8baa43d3598dcdf426fecb7c0dd72bec85a",
+      "source_metadata_sha256": {
+        "runs/part-b-tuning/bilstm_long_schedule_control/bilstm/checkpoints/best.pt": "ed03e33534f053c0b12ceb519c719ea9716c4ece948c20715d6a535543003529",
+        "runs/part-b-tuning/bilstm_long_schedule_control/bilstm/checkpoints/last.pt": "5902cbd3c37ce0537b3389a16321824a7bc70373d4a2a114bbd9e9700781eba5",
+        "runs/part-b-tuning/bilstm_long_schedule_control/bilstm/history.json": "102037915eea486ffa4e24805fa0aac7e6a8bd35044fed9884be89005eb73324",
+        "runs/part-b-tuning/bilstm_long_schedule_control/bilstm/validation_selection.json": "9f37b608715823a284627703715c9d2e049368843d08d64ca0711537382ec846",
+        "runs/part-b-tuning/bilstm_long_schedule_control/config.json": "e128e5a3eec8b17db5bae50fb810e7fe7bb7b1a5da8107758a098b9d0ea5ada4",
+        "runs/part-b-tuning/bilstm_long_schedule_control/provenance.json": "32155a56e6c563aa8fcc2d00936fc1dec26c75966aefe2f846e181c28b50bb66"
+      },
+      "decision": {
+        "selected": true,
+        "within_practical_band": true,
+        "gap_to_highest_validation_macro_f1": 0.0,
+        "reason": "Selected by parameter count, then validation score within the practical band."
+      }
+    },
+    "dilated_cnn": {
+      "candidate_id": "reference:dilated_cnn",
+      "model_name": "dilated_cnn",
+      "source_run": "runs/part-b-full",
+      "checkpoint": "runs/part-b-full/dilated_cnn/checkpoints/best.pt",
+      "sha256": "013aa085d21b988169e37951027b280966e5dd550aa7769752e5daf657d0ed8a",
+      "config": {
+        "mode": "full",
+        "seed": 2342,
+        "dataset": "fancyzhx/yelp_polarity",
+        "dataset_revision": "main",
+        "data_dir": "task2_sentiment/srinidhi/data_processed/full",
+        "train_limit": null,
+        "validation_limit": null,
+        "test_limit": null,
+        "vocabulary_size": 40000,
+        "min_frequency": 2,
+        "embedding_dim": 128,
+        "max_length": 384,
+        "batch_size": 128,
+        "epochs": 6,
+        "early_stopping_patience": 2,
+        "early_stopping_min_delta": 0.0001,
+        "mlp_hidden": 64,
+        "lstm_hidden": 96,
+        "cnn_channels": 128,
+        "dilations": [
+          1,
+          2,
+          4,
+          8
+        ],
+        "dropout": 0.3,
+        "cnn_dropout": 0.2,
+        "learning_rates": {
+          "maxpool_mlp": 0.0015,
+          "bilstm": 0.001,
+          "dilated_cnn": 0.0008
+        },
+        "weight_decay": 0.0001,
+        "gradient_clip": 1.0,
+        "amp": true,
+        "bootstrap_samples": 1000,
+        "cpu_threads": 2,
+        "raw_data_cache": "task2_sentiment/data/huggingface",
+        "encoded_cache": "task2_sentiment/srinidhi/data_processed/full_encoded",
+        "num_workers": 2,
+        "log_every_steps": 50
+      },
+      "validation_macro_f1": 0.9538923913031014,
+      "selected_epoch": 6,
+      "parameter_count": 5539073,
+      "train_seconds": 228.67676686507184,
+      "provenance": {
+        "task": "sentiment",
+        "mode": "full",
+        "device": "cuda",
+        "started_utc": "2026-09-19T01:40:08.215178+00:00",
+        "status": "completed",
+        "is_final_result": false,
+        "config": {
+          "mode": "full",
+          "seed": 2342,
+          "dataset": "fancyzhx/yelp_polarity",
+          "dataset_revision": "main",
+          "data_dir": "task2_sentiment/srinidhi/data_processed/full",
+          "train_limit": null,
+          "validation_limit": null,
+          "test_limit": null,
+          "vocabulary_size": 40000,
+          "min_frequency": 2,
+          "embedding_dim": 128,
+          "max_length": 384,
+          "batch_size": 128,
+          "epochs": 6,
+          "early_stopping_patience": 2,
+          "early_stopping_min_delta": 0.0001,
+          "mlp_hidden": 64,
+          "lstm_hidden": 96,
+          "cnn_channels": 128,
+          "dilations": [
+            1,
+            2,
+            4,
+            8
+          ],
+          "dropout": 0.3,
+          "cnn_dropout": 0.2,
+          "learning_rates": {
+            "maxpool_mlp": 0.0015,
+            "bilstm": 0.001,
+            "dilated_cnn": 0.0008
+          },
+          "weight_decay": 0.0001,
+          "gradient_clip": 1.0,
+          "amp": true,
+          "bootstrap_samples": 1000,
+          "cpu_threads": 2,
+          "raw_data_cache": "task2_sentiment/data/huggingface",
+          "encoded_cache": "task2_sentiment/srinidhi/data_processed/full_encoded",
+          "num_workers": 2,
+          "log_every_steps": 50
+        },
+        "source_sha256": {
+          "src/lab1/__init__.py": "4597cd6743deb8dc143f2be2f7757c8d8d8fb367716dbcb4cb9626a025265217",
+          "src/lab1/common.py": "6659501f6490e5dc1c72decbb48f1c745a2e876bea24a89fea32b381518677ce",
+          "src/lab1/run.py": "571163444bc3331b59263ba9bde6f4c027360a25983ab846dfb4e052b5a5bb39",
+          "task1_llm/srinidhi/config.json": "cf5cda1c11f81ea6837421c565364c0c235ff1483e41dadad9235ba0e8e0238b",
+          "task1_llm/srinidhi/src/gpt.py": "7498de5a36d1e6cb2d851d862dad47152cf73a82dd46fe2f5fbb5aa67a5627d9",
+          "task2_sentiment/srinidhi/config.json": "84c480d132b22cb2606a5f3139702ee75d523f90050f78e0e2772fae82f30ded",
+          "task2_sentiment/srinidhi/src/sentiment.py": "24619af4a8f2faa814e0715a7307568ea4e5063a2644ceb12e81b19ee2fabafc",
+          "task3_gan/srinidhi/config.json": "0c88cb843e6c2abf42561cb6ceaf557787357646fb464a6c97632e0fefb83100",
+          "task3_gan/srinidhi/evaluate_local.py": "4cb02bb71263f3a507562a99dec4b485fbcd0ed1ff08fc3757f1886e015dacfc",
+          "task3_gan/srinidhi/src/cyclegan.py": "9d7348d09246c3923ad150a1d6a297d137d51adae5240a80d38989c7f6a2f927"
+        },
+        "environment": {
+          "captured_utc": "2026-09-19T01:40:08.255173+00:00",
+          "python": "3.12.3",
+          "platform": "Linux-6.11.0-26-generic-x86_64-with-glibc2.39",
+          "machine": "x86_64",
+          "packages": {
+            "torch": "2.11.0+cu128",
+            "torchvision": "0.26.0+cu128",
+            "numpy": "2.5.3",
+            "pandas": "3.0.6",
+            "scikit-learn": "1.9.1",
+            "scipy": "1.16.3",
+            "matplotlib": "3.11.2",
+            "datasets": "5.0.1",
+            "Pillow": "12.3.0",
+            "clean-fid": "0.1.35",
+            "lpips": "0.1.4",
+            "prdc": "0.2"
+          },
+          "cuda_available": true,
+          "cuda_build": "12.8",
+          "cudnn": 91900,
+          "gpus": [
+            {
+              "index": 0,
+              "name": "NVIDIA GeForce RTX 5090",
+              "memory_bytes": 33680326656,
+              "compute_capability": [
+                12,
+                0
+              ]
+            }
+          ],
+          "mps_available": false,
+          "nvidia_smi": "name, uuid, driver_version, memory.total [MiB]\nNVIDIA GeForce RTX 5090, GPU-1f89be66-27b1-f3fd-debe-6a3213d26d35, 570.153.02, 32607 MiB"
+        },
+        "resumed": false,
+        "ended_utc": "2026-09-19T02:02:07.557019+00:00",
+        "elapsed_seconds": 1319.2691325530177,
+        "summary": {
+          "mode": "full",
+          "synthetic": false,
+          "models": {
+            "maxpool_mlp": {
+              "count": 38000,
+              "accuracy": 0.932,
+              "mcc": 0.8640184006764469,
+              "brier": 0.05268637490781428,
+              "confusion_matrix": [
+                [
+                  17770,
+                  1230
+                ],
+                [
+                  1354,
+                  17646
+                ]
+              ],
+              "threshold": 0.5,
+              "macro": {
+                "precision": 0.9320184008723873,
+                "recall": 0.9319999999999999,
+                "f1": 0.9319992759147275
+              },
+              "micro": {
+                "precision": 0.932,
+                "recall": 0.932,
+                "f1": 0.932
+              },
+              "weighted": {
+                "precision": 0.9320184008723874,
+                "recall": 0.932,
+                "f1": 0.9319992759147273
+              },
+              "per_class": [
+                {
+                  "label": 0,
+                  "precision": 0.9291989123614307,
+                  "recall": 0.9352631578947368,
+                  "f1": 0.9322211730143741,
+                  "support": 19000
+                },
+                {
+                  "label": 1,
+                  "precision": 0.9348378893833439,
+                  "recall": 0.9287368421052632,
+                  "f1": 0.9317773788150808,
+                  "support": 19000
+                }
+              ],
+              "ece_15": 0.026869014960735186,
+              "ece_definition": "Top-label confidence ECE; 15 equal-width bins on [0,1]; threshold 0.5.",
+              "roc_auc": 0.9815935180055401,
+              "pr_auc_trapezoidal": 0.9823367584933611,
+              "bootstrap_95_percentile": {
+                "accuracy": {
+                  "low": 0.9291309210526316,
+                  "high": 0.9346059210526315
+                },
+                "macro_f1": {
+                  "low": 0.9291157936160613,
+                  "high": 0.9346058885034065
+                },
+                "mcc": {
+                  "low": 0.8582515617296906,
+                  "high": 0.8692453751576493
+                }
+              },
+              "bootstrap_samples": 1000,
+              "uncertainty_scope": "IID test-row resampling; does not include training-seed uncertainty.",
+              "test_loss": 0.18763503551483154,
+              "selected_epoch": 5,
+              "selected_validation_macro_f1": 0.926570295281343,
+              "parameter_count": 5128321,
+              "train_seconds": 97.03223231015727,
+              "peak_cuda_memory_bytes": 162652160,
+              "mode": "full",
+              "synthetic": false,
+              "resume_scaler_status": "not_resumed",
+              "completed_training_steps": 23628
+            },
+            "bilstm": {
+              "count": 38000,
+              "accuracy": 0.9592631578947368,
+              "mcc": 0.9185422746459667,
+              "brier": 0.031069280768833557,
+              "confusion_matrix": [
+                [
+                  18170,
+                  830
+                ],
+                [
+                  718,
+                  18282
+                ]
+              ],
+              "threshold": 0.5,
+              "macro": {
+                "precision": 0.9592791168898678,
+                "recall": 0.9592631578947368,
+                "f1": 0.9592628040115052
+              },
+              "micro": {
+                "precision": 0.9592631578947368,
+                "recall": 0.9592631578947368,
+                "f1": 0.9592631578947368
+              },
+              "weighted": {
+                "precision": 0.9592791168898678,
+                "recall": 0.9592631578947368,
+                "f1": 0.9592628040115052
+              },
+              "per_class": [
+                {
+                  "label": 0,
+                  "precision": 0.9619864464210081,
+                  "recall": 0.9563157894736842,
+                  "f1": 0.9591427364864865,
+                  "support": 19000
+                },
+                {
+                  "label": 1,
+                  "precision": 0.9565717873587275,
+                  "recall": 0.9622105263157895,
+                  "f1": 0.9593828715365239,
+                  "support": 19000
+                }
+              ],
+              "ece_15": 0.005893806638629606,
+              "ece_definition": "Top-label confidence ECE; 15 equal-width bins on [0,1]; threshold 0.5.",
+              "roc_auc": 0.9925911426592796,
+              "pr_auc_trapezoidal": 0.9928007780284408,
+              "bootstrap_95_percentile": {
+                "accuracy": {
+                  "low": 0.957183552631579,
+                  "high": 0.9612901315789473
+                },
+                "macro_f1": {
+                  "low": 0.9571818259492425,
+                  "high": 0.961286535179993
+                },
+                "mcc": {
+                  "low": 0.914376740922127,
+                  "high": 0.92257854334947
+                }
+              },
+              "bootstrap_samples": 1000,
+              "uncertainty_scope": "IID test-row resampling; does not include training-seed uncertainty.",
+              "test_loss": 0.10942320688147295,
+              "selected_epoch": 4,
+              "selected_validation_macro_f1": 0.9566069090104472,
+              "parameter_count": 5305985,
+              "train_seconds": 881.1853327440331,
+              "peak_cuda_memory_bytes": 228746752,
+              "mode": "full",
+              "synthetic": false,
+              "resume_scaler_status": "not_resumed",
+              "completed_training_steps": 23628
+            },
+            "dilated_cnn": {
+              "count": 38000,
+              "accuracy": 0.9580526315789474,
+              "mcc": 0.9161122114258923,
+              "brier": 0.032042928589741664,
+              "confusion_matrix": [
+                [
+                  18240,
+                  760
+                ],
+                [
+                  834,
+                  18166
+                ]
+              ],
+              "threshold": 0.5,
+              "macro": {
+                "precision": 0.9580595798732947,
+                "recall": 0.9580526315789474,
+                "f1": 0.9580524725036976
+              },
+              "micro": {
+                "precision": 0.9580526315789474,
+                "recall": 0.9580526315789474,
+                "f1": 0.9580526315789474
+              },
+              "weighted": {
+                "precision": 0.9580595798732946,
+                "recall": 0.9580526315789474,
+                "f1": 0.9580524725036976
+              },
+              "per_class": [
+                {
+                  "label": 0,
+                  "precision": 0.9562755583516829,
+                  "recall": 0.96,
+                  "f1": 0.9581341597940852,
+                  "support": 19000
+                },
+                {
+                  "label": 1,
+                  "precision": 0.9598436013949064,
+                  "recall": 0.9561052631578948,
+                  "f1": 0.9579707852133101,
+                  "support": 19000
+                }
+              ],
+              "ece_15": 0.0099814826210208,
+              "ece_definition": "Top-label confidence ECE; 15 equal-width bins on [0,1]; threshold 0.5.",
+              "roc_auc": 0.9921975650969529,
+              "pr_auc_trapezoidal": 0.9924417241296837,
+              "bootstrap_95_percentile": {
+                "accuracy": {
+                  "low": 0.9558947368421052,
+                  "high": 0.9599743421052631
+                },
+                "macro_f1": {
+                  "low": 0.9558939342338848,
+                  "high": 0.9599743397485918
+                },
+                "mcc": {
+                  "low": 0.911803816581789,
+                  "high": 0.9199661087088662
+                }
+              },
+              "bootstrap_samples": 1000,
+              "uncertainty_scope": "IID test-row resampling; does not include training-seed uncertainty.",
+              "test_loss": 0.11467858448154047,
+              "selected_epoch": 6,
+              "selected_validation_macro_f1": 0.9538923913031014,
+              "parameter_count": 5539073,
+              "train_seconds": 228.67676686507184,
+              "peak_cuda_memory_bytes": 470494720,
+              "mode": "full",
+              "synthetic": false,
+              "resume_scaler_status": "not_resumed",
+              "completed_training_steps": 23628
+            }
+          },
+          "output_dir": "runs/part-b-full",
+          "manual_error_review_complete": false
+        }
+      },
+      "selection_metadata_file": "runs/part-b-full/dilated_cnn/metrics.json",
+      "selection_fields_used": [
+        "selected_epoch",
+        "selected_validation_macro_f1",
+        "parameter_count",
+        "train_seconds"
+      ],
+      "recipe": null,
+      "source_metadata_sha256": {
+        "runs/part-b-full/dilated_cnn/checkpoints/best.pt": "013aa085d21b988169e37951027b280966e5dd550aa7769752e5daf657d0ed8a",
+        "runs/part-b-full/dilated_cnn/checkpoints/last.pt": "b0f85b1e7df44b7fdaacf6037519d3e9c2ad965a3599c74eed2a8069ad3fcb16",
+        "runs/part-b-full/dilated_cnn/history.json": "9ff02d4b95085522693f06aef0a330142d2a0b0c71b81c10c443ac92a1929c83",
+        "runs/part-b-full/dilated_cnn/metrics.json": "8adcdf3db5cddb1f3c1d243098e488c313d1dcaf12716860048acb6ae98d9a07",
+        "runs/part-b-full/config.json": "7080e2b6f917a91745dfcb8cccd71830c3c157d80590753ab9ef621008bc51e3",
+        "runs/part-b-full/run_summary.json": "ea5dd604493f70c438b51253ea0611264190a21b160f003869b6fa7aba29a833"
+      },
+      "decision": {
+        "selected": true,
+        "within_practical_band": true,
+        "gap_to_highest_validation_macro_f1": 0.0,
+        "reason": "Selected by parameter count, then validation score within the practical band."
+      }
+    }
+  },
+  "config": {
+    "mode": "full",
+    "seed": 2342,
+    "dataset": "fancyzhx/yelp_polarity",
+    "dataset_revision": "main",
+    "data_dir": "task2_sentiment/srinidhi/data_processed/full",
+    "train_limit": null,
+    "validation_limit": null,
+    "test_limit": null,
+    "vocabulary_size": 40000,
+    "min_frequency": 2,
+    "embedding_dim": 128,
+    "max_length": 384,
+    "batch_size": 128,
+    "epochs": 6,
+    "early_stopping_patience": 2,
+    "early_stopping_min_delta": 0.0001,
+    "mlp_hidden": 64,
+    "lstm_hidden": 96,
+    "cnn_channels": 128,
+    "dilations": [
+      1,
+      2,
+      4,
+      8
+    ],
+    "dropout": 0.3,
+    "cnn_dropout": 0.2,
+    "learning_rates": {
+      "maxpool_mlp": 0.0015,
+      "bilstm": 0.001,
+      "dilated_cnn": 0.0008
+    },
+    "weight_decay": 0.0001,
+    "gradient_clip": 1.0,
+    "amp": true,
+    "bootstrap_samples": 1000,
+    "cpu_threads": 2,
+    "raw_data_cache": "task2_sentiment/data/huggingface",
+    "encoded_cache": "task2_sentiment/srinidhi/data_processed/full_encoded",
+    "artifact_type": "assembled_validation_selection",
+    "model_configs": {
+      "maxpool_mlp": {
+        "mode": "full",
+        "seed": 2342,
+        "dataset": "fancyzhx/yelp_polarity",
+        "dataset_revision": "main",
+        "data_dir": "task2_sentiment/srinidhi/data_processed/full",
+        "train_limit": null,
+        "validation_limit": null,
+        "test_limit": null,
+        "vocabulary_size": 40000,
+        "min_frequency": 2,
+        "embedding_dim": 128,
+        "max_length": 384,
+        "batch_size": 128,
+        "epochs": 6,
+        "early_stopping_patience": 2,
+        "early_stopping_min_delta": 0.0001,
+        "mlp_hidden": 64,
+        "lstm_hidden": 96,
+        "cnn_channels": 128,
+        "dilations": [
+          1,
+          2,
+          4,
+          8
+        ],
+        "dropout": 0.3,
+        "cnn_dropout": 0.2,
+        "learning_rates": {
+          "maxpool_mlp": 0.0015,
+          "bilstm": 0.001,
+          "dilated_cnn": 0.0008
+        },
+        "weight_decay": 0.0001,
+        "gradient_clip": 1.0,
+        "amp": true,
+        "bootstrap_samples": 1000,
+        "cpu_threads": 2,
+        "raw_data_cache": "task2_sentiment/data/huggingface",
+        "encoded_cache": "task2_sentiment/srinidhi/data_processed/full_encoded",
+        "num_workers": 2,
+        "log_every_steps": 50
+      },
+      "bilstm": {
+        "mode": "full",
+        "seed": 2342,
+        "dataset": "fancyzhx/yelp_polarity",
+        "dataset_revision": "main",
+        "data_dir": "task2_sentiment/srinidhi/data_processed/full",
+        "train_limit": null,
+        "validation_limit": null,
+        "test_limit": null,
+        "vocabulary_size": 40000,
+        "min_frequency": 2,
+        "embedding_dim": 128,
+        "max_length": 384,
+        "batch_size": 128,
+        "epochs": 12,
+        "early_stopping_patience": 4,
+        "early_stopping_min_delta": 0.0001,
+        "mlp_hidden": 64,
+        "lstm_hidden": 96,
+        "cnn_channels": 128,
+        "dilations": [
+          1,
+          2,
+          4,
+          8
+        ],
+        "dropout": 0.3,
+        "cnn_dropout": 0.2,
+        "learning_rates": {
+          "maxpool_mlp": 0.0015,
+          "bilstm": 0.001,
+          "dilated_cnn": 0.0008
+        },
+        "weight_decay": 0.0001,
+        "gradient_clip": 1.0,
+        "amp": true,
+        "bootstrap_samples": 1000,
+        "cpu_threads": 2,
+        "raw_data_cache": "task2_sentiment/data/huggingface",
+        "encoded_cache": "task2_sentiment/srinidhi/data_processed/full_encoded",
+        "num_workers": 2,
+        "checkpoint_every_steps": 1000,
+        "log_every_steps": 100,
+        "validation_only": true
+      },
+      "dilated_cnn": {
+        "mode": "full",
+        "seed": 2342,
+        "dataset": "fancyzhx/yelp_polarity",
+        "dataset_revision": "main",
+        "data_dir": "task2_sentiment/srinidhi/data_processed/full",
+        "train_limit": null,
+        "validation_limit": null,
+        "test_limit": null,
+        "vocabulary_size": 40000,
+        "min_frequency": 2,
+        "embedding_dim": 128,
+        "max_length": 384,
+        "batch_size": 128,
+        "epochs": 6,
+        "early_stopping_patience": 2,
+        "early_stopping_min_delta": 0.0001,
+        "mlp_hidden": 64,
+        "lstm_hidden": 96,
+        "cnn_channels": 128,
+        "dilations": [
+          1,
+          2,
+          4,
+          8
+        ],
+        "dropout": 0.3,
+        "cnn_dropout": 0.2,
+        "learning_rates": {
+          "maxpool_mlp": 0.0015,
+          "bilstm": 0.001,
+          "dilated_cnn": 0.0008
+        },
+        "weight_decay": 0.0001,
+        "gradient_clip": 1.0,
+        "amp": true,
+        "bootstrap_samples": 1000,
+        "cpu_threads": 2,
+        "raw_data_cache": "task2_sentiment/data/huggingface",
+        "encoded_cache": "task2_sentiment/srinidhi/data_processed/full_encoded",
+        "num_workers": 2,
+        "log_every_steps": 50
+      }
+    }
+  },
+  "environment": {
+    "captured_utc": "2026-09-19T01:40:08.255173+00:00",
+    "python": "3.12.3",
+    "platform": "Linux-6.11.0-26-generic-x86_64-with-glibc2.39",
+    "machine": "x86_64",
+    "packages": {
+      "torch": "2.11.0+cu128",
+      "torchvision": "0.26.0+cu128",
+      "numpy": "2.5.3",
+      "pandas": "3.0.6",
+      "scikit-learn": "1.9.1",
+      "scipy": "1.16.3",
+      "matplotlib": "3.11.2",
+      "datasets": "5.0.1",
+      "Pillow": "12.3.0",
+      "clean-fid": "0.1.35",
+      "lpips": "0.1.4",
+      "prdc": "0.2"
+    },
+    "cuda_available": true,
+    "cuda_build": "12.8",
+    "cudnn": 91900,
+    "gpus": [
+      {
+        "index": 0,
+        "name": "NVIDIA GeForce RTX 5090",
+        "memory_bytes": 33680326656,
+        "compute_capability": [
+          12,
+          0
+        ]
+      }
+    ],
+    "mps_available": false,
+    "nvidia_smi": "name, uuid, driver_version, memory.total [MiB]\nNVIDIA GeForce RTX 5090, GPU-1f89be66-27b1-f3fd-debe-6a3213d26d35, 570.153.02, 32607 MiB",
+    "cpu": {
+      "model": "AMD EPYC 7543 32-Core Processor",
+      "source": "verification/part_b_cpu_hardware.txt",
+      "sha256": "6d700907ed161b02be81a2c82e78819b1a991afd131d25273f9b58d3d84c3ee9",
+      "lscpu": "Architecture:                         x86_64\nCPU op-mode(s):                       32-bit, 64-bit\nAddress sizes:                        48 bits physical, 48 bits virtual\nByte Order:                           Little Endian\nCPU(s):                               120\nOn-line CPU(s) list:                  0-119\nVendor ID:                            AuthenticAMD\nModel name:                           AMD EPYC 7543 32-Core Processor\nCPU family:                           25\nModel:                                1\nThread(s) per core:                   1\nCore(s) per socket:                   60\nSocket(s):                            2\nStepping:                             1\nBogoMIPS:                             5599.99\nFlags:                                fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm rep_good nopl cpuid extd_apicid tsc_known_freq pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm cmp_legacy cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw perfctr_core ssbd ibrs ibpb stibp vmmcall fsgsbase tsc_adjust bmi1 avx2 smep bmi2 invpcid rdseed adx smap clflushopt clwb sha_ni xsaveopt xsavec xgetbv1 xsaves clzero xsaveerptr wbnoinvd arat umip pku ospke vaes vpclmulqdq rdpid arch_capabilities\nHypervisor vendor:                    KVM\nVirtualization type:                  full\nL1d cache:                            7.5 MiB (120 instances)\nL1i cache:                            7.5 MiB (120 instances)\nL2 cache:                             60 MiB (120 instances)\nL3 cache:                             1.9 GiB (120 instances)\nNUMA node(s):                         2\nNUMA node0 CPU(s):                    0-59\nNUMA node1 CPU(s):                    60-119\nVulnerability Gather data sampling:   Not affected\nVulnerability Itlb multihit:          Not affected\nVulnerability L1tf:                   Not affected\nVulnerability Mds:                    Not affected\nVulnerability Meltdown:               Not affected\nVulnerability Mmio stale data:        Not affected\nVulnerability Reg file data sampling: Not affected\nVulnerability Retbleed:               Not affected\nVulnerability Spec rstack overflow:   Vulnerable: Safe RET, no microcode\nVulnerability Spec store bypass:      Mitigation; Speculative Store Bypass disabled via prctl\nVulnerability Spectre v1:             Mitigation; usercopy/swapgs barriers and __user pointer sanitization\nVulnerability Spectre v2:             Mitigation; Retpolines; IBPB conditional; IBRS_FW; STIBP disabled; RSB filling; PBRSB-eIBRS Not affected; BHI Not affected\nVulnerability Srbds:                  Not affected\nVulnerability Tsx async abort:        Not affected\n",
+      "scope": "Recorded Part B training host"
+    }
+  },
+  "environment_scope": "Representative source training environment; per-model originals are in source_runs.",
+  "evaluation_environment": {
+    "captured_utc": "2026-09-19T02:44:27.599322+00:00",
+    "python": "3.12.14",
+    "platform": "macOS-27.0-arm64-arm-64bit",
+    "machine": "arm64",
+    "packages": {
+      "torch": "2.11.0",
+      "torchvision": "0.26.0",
+      "numpy": "2.5.3",
+      "pandas": "3.0.6",
+      "scikit-learn": "1.9.1",
+      "scipy": "1.16.3",
+      "matplotlib": "3.11.2",
+      "datasets": "5.0.1",
+      "Pillow": "12.3.0",
+      "clean-fid": "0.1.35",
+      "lpips": "0.1.4",
+      "prdc": "0.2"
+    },
+    "cuda_available": false,
+    "cuda_build": null,
+    "cudnn": null,
+    "gpus": [],
+    "mps_available": true
+  },
+  "device": "cpu",
+  "source_sha256": {
+    "src/lab1/__init__.py": "4597cd6743deb8dc143f2be2f7757c8d8d8fb367716dbcb4cb9626a025265217",
+    "src/lab1/common.py": "6659501f6490e5dc1c72decbb48f1c745a2e876bea24a89fea32b381518677ce",
+    "src/lab1/run.py": "571163444bc3331b59263ba9bde6f4c027360a25983ab846dfb4e052b5a5bb39",
+    "task1_llm/srinidhi/config.json": "cf5cda1c11f81ea6837421c565364c0c235ff1483e41dadad9235ba0e8e0238b",
+    "task1_llm/srinidhi/src/gpt.py": "7498de5a36d1e6cb2d851d862dad47152cf73a82dd46fe2f5fbb5aa67a5627d9",
+    "task2_sentiment/srinidhi/config.json": "84c480d132b22cb2606a5f3139702ee75d523f90050f78e0e2772fae82f30ded",
+    "task2_sentiment/srinidhi/src/sentiment.py": "f381634c3d8ea45e1f0073734516699047656ea5aa61ba31f7955de4f50b6b1b",
+    "task3_gan/srinidhi/config.json": "0c88cb843e6c2abf42561cb6ceaf557787357646fb464a6c97632e0fefb83100",
+    "task3_gan/srinidhi/evaluate_local.py": "4cb02bb71263f3a507562a99dec4b485fbcd0ed1ff08fc3757f1886e015dacfc",
+    "task3_gan/srinidhi/src/cyclegan.py": "9d7348d09246c3923ad150a1d6a297d137d51adae5240a80d38989c7f6a2f927",
+    "scripts/select_sentiment_candidates.py": "19613af9aead9cd6ca1ccb609ff2f8ac622b4a7e1cb558667b1944634fb8972b",
+    "scripts/finalize_sentiment_selection.py": "7debaa2eebd40c3f568496cad2a71a39f86115bc7118abf5b566bf6de20b02da",
+    "scripts/tune_sentiment.py": "d82c7a38d525e4127f0b34217121a2ae06cc539a20a7f8fae3e2030d9b8271cd"
+  },
+  "source_sha256_scope": "Current project sources and selector/finalizer/tuning scripts; original training evidence remains in source_runs.",
+  "started_utc": "2026-09-19T02:44:27.588464+00:00",
+  "summary": {
+    "mode": "full",
+    "synthetic": false,
+    "models": {
+      "maxpool_mlp": {
+        "count": 38000,
+        "accuracy": 0.932,
+        "mcc": 0.8640184006764469,
+        "brier": 0.05268637505515327,
+        "confusion_matrix": [
+          [
+            17770,
+            1230
+          ],
+          [
+            1354,
+            17646
+          ]
+        ],
+        "threshold": 0.5,
+        "macro": {
+          "precision": 0.9320184008723873,
+          "recall": 0.9319999999999999,
+          "f1": 0.9319992759147275
+        },
+        "micro": {
+          "precision": 0.932,
+          "recall": 0.932,
+          "f1": 0.932
+        },
+        "weighted": {
+          "precision": 0.9320184008723874,
+          "recall": 0.932,
+          "f1": 0.9319992759147273
+        },
+        "per_class": [
+          {
+            "label": 0,
+            "precision": 0.9291989123614307,
+            "recall": 0.9352631578947368,
+            "f1": 0.9322211730143741,
+            "support": 19000
+          },
+          {
+            "label": 1,
+            "precision": 0.9348378893833439,
+            "recall": 0.9287368421052632,
+            "f1": 0.9317773788150808,
+            "support": 19000
+          }
+        ],
+        "ece_15": 0.026869014426738343,
+        "ece_definition": "Top-label confidence ECE; 15 equal-width bins on [0,1]; threshold 0.5.",
+        "roc_auc": 0.9815935166204987,
+        "pr_auc_trapezoidal": 0.9823367570403351,
+        "bootstrap_95_percentile": {
+          "accuracy": {
+            "low": 0.9291309210526316,
+            "high": 0.9346059210526315
+          },
+          "macro_f1": {
+            "low": 0.9291157936160613,
+            "high": 0.9346058885034065
+          },
+          "mcc": {
+            "low": 0.8582515617296906,
+            "high": 0.8692453751576493
+          }
+        },
+        "bootstrap_samples": 1000,
+        "uncertainty_scope": "IID test-row resampling; does not include training-seed uncertainty.",
+        "test_loss": 0.18763503535170303,
+        "selected_epoch": 5,
+        "selected_validation_macro_f1": 0.926570295281343,
+        "parameter_count": 5128321,
+        "mode": "full",
+        "synthetic": false,
+        "train_seconds": 97.03223231015727,
+        "peak_cuda_memory_bytes": 162652160,
+        "resume_scaler_status": "checkpoint_evaluation_only",
+        "completed_training_steps": 23628
+      },
+      "bilstm": {
+        "count": 38000,
+        "accuracy": 0.9601052631578947,
+        "mcc": 0.9202993688101679,
+        "brier": 0.030415292606101676,
+        "confusion_matrix": [
+          [
+            18110,
+            890
+          ],
+          [
+            626,
+            18374
+          ]
+        ],
+        "threshold": 0.5,
+        "macro": {
+          "precision": 0.9601941099409597,
+          "recall": 0.9601052631578948,
+          "f1": 0.9601033375084563
+        },
+        "micro": {
+          "precision": 0.9601052631578947,
+          "recall": 0.9601052631578947,
+          "f1": 0.9601052631578947
+        },
+        "weighted": {
+          "precision": 0.9601941099409597,
+          "recall": 0.9601052631578947,
+          "f1": 0.9601033375084562
+        },
+        "per_class": [
+          {
+            "label": 0,
+            "precision": 0.9665883859948762,
+            "recall": 0.9531578947368421,
+            "f1": 0.9598261606953572,
+            "support": 19000
+          },
+          {
+            "label": 1,
+            "precision": 0.9537998338870431,
+            "recall": 0.9670526315789474,
+            "f1": 0.9603805143215555,
+            "support": 19000
+          }
+        ],
+        "ece_15": 0.011760703768658754,
+        "ece_definition": "Top-label confidence ECE; 15 equal-width bins on [0,1]; threshold 0.5.",
+        "roc_auc": 0.9932552063711912,
+        "pr_auc_trapezoidal": 0.993373187998623,
+        "bootstrap_95_percentile": {
+          "accuracy": {
+            "low": 0.9581309210526316,
+            "high": 0.9621052631578947
+          },
+          "macro_f1": {
+            "low": 0.9581307596060316,
+            "high": 0.9621032517280533
+          },
+          "mcc": {
+            "low": 0.916372769742044,
+            "high": 0.9242827954223712
+          }
+        },
+        "bootstrap_samples": 1000,
+        "uncertainty_scope": "IID test-row resampling; does not include training-seed uncertainty.",
+        "test_loss": 0.11025270241185238,
+        "selected_epoch": 10,
+        "selected_validation_macro_f1": 0.9588017632122099,
+        "parameter_count": 5305985,
+        "mode": "full",
+        "synthetic": false,
+        "train_seconds": 1686.3448840710334,
+        "peak_cuda_memory_bytes": 229768704,
+        "resume_scaler_status": "checkpoint_evaluation_only",
+        "completed_training_steps": 47256
+      },
+      "dilated_cnn": {
+        "count": 38000,
+        "accuracy": 0.9580263157894737,
+        "mcc": 0.9160597684989896,
+        "brier": 0.032042736446366626,
+        "confusion_matrix": [
+          [
+            18240,
+            760
+          ],
+          [
+            835,
+            18165
+          ]
+        ],
+        "threshold": 0.5,
+        "macro": {
+          "precision": 0.9580334527373175,
+          "recall": 0.9580263157894737,
+          "f1": 0.9580261522833148
+        },
+        "micro": {
+          "precision": 0.9580263157894737,
+          "recall": 0.9580263157894737,
+          "f1": 0.9580263157894737
+        },
+        "weighted": {
+          "precision": 0.9580334527373174,
+          "recall": 0.9580263157894737,
+          "f1": 0.9580261522833148
+        },
+        "per_class": [
+          {
+            "label": 0,
+            "precision": 0.9562254259501966,
+            "recall": 0.96,
+            "f1": 0.9581089954038082,
+            "support": 19000
+          },
+          {
+            "label": 1,
+            "precision": 0.9598414795244385,
+            "recall": 0.9560526315789474,
+            "f1": 0.9579433091628213,
+            "support": 19000
+          }
+        ],
+        "ece_15": 0.010007958044863433,
+        "ece_definition": "Top-label confidence ECE; 15 equal-width bins on [0,1]; threshold 0.5.",
+        "roc_auc": 0.9921975623268698,
+        "pr_auc_trapezoidal": 0.9924416943377992,
+        "bootstrap_95_percentile": {
+          "accuracy": {
+            "low": 0.9558684210526316,
+            "high": 0.9599736842105263
+          },
+          "macro_f1": {
+            "low": 0.9558682737716573,
+            "high": 0.9599723029606714
+          },
+          "mcc": {
+            "low": 0.9117483576217921,
+            "high": 0.9199480805536716
+          }
+        },
+        "bootstrap_samples": 1000,
+        "uncertainty_scope": "IID test-row resampling; does not include training-seed uncertainty.",
+        "test_loss": 0.11467752776647869,
+        "selected_epoch": 6,
+        "selected_validation_macro_f1": 0.9538923913031014,
+        "parameter_count": 5539073,
+        "mode": "full",
+        "synthetic": false,
+        "train_seconds": 228.67676686507184,
+        "peak_cuda_memory_bytes": 470494720,
+        "resume_scaler_status": "checkpoint_evaluation_only",
+        "completed_training_steps": 23628
+      }
+    },
+    "paired_mcnemar": {
+      "bilstm": {
+        "table": [
+          [
+            34796,
+            620
+          ],
+          [
+            1688,
+            896
+          ]
+        ],
+        "table_definition": "Rows baseline correct/incorrect, columns other correct/incorrect",
+        "discordant_pairs": 2308,
+        "pvalue_exact_two_sided": 1.8006117900641602e-113,
+        "test": "Paired exact McNemar (binomial), no continuity correction",
+        "multiple_comparisons": "Two prespecified baseline comparisons; p-values are unadjusted."
+      },
+      "dilated_cnn": {
+        "table": [
+          [
+            34881,
+            535
+          ],
+          [
+            1524,
+            1060
+          ]
+        ],
+        "table_definition": "Rows baseline correct/incorrect, columns other correct/incorrect",
+        "discordant_pairs": 2059,
+        "pvalue_exact_two_sided": 1.776784927498226e-109,
+        "test": "Paired exact McNemar (binomial), no continuity correction",
+        "multiple_comparisons": "Two prespecified baseline comparisons; p-values are unadjusted."
+      }
+    },
+    "manual_error_review_complete": false,
+    "artifact_type": "assembled_validation_selection",
+    "selection_manifest_sha256": "b24b1372d41072e7d703fa2a8a0cee7ff10bbd2fba507a169f8281cf34324ebd",
+    "fingerprint": "46cab25959c841830bee44977b7bb78bf829d5420c90869e8d073736efa09e31"
+  },
+  "ended_utc": "2026-09-19T02:51:22.065929+00:00",
+  "elapsed_seconds": 414.37110837499495
+}

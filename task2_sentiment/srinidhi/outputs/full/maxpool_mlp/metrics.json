@@ -1,0 +1,78 @@
+{
+  "count": 38000,
+  "accuracy": 0.932,
+  "mcc": 0.8640184006764469,
+  "brier": 0.05268637505515327,
+  "confusion_matrix": [
+    [
+      17770,
+      1230
+    ],
+    [
+      1354,
+      17646
+    ]
+  ],
+  "threshold": 0.5,
+  "macro": {
+    "precision": 0.9320184008723873,
+    "recall": 0.9319999999999999,
+    "f1": 0.9319992759147275
+  },
+  "micro": {
+    "precision": 0.932,
+    "recall": 0.932,
+    "f1": 0.932
+  },
+  "weighted": {
+    "precision": 0.9320184008723874,
+    "recall": 0.932,
+    "f1": 0.9319992759147273
+  },
+  "per_class": [
+    {
+      "label": 0,
+      "precision": 0.9291989123614307,
+      "recall": 0.9352631578947368,
+      "f1": 0.9322211730143741,
+      "support": 19000
+    },
+    {
+      "label": 1,
+      "precision": 0.9348378893833439,
+      "recall": 0.9287368421052632,
+      "f1": 0.9317773788150808,
+      "support": 19000
+    }
+  ],
+  "ece_15": 0.026869014426738343,
+  "ece_definition": "Top-label confidence ECE; 15 equal-width bins on [0,1]; threshold 0.5.",
+  "roc_auc": 0.9815935166204987,
+  "pr_auc_trapezoidal": 0.9823367570403351,
+  "bootstrap_95_percentile": {
+    "accuracy": {
+      "low": 0.9291309210526316,
+      "high": 0.9346059210526315
+    },
+    "macro_f1": {
+      "low": 0.9291157936160613,
+      "high": 0.9346058885034065
+    },
+    "mcc": {
+      "low": 0.8582515617296906,
+      "high": 0.8692453751576493
+    }
+  },
+  "bootstrap_samples": 1000,
+  "uncertainty_scope": "IID test-row resampling; does not include training-seed uncertainty.",
+  "test_loss": 0.18763503535170303,
+  "selected_epoch": 5,
+  "selected_validation_macro_f1": 0.926570295281343,
+  "parameter_count": 5128321,
+  "mode": "full",
+  "synthetic": false,
+  "train_seconds": 97.03223231015727,
+  "peak_cuda_memory_bytes": 162652160,
+  "resume_scaler_status": "checkpoint_evaluation_only",
+  "completed_training_steps": 23628
+}

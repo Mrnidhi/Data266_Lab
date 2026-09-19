@@ -32,6 +32,9 @@ TUNABLE_KEYS = {
     "raw_data_cache", "offline", "num_workers", "cpu_threads",
     "checkpoint_every_steps", "log_every_steps",
 }
+ORCHESTRATION_SCRIPTS = (
+    "select_sentiment_candidates.py", "finalize_sentiment_selection.py", "tune_sentiment.py",
+)
 
 
 def digest(path):
@@ -44,6 +47,14 @@ def digest(path):
 
 def read_json(path):
     return json.loads(Path(path).read_text())
+
+
+def evaluation_code_manifest(root):
+    """Record current evaluation tooling without rewriting training provenance."""
+    hashes = code_manifest(root)
+    script_dir = Path(__file__).resolve().parent
+    hashes.update({f"scripts/{name}": digest(script_dir / name) for name in ORCHESTRATION_SCRIPTS})
+    return hashes
 
 
 def fixed_contract(cfg):
@@ -131,12 +142,18 @@ def verify_source(root, name, selected, base):
     model = s.build_model(name, len(state["vocabulary"]), cfg)
     model.load_state_dict(state["model"], strict=True)
     del model
+    metadata_sha256 = {
+        path.relative_to(root).as_posix(): digest(path)
+        for path in (checkpoint, last_path, history_path, metadata_path,
+                     run / "config.json", provenance_path)
+    }
+    # The selector first verifies candidates before this map exists. Once frozen,
+    # require the same complete mapping, including both checkpoints and raw metadata.
+    if "source_metadata_sha256" in selected and selected["source_metadata_sha256"] != metadata_sha256:
+        raise ValueError(f"Frozen source metadata SHA256 mapping mismatch: {name}")
     return {"state": state, "history": history, "metadata": metadata,
             "checkpoint": checkpoint, "last": last_path, "run": run,
-            "provenance": provenance, "metadata_sha256": {
-                path.relative_to(root).as_posix(): digest(path)
-                for path in (checkpoint, last_path, history_path, metadata_path,
-                             run / "config.json", provenance_path)}}
+            "provenance": provenance, "metadata_sha256": metadata_sha256}
 
 
 def cpu_evidence(root, sources):
@@ -225,15 +242,19 @@ def finalize(selection_path, output, *, device="cpu", root=ROOT, base_config=Non
             "source_metadata_sha256": source["metadata_sha256"]})
     training_environment = dict(next(iter(sources.values()))["provenance"]["environment"])
     training_environment["cpu"] = hardware
+    evaluation_started_utc = utc_now()
     provenance = {"task": "sentiment", "mode": base["mode"], "status": "running",
         "artifact_type": "assembled_validation_selection", "assembled_results": True,
         "description": "Derived evaluation of separately selected original checkpoints; no training in this invocation.",
         "selection_rule": selection["selection_rule"], "selection_manifest_sha256": selection_sha,
-        "selection_frozen_utc": utc_now(), "source_runs": selection["selected"],
+        "selection_frozen_utc": selection.get("created_utc"),
+        "evaluation_started_utc": evaluation_started_utc, "source_runs": selection["selected"],
         "config": assembled_config, "environment": training_environment,
         "environment_scope": "Representative source training environment; per-model originals are in source_runs.",
         "evaluation_environment": environment(), "device": device,
-        "source_sha256": code_manifest(root), "started_utc": utc_now()}
+        "source_sha256": evaluation_code_manifest(root),
+        "source_sha256_scope": "Current project sources and selector/finalizer/tuning scripts; original training evidence remains in source_runs.",
+        "started_utc": evaluation_started_utc}
     write_json(output / "run_summary.json", provenance)
     started = time.perf_counter()
     results, predictions = {}, {}

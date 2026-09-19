@@ -1,0 +1,10 @@
+{
+  "model_name": "maxpool_mlp",
+  "selected_epoch": 5,
+  "selected_validation_macro_f1": 0.926570295281343,
+  "parameter_count": 5128321,
+  "train_seconds": 223.38594358996488,
+  "peak_cuda_memory_bytes": 162652160,
+  "completed_training_steps": 35442,
+  "test_evaluated": false
+}

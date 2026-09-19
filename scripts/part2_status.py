@@ -21,5 +21,7 @@ for run in runs:
         print(f"{run.name}: metadata being updated; refresh shortly")
 try:
     subprocess.run(["nvidia-smi", "--query-gpu=name,utilization.gpu,memory.used,memory.total,power.draw", "--format=csv"], check=True)
-except (FileNotFoundError, subprocess.CalledProcessError):
-    print("Live GPU telemetry is available on the training host.")
+except FileNotFoundError:
+    print("No NVIDIA monitoring command on this machine; run histories remain available above.")
+except subprocess.CalledProcessError:
+    print("GPU telemetry is currently unavailable; the progress above comes from saved run histories.")

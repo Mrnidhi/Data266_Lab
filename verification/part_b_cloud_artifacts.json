@@ -1,0 +1,390 @@
+{
+  "scope": "completed_training_runs",
+  "created_utc": "2026-09-19T02:38:49.608251+00:00",
+  "files": {
+    "runs/part-b-full/RUN_LOG.txt": {
+      "bytes": 184109,
+      "sha256": "37ce98c3c472ba8ad4311d9bf80dab6231d5b2795711dba3b56c4da0b24d8270"
+    },
+    "runs/part-b-full/bilstm/checkpoints/best.pt": {
+      "bytes": 64500145,
+      "sha256": "7ae843f74f1a847e8d7634f0f02d0eeca958f5e0b0676442d273631bd56df80e"
+    },
+    "runs/part-b-full/bilstm/checkpoints/last.pt": {
+      "bytes": 64500337,
+      "sha256": "8f8ca4c3e4f93e1b55a8c04aaedfba15766d0016e2a2ac00447908b069bc4d4f"
+    },
+    "runs/part-b-full/bilstm/confusion_matrix.png": {
+      "bytes": 17038,
+      "sha256": "3f01851ae51167cd43f811a91b05a8a120219974520d66f891913a1a1cc45b50"
+    },
+    "runs/part-b-full/bilstm/curves.json": {
+      "bytes": 1916656,
+      "sha256": "61784df9945bd2bbfe3b84572af2c82cd02b09daf48e376b4cec91b2a1fd82aa"
+    },
+    "runs/part-b-full/bilstm/error_candidates_for_manual_review.csv": {
+      "bytes": 17854,
+      "sha256": "286d7dce08799b5f56ad44c94f226f6c0562e8f4910de7b4d3f71e935df30a61"
+    },
+    "runs/part-b-full/bilstm/error_review_instructions.json": {
+      "bytes": 452,
+      "sha256": "c0b1d5b95f4f91893ed9176f110f38a9f548846a288ca70061bb9a796431e67e"
+    },
+    "runs/part-b-full/bilstm/evaluation_curves.png": {
+      "bytes": 76481,
+      "sha256": "795a6d4c38b0b0fdf45c5e4c21e203c3512230d436edfe4a61e7036fb067f461"
+    },
+    "runs/part-b-full/bilstm/history.json": {
+      "bytes": 1621,
+      "sha256": "c21b653e222d832540c45e57d7bdac16eae7c2a52a36680fd8cb309800d185a9"
+    },
+    "runs/part-b-full/bilstm/learning_curves.png": {
+      "bytes": 56707,
+      "sha256": "95a5fc85de818605baba15c07723a70b74ed861979b1b8cbad26d95a006926d1"
+    },
+    "runs/part-b-full/bilstm/metrics.json": {
+      "bytes": 1902,
+      "sha256": "c9f2830f42b58b2a111cd4963b9d058d4330b3c9c8cf2281cd820ef6cd4264b3"
+    },
+    "runs/part-b-full/bilstm/slices.json": {
+      "bytes": 8797,
+      "sha256": "8b0cf18f863771fd9dadf9c3a3f38016a8fffa68c8427cec8ce2082d103b0f8e"
+    },
+    "runs/part-b-full/bilstm/test_predictions.csv": {
+      "bytes": 2243538,
+      "sha256": "384898120eeb09a462842b170448a744d5560021274cf6d93b361481dfcd34d3"
+    },
+    "runs/part-b-full/config.json": {
+      "bytes": 986,
+      "sha256": "7080e2b6f917a91745dfcb8cccd71830c3c157d80590753ab9ef621008bc51e3"
+    },
+    "runs/part-b-full/data_audit.json": {
+      "bytes": 452,
+      "sha256": "d2dad6ca26ed706a68fd6d43ebc62104d0aa622f7253bafe0b3633d43e6e961d"
+    },
+    "runs/part-b-full/dataset_statistics.json": {
+      "bytes": 558,
+      "sha256": "4bb7be976c34cd63029f0dd454d7468aab36d6e87f7951d35f594c66b2f62a36"
+    },
+    "runs/part-b-full/dilated_cnn/checkpoints/best.pt": {
+      "bytes": 67308375,
+      "sha256": "013aa085d21b988169e37951027b280966e5dd550aa7769752e5daf657d0ed8a"
+    },
+    "runs/part-b-full/dilated_cnn/checkpoints/last.pt": {
+      "bytes": 67308375,
+      "sha256": "b0f85b1e7df44b7fdaacf6037519d3e9c2ad965a3599c74eed2a8069ad3fcb16"
+    },
+    "runs/part-b-full/dilated_cnn/confusion_matrix.png": {
+      "bytes": 17552,
+      "sha256": "167471bd4a28125a66be205cd2433a727d2255b5bbbc44d7587154dc915f5176"
+    },
+    "runs/part-b-full/dilated_cnn/curves.json": {
+      "bytes": 1882611,
+      "sha256": "f219225858e0b0216edcee5afa3155ff8648a4e5bd5d6dd6f99d28455b8c18c5"
+    },
+    "runs/part-b-full/dilated_cnn/error_candidates_for_manual_review.csv": {
+      "bytes": 25603,
+      "sha256": "c5a95f9bce3285522288ec36f457285c2aead785fffacb5dd25fa17ad58c7067"
+    },
+    "runs/part-b-full/dilated_cnn/error_review_instructions.json": {
+      "bytes": 452,
+      "sha256": "c0b1d5b95f4f91893ed9176f110f38a9f548846a288ca70061bb9a796431e67e"
+    },
+    "runs/part-b-full/dilated_cnn/evaluation_curves.png": {
+      "bytes": 76987,
+      "sha256": "e4820cdd23c5ef63a0b8688e7d67e5cebcd78c61dfe9291ad388b88c395fd970"
+    },
+    "runs/part-b-full/dilated_cnn/history.json": {
+      "bytes": 1617,
+      "sha256": "9ff02d4b95085522693f06aef0a330142d2a0b0c71b81c10c443ac92a1929c83"
+    },
+    "runs/part-b-full/dilated_cnn/learning_curves.png": {
+      "bytes": 55849,
+      "sha256": "da8e91b77bd74ab7f91c4eaba6fa7cd14c9bf493505e4ea8706d5bea2e064674"
+    },
+    "runs/part-b-full/dilated_cnn/metrics.json": {
+      "bytes": 1891,
+      "sha256": "8adcdf3db5cddb1f3c1d243098e488c313d1dcaf12716860048acb6ae98d9a07"
+    },
+    "runs/part-b-full/dilated_cnn/slices.json": {
+      "bytes": 8783,
+      "sha256": "a6b5ba5f7635cb33f43d28408ab2f3990ca28571cc0864306bb72f20e0139724"
+    },
+    "runs/part-b-full/dilated_cnn/test_predictions.csv": {
+      "bytes": 2245512,
+      "sha256": "7e44d3f4c50f58145ebcaf3dc5b91ac7fe27aeb289c9521972d444ebe1289c57"
+    },
+    "runs/part-b-full/maxpool_mlp/checkpoints/best.pt": {
+      "bytes": 62361671,
+      "sha256": "fc9442519f52db62c292e380fed6285a14e51f2711e7540618314d7675720e08"
+    },
+    "runs/part-b-full/maxpool_mlp/checkpoints/last.pt": {
+      "bytes": 62361799,
+      "sha256": "16a34b51fd4c4cb7e270e0479a4a30ecef9bb4de16666aeb8b65f956178d7421"
+    },
+    "runs/part-b-full/maxpool_mlp/confusion_matrix.png": {
+      "bytes": 16946,
+      "sha256": "626f730eb199848cbfd80c2fb114c1f5b239cb57a97c2cd422d82be4e2b676c6"
+    },
+    "runs/part-b-full/maxpool_mlp/curves.json": {
+      "bytes": 2046715,
+      "sha256": "f7e78a7f20814806a094c0bd24cda8fba9f5373b841962a8d8408afcebc1150c"
+    },
+    "runs/part-b-full/maxpool_mlp/error_candidates_for_manual_review.csv": {
+      "bytes": 16105,
+      "sha256": "387cc5ac7b08c7118663d847eb8595193885639bf9aecdbc801abec9aaeb6c3e"
+    },
+    "runs/part-b-full/maxpool_mlp/error_review_instructions.json": {
+      "bytes": 452,
+      "sha256": "c0b1d5b95f4f91893ed9176f110f38a9f548846a288ca70061bb9a796431e67e"
+    },
+    "runs/part-b-full/maxpool_mlp/evaluation_curves.png": {
+      "bytes": 79921,
+      "sha256": "1d9ca6dd18eb304818eccb2b11a94b6df01eaccb1e53ad4b2561a6c2f8f4ed05"
+    },
+    "runs/part-b-full/maxpool_mlp/history.json": {
+      "bytes": 1621,
+      "sha256": "87cafb8be8f58c1b1ef11089f0e8ca9d2a530a0c9bd765aa9fe28da2eca6f16b"
+    },
+    "runs/part-b-full/maxpool_mlp/learning_curves.png": {
+      "bytes": 60352,
+      "sha256": "92768f3f2bd8f5da210929c5174a6518e72f362bc11f0f03ef941bd987dc53a4"
+    },
+    "runs/part-b-full/maxpool_mlp/metrics.json": {
+      "bytes": 1842,
+      "sha256": "3aec394c7675ac35d50195daf23d894ab12abcb9de284d3c912a39ad8e5a7940"
+    },
+    "runs/part-b-full/maxpool_mlp/slices.json": {
+      "bytes": 8799,
+      "sha256": "4f55ad3f629922b2ed54a88ca3d50608706c24a53146c8644a4c6e04d6f340f6"
+    },
+    "runs/part-b-full/maxpool_mlp/test_predictions.csv": {
+      "bytes": 2239308,
+      "sha256": "cdd27fbbf142de9de784211814874a66f2a671eb9c3d5734d2c47b1468f29884"
+    },
+    "runs/part-b-full/paired_mcnemar.json": {
+      "bytes": 950,
+      "sha256": "6ff62309c7bda60b14af5a0347fe91773247bd4b5fddda9942a5d8f8e69312dc"
+    },
+    "runs/part-b-full/preprocessing.json": {
+      "bytes": 936,
+      "sha256": "5d33a25a2c18c33bfbaefa7b086e31ca2b54967f7409f8f3a45688f1350fe87f"
+    },
+    "runs/part-b-full/provenance/2026-09-19T01-40-08.215178+00-00.json": {
+      "bytes": 10699,
+      "sha256": "ea5dd604493f70c438b51253ea0611264190a21b160f003869b6fa7aba29a833"
+    },
+    "runs/part-b-full/resolved_config.json": {
+      "bytes": 986,
+      "sha256": "7080e2b6f917a91745dfcb8cccd71830c3c157d80590753ab9ef621008bc51e3"
+    },
+    "runs/part-b-full/run_summary.json": {
+      "bytes": 10699,
+      "sha256": "ea5dd604493f70c438b51253ea0611264190a21b160f003869b6fa7aba29a833"
+    },
+    "runs/part-b-full/split_ids.npz": {
+      "bytes": 1687808,
+      "sha256": "4dcc61922f45f6454e8138833d1a8b1ee179bf539411b36991ec9e147cd3b4f9"
+    },
+    "runs/part-b-full/summary.json": {
+      "bytes": 7842,
+      "sha256": "53f86be0b2c6c1bf6f27bb1198a3b4422638111c573fc6825539ff2c9e2f4d03"
+    },
+    "runs/part-b-full/vocabulary.json": {
+      "bytes": 783687,
+      "sha256": "144860d710510e30b01646339143f8a82d64de5935e936d1ded39fadf1d251b7"
+    },
+    "runs/part-b-tuning/bilstm_long_schedule_control/RUN_LOG.txt": {
+      "bytes": 62841,
+      "sha256": "cc5e773758f7cd12ed0e07725aff9be2708c162973e366576269bb40639b7dfd"
+    },
+    "runs/part-b-tuning/bilstm_long_schedule_control/bilstm/checkpoints/best.pt": {
+      "bytes": 64500785,
+      "sha256": "ed03e33534f053c0b12ceb519c719ea9716c4ece948c20715d6a535543003529"
+    },
+    "runs/part-b-tuning/bilstm_long_schedule_control/bilstm/checkpoints/last.pt": {
+      "bytes": 64500977,
+      "sha256": "5902cbd3c37ce0537b3389a16321824a7bc70373d4a2a114bbd9e9700781eba5"
+    },
+    "runs/part-b-tuning/bilstm_long_schedule_control/bilstm/history.json": {
+      "bytes": 3250,
+      "sha256": "102037915eea486ffa4e24805fa0aac7e6a8bd35044fed9884be89005eb73324"
+    },
+    "runs/part-b-tuning/bilstm_long_schedule_control/bilstm/validation_selection.json": {
+      "bytes": 279,
+      "sha256": "9f37b608715823a284627703715c9d2e049368843d08d64ca0711537382ec846"
+    },
+    "runs/part-b-tuning/bilstm_long_schedule_control/candidate.json": {
+      "bytes": 327,
+      "sha256": "abc6a004f45c643cfd7ce8d43dfad8baa43d3598dcdf426fecb7c0dd72bec85a"
+    },
+    "runs/part-b-tuning/bilstm_long_schedule_control/config.json": {
+      "bytes": 1049,
+      "sha256": "e128e5a3eec8b17db5bae50fb810e7fe7bb7b1a5da8107758a098b9d0ea5ada4"
+    },
+    "runs/part-b-tuning/bilstm_long_schedule_control/provenance.json": {
+      "bytes": 4181,
+      "sha256": "32155a56e6c563aa8fcc2d00936fc1dec26c75966aefe2f846e181c28b50bb66"
+    },
+    "runs/part-b-tuning/bilstm_wider/RUN_LOG.txt": {
+      "bytes": 62904,
+      "sha256": "d2780bf5a24ef88a6cb1f191e154ffa6fe4ff71081cc11abd62818b276808a21"
+    },
+    "runs/part-b-tuning/bilstm_wider/bilstm/checkpoints/best.pt": {
+      "bytes": 97143665,
+      "sha256": "e3e2caa1f134435bed9ba7a8fbfee77c7666fa67390a876e1dcfb5179e81d140"
+    },
+    "runs/part-b-tuning/bilstm_wider/bilstm/checkpoints/last.pt": {
+      "bytes": 97144113,
+      "sha256": "5ce8cc148a7e37ce03663c9bbb7572d7565940493033116dadc5803bc2144a7c"
+    },
+    "runs/part-b-tuning/bilstm_wider/bilstm/history.json": {
+      "bytes": 3257,
+      "sha256": "b4acac2927a27f784a218cc6302aaee0b43776549d3f6017bbc75594dc452688"
+    },
+    "runs/part-b-tuning/bilstm_wider/bilstm/validation_selection.json": {
+      "bytes": 278,
+      "sha256": "4382d12ad76526691dc2dc033cb4637769c2dc67b4ba3ccfe9aa650ff49f1e6a"
+    },
+    "runs/part-b-tuning/bilstm_wider/candidate.json": {
+      "bytes": 488,
+      "sha256": "fadfedf5174689f0fd0a9431e9f38e1370eb48266033d05f6c5dec41d5c5c193"
+    },
+    "runs/part-b-tuning/bilstm_wider/config.json": {
+      "bytes": 1051,
+      "sha256": "c4110f2ec33715b7816cc9bf3b998c6a51c77f6991f0745bb66e3a853d3a49d0"
+    },
+    "runs/part-b-tuning/bilstm_wider/provenance.json": {
+      "bytes": 4359,
+      "sha256": "8bc7752ac045f3a3673aaf982a9d7719806d2fb98656253604ebc8c21d4336be"
+    },
+    "runs/part-b-tuning/cnn_long_context/RUN_LOG.txt": {
+      "bytes": 54057,
+      "sha256": "115dd2f076c6045035e34fcbdfd3ee04e764bb16ffc25bc32ac9d6b4a084d3c7"
+    },
+    "runs/part-b-tuning/cnn_long_context/candidate.json": {
+      "bytes": 405,
+      "sha256": "8dc3de39a2842f38fcaf4e479fb052b8bba7a591348b5e94a29daa747e0fab4a"
+    },
+    "runs/part-b-tuning/cnn_long_context/config.json": {
+      "bytes": 1065,
+      "sha256": "071eb6c8e45e4d9601b7143268bb435c84fe235c6b439e333b997adff1b93b77"
+    },
+    "runs/part-b-tuning/cnn_long_context/dilated_cnn/checkpoints/best.pt": {
+      "bytes": 69681842,
+      "sha256": "a9d96afa669264cef21c0541a3e8c0d7d0022ded9400903367b68ea93c726b80"
+    },
+    "runs/part-b-tuning/cnn_long_context/dilated_cnn/checkpoints/last.pt": {
+      "bytes": 69682226,
+      "sha256": "a76607761e269defa7af307ed88312791e41c1969465c65fb62282c3b7998fe8"
+    },
+    "runs/part-b-tuning/cnn_long_context/dilated_cnn/history.json": {
+      "bytes": 2701,
+      "sha256": "58e62b3ad85b67b90cb8eebaf00a928b1ebdae0829e0a30ae549a5296de486a6"
+    },
+    "runs/part-b-tuning/cnn_long_context/dilated_cnn/validation_selection.json": {
+      "bytes": 283,
+      "sha256": "8190d50c754f469c0444d583b3d05a08c2949e4c14e7a1e5c24761ca51cfbd07"
+    },
+    "runs/part-b-tuning/cnn_long_context/provenance.json": {
+      "bytes": 4298,
+      "sha256": "081e1debab077b7c2039590b27d053bfcebc247bac27ccac316312aa21833c93"
+    },
+    "runs/part-b-tuning/dilated_cnn_long_schedule_control/RUN_LOG.txt": {
+      "bytes": 54007,
+      "sha256": "965df270c451dee6d8df58916bf766e96a936c812c295de1430158e4d6c278a1"
+    },
+    "runs/part-b-tuning/dilated_cnn_long_schedule_control/candidate.json": {
+      "bytes": 337,
+      "sha256": "0fc53e328ad7ebca0f20ebb75680cfc14ec3d963a42d6b3655928a718b40fb63"
+    },
+    "runs/part-b-tuning/dilated_cnn_long_schedule_control/config.json": {
+      "bytes": 1049,
+      "sha256": "e128e5a3eec8b17db5bae50fb810e7fe7bb7b1a5da8107758a098b9d0ea5ada4"
+    },
+    "runs/part-b-tuning/dilated_cnn_long_schedule_control/dilated_cnn/checkpoints/best.pt": {
+      "bytes": 67308439,
+      "sha256": "8354d866a779d76b191b8cb939a9f4d3efc06ea179626cac1df1b1a1466c99ba"
+    },
+    "runs/part-b-tuning/dilated_cnn_long_schedule_control/dilated_cnn/checkpoints/last.pt": {
+      "bytes": 67308823,
+      "sha256": "d66a03fde879f60321b5cd0ec2fcc515a7c063c8c62ddd26b9d2b7c6b51f5276"
+    },
+    "runs/part-b-tuning/dilated_cnn_long_schedule_control/dilated_cnn/history.json": {
+      "bytes": 2691,
+      "sha256": "d7580f3f71f3a1d7caba2a004979b0ddead90f0add1ea221f7287e203d8b95ed"
+    },
+    "runs/part-b-tuning/dilated_cnn_long_schedule_control/dilated_cnn/validation_selection.json": {
+      "bytes": 282,
+      "sha256": "84b60a402282d6ef2f8105ade76ee831898200491d22a1dad296deb5b1ff43b6"
+    },
+    "runs/part-b-tuning/dilated_cnn_long_schedule_control/provenance.json": {
+      "bytes": 4194,
+      "sha256": "e40a79a49696a4b74727a16a3b8abe4b42e2ff653090d80d68b0ee24a32ab31d"
+    },
+    "runs/part-b-tuning/maxpool_mlp_long_schedule_control/RUN_LOG.txt": {
+      "bytes": 48580,
+      "sha256": "27542f4df8e48ac7af64b6a5ae74511df0bc6e43f0e07a91c6f3275379f220f4"
+    },
+    "runs/part-b-tuning/maxpool_mlp_long_schedule_control/candidate.json": {
+      "bytes": 337,
+      "sha256": "8e83b846f10a0ec773070382cb1612b5936c730c406ce8818558edc2573719b6"
+    },
+    "runs/part-b-tuning/maxpool_mlp_long_schedule_control/config.json": {
+      "bytes": 1049,
+      "sha256": "e128e5a3eec8b17db5bae50fb810e7fe7bb7b1a5da8107758a098b9d0ea5ada4"
+    },
+    "runs/part-b-tuning/maxpool_mlp_long_schedule_control/maxpool_mlp/checkpoints/best.pt": {
+      "bytes": 62361735,
+      "sha256": "9c026dfbf936c56eeb087e2392bae0522235aa3da5a6d55c384d6c5284d25b0b"
+    },
+    "runs/part-b-tuning/maxpool_mlp_long_schedule_control/maxpool_mlp/checkpoints/last.pt": {
+      "bytes": 62362119,
+      "sha256": "04b765343a7bc35bf596c38cab836834270b48412d8ba24193b736dfebd69fea"
+    },
+    "runs/part-b-tuning/maxpool_mlp_long_schedule_control/maxpool_mlp/history.json": {
+      "bytes": 2434,
+      "sha256": "17eaa1f4517efd084f0932835dcb1d2ecb48ed873b1c5373a7274fc98ec69492"
+    },
+    "runs/part-b-tuning/maxpool_mlp_long_schedule_control/maxpool_mlp/validation_selection.json": {
+      "bytes": 282,
+      "sha256": "91f654746513c3a9c6f853fea48e89d0f73a06be066fb91bfb9c309c7c4f583a"
+    },
+    "runs/part-b-tuning/maxpool_mlp_long_schedule_control/provenance.json": {
+      "bytes": 4193,
+      "sha256": "14e7ba08bf2eb1b83947a8fa36a8eb9ba0bd266bb59b95e11d5a69e0869d2d0f"
+    },
+    "runs/part-b-tuning/mlp_wider/RUN_LOG.txt": {
+      "bytes": 37823,
+      "sha256": "145c62ceb9ce4dd6e33ebf2be486488b84864cf3dcfd033010cff4868d01db0b"
+    },
+    "runs/part-b-tuning/mlp_wider/candidate.json": {
+      "bytes": 360,
+      "sha256": "ba3f57beeb6b9f611a6d6ae1c96979f0d820728efd45f7c6c970b1fd21dc1baf"
+    },
+    "runs/part-b-tuning/mlp_wider/config.json": {
+      "bytes": 1050,
+      "sha256": "2755804dd0ad4dd9ed7de39ec98d278ff9512c20ac7da8e5b71d273c1a208f8b"
+    },
+    "runs/part-b-tuning/mlp_wider/maxpool_mlp/checkpoints/best.pt": {
+      "bytes": 124097991,
+      "sha256": "766e245328d9ea9ec8d6892929032049f5dc80f6647503c09e865d10e39f9534"
+    },
+    "runs/part-b-tuning/mlp_wider/maxpool_mlp/checkpoints/last.pt": {
+      "bytes": 124098375,
+      "sha256": "e45970123ddbb0c49c1738d2eb974377d1b0e8e61c6edeb68c6bef502cdf4d11"
+    },
+    "runs/part-b-tuning/mlp_wider/maxpool_mlp/history.json": {
+      "bytes": 1893,
+      "sha256": "81a1b2e19d4299c4fd281e08c1a76bb1f092e886b8e2caa6d29a2b49ab042dc8"
+    },
+    "runs/part-b-tuning/mlp_wider/maxpool_mlp/validation_selection.json": {
+      "bytes": 283,
+      "sha256": "a38379573a2cc6b84f7344976122ade5d14e3bd2aa92258fb081a9d4312382bc"
+    },
+    "runs/part-b-tuning/mlp_wider/provenance.json": {
+      "bytes": 4224,
+      "sha256": "4cd02f039639ceccf47f626f2fdcdb9774d7287062731c3b07e16889a464d2be"
+    }
+  }
+}

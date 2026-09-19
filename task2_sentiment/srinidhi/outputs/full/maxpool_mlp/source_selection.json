@@ -1,0 +1,421 @@
+{
+  "candidate_id": "reference:maxpool_mlp",
+  "model_name": "maxpool_mlp",
+  "source_run": "runs/part-b-full",
+  "checkpoint": "runs/part-b-full/maxpool_mlp/checkpoints/best.pt",
+  "sha256": "fc9442519f52db62c292e380fed6285a14e51f2711e7540618314d7675720e08",
+  "config": {
+    "mode": "full",
+    "seed": 2342,
+    "dataset": "fancyzhx/yelp_polarity",
+    "dataset_revision": "main",
+    "data_dir": "task2_sentiment/srinidhi/data_processed/full",
+    "train_limit": null,
+    "validation_limit": null,
+    "test_limit": null,
+    "vocabulary_size": 40000,
+    "min_frequency": 2,
+    "embedding_dim": 128,
+    "max_length": 384,
+    "batch_size": 128,
+    "epochs": 6,
+    "early_stopping_patience": 2,
+    "early_stopping_min_delta": 0.0001,
+    "mlp_hidden": 64,
+    "lstm_hidden": 96,
+    "cnn_channels": 128,
+    "dilations": [
+      1,
+      2,
+      4,
+      8
+    ],
+    "dropout": 0.3,
+    "cnn_dropout": 0.2,
+    "learning_rates": {
+      "maxpool_mlp": 0.0015,
+      "bilstm": 0.001,
+      "dilated_cnn": 0.0008
+    },
+    "weight_decay": 0.0001,
+    "gradient_clip": 1.0,
+    "amp": true,
+    "bootstrap_samples": 1000,
+    "cpu_threads": 2,
+    "raw_data_cache": "task2_sentiment/data/huggingface",
+    "encoded_cache": "task2_sentiment/srinidhi/data_processed/full_encoded",
+    "num_workers": 2,
+    "log_every_steps": 50
+  },
+  "validation_macro_f1": 0.926570295281343,
+  "selected_epoch": 5,
+  "parameter_count": 5128321,
+  "train_seconds": 97.03223231015727,
+  "provenance": {
+    "task": "sentiment",
+    "mode": "full",
+    "device": "cuda",
+    "started_utc": "2026-09-19T01:40:08.215178+00:00",
+    "status": "completed",
+    "is_final_result": false,
+    "config": {
+      "mode": "full",
+      "seed": 2342,
+      "dataset": "fancyzhx/yelp_polarity",
+      "dataset_revision": "main",
+      "data_dir": "task2_sentiment/srinidhi/data_processed/full",
+      "train_limit": null,
+      "validation_limit": null,
+      "test_limit": null,
+      "vocabulary_size": 40000,
+      "min_frequency": 2,
+      "embedding_dim": 128,
+      "max_length": 384,
+      "batch_size": 128,
+      "epochs": 6,
+      "early_stopping_patience": 2,
+      "early_stopping_min_delta": 0.0001,
+      "mlp_hidden": 64,
+      "lstm_hidden": 96,
+      "cnn_channels": 128,
+      "dilations": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "dropout": 0.3,
+      "cnn_dropout": 0.2,
+      "learning_rates": {
+        "maxpool_mlp": 0.0015,
+        "bilstm": 0.001,
+        "dilated_cnn": 0.0008
+      },
+      "weight_decay": 0.0001,
+      "gradient_clip": 1.0,
+      "amp": true,
+      "bootstrap_samples": 1000,
+      "cpu_threads": 2,
+      "raw_data_cache": "task2_sentiment/data/huggingface",
+      "encoded_cache": "task2_sentiment/srinidhi/data_processed/full_encoded",
+      "num_workers": 2,
+      "log_every_steps": 50
+    },
+    "source_sha256": {
+      "src/lab1/__init__.py": "4597cd6743deb8dc143f2be2f7757c8d8d8fb367716dbcb4cb9626a025265217",
+      "src/lab1/common.py": "6659501f6490e5dc1c72decbb48f1c745a2e876bea24a89fea32b381518677ce",
+      "src/lab1/run.py": "571163444bc3331b59263ba9bde6f4c027360a25983ab846dfb4e052b5a5bb39",
+      "task1_llm/srinidhi/config.json": "cf5cda1c11f81ea6837421c565364c0c235ff1483e41dadad9235ba0e8e0238b",
+      "task1_llm/srinidhi/src/gpt.py": "7498de5a36d1e6cb2d851d862dad47152cf73a82dd46fe2f5fbb5aa67a5627d9",
+      "task2_sentiment/srinidhi/config.json": "84c480d132b22cb2606a5f3139702ee75d523f90050f78e0e2772fae82f30ded",
+      "task2_sentiment/srinidhi/src/sentiment.py": "24619af4a8f2faa814e0715a7307568ea4e5063a2644ceb12e81b19ee2fabafc",
+      "task3_gan/srinidhi/config.json": "0c88cb843e6c2abf42561cb6ceaf557787357646fb464a6c97632e0fefb83100",
+      "task3_gan/srinidhi/evaluate_local.py": "4cb02bb71263f3a507562a99dec4b485fbcd0ed1ff08fc3757f1886e015dacfc",
+      "task3_gan/srinidhi/src/cyclegan.py": "9d7348d09246c3923ad150a1d6a297d137d51adae5240a80d38989c7f6a2f927"
+    },
+    "environment": {
+      "captured_utc": "2026-09-19T01:40:08.255173+00:00",
+      "python": "3.12.3",
+      "platform": "Linux-6.11.0-26-generic-x86_64-with-glibc2.39",
+      "machine": "x86_64",
+      "packages": {
+        "torch": "2.11.0+cu128",
+        "torchvision": "0.26.0+cu128",
+        "numpy": "2.5.3",
+        "pandas": "3.0.6",
+        "scikit-learn": "1.9.1",
+        "scipy": "1.16.3",
+        "matplotlib": "3.11.2",
+        "datasets": "5.0.1",
+        "Pillow": "12.3.0",
+        "clean-fid": "0.1.35",
+        "lpips": "0.1.4",
+        "prdc": "0.2"
+      },
+      "cuda_available": true,
+      "cuda_build": "12.8",
+      "cudnn": 91900,
+      "gpus": [
+        {
+          "index": 0,
+          "name": "NVIDIA GeForce RTX 5090",
+          "memory_bytes": 33680326656,
+          "compute_capability": [
+            12,
+            0
+          ]
+        }
+      ],
+      "mps_available": false,
+      "nvidia_smi": "name, uuid, driver_version, memory.total [MiB]\nNVIDIA GeForce RTX 5090, GPU-1f89be66-27b1-f3fd-debe-6a3213d26d35, 570.153.02, 32607 MiB"
+    },
+    "resumed": false,
+    "ended_utc": "2026-09-19T02:02:07.557019+00:00",
+    "elapsed_seconds": 1319.2691325530177,
+    "summary": {
+      "mode": "full",
+      "synthetic": false,
+      "models": {
+        "maxpool_mlp": {
+          "count": 38000,
+          "accuracy": 0.932,
+          "mcc": 0.8640184006764469,
+          "brier": 0.05268637490781428,
+          "confusion_matrix": [
+            [
+              17770,
+              1230
+            ],
+            [
+              1354,
+              17646
+            ]
+          ],
+          "threshold": 0.5,
+          "macro": {
+            "precision": 0.9320184008723873,
+            "recall": 0.9319999999999999,
+            "f1": 0.9319992759147275
+          },
+          "micro": {
+            "precision": 0.932,
+            "recall": 0.932,
+            "f1": 0.932
+          },
+          "weighted": {
+            "precision": 0.9320184008723874,
+            "recall": 0.932,
+            "f1": 0.9319992759147273
+          },
+          "per_class": [
+            {
+              "label": 0,
+              "precision": 0.9291989123614307,
+              "recall": 0.9352631578947368,
+              "f1": 0.9322211730143741,
+              "support": 19000
+            },
+            {
+              "label": 1,
+              "precision": 0.9348378893833439,
+              "recall": 0.9287368421052632,
+              "f1": 0.9317773788150808,
+              "support": 19000
+            }
+          ],
+          "ece_15": 0.026869014960735186,
+          "ece_definition": "Top-label confidence ECE; 15 equal-width bins on [0,1]; threshold 0.5.",
+          "roc_auc": 0.9815935180055401,
+          "pr_auc_trapezoidal": 0.9823367584933611,
+          "bootstrap_95_percentile": {
+            "accuracy": {
+              "low": 0.9291309210526316,
+              "high": 0.9346059210526315
+            },
+            "macro_f1": {
+              "low": 0.9291157936160613,
+              "high": 0.9346058885034065
+            },
+            "mcc": {
+              "low": 0.8582515617296906,
+              "high": 0.8692453751576493
+            }
+          },
+          "bootstrap_samples": 1000,
+          "uncertainty_scope": "IID test-row resampling; does not include training-seed uncertainty.",
+          "test_loss": 0.18763503551483154,
+          "selected_epoch": 5,
+          "selected_validation_macro_f1": 0.926570295281343,
+          "parameter_count": 5128321,
+          "train_seconds": 97.03223231015727,
+          "peak_cuda_memory_bytes": 162652160,
+          "mode": "full",
+          "synthetic": false,
+          "resume_scaler_status": "not_resumed",
+          "completed_training_steps": 23628
+        },
+        "bilstm": {
+          "count": 38000,
+          "accuracy": 0.9592631578947368,
+          "mcc": 0.9185422746459667,
+          "brier": 0.031069280768833557,
+          "confusion_matrix": [
+            [
+              18170,
+              830
+            ],
+            [
+              718,
+              18282
+            ]
+          ],
+          "threshold": 0.5,
+          "macro": {
+            "precision": 0.9592791168898678,
+            "recall": 0.9592631578947368,
+            "f1": 0.9592628040115052
+          },
+          "micro": {
+            "precision": 0.9592631578947368,
+            "recall": 0.9592631578947368,
+            "f1": 0.9592631578947368
+          },
+          "weighted": {
+            "precision": 0.9592791168898678,
+            "recall": 0.9592631578947368,
+            "f1": 0.9592628040115052
+          },
+          "per_class": [
+            {
+              "label": 0,
+              "precision": 0.9619864464210081,
+              "recall": 0.9563157894736842,
+              "f1": 0.9591427364864865,
+              "support": 19000
+            },
+            {
+              "label": 1,
+              "precision": 0.9565717873587275,
+              "recall": 0.9622105263157895,
+              "f1": 0.9593828715365239,
+              "support": 19000
+            }
+          ],
+          "ece_15": 0.005893806638629606,
+          "ece_definition": "Top-label confidence ECE; 15 equal-width bins on [0,1]; threshold 0.5.",
+          "roc_auc": 0.9925911426592796,
+          "pr_auc_trapezoidal": 0.9928007780284408,
+          "bootstrap_95_percentile": {
+            "accuracy": {
+              "low": 0.957183552631579,
+              "high": 0.9612901315789473
+            },
+            "macro_f1": {
+              "low": 0.9571818259492425,
+              "high": 0.961286535179993
+            },
+            "mcc": {
+              "low": 0.914376740922127,
+              "high": 0.92257854334947
+            }
+          },
+          "bootstrap_samples": 1000,
+          "uncertainty_scope": "IID test-row resampling; does not include training-seed uncertainty.",
+          "test_loss": 0.10942320688147295,
+          "selected_epoch": 4,
+          "selected_validation_macro_f1": 0.9566069090104472,
+          "parameter_count": 5305985,
+          "train_seconds": 881.1853327440331,
+          "peak_cuda_memory_bytes": 228746752,
+          "mode": "full",
+          "synthetic": false,
+          "resume_scaler_status": "not_resumed",
+          "completed_training_steps": 23628
+        },
+        "dilated_cnn": {
+          "count": 38000,
+          "accuracy": 0.9580526315789474,
+          "mcc": 0.9161122114258923,
+          "brier": 0.032042928589741664,
+          "confusion_matrix": [
+            [
+              18240,
+              760
+            ],
+            [
+              834,
+              18166
+            ]
+          ],
+          "threshold": 0.5,
+          "macro": {
+            "precision": 0.9580595798732947,
+            "recall": 0.9580526315789474,
+            "f1": 0.9580524725036976
+          },
+          "micro": {
+            "precision": 0.9580526315789474,
+            "recall": 0.9580526315789474,
+            "f1": 0.9580526315789474
+          },
+          "weighted": {
+            "precision": 0.9580595798732946,
+            "recall": 0.9580526315789474,
+            "f1": 0.9580524725036976
+          },
+          "per_class": [
+            {
+              "label": 0,
+              "precision": 0.9562755583516829,
+              "recall": 0.96,
+              "f1": 0.9581341597940852,
+              "support": 19000
+            },
+            {
+              "label": 1,
+              "precision": 0.9598436013949064,
+              "recall": 0.9561052631578948,
+              "f1": 0.9579707852133101,
+              "support": 19000
+            }
+          ],
+          "ece_15": 0.0099814826210208,
+          "ece_definition": "Top-label confidence ECE; 15 equal-width bins on [0,1]; threshold 0.5.",
+          "roc_auc": 0.9921975650969529,
+          "pr_auc_trapezoidal": 0.9924417241296837,
+          "bootstrap_95_percentile": {
+            "accuracy": {
+              "low": 0.9558947368421052,
+              "high": 0.9599743421052631
+            },
+            "macro_f1": {
+              "low": 0.9558939342338848,
+              "high": 0.9599743397485918
+            },
+            "mcc": {
+              "low": 0.911803816581789,
+              "high": 0.9199661087088662
+            }
+          },
+          "bootstrap_samples": 1000,
+          "uncertainty_scope": "IID test-row resampling; does not include training-seed uncertainty.",
+          "test_loss": 0.11467858448154047,
+          "selected_epoch": 6,
+          "selected_validation_macro_f1": 0.9538923913031014,
+          "parameter_count": 5539073,
+          "train_seconds": 228.67676686507184,
+          "peak_cuda_memory_bytes": 470494720,
+          "mode": "full",
+          "synthetic": false,
+          "resume_scaler_status": "not_resumed",
+          "completed_training_steps": 23628
+        }
+      },
+      "output_dir": "runs/part-b-full",
+      "manual_error_review_complete": false
+    }
+  },
+  "selection_metadata_file": "runs/part-b-full/maxpool_mlp/metrics.json",
+  "selection_fields_used": [
+    "selected_epoch",
+    "selected_validation_macro_f1",
+    "parameter_count",
+    "train_seconds"
+  ],
+  "recipe": null,
+  "source_metadata_sha256": {
+    "runs/part-b-full/maxpool_mlp/checkpoints/best.pt": "fc9442519f52db62c292e380fed6285a14e51f2711e7540618314d7675720e08",
+    "runs/part-b-full/maxpool_mlp/checkpoints/last.pt": "16a34b51fd4c4cb7e270e0479a4a30ecef9bb4de16666aeb8b65f956178d7421",
+    "runs/part-b-full/maxpool_mlp/history.json": "87cafb8be8f58c1b1ef11089f0e8ca9d2a530a0c9bd765aa9fe28da2eca6f16b",
+    "runs/part-b-full/maxpool_mlp/metrics.json": "3aec394c7675ac35d50195daf23d894ab12abcb9de284d3c912a39ad8e5a7940",
+    "runs/part-b-full/config.json": "7080e2b6f917a91745dfcb8cccd71830c3c157d80590753ab9ef621008bc51e3",
+    "runs/part-b-full/run_summary.json": "ea5dd604493f70c438b51253ea0611264190a21b160f003869b6fa7aba29a833"
+  },
+  "decision": {
+    "selected": true,
+    "within_practical_band": true,
+    "gap_to_highest_validation_macro_f1": 0.0003883524604003,
+    "reason": "Selected by parameter count, then validation score within the practical band."
+  },
+  "resolved_checkpoint": "runs/part-b-full/maxpool_mlp/checkpoints/best.pt"
+}

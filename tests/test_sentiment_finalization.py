@@ -2,6 +2,7 @@
 import importlib.util
 import json
 from pathlib import Path
+import shutil
 
 import numpy as np
 import pytest
@@ -45,6 +46,8 @@ def frozen(tmp_path_factory):
                           "sha256": finalizer.digest(checkpoint), "config": cfg,
                           "validation_macro_f1": metrics["selected_validation_macro_f1"],
                           "selected_epoch": metrics["selected_epoch"], "provenance": provenance}
+        selected[name]["source_metadata_sha256"] = finalizer.verify_source(
+            root, name, selected[name], base)["metadata_sha256"]
     manifest = {"selection_rule": "Maximum validation macro-F1, then smaller model",
                 "candidates": list(selected), "selected": selected}
     selection = root / "selection.json"
@@ -73,8 +76,16 @@ def test_selected_checkpoint_evaluation_matches_original_exports(tmp_path, froze
         assert (tmp_path / filename).is_file()
 
 
-def test_finalizer_preserves_sources_and_pairs_predictions(tmp_path, frozen, monkeypatch):
+@pytest.mark.parametrize("selection_created_utc", ["2026-09-19T03:00:00+00:00", None])
+def test_finalizer_preserves_sources_and_pairs_predictions(tmp_path, frozen, monkeypatch, selection_created_utc):
     root, base, selection, datasets, vocabulary = frozen
+    manifest = finalizer.read_json(selection)
+    if selection_created_utc is not None:
+        manifest["created_utc"] = selection_created_utc
+    selection = tmp_path / "selection.json"
+    write_json(selection, manifest)
+    evaluation_utc = "2026-09-19T04:00:00+00:00"
+    monkeypatch.setattr(finalizer, "utc_now", lambda: evaluation_utc)
     monkeypatch.setattr(finalizer, "environment", lambda: {"cpu_model": "Evaluation CPU", "gpus": []})
     monkeypatch.setattr(torch.optim.AdamW, "step", lambda *args, **kwargs: pytest.fail("Finalizer trained"))
     output = tmp_path / "derived"
@@ -85,6 +96,13 @@ def test_finalizer_preserves_sources_and_pairs_predictions(tmp_path, frozen, mon
     assert provenance["status"] == "completed" and provenance["assembled_results"] is True
     assert provenance["environment"]["cpu"]["details"] == "Synthetic test CPU"
     assert provenance["evaluation_environment"]["cpu_model"] == "Evaluation CPU"
+    assert provenance["selection_frozen_utc"] == selection_created_utc
+    assert provenance["evaluation_started_utc"] == provenance["started_utc"] == evaluation_utc
+    assert provenance["source_runs"] == manifest["selected"]
+    for name in finalizer.ORCHESTRATION_SCRIPTS:
+        key = f"scripts/{name}"
+        assert provenance["source_sha256"][key] == finalizer.digest(project_root() / key)
+    assert "original training evidence remains in source_runs" in provenance["source_sha256_scope"]
     config = finalizer.read_json(output / "config.json")
     assert config["model_configs"]["bilstm"]["model_seed"] == 45
     assert len({cfg["mlp_hidden"] for cfg in config["model_configs"].values()}) == 3
@@ -93,6 +111,8 @@ def test_finalizer_preserves_sources_and_pairs_predictions(tmp_path, frozen, mon
         assert finalizer.digest(output / name / "checkpoints/best.pt") == source["sha256"]
         assert (output / name / "checkpoints/last.pt").exists()
         assert (root / source["resolved_checkpoint"]).is_file()
+        for relative, checksum in manifest["selected"][name]["source_metadata_sha256"].items():
+            assert finalizer.digest(root / relative) == checksum
     for comparison in summary["paired_mcnemar"].values():
         assert sum(map(sum, comparison["table"])) == base["test_limit"]
     with np.load(output / "split_ids.npz") as splits:
@@ -118,6 +138,45 @@ def test_any_invalid_selected_source_blocks_all_test_inference(tmp_path, frozen,
     output = tmp_path / "rejected"
     with pytest.raises(ValueError, match=match):
         finalizer.finalize(changed, output, root=root, base_config=base)
+    assert not output.exists()
+
+
+@pytest.mark.parametrize("tamper", ["wrong_digest", "missing_path", "extra_path", "null"])
+def test_frozen_source_hash_mapping_must_match_exactly(tmp_path, frozen, monkeypatch, tamper):
+    root, base, selection, _, _ = frozen
+    manifest = finalizer.read_json(selection)
+    selected = manifest["selected"]["dilated_cnn"]
+    checksums = selected["source_metadata_sha256"]
+    last_path = f"{selected['source_run']}/dilated_cnn/checkpoints/last.pt"
+    if tamper == "wrong_digest":
+        checksums[last_path] = "0" * 64
+    elif tamper == "missing_path":
+        del checksums[last_path]
+    elif tamper == "extra_path":
+        checksums["unexpected/file"] = "0" * 64
+    else:
+        selected["source_metadata_sha256"] = None
+    changed = tmp_path / "changed.json"
+    write_json(changed, manifest)
+    monkeypatch.setattr(s, "_predict", lambda *a, **kw: pytest.fail("Inference ran with altered frozen evidence"))
+    output = tmp_path / "rejected"
+    with pytest.raises(ValueError, match="Frozen source metadata SHA256 mapping"):
+        finalizer.finalize(changed, output, root=root, base_config=base)
+    assert not output.exists()
+
+
+def test_byte_changed_source_is_rejected_even_when_parsed_metadata_matches(tmp_path, frozen, monkeypatch):
+    root, base, selection, _, _ = frozen
+    copied_root = tmp_path / "source-copy"
+    shutil.copytree(root / "runs", copied_root / "runs")
+    history = copied_root / "runs/dilated_cnn/dilated_cnn/history.json"
+    parsed_before = finalizer.read_json(history)
+    history.write_bytes(history.read_bytes() + b"\n")
+    assert finalizer.read_json(history) == parsed_before
+    monkeypatch.setattr(s, "_predict", lambda *a, **kw: pytest.fail("Inference ran after source bytes changed"))
+    output = tmp_path / "rejected"
+    with pytest.raises(ValueError, match="Frozen source metadata SHA256 mapping"):
+        finalizer.finalize(selection, output, root=copied_root, base_config=base)
     assert not output.exists()
 
 

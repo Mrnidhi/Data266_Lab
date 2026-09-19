@@ -1,0 +1,36 @@
+{
+  "bilstm": {
+    "table": [
+      [
+        34837,
+        579
+      ],
+      [
+        1615,
+        969
+      ]
+    ],
+    "table_definition": "Rows baseline correct/incorrect, columns other correct/incorrect",
+    "discordant_pairs": 2194,
+    "pvalue_exact_two_sided": 1.5967360806152047e-112,
+    "test": "Paired exact McNemar (binomial), no continuity correction",
+    "multiple_comparisons": "Two prespecified baseline comparisons; p-values are unadjusted."
+  },
+  "dilated_cnn": {
+    "table": [
+      [
+        34882,
+        534
+      ],
+      [
+        1524,
+        1060
+      ]
+    ],
+    "table_definition": "Rows baseline correct/incorrect, columns other correct/incorrect",
+    "discordant_pairs": 2058,
+    "pvalue_exact_two_sided": 9.224125817563499e-110,
+    "test": "Paired exact McNemar (binomial), no continuity correction",
+    "multiple_comparisons": "Two prespecified baseline comparisons; p-values are unadjusted."
+  }
+}

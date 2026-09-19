@@ -1,0 +1,20 @@
+{
+  "train": {
+    "count": 504000,
+    "truncated_fraction": 0.009293650793650793,
+    "mean_oov_rate": 0.009059829883018613,
+    "mean_tokens_before_truncation": 82.97298412698413
+  },
+  "validation": {
+    "count": 56000,
+    "truncated_fraction": 0.009285714285714286,
+    "mean_oov_rate": 0.00947851911332227,
+    "mean_tokens_before_truncation": 82.79751785714285
+  },
+  "test": {
+    "count": 38000,
+    "truncated_fraction": 0.008842105263157894,
+    "mean_oov_rate": 0.009429172500955188,
+    "mean_tokens_before_truncation": 82.6206052631579
+  }
+}

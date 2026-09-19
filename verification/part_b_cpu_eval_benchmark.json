@@ -1,0 +1,23 @@
+{
+  "purpose": "CPU fallback timing on validation examples, no test scoring",
+  "cpu": "Apple M3",
+  "threads": 2,
+  "torch": "2.11.0",
+  "results": [
+    {
+      "model": "maxpool_mlp",
+      "seconds_per_batch": 0.0038052457995945586,
+      "estimated_38000_row_inference_seconds": 1.1301580024795839
+    },
+    {
+      "model": "bilstm",
+      "seconds_per_batch": 0.04479414170054952,
+      "estimated_38000_row_inference_seconds": 13.303860085063206
+    },
+    {
+      "model": "dilated_cnn",
+      "seconds_per_batch": 1.080002250000689,
+      "estimated_38000_row_inference_seconds": 320.7606682502046
+    }
+  ]
+}

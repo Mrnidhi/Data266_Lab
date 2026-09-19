@@ -1,0 +1,78 @@
+{
+  "count": 38000,
+  "accuracy": 0.9592631578947368,
+  "mcc": 0.9185422746459667,
+  "brier": 0.031069280768833557,
+  "confusion_matrix": [
+    [
+      18170,
+      830
+    ],
+    [
+      718,
+      18282
+    ]
+  ],
+  "threshold": 0.5,
+  "macro": {
+    "precision": 0.9592791168898678,
+    "recall": 0.9592631578947368,
+    "f1": 0.9592628040115052
+  },
+  "micro": {
+    "precision": 0.9592631578947368,
+    "recall": 0.9592631578947368,
+    "f1": 0.9592631578947368
+  },
+  "weighted": {
+    "precision": 0.9592791168898678,
+    "recall": 0.9592631578947368,
+    "f1": 0.9592628040115052
+  },
+  "per_class": [
+    {
+      "label": 0,
+      "precision": 0.9619864464210081,
+      "recall": 0.9563157894736842,
+      "f1": 0.9591427364864865,
+      "support": 19000
+    },
+    {
+      "label": 1,
+      "precision": 0.9565717873587275,
+      "recall": 0.9622105263157895,
+      "f1": 0.9593828715365239,
+      "support": 19000
+    }
+  ],
+  "ece_15": 0.005893806638629606,
+  "ece_definition": "Top-label confidence ECE; 15 equal-width bins on [0,1]; threshold 0.5.",
+  "roc_auc": 0.9925911426592796,
+  "pr_auc_trapezoidal": 0.9928007780284408,
+  "bootstrap_95_percentile": {
+    "accuracy": {
+      "low": 0.957183552631579,
+      "high": 0.9612901315789473
+    },
+    "macro_f1": {
+      "low": 0.9571818259492425,
+      "high": 0.961286535179993
+    },
+    "mcc": {
+      "low": 0.914376740922127,
+      "high": 0.92257854334947
+    }
+  },
+  "bootstrap_samples": 1000,
+  "uncertainty_scope": "IID test-row resampling; does not include training-seed uncertainty.",
+  "test_loss": 0.10942320688147295,
+  "selected_epoch": 4,
+  "selected_validation_macro_f1": 0.9566069090104472,
+  "parameter_count": 5305985,
+  "train_seconds": 881.1853327440331,
+  "peak_cuda_memory_bytes": 228746752,
+  "mode": "full",
+  "synthetic": false,
+  "resume_scaler_status": "not_resumed",
+  "completed_training_steps": 23628
+}

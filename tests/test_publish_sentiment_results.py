@@ -191,7 +191,9 @@ def test_notebook_presentation_executes_without_original_runs(tmp_path, monkeypa
     (outputs / "data_distributions.png").write_bytes(b"EDA image fixture")
     table = pd.DataFrame({"model": list(publisher.NAMES), "accuracy": [.8, .9, .9]})
     table.to_csv(outputs / "model_comparison.csv", index=False)
-    table.to_csv(member / "metrics_report.csv", index=False)
+    pd.DataFrame({"model": list(publisher.NAMES), "split": ["test"] * 3,
+                  "metric": ["accuracy"] * 3, "value": [.8, .9, .9]}).to_csv(
+        member / "metrics_report.csv", index=False)
     for name in publisher.NAMES:
         folder = outputs / name
         folder.mkdir()
@@ -228,3 +230,65 @@ def test_notebook_presentation_executes_without_original_runs(tmp_path, monkeypa
     assert list(compact[0].columns) == ["model", "source_run", "selected_epoch", "validation_macro_f1", "checkpoint_sha256"]
     assert not any(isinstance(value, dict) and "selected" in value for value in displayed)
     assert (outputs / "selection_manifest.json").read_bytes() == preserved_selection
+
+
+def test_path_normalization_only_strips_exact_prefix_in_values(tmp_path):
+    root = tmp_path / "repository"
+    absolute_key = f"{root}/unchanged-dictionary-key"
+    value = {"data_dir": f"{root}/data/full", "nested": [f"{root}/cache", 3, None, True],
+             "already_relative": "data/full", "other_repository": f"{root}-other/data",
+             "embedded_text": f"Recorded at {root}/data", "root_without_slash": str(root),
+             absolute_key: "unchanged value"}
+    original = json.loads(json.dumps(value))
+    normalized = publisher.normalize_repository_paths(value, root)
+    assert normalized["data_dir"] == "data/full"
+    assert normalized["nested"] == ["cache", 3, None, True]
+    for key in ("already_relative", "other_repository", "embedded_text", "root_without_slash", absolute_key):
+        assert normalized[key] == value[key]
+    assert value == original
+
+
+@pytest.mark.parametrize("filename", ["config.json", "run_summary.json"])
+def test_portable_derived_metadata_preserves_original_hardware_and_metrics(tmp_path, monkeypatch, filename):
+    monkeypatch.setattr(publisher, "ROOT", tmp_path)
+    source = tmp_path / "runs/selected" / filename
+    source.parent.mkdir(parents=True)
+    target = tmp_path / "outputs/full" / filename
+    original = {"data_dir": f"{tmp_path}/data/full", "config": {
+                    "encoded_cache": f"{tmp_path}/data/encoded", "seed": 2342},
+                "environment": {"cpu_model": "AMD EPYC 7543", "gpus": [{"name": "RTX 5090"}],
+                                "packages": {"torch": "2.11.0"}},
+                "evaluation_environment": {"machine": "arm64", "cuda_available": False},
+                "summary": {"models": {"fixture": {"accuracy": .8123456789, "count": 38000}}}}
+    source.write_text(json.dumps(original, separators=(",", ":")) + "\n")
+    before = source.read_bytes()
+    record = publisher.copy_publication_metadata(source, target, derived=True)
+    published = json.loads(target.read_text())
+    assert published["data_dir"] == "data/full"
+    assert published["config"] == {"encoded_cache": "data/encoded", "seed": 2342}
+    for key in ("environment", "evaluation_environment", "summary"):
+        assert published[key] == original[key]
+    assert source.read_bytes() == before
+    assert record["original_sha256"] == hashlib.sha256(before).hexdigest()
+    assert record["published_sha256"] == hashlib.sha256(target.read_bytes()).hexdigest()
+    assert record["original_sha256"] != record["published_sha256"]
+    assert record["paths_normalized"] is True
+    assert record["source_path"] == f"runs/selected/{filename}"
+    assert "original run bytes remain unchanged" in record["normalization_note"]
+
+
+def test_original_suite_metadata_remains_byte_identical(tmp_path, monkeypatch):
+    monkeypatch.setattr(publisher, "ROOT", tmp_path)
+    source = tmp_path / "runs/reference/config.json"
+    source.parent.mkdir(parents=True)
+    source.write_text(json.dumps({"data_dir": f"{tmp_path}/data/full"}, indent=4) + "\n")
+    target = tmp_path / "outputs/full/config.json"
+    record = publisher.copy_publication_metadata(source, target, derived=False)
+    assert source.read_bytes() == target.read_bytes()
+    assert record["original_sha256"] == record["published_sha256"]
+    assert record["paths_normalized"] is False
+
+
+def test_normalization_refuses_metric_files(tmp_path):
+    with pytest.raises(ValueError, match="limited to config.json and run_summary.json"):
+        publisher.copy_publication_metadata(tmp_path / "metrics.json", tmp_path / "copy.json", derived=True)

@@ -1,0 +1,16 @@
+{
+  "verified_utc": "2026-09-19T02:56:11.129020+00:00",
+  "notebook": "task2_sentiment/srinidhi/src/sentiment.ipynb",
+  "notebook_sha256": "cefc94539574573e05f9de9b1042b84a8c871ba4f35521bdc594c007ec055592",
+  "html": "dist/part-b-preview/part-b-notebook.html",
+  "html_sha256": "1dd4a744181f1bb6334a0d53c13338617aa94f00771f29ae2a3a22f7950efe1b",
+  "visual_checks": [
+    "Chrome HTML preview: heading and executed code/output layout",
+    "Chrome HTML preview: three-model comparison table",
+    "Chrome HTML preview: full159-row numeric metric table without pandas row truncation",
+    "Chrome HTML preview: embedded confusion matrix",
+    "Direct image inspection: BiLSTM learning, ROC, precision-recall and reliability curves"
+  ],
+  "result": "passed; presentation displays preserved results and fresh CPU checkpoint checks",
+  "remaining": "Student review of AI error-analysis drafts and teammate/report work remain separate."
+}

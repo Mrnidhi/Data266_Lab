@@ -1,0 +1,38 @@
+{
+  "maxpool_mlp": {
+    "best.pt": {
+      "path": "task2_sentiment/srinidhi/checkpoints/maxpool_mlp/best.pt",
+      "sha256": "fc9442519f52db62c292e380fed6285a14e51f2711e7540618314d7675720e08",
+      "bytes": 62361671
+    },
+    "last.pt": {
+      "path": "task2_sentiment/srinidhi/checkpoints/maxpool_mlp/last.pt",
+      "sha256": "16a34b51fd4c4cb7e270e0479a4a30ecef9bb4de16666aeb8b65f956178d7421",
+      "bytes": 62361799
+    }
+  },
+  "bilstm": {
+    "best.pt": {
+      "path": "task2_sentiment/srinidhi/checkpoints/bilstm/best.pt",
+      "sha256": "ed03e33534f053c0b12ceb519c719ea9716c4ece948c20715d6a535543003529",
+      "bytes": 64500785
+    },
+    "last.pt": {
+      "path": "task2_sentiment/srinidhi/checkpoints/bilstm/last.pt",
+      "sha256": "5902cbd3c37ce0537b3389a16321824a7bc70373d4a2a114bbd9e9700781eba5",
+      "bytes": 64500977
+    }
+  },
+  "dilated_cnn": {
+    "best.pt": {
+      "path": "task2_sentiment/srinidhi/checkpoints/dilated_cnn/best.pt",
+      "sha256": "013aa085d21b988169e37951027b280966e5dd550aa7769752e5daf657d0ed8a",
+      "bytes": 67308375
+    },
+    "last.pt": {
+      "path": "task2_sentiment/srinidhi/checkpoints/dilated_cnn/last.pt",
+      "sha256": "b0f85b1e7df44b7fdaacf6037519d3e9c2ad965a3599c74eed2a8069ad3fcb16",
+      "bytes": 67308375
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "archive": "dist/part-b-srinidhi-20260918-checkpoints.zip",
+  "bytes": 404003652,
+  "sha256": "ba845ee35266cf01a95be33570dcc8fb3fdecb8e341e434defef12c1228d31fe",
+  "verified": true,
+  "files": 54,
+  "contents": "Final evaluation plus six selected best/last checkpoint files; raw data and code transferred separately."
+}

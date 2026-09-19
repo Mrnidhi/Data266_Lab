@@ -9,13 +9,15 @@ Updated September 18, 2026 after the user reported that the college lab is close
 | Work | Placement and status |
 |---|---|
 | Part 1: character GPT | Completed on RunPod RTX 4090. Checkpoints, executed notebook, metrics and logs verified locally; pod stopped. |
-| Part 2: Yelp sentiment | User selected one RunPod RTX 5090 at $0.99/hour. Prepare text features locally, benchmark all three models, then run independent validation trials in parallel with live SSH progress. |
+| Part 2: Yelp sentiment | Completed the reference suite and six validation-only trials on one RunPod RTX 5090. All checkpoints and logs were verified locally before stopping; final inference and reporting use the Mac CPU. |
 | Part 3: CycleGAN | Class archive received. Training and any GPU decision are deferred until Part 2 finishes and its pod stops. |
 | Reports, notebooks, packaging, checksums | Local Mac, with verified local backups of every cloud training run. |
 
 The earlier college/free-GPU allocation is superseded. No final submission may claim a college-GPU run that did not occur. Each task retains actual hardware, environment, source and training provenance.
 
 ## Part 2 cost and stopping policy
+
+The completed session was observed from 2026-09-19 01:32:44 UTC to 02:43:51 UTC (about 71 minutes). Estimated compute plus container cost: **$1.18**, before any tax; this is a duration-based estimate, not an invoice. The RunPod console confirmed **$0.00/hour** after stop. See `verification/runpod_part_b_session_20260918.json` and the 96-file backup receipt. Existing GPU training processes finished normally, but new CUDA contexts became unavailable late in the session; final inference therefore runs on the local Apple M3 CPU. No extra paid resource was started.
 
 The user explicitly removed the initial $3 allowance and authorized continued research-guided experiments for better Part 2 results. Keep one RTX 5090 active, measure throughput and costs, preserve checkpoints, and stop after useful work finishes. This is not authorization for unrelated purchases or an unbounded resource fleet. The current on-demand quote is $0.99/hour plus approximately $0.004/hour for a 30 GB container disk, before any applicable tax. A real-data benchmark is in verification/sentiment_5090_benchmark.json. Candidate runtimes depend on their actual architecture, stopping epoch and concurrent workload.
 

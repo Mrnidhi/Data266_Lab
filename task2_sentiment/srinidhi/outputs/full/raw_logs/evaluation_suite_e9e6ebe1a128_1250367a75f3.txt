@@ -1,0 +1,3 @@
+Evaluating frozen maxpool_mlp checkpoint on 38000 paired test rows
+Evaluating frozen bilstm checkpoint on 38000 paired test rows
+Evaluating frozen dilated_cnn checkpoint on 38000 paired test rows

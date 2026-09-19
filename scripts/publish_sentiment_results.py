@@ -25,6 +25,43 @@ def write_json(path, value):
     path.write_text(json.dumps(value, indent=2, allow_nan=False) + "\n")
 
 
+def normalize_repository_paths(value, root):
+    """Strip only the exact absolute repository prefix from JSON string values."""
+    prefix = root.as_posix().rstrip("/") + "/"
+    if isinstance(value, str):
+        return value[len(prefix):] if value.startswith(prefix) else value
+    if isinstance(value, dict):
+        return {key: normalize_repository_paths(item, root) for key, item in value.items()}
+    if isinstance(value, list):
+        return [normalize_repository_paths(item, root) for item in value]
+    return value
+
+
+def copy_publication_metadata(source, target, *, derived):
+    """Make a portable derived metadata copy and record its immutable source hash."""
+    if source.name not in {"config.json", "run_summary.json"}:
+        raise ValueError("Path normalization is limited to config.json and run_summary.json")
+    original = source.read_bytes()
+    document = json.loads(original)
+    portable = normalize_repository_paths(document, ROOT) if derived else document
+    changed = portable != document
+    if changed:
+        write_json(target, portable)
+    else:
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(source, target)
+    published = target.read_bytes()
+    return {"source_path": source.relative_to(ROOT).as_posix(),
+            "published_path": target.relative_to(ROOT).as_posix(),
+            "original_sha256": hashlib.sha256(original).hexdigest(),
+            "published_sha256": hashlib.sha256(published).hexdigest(),
+            "original_bytes": len(original), "published_bytes": len(published),
+            "paths_normalized": changed,
+            "normalization_note": (
+                "In this derived publication copy only, recursively replace an exact absolute repository-root prefix followed by '/' in string values with a repository-relative path. All other values are preserved; original run bytes remain unchanged."
+                if derived else "Byte-identical original-suite copy; no path normalization applied.")}
+
+
 def training_hardware(provenance, cpu_evidence):
     """Read training hardware, never substitute the publisher's local hardware."""
     environment = provenance.get("environment", {})
@@ -214,8 +251,17 @@ def main():
     if not selection and (outputs / "selection_manifest.json").exists():
         raise ValueError("Published selection metadata exists; use the matching selected suite")
     outputs.mkdir(parents=True, exist_ok=True)
+    publication_metadata = []
+    derived = provenance.get("artifact_type") == "assembled_validation_selection"
     for file in ("summary.json", "config.json", "vocabulary.json", "preprocessing.json", "data_audit.json", "dataset_statistics.json", "split_ids.npz", "run_summary.json", "paired_mcnemar.json"):
-        shutil.copy2(run / file, outputs / file)
+        if file in {"config.json", "run_summary.json"}:
+            publication_metadata.append(copy_publication_metadata(run / file, outputs / file, derived=derived))
+        else:
+            shutil.copy2(run / file, outputs / file)
+    write_json(outputs / "publication_metadata.json", {
+        "format_version": 1, "source_run": relative, "derived_suite": derived,
+        "scope": "Publication copies of config.json and run_summary.json only; no metric, checkpoint, hardware or raw-source changes.",
+        "files": publication_metadata})
     if selection:
         shutil.copy2(selection_path, outputs / "selection_manifest.json")
     write_json(outputs / "training_sources.json", sources)
@@ -327,8 +373,11 @@ def main():
         "Training throughput is processed training examples divided by those measured epoch times. "
         + TIMING_CONTEXT + "\n\n" +
         "Data length and class distributions, class balance, blanks and truncation/OOV statistics are in outputs/full/data_distributions.json and .png.\n\n"
+        "Duplicate reviews are audited in outputs/full/data_audit.json and retained under the frozen official-row protocol. "
+        "Shared text across splits is a small potential source of score inflation; these results are not a duplicate-clean benchmark.\n\n"
         f"Original evaluation evidence: ../../{relative}. The notebook reads the published copies in outputs/full; "
         "byte-identical training and evaluation logs are mapped to their original paths in outputs/full/raw_logs/manifest.json. "
+        "Publication metadata records original and published hashes for the two metadata files; derived copies use portable repository-relative paths. "
         "Original training evidence is listed per model above. Checkpoint mapping: checkpoints/manifest.json. "
         "outputs/full/model_comparison.csv summarizes the three models. Each model's required_20_errors_for_review.csv contains five errors from each required category. "
         "Student review is recorded only by explicit student_reviewed values; newly generated interpretation fields remain blank and unreviewed. "
@@ -380,7 +429,10 @@ display(json.loads((OUTPUTS / "data_audit.json").read_text()))'''),
 print(distributions["length_definition"])
 display(pd.DataFrame.from_dict(distributions["splits"], orient="index"))
 display(Image(filename=str(OUTPUTS / "data_distributions.png"), width=1000))'''),
-        nbformat.v4.new_code_cell('display(pd.read_csv(OUTPUTS / "model_comparison.csv"))\ndisplay(pd.read_csv(MEMBER / "metrics_report.csv"))'),
+        nbformat.v4.new_code_cell('''display(pd.read_csv(OUTPUTS / "model_comparison.csv"))
+metrics = pd.read_csv(MEMBER / "metrics_report.csv")
+with pd.option_context("display.max_rows", None, "display.max_colwidth", 100):
+    display(metrics[["model", "split", "metric", "value"]])'''),
         nbformat.v4.new_markdown_cell("## Timing interpretation\n\n" + TIMING_CONTEXT),
         nbformat.v4.new_code_cell('''for name in ("maxpool_mlp", "bilstm", "dilated_cnn"):
     print(name)

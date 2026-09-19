@@ -6,7 +6,7 @@
   "container_storage_estimate_usd_hour": 0.004,
   "observed_allocated_utc": "2026-09-19T01:32:44+00:00",
   "initial_operating_allowance_usd": 3.0,
-  "status": "reference_and_validation_candidates_running",
+  "status": "stopped",
   "scope": "Part 2 only. User explicitly chose to retain this single RTX 5090, finish Part 2, verify backups and stop; discuss Part 3 later.",
   "stop_policy": "Back up and verify Part 2 trained models and all experiment evidence, then stop the pod before Part 3.",
   "automatic_shutdown": false,
@@ -15,10 +15,6 @@
   "full_run": "runs/part-b-full",
   "num_workers": 2,
   "benchmark": "verification/sentiment_5090_benchmark.json",
-  "expected_remaining_minutes": [
-    30,
-    45
-  ],
   "estimated_total_cost_usd": [
     1,
     1.5
@@ -27,10 +23,17 @@
   "initial_operating_allowance_superseded": true,
   "active_resource_limit": "One RTX 5090; extra paid GPUs not selected",
   "optimization_policy": "Choose candidates by validation only; preserve reference run and all raw evidence; no promise of a global optimum.",
-  "concurrent_jobs": [
-    "part-b-full",
-    "part-b-tuning/cnn_long_context",
-    "part-b-tuning/mlp_wider"
-  ],
-  "observed_parallel_gpu_utilization_percent": 91
+  "concurrent_jobs": [],
+  "observed_parallel_gpu_utilization_percent": 91,
+  "observed_stopped_utc": "2026-09-19T02:43:51.474164+00:00",
+  "observed_stopped_rate_usd_hour": 0.0,
+  "stop_confirmation": "RunPod Pods UI shows pod 2jh3s1o6ud6tb1 at $0.00/hr after Stop Pod confirmation.",
+  "training_completed": true,
+  "backup_receipt": "verification/part_b_backup_verified.json",
+  "final_evaluation": "completed_local_Apple_M3_cpu",
+  "estimated_session_minutes": 71.1245694,
+  "estimated_session_cost_usd": 1.1783,
+  "cost_note": "Estimate from observed allocation/stop times, GPU and estimated container rate; not an invoice. UI balance observed after stop: $7.93.",
+  "evaluation_receipt": "task2_sentiment/srinidhi/outputs/full/run_summary.json",
+  "notebook_receipt": "verification/part_b_notebook.json"
 }
