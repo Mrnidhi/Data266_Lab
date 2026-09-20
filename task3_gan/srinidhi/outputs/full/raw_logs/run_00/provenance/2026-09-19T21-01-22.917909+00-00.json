@@ -1,0 +1,130 @@
+{
+  "task": "cyclegan",
+  "mode": "full",
+  "device": "cuda",
+  "started_utc": "2026-09-19T21:01:22.917909+00:00",
+  "status": "completed",
+  "is_final_result": false,
+  "config": {
+    "mode": "full",
+    "seed": 2342,
+    "image_size": 256,
+    "base_channels": 64,
+    "residual_blocks": 9,
+    "batch_size": 1,
+    "learning_rate": 0.0001,
+    "betas": [
+      0.5,
+      0.999
+    ],
+    "cycle_weight": 10.0,
+    "identity_weight": 5.0,
+    "replay_size": 50,
+    "epochs": 30,
+    "constant_epochs": 15,
+    "max_steps": 200,
+    "checkpoint_every": 500,
+    "log_every": 50,
+    "allow_synthetic": false,
+    "select_best": true,
+    "validation_every_epochs": 5,
+    "evaluate_after_run": false,
+    "evaluation": {
+      "allow_metric_downloads": true,
+      "max_images": null,
+      "batch_size": 16,
+      "kid_subsets": 50,
+      "kid_subset_size": 100,
+      "prdc_k": 5,
+      "seed": 2342
+    },
+    "data": {
+      "monet_dir": "task3_gan/data/monet_jpg",
+      "photo_dir": "task3_gan/data/photo_jpg",
+      "manifest_dir": "task3_gan/srinidhi/data_processed/part3_manifests",
+      "source_note": "Verified class ZIP SHA256 5060b62d4a6a0194de10b849ea43b649f308ae516f0bf659b62ee404ca153e1d; unique-content independent 80/10/10 splits frozen at seed 2342; source receipts in reproducibility/manifests/srinidhi/part-c-source-snapshot."
+    },
+    "precision": "bf16",
+    "replay_device": "device"
+  },
+  "source_sha256": {
+    "src/lab1/__init__.py": "4597cd6743deb8dc143f2be2f7757c8d8d8fb367716dbcb4cb9626a025265217",
+    "src/lab1/common.py": "6659501f6490e5dc1c72decbb48f1c745a2e876bea24a89fea32b381518677ce",
+    "src/lab1/run.py": "571163444bc3331b59263ba9bde6f4c027360a25983ab846dfb4e052b5a5bb39",
+    "task3_gan/srinidhi/config.json": "6f8174e53f29143e02ccd8b263062f4a03f3e5a6fae639e8e3e54f966f9fe51f",
+    "task3_gan/srinidhi/evaluate_local.py": "4cb02bb71263f3a507562a99dec4b485fbcd0ed1ff08fc3757f1886e015dacfc",
+    "task3_gan/srinidhi/src/cyclegan.py": "8844e5c503162a54c8b4eefc857cf5b0141022367fa0ecfd6435187130a60cc6"
+  },
+  "environment": {
+    "captured_utc": "2026-09-19T21:01:22.964670+00:00",
+    "python": "3.12.3",
+    "platform": "Linux-5.15.0-191-generic-x86_64-with-glibc2.39",
+    "machine": "x86_64",
+    "packages": {
+      "torch": "2.11.0+cu128",
+      "torchvision": "0.26.0+cu128",
+      "numpy": "2.5.3",
+      "pandas": "3.0.6",
+      "scikit-learn": "1.9.1",
+      "scipy": "1.16.3",
+      "matplotlib": "3.11.2",
+      "datasets": "5.0.1",
+      "Pillow": "12.3.0",
+      "clean-fid": "0.1.35",
+      "lpips": "0.1.4",
+      "prdc": "0.2"
+    },
+    "cuda_available": true,
+    "cuda_build": "12.8",
+    "cudnn": 91900,
+    "gpus": [
+      {
+        "index": 0,
+        "name": "NVIDIA GeForce RTX 5090",
+        "memory_bytes": 33668857856,
+        "compute_capability": [
+          12,
+          0
+        ]
+      }
+    ],
+    "mps_available": false,
+    "nvidia_smi": "name, uuid, driver_version, memory.total [MiB]\nNVIDIA GeForce RTX 5090, GPU-df52819f-f1ff-484e-4af6-8f6202c1035c, 580.159.03, 32607 MiB"
+  },
+  "resumed": false,
+  "ended_utc": "2026-09-19T21:01:33.539116+00:00",
+  "elapsed_seconds": 10.555247917072847,
+  "summary": {
+    "part": 3,
+    "mode": "full",
+    "device": "cuda",
+    "precision": "bf16",
+    "replay_device": "device",
+    "seed": 2342,
+    "data_kind": "explicit_class_manifests",
+    "class_results": true,
+    "completed_updates": 200,
+    "completed_epoch_fraction": 0.03556187766714083,
+    "steps_per_epoch": 5624,
+    "epoch_definition": "one shuffled pass through larger training domain; smaller domain sampled independently with replacement",
+    "parameter_counts": {
+      "G_photo_to_monet": 11378179,
+      "G_monet_to_photo": 11378179,
+      "D_photo": 2764737,
+      "D_monet": 2764737
+    },
+    "training_seconds": 8.400933010037988,
+    "session_wall_seconds": 9.215999798034318,
+    "training_source_images_per_second": 47.61375903391369,
+    "throughput_definition": "two source images per complete paired-domain G/D update; excludes data loading and evaluation",
+    "peak_gpu_memory_bytes": 1571999744,
+    "memory_note": "CUDA peak allocated memory; not reserved memory",
+    "nan_events": 0,
+    "checkpoint": "reproducibility/raw_logs/srinidhi/vast-part3/full/last.pt",
+    "best_checkpoint": null,
+    "best_selection": null,
+    "metrics_status": "Run evaluate_checkpoint for held-out evaluation; no scores inferred from loss",
+    "human_audit_status": "Requires independent real ratings by two humans",
+    "kaggle_submission_status": "Not submitted; actual class format unverified"
+  }
+}

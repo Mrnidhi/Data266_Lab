@@ -1,2 +1,4 @@
 # Preserve generated evidence byte-for-byte, including standard CSV CRLF endings.
 reproducibility/raw_logs/** -text whitespace=cr-at-eol
+# Preserve the generated blank rater sheets exactly as produced.
+task3_gan/srinidhi/outputs/full/evaluation/human_audit/*.csv -text whitespace=cr-at-eol

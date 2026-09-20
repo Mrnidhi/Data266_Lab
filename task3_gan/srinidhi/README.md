@@ -1,6 +1,6 @@
 # Part 3 — Srinidhi's CycleGAN (seed 2342)
 
-The real class data and frozen splits are prepared for Colab training. Full training and final evaluation are not completed yet. No class Kaggle submission is generated or sent automatically.
+Full training and held-out evaluation are complete on the real class data and frozen splits. The selected checkpoint completed all 30 epochs (168,720 updates) with zero non-finite events, and both translation directions were evaluated on the frozen test split. The executed notebook, metrics, plots, fixed audit panels and direct prediction exports are saved in this folder. No class Kaggle submission was generated or sent automatically because the class submission schema is still unverified.
 
 ## Configuration
 

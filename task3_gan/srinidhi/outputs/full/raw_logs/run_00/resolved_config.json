@@ -1,0 +1,42 @@
+{
+  "mode": "full",
+  "seed": 2342,
+  "image_size": 256,
+  "base_channels": 64,
+  "residual_blocks": 9,
+  "batch_size": 1,
+  "learning_rate": 0.0001,
+  "betas": [
+    0.5,
+    0.999
+  ],
+  "cycle_weight": 10.0,
+  "identity_weight": 5.0,
+  "replay_size": 50,
+  "epochs": 30,
+  "constant_epochs": 15,
+  "max_steps": null,
+  "checkpoint_every": 500,
+  "log_every": 50,
+  "allow_synthetic": false,
+  "select_best": true,
+  "validation_every_epochs": 5,
+  "evaluate_after_run": false,
+  "evaluation": {
+    "allow_metric_downloads": true,
+    "max_images": null,
+    "batch_size": 16,
+    "kid_subsets": 50,
+    "kid_subset_size": 100,
+    "prdc_k": 5,
+    "seed": 2342
+  },
+  "data": {
+    "monet_dir": "task3_gan/data/monet_jpg",
+    "photo_dir": "task3_gan/data/photo_jpg",
+    "manifest_dir": "task3_gan/srinidhi/data_processed/part3_manifests",
+    "source_note": "Verified class ZIP SHA256 5060b62d4a6a0194de10b849ea43b649f308ae516f0bf659b62ee404ca153e1d; unique-content independent 80/10/10 splits frozen at seed 2342; source receipts in reproducibility/manifests/srinidhi/part-c-source-snapshot."
+  },
+  "precision": "bf16",
+  "replay_device": "device"
+}

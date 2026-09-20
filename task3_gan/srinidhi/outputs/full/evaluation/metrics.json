@@ -1,0 +1,130 @@
+{
+  "split": "test",
+  "data_kind": "explicit_class_manifests",
+  "class_results": true,
+  "manifest_fingerprint": "35184a0643321f99efc8df06544328b25c3364b66f29c76545ab47e01fe3438a",
+  "directions": {
+    "photo_to_monet": {
+      "source_count": 702,
+      "generated_count": 702,
+      "real_reference_count": 30,
+      "metrics": {
+        "fid": {
+          "status": "computed",
+          "value": 195.82003626484618
+        },
+        "kid": {
+          "status": "computed",
+          "value": 0.011112085897475482,
+          "subset_std": 0.004937408893181942,
+          "subsets": 50,
+          "subset_size": 30,
+          "note": "Subset SD is not training-seed uncertainty; unbiased KID estimates may be negative"
+        },
+        "precision": {
+          "status": "computed",
+          "value": 0.6011396011396012,
+          "nearest_k": 5
+        },
+        "recall": {
+          "status": "computed",
+          "value": 0.6333333333333333,
+          "nearest_k": 5
+        },
+        "density": {
+          "status": "computed",
+          "value": 0.5196581196581197,
+          "nearest_k": 5
+        },
+        "coverage": {
+          "status": "computed",
+          "value": 1.0,
+          "nearest_k": 5
+        },
+        "lpips_cycle": {
+          "status": "computed",
+          "value": 0.18855660488335496,
+          "count": 702
+        },
+        "content_cosine": {
+          "status": "computed",
+          "value": 0.8103030257754855,
+          "count": 702
+        },
+        "cycle_l1": {
+          "status": "computed",
+          "value": 0.09750508292023613,
+          "count": 702,
+          "pixel_range": "[-1,1]"
+        }
+      },
+      "inference_seconds": 2.054546600091271,
+      "inference_images_per_second": 341.6812254191822,
+      "generation_and_pair_metrics_seconds": 37.63103879895061
+    },
+    "monet_to_photo": {
+      "source_count": 30,
+      "generated_count": 30,
+      "real_reference_count": 702,
+      "metrics": {
+        "fid": {
+          "status": "computed",
+          "value": 188.2377262435952
+        },
+        "kid": {
+          "status": "computed",
+          "value": 0.01919503280892968,
+          "subset_std": 0.0031508303148950374,
+          "subsets": 50,
+          "subset_size": 30,
+          "note": "Subset SD is not training-seed uncertainty; unbiased KID estimates may be negative"
+        },
+        "precision": {
+          "status": "computed",
+          "value": 0.7,
+          "nearest_k": 5
+        },
+        "recall": {
+          "status": "computed",
+          "value": 0.5085470085470085,
+          "nearest_k": 5
+        },
+        "density": {
+          "status": "computed",
+          "value": 0.96,
+          "nearest_k": 5
+        },
+        "coverage": {
+          "status": "computed",
+          "value": 0.14387464387464388,
+          "nearest_k": 5
+        },
+        "lpips_cycle": {
+          "status": "computed",
+          "value": 0.23620524033904075,
+          "count": 30
+        },
+        "content_cosine": {
+          "status": "computed",
+          "value": 0.9019160509109497,
+          "count": 30
+        },
+        "cycle_l1": {
+          "status": "computed",
+          "value": 0.12110819096366564,
+          "count": 30,
+          "pixel_range": "[-1,1]"
+        }
+      },
+      "inference_seconds": 0.08136582199949771,
+      "inference_images_per_second": 368.7051794325288,
+      "generation_and_pair_metrics_seconds": 10.800502461963333
+    }
+  },
+  "lpips_pairing": "original versus cycle reconstruction (not arbitrary unpaired target)",
+  "content_encoder": "torchvision ResNet18 IMAGENET1K_V1, frozen, pooled512; input versus translation",
+  "distribution_encoder": "Clean-FID clean-mode InceptionV3 2048 features",
+  "caveat": "Small reference sets make FID and neighborhood metrics uncertain; fixed counts do not remove FID bias.",
+  "checkpoint_sha256": "d8b37673ce3cbda3397740863fcde33126eb029a9cc5a7c7cdde9dcf064d9b7e",
+  "checkpoint_step": 168720
+}

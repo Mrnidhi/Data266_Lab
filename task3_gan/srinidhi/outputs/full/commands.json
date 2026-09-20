@@ -1,0 +1,7 @@
+{
+  "training": [
+    ".venv/bin/python -u scripts/run_part3_colab.py --output reproducibility/raw_logs/srinidhi/vast-part3/full --until-step 200",
+    ".venv/bin/python -u scripts/run_part3_colab.py --output reproducibility/raw_logs/srinidhi/vast-part3/full --resume reproducibility/raw_logs/srinidhi/vast-part3/full/last.pt"
+  ],
+  "evaluation": ".venv/bin/python -u task3_gan/srinidhi/evaluate_local.py --mode full --device cuda --checkpoint reproducibility/raw_logs/srinidhi/vast-part3/full/best.pt --split test --output-dir reproducibility/raw_logs/srinidhi/vast-part3/evaluation-final --report reproducibility/raw_logs/srinidhi/vast-part3/evaluation-final/full_metrics_report.csv"
+}

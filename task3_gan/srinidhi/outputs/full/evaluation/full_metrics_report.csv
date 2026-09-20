@@ -1,0 +1,19 @@
+direction,metric,value,status,details,checkpoint_sha256
+photo_to_monet,fid,195.82003626484618,computed,{},d8b37673ce3cbda3397740863fcde33126eb029a9cc5a7c7cdde9dcf064d9b7e
+photo_to_monet,kid,0.011112085897475482,computed,"{""note"": ""Subset SD is not training-seed uncertainty; unbiased KID estimates may be negative"", ""subset_size"": 30, ""subset_std"": 0.004937408893181942, ""subsets"": 50}",d8b37673ce3cbda3397740863fcde33126eb029a9cc5a7c7cdde9dcf064d9b7e
+photo_to_monet,precision,0.6011396011396012,computed,"{""nearest_k"": 5}",d8b37673ce3cbda3397740863fcde33126eb029a9cc5a7c7cdde9dcf064d9b7e
+photo_to_monet,recall,0.6333333333333333,computed,"{""nearest_k"": 5}",d8b37673ce3cbda3397740863fcde33126eb029a9cc5a7c7cdde9dcf064d9b7e
+photo_to_monet,density,0.5196581196581197,computed,"{""nearest_k"": 5}",d8b37673ce3cbda3397740863fcde33126eb029a9cc5a7c7cdde9dcf064d9b7e
+photo_to_monet,coverage,1.0,computed,"{""nearest_k"": 5}",d8b37673ce3cbda3397740863fcde33126eb029a9cc5a7c7cdde9dcf064d9b7e
+photo_to_monet,lpips_cycle,0.18855660488335496,computed,"{""count"": 702}",d8b37673ce3cbda3397740863fcde33126eb029a9cc5a7c7cdde9dcf064d9b7e
+photo_to_monet,content_cosine,0.8103030257754855,computed,"{""count"": 702}",d8b37673ce3cbda3397740863fcde33126eb029a9cc5a7c7cdde9dcf064d9b7e
+photo_to_monet,cycle_l1,0.09750508292023613,computed,"{""count"": 702, ""pixel_range"": ""[-1,1]""}",d8b37673ce3cbda3397740863fcde33126eb029a9cc5a7c7cdde9dcf064d9b7e
+monet_to_photo,fid,188.2377262435952,computed,{},d8b37673ce3cbda3397740863fcde33126eb029a9cc5a7c7cdde9dcf064d9b7e
+monet_to_photo,kid,0.01919503280892968,computed,"{""note"": ""Subset SD is not training-seed uncertainty; unbiased KID estimates may be negative"", ""subset_size"": 30, ""subset_std"": 0.0031508303148950374, ""subsets"": 50}",d8b37673ce3cbda3397740863fcde33126eb029a9cc5a7c7cdde9dcf064d9b7e
+monet_to_photo,precision,0.7,computed,"{""nearest_k"": 5}",d8b37673ce3cbda3397740863fcde33126eb029a9cc5a7c7cdde9dcf064d9b7e
+monet_to_photo,recall,0.5085470085470085,computed,"{""nearest_k"": 5}",d8b37673ce3cbda3397740863fcde33126eb029a9cc5a7c7cdde9dcf064d9b7e
+monet_to_photo,density,0.96,computed,"{""nearest_k"": 5}",d8b37673ce3cbda3397740863fcde33126eb029a9cc5a7c7cdde9dcf064d9b7e
+monet_to_photo,coverage,0.14387464387464388,computed,"{""nearest_k"": 5}",d8b37673ce3cbda3397740863fcde33126eb029a9cc5a7c7cdde9dcf064d9b7e
+monet_to_photo,lpips_cycle,0.23620524033904075,computed,"{""count"": 30}",d8b37673ce3cbda3397740863fcde33126eb029a9cc5a7c7cdde9dcf064d9b7e
+monet_to_photo,content_cosine,0.9019160509109497,computed,"{""count"": 30}",d8b37673ce3cbda3397740863fcde33126eb029a9cc5a7c7cdde9dcf064d9b7e
+monet_to_photo,cycle_l1,0.12110819096366564,computed,"{""count"": 30, ""pixel_range"": ""[-1,1]""}",d8b37673ce3cbda3397740863fcde33126eb029a9cc5a7c7cdde9dcf064d9b7e

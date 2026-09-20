@@ -1,0 +1,16 @@
+{
+  "requested_per_direction": 30,
+  "actual_total": 60,
+  "counts": {
+    "photo_to_monet": 30,
+    "monet_to_photo": 30
+  },
+  "complete_sample_count": true,
+  "rubric": {
+    "style": "1=no target style, 5=strong target style",
+    "content": "1=scene changed, 5=scene preserved",
+    "artifacts": "1=severe artifacts, 5=no visible artifacts"
+  },
+  "instructions": "Two humans rate independently. Hide model/student labels and private key. Use the same fixed inputs for every team model. Do not fill missing ratings automatically.",
+  "requirement_interpretation": "Lab says 30 fixed samples and metrics in both directions; this prepares up to 30 per direction."
+}

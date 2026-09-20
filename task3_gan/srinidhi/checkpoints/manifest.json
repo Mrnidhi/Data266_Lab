@@ -1,0 +1,13 @@
+{
+  "selected.pt": {
+    "sha256": "d8b37673ce3cbda3397740863fcde33126eb029a9cc5a7c7cdde9dcf064d9b7e",
+    "step": 168720,
+    "manifest_fingerprint": "35184a0643321f99efc8df06544328b25c3364b66f29c76545ab47e01fe3438a",
+    "selection": {
+      "metric": "mean_validation_KID_both_directions",
+      "step": 168720,
+      "value": 0.019753425605595114,
+      "validation_only": true
+    }
+  }
+}

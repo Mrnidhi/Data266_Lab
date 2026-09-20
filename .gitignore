@@ -31,6 +31,18 @@ dist/
 *.pt
 *.pth
 *.ckpt
+# Part 3 keeps the complete local evidence tree for Canvas packaging, while Git
+# carries the executed notebook, metrics, plots, audit panels and predictions.
+/task3_gan/srinidhi/outputs/full/raw_logs/**/training_log.jsonl
+/task3_gan/srinidhi/outputs/full/evaluation/photo_to_monet/source/
+/task3_gan/srinidhi/outputs/full/evaluation/photo_to_monet/generated/
+/task3_gan/srinidhi/outputs/full/evaluation/photo_to_monet/cycle/
+/task3_gan/srinidhi/outputs/full/evaluation/photo_to_monet/real_target/
+/task3_gan/srinidhi/outputs/full/evaluation/monet_to_photo/source/
+/task3_gan/srinidhi/outputs/full/evaluation/monet_to_photo/generated/
+/task3_gan/srinidhi/outputs/full/evaluation/monet_to_photo/cycle/
+/task3_gan/srinidhi/outputs/full/evaluation/monet_to_photo/real_target/
+/task3_gan/srinidhi/outputs/full/evaluation/human_audit/private_key_do_not_share_with_raters.json
 .env
 .env.*
 **/data_processed/*
