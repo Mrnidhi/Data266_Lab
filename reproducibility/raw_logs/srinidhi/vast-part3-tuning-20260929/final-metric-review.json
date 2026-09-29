@@ -1,0 +1,742 @@
+{
+  "selection.json": {
+    "created_utc": "2026-09-29T13:22:55.444570+00:00",
+    "status": "validation_selected_pending_visual_review",
+    "split": "val",
+    "metric": "mean_validation_KID_both_directions",
+    "protocol_sha256": "9b9749a20ffcc484428f070867b634524369d2edb3e118d730e696271969da68",
+    "path_base": "selection_json_directory",
+    "path_note": "Retain the unchanged source checkpoint's relative location when moving this experiment; verify its SHA-256.",
+    "source_checkpoint_sha256": "d8b37673ce3cbda3397740863fcde33126eb029a9cc5a7c7cdde9dcf064d9b7e",
+    "baseline_rechecks": [
+      {
+        "value": 0.019753425605595114,
+        "directions": {
+          "photo_to_monet": 0.013203506395220756,
+          "monet_to_photo": 0.02630334481596947
+        },
+        "metrics_path": "arms/identity5/validation/step_0000000/metrics.json",
+        "metrics_sha256": "d6bb19bb2d6a851fbf0394dc50cffe799da906bc82e0a5d1838fada6fe8889f2",
+        "arm": "identity5"
+      },
+      {
+        "value": 0.019753425605595114,
+        "directions": {
+          "photo_to_monet": 0.013203506395220756,
+          "monet_to_photo": 0.02630334481596947
+        },
+        "metrics_path": "arms/identity2p5/validation/step_0000000/metrics.json",
+        "metrics_sha256": "7e74ced047ded311fc20bab765df3e77d889450fe57670bd339cb80ed323010b",
+        "arm": "identity2p5"
+      }
+    ],
+    "completed_arm_candidates": [
+      {
+        "value": 0.01620449319947511,
+        "directions": {
+          "photo_to_monet": 0.012145767202600837,
+          "monet_to_photo": 0.020263219196349384
+        },
+        "metrics_path": "arms/identity5/validation/step_0044992/metrics.json",
+        "metrics_sha256": "5fa56722af78622211af0ad8ceb61971379eb44638a0665300b6fa2874e9f17c",
+        "kind": "arm",
+        "arm": "identity5",
+        "step": 44992,
+        "checkpoint": "arms/identity5/best.pt",
+        "checkpoint_sha256": "8373306064c08b52d2bef1236000bd2965f2c66299ef6598ab8b960b5dd75904"
+      },
+      {
+        "value": 0.016203977004624903,
+        "directions": {
+          "photo_to_monet": 0.011491383882239461,
+          "monet_to_photo": 0.020916570127010346
+        },
+        "metrics_path": "arms/identity2p5/validation/step_0044992/metrics.json",
+        "metrics_sha256": "772305350a1592f92483d5825fd39b680775e4577b009a9670c9c019dd626de5",
+        "kind": "arm",
+        "arm": "identity2p5",
+        "step": 44992,
+        "checkpoint": "arms/identity2p5/best.pt",
+        "checkpoint_sha256": "c6775f21d2b6ccc214ae235f366a01f636f0b214e686ca53d2858ecb84d0ec91"
+      }
+    ],
+    "ranking": [
+      {
+        "value": 0.016203977004624903,
+        "directions": {
+          "photo_to_monet": 0.011491383882239461,
+          "monet_to_photo": 0.020916570127010346
+        },
+        "metrics_path": "arms/identity2p5/validation/step_0044992/metrics.json",
+        "metrics_sha256": "772305350a1592f92483d5825fd39b680775e4577b009a9670c9c019dd626de5",
+        "kind": "arm",
+        "arm": "identity2p5",
+        "step": 44992,
+        "checkpoint": "arms/identity2p5/best.pt",
+        "checkpoint_sha256": "c6775f21d2b6ccc214ae235f366a01f636f0b214e686ca53d2858ecb84d0ec91"
+      },
+      {
+        "value": 0.01620449319947511,
+        "directions": {
+          "photo_to_monet": 0.012145767202600837,
+          "monet_to_photo": 0.020263219196349384
+        },
+        "metrics_path": "arms/identity5/validation/step_0044992/metrics.json",
+        "metrics_sha256": "5fa56722af78622211af0ad8ceb61971379eb44638a0665300b6fa2874e9f17c",
+        "kind": "arm",
+        "arm": "identity5",
+        "step": 44992,
+        "checkpoint": "arms/identity5/best.pt",
+        "checkpoint_sha256": "8373306064c08b52d2bef1236000bd2965f2c66299ef6598ab8b960b5dd75904"
+      },
+      {
+        "value": 0.019753425605595114,
+        "directions": {
+          "photo_to_monet": 0.013203506395220756,
+          "monet_to_photo": 0.02630334481596947
+        },
+        "metrics_path": "arms/identity5/validation/step_0000000/metrics.json",
+        "metrics_sha256": "d6bb19bb2d6a851fbf0394dc50cffe799da906bc82e0a5d1838fada6fe8889f2",
+        "arm": null,
+        "kind": "unchanged_source",
+        "step": 168720,
+        "checkpoint": "../../../../task3_gan/srinidhi/checkpoints/best.pt",
+        "checkpoint_sha256": "d8b37673ce3cbda3397740863fcde33126eb029a9cc5a7c7cdde9dcf064d9b7e"
+      }
+    ],
+    "winner": {
+      "value": 0.016203977004624903,
+      "directions": {
+        "photo_to_monet": 0.011491383882239461,
+        "monet_to_photo": 0.020916570127010346
+      },
+      "metrics_path": "arms/identity2p5/validation/step_0044992/metrics.json",
+      "metrics_sha256": "772305350a1592f92483d5825fd39b680775e4577b009a9670c9c019dd626de5",
+      "kind": "arm",
+      "arm": "identity2p5",
+      "step": 44992,
+      "checkpoint": "arms/identity2p5/best.pt",
+      "checkpoint_sha256": "c6775f21d2b6ccc214ae235f366a01f636f0b214e686ca53d2858ecb84d0ec91"
+    },
+    "mean_kid_improvement": 0.0035494486009702113,
+    "test_evaluated": false,
+    "published": false
+  },
+  "finalization.json": {
+    "status": "completed",
+    "started_utc": "2026-09-29T13:23:54.622605+00:00",
+    "checkpoint_sha256": "c6775f21d2b6ccc214ae235f366a01f636f0b214e686ca53d2858ecb84d0ec91",
+    "selection_sha256": "ade1fdaccaafae8df47d58c9ed7497c37db62d74e049078ac5036a56f3f4a441",
+    "ended_utc": "2026-09-29T13:25:20.471062+00:00"
+  },
+  "commands-final.json": {
+    "working_directory": "/workspace/Data266_Lab_tuning_20260929",
+    "environment": {
+      "PYTHONPATH": "/workspace/Data266_Lab_tuning_20260929/src"
+    },
+    "training": [
+      "/venv/main/bin/python scripts/tune_cyclegan.py --action train-arm --output reproducibility/raw_logs/srinidhi/vast-part3-tuning-20260929 --arm identity2p5 --device cuda"
+    ],
+    "evaluation": "/venv/main/bin/python -m lab1.cyclegan evaluate --mode full --config /workspace/Data266_Lab_tuning_20260929/reproducibility/raw_logs/srinidhi/vast-part3-tuning-20260929/configs/identity2p5.json --checkpoint /workspace/Data266_Lab_tuning_20260929/reproducibility/raw_logs/srinidhi/vast-part3-tuning-20260929/arms/identity2p5/best.pt --device cuda --split test --output-dir /workspace/Data266_Lab_tuning_20260929/reproducibility/raw_logs/srinidhi/vast-part3-tuning-20260929/evaluation-final",
+    "exports": [
+      "/venv/main/bin/python -m lab1.cyclegan export --mode full --config /workspace/Data266_Lab_tuning_20260929/reproducibility/raw_logs/srinidhi/vast-part3-tuning-20260929/configs/identity2p5.json --checkpoint /workspace/Data266_Lab_tuning_20260929/reproducibility/raw_logs/srinidhi/vast-part3-tuning-20260929/arms/identity2p5/best.pt --device cuda --input-dir /workspace/Data266_Lab_tuning_20260929/task3_gan/data/photo_jpg --manifest /workspace/Data266_Lab_tuning_20260929/task3_gan/srinidhi/data_processed/part3_manifests/test_photo.txt --direction photo_to_monet --output-dir /workspace/Data266_Lab_tuning_20260929/reproducibility/raw_logs/srinidhi/vast-part3-tuning-20260929/exports/photo_to_monet",
+      "/venv/main/bin/python -m lab1.cyclegan export --mode full --config /workspace/Data266_Lab_tuning_20260929/reproducibility/raw_logs/srinidhi/vast-part3-tuning-20260929/configs/identity2p5.json --checkpoint /workspace/Data266_Lab_tuning_20260929/reproducibility/raw_logs/srinidhi/vast-part3-tuning-20260929/arms/identity2p5/best.pt --device cuda --input-dir /workspace/Data266_Lab_tuning_20260929/task3_gan/data/monet_jpg --manifest /workspace/Data266_Lab_tuning_20260929/task3_gan/srinidhi/data_processed/part3_manifests/test_monet.txt --direction monet_to_photo --output-dir /workspace/Data266_Lab_tuning_20260929/reproducibility/raw_logs/srinidhi/vast-part3-tuning-20260929/exports/monet_to_photo"
+    ]
+  },
+  "evaluation-final/metrics.json": {
+    "split": "test",
+    "data_kind": "explicit_class_manifests",
+    "class_results": true,
+    "manifest_fingerprint": "35184a0643321f99efc8df06544328b25c3364b66f29c76545ab47e01fe3438a",
+    "directions": {
+      "photo_to_monet": {
+        "source_count": 702,
+        "generated_count": 702,
+        "real_reference_count": 30,
+        "metrics": {
+          "fid": {
+            "status": "computed",
+            "value": 195.68238433720225
+          },
+          "kid": {
+            "status": "computed",
+            "value": 0.010904413852840663,
+            "subset_std": 0.0055312876956171205,
+            "subsets": 50,
+            "subset_size": 30,
+            "note": "Subset SD is not training-seed uncertainty; unbiased KID estimates may be negative"
+          },
+          "precision": {
+            "status": "computed",
+            "value": 0.6239316239316239,
+            "nearest_k": 5
+          },
+          "recall": {
+            "status": "computed",
+            "value": 0.6333333333333333,
+            "nearest_k": 5
+          },
+          "density": {
+            "status": "computed",
+            "value": 0.5592592592592592,
+            "nearest_k": 5
+          },
+          "coverage": {
+            "status": "computed",
+            "value": 1.0,
+            "nearest_k": 5
+          },
+          "lpips_cycle": {
+            "status": "computed",
+            "value": 0.18394165176187147,
+            "count": 702
+          },
+          "content_cosine": {
+            "status": "computed",
+            "value": 0.8057083588549894,
+            "count": 702
+          },
+          "cycle_l1": {
+            "status": "computed",
+            "value": 0.09824080752511309,
+            "count": 702,
+            "pixel_range": "[-1,1]"
+          }
+        },
+        "inference_seconds": 1.8809157426003367,
+        "inference_images_per_second": 373.2224597309691,
+        "generation_and_pair_metrics_seconds": 34.69767786911689
+      },
+      "monet_to_photo": {
+        "source_count": 30,
+        "generated_count": 30,
+        "real_reference_count": 702,
+        "metrics": {
+          "fid": {
+            "status": "computed",
+            "value": 180.95186165438653
+          },
+          "kid": {
+            "status": "computed",
+            "value": 0.017124959230422974,
+            "subset_std": 0.003095745982885432,
+            "subsets": 50,
+            "subset_size": 30,
+            "note": "Subset SD is not training-seed uncertainty; unbiased KID estimates may be negative"
+          },
+          "precision": {
+            "status": "computed",
+            "value": 0.7333333333333333,
+            "nearest_k": 5
+          },
+          "recall": {
+            "status": "computed",
+            "value": 0.5213675213675214,
+            "nearest_k": 5
+          },
+          "density": {
+            "status": "computed",
+            "value": 0.9,
+            "nearest_k": 5
+          },
+          "coverage": {
+            "status": "computed",
+            "value": 0.1339031339031339,
+            "nearest_k": 5
+          },
+          "lpips_cycle": {
+            "status": "computed",
+            "value": 0.24427643169959387,
+            "count": 30
+          },
+          "content_cosine": {
+            "status": "computed",
+            "value": 0.8900113781293233,
+            "count": 30
+          },
+          "cycle_l1": {
+            "status": "computed",
+            "value": 0.1243896283209324,
+            "count": 30,
+            "pixel_range": "[-1,1]"
+          }
+        },
+        "inference_seconds": 0.07493838341906667,
+        "inference_images_per_second": 400.328891967625,
+        "generation_and_pair_metrics_seconds": 10.009080153191462
+      }
+    },
+    "lpips_pairing": "original versus cycle reconstruction (not arbitrary unpaired target)",
+    "content_encoder": "torchvision ResNet18 IMAGENET1K_V1, frozen, pooled512; input versus translation",
+    "distribution_encoder": "Clean-FID clean-mode InceptionV3 2048 features",
+    "caveat": "Small reference sets make FID and neighborhood metrics uncertain; fixed counts do not remove FID bias.",
+    "checkpoint_sha256": "c6775f21d2b6ccc214ae235f366a01f636f0b214e686ca53d2858ecb84d0ec91",
+    "checkpoint_step": 44992
+  },
+  "arms/identity5/run_summary.json": {
+    "task": "cyclegan",
+    "mode": "full",
+    "device": "cuda",
+    "started_utc": "2026-09-29T11:47:44.300440+00:00",
+    "status": "completed",
+    "is_final_result": false,
+    "config": {
+      "mode": "full",
+      "seed": 2342,
+      "image_size": 256,
+      "base_channels": 64,
+      "residual_blocks": 9,
+      "batch_size": 1,
+      "learning_rate": 5e-05,
+      "betas": [
+        0.5,
+        0.999
+      ],
+      "cycle_weight": 10.0,
+      "identity_weight": 5.0,
+      "replay_size": 50,
+      "epochs": 10,
+      "constant_epochs": 5,
+      "max_steps": null,
+      "checkpoint_every": 500,
+      "log_every": 50,
+      "allow_synthetic": false,
+      "select_best": true,
+      "validation_every_epochs": 2,
+      "evaluate_after_run": false,
+      "evaluation": {
+        "allow_metric_downloads": true,
+        "max_images": null,
+        "batch_size": 16,
+        "kid_subsets": 50,
+        "kid_subset_size": 100,
+        "prdc_k": 5,
+        "seed": 2342
+      },
+      "data": {
+        "monet_dir": "task3_gan/data/monet_jpg",
+        "photo_dir": "task3_gan/data/photo_jpg",
+        "manifest_dir": "task3_gan/srinidhi/data_processed/part3_manifests",
+        "source_note": "Verified class ZIP SHA256 5060b62d4a6a0194de10b849ea43b649f308ae516f0bf659b62ee404ca153e1d; unique-content independent 80/10/10 splits frozen at seed 2342; source receipts in reproducibility/manifests/srinidhi/part-c-source-snapshot."
+      },
+      "precision": "bf16",
+      "replay_device": "device"
+    },
+    "source_sha256": {
+      "src/lab1/__init__.py": "4597cd6743deb8dc143f2be2f7757c8d8d8fb367716dbcb4cb9626a025265217",
+      "src/lab1/common.py": "6659501f6490e5dc1c72decbb48f1c745a2e876bea24a89fea32b381518677ce",
+      "task3_gan/srinidhi/config.json": "6f8174e53f29143e02ccd8b263062f4a03f3e5a6fae639e8e3e54f966f9fe51f",
+      "task3_gan/srinidhi/evaluate_local.py": "4cb02bb71263f3a507562a99dec4b485fbcd0ed1ff08fc3757f1886e015dacfc",
+      "task3_gan/srinidhi/src/cyclegan.py": "b7567023c01324d6c64086c3a169750fe946cdc9eff4cec7d05e94c9992f43d8",
+      "scripts/tune_cyclegan.py": "d395fc92e8e62fd5a91ec7c478e881f6627dece102064c07a5d1a45fade0c78c"
+    },
+    "environment": {
+      "captured_utc": "2026-09-29T11:47:44.328296+00:00",
+      "python": "3.12.14",
+      "platform": "Linux-6.14.0-36-generic-x86_64-with-glibc2.39",
+      "machine": "x86_64",
+      "packages": {
+        "torch": "2.11.0+cu128",
+        "torchvision": "0.26.0+cu128",
+        "numpy": "2.5.3",
+        "pandas": "3.0.6",
+        "scikit-learn": "1.9.1",
+        "scipy": "1.16.3",
+        "matplotlib": "3.11.2",
+        "datasets": null,
+        "Pillow": "12.3.0",
+        "clean-fid": "0.1.35",
+        "lpips": "0.1.4",
+        "prdc": "0.2"
+      },
+      "cuda_available": true,
+      "cuda_build": "12.8",
+      "cudnn": 91900,
+      "gpus": [
+        {
+          "index": 0,
+          "name": "NVIDIA GeForce RTX 5090",
+          "memory_bytes": 33668988928,
+          "compute_capability": [
+            12,
+            0
+          ]
+        }
+      ],
+      "mps_available": false,
+      "nvidia_smi": "name, uuid, driver_version, memory.total [MiB]\nNVIDIA GeForce RTX 5090, GPU-88287816-dbdd-a65e-9998-41fb2bcbc1fd, 580.95.05, 32607 MiB"
+    },
+    "resumed": true,
+    "tuning_arm": "identity5",
+    "protocol_sha256": "9b9749a20ffcc484428f070867b634524369d2edb3e118d730e696271969da68",
+    "warm_start_source_sha256": "d8b37673ce3cbda3397740863fcde33126eb029a9cc5a7c7cdde9dcf064d9b7e",
+    "invocation": "/venv/main/bin/python scripts/tune_cyclegan.py --action train-arm --output reproducibility/raw_logs/srinidhi/vast-part3-tuning-20260929 --arm identity5 --device cuda --resume reproducibility/raw_logs/srinidhi/vast-part3-tuning-20260929/arms/identity5/last.pt",
+    "summary": {
+      "part": 3,
+      "mode": "full",
+      "device": "cuda",
+      "precision": "bf16",
+      "replay_device": "device",
+      "seed": 2342,
+      "data_kind": "explicit_class_manifests",
+      "class_results": true,
+      "completed_updates": 56240,
+      "completed_epoch_fraction": 10.0,
+      "steps_per_epoch": 5624,
+      "epoch_definition": "one shuffled pass through larger training domain; smaller domain sampled independently with replacement",
+      "parameter_counts": {
+        "G_photo_to_monet": 11378179,
+        "G_monet_to_photo": 11378179,
+        "D_photo": 2764737,
+        "D_monet": 2764737
+      },
+      "training_seconds": 2293.413010203978,
+      "session_wall_seconds": 2811.6782026852015,
+      "training_source_images_per_second": 49.04480767290839,
+      "throughput_definition": "two source images per complete paired-domain G/D update; excludes data loading and evaluation",
+      "peak_gpu_memory_bytes": 1573897728,
+      "memory_note": "CUDA peak allocated memory; not reserved memory",
+      "nan_events": 0,
+      "checkpoint": "/workspace/Data266_Lab_tuning_20260929/reproducibility/raw_logs/srinidhi/vast-part3-tuning-20260929/arms/identity5/last.pt",
+      "best_checkpoint": "/workspace/Data266_Lab_tuning_20260929/reproducibility/raw_logs/srinidhi/vast-part3-tuning-20260929/arms/identity5/best.pt",
+      "best_selection": {
+        "metric": "mean_validation_KID_both_directions",
+        "step": 44992,
+        "value": 0.01620449319947511,
+        "validation_only": true
+      },
+      "metrics_status": "Run evaluate_checkpoint for held-out evaluation; no scores inferred from loss",
+      "human_audit_status": "Requires independent real ratings by two humans",
+      "kaggle_submission_status": "Not submitted; actual class format unverified",
+      "initialization": {
+        "kind": "warm_start",
+        "checkpoint": "/workspace/Data266_Lab_tuning_20260929/task3_gan/srinidhi/checkpoints/best.pt",
+        "checkpoint_sha256": "d8b37673ce3cbda3397740863fcde33126eb029a9cc5a7c7cdde9dcf064d9b7e",
+        "source_config": {
+          "mode": "full",
+          "seed": 2342,
+          "image_size": 256,
+          "base_channels": 64,
+          "residual_blocks": 9,
+          "batch_size": 1,
+          "learning_rate": 0.0001,
+          "betas": [
+            0.5,
+            0.999
+          ],
+          "cycle_weight": 10.0,
+          "identity_weight": 5.0,
+          "replay_size": 50,
+          "epochs": 30,
+          "constant_epochs": 15,
+          "max_steps": null,
+          "checkpoint_every": 500,
+          "log_every": 50,
+          "allow_synthetic": false,
+          "select_best": true,
+          "validation_every_epochs": 5,
+          "evaluate_after_run": false,
+          "evaluation": {
+            "allow_metric_downloads": true,
+            "max_images": null,
+            "batch_size": 16,
+            "kid_subsets": 50,
+            "kid_subset_size": 100,
+            "prdc_k": 5,
+            "seed": 2342
+          },
+          "data": {
+            "monet_dir": "task3_gan/data/monet_jpg",
+            "photo_dir": "task3_gan/data/photo_jpg",
+            "manifest_dir": "task3_gan/srinidhi/data_processed/part3_manifests",
+            "source_note": "Verified class ZIP SHA256 5060b62d4a6a0194de10b849ea43b649f308ae516f0bf659b62ee404ca153e1d; unique-content independent 80/10/10 splits frozen at seed 2342; source receipts in reproducibility/manifests/srinidhi/part-c-source-snapshot."
+          },
+          "precision": "bf16",
+          "replay_device": "device"
+        },
+        "source_global_step": 168720,
+        "source_best_selection": {
+          "metric": "mean_validation_KID_both_directions",
+          "step": 168720,
+          "value": 0.019753425605595114,
+          "validation_only": true
+        },
+        "source_best_validation_score": 0.019753425605595114,
+        "manifest_fingerprint": "35184a0643321f99efc8df06544328b25c3364b66f29c76545ab47e01fe3438a",
+        "restored": [
+          "all_four_network_weights"
+        ],
+        "reset": [
+          "optimizers",
+          "schedulers",
+          "replay_pools",
+          "rng",
+          "global_step",
+          "training_seconds",
+          "best_selection"
+        ],
+        "selection_note": "Source scores are provenance only; selection is recomputed on this run's validation settings.",
+        "baseline_validation": {
+          "step": 0,
+          "split": "val",
+          "metric": "mean_validation_KID_both_directions",
+          "status": "computed",
+          "value": 0.019753425605595114,
+          "directions": {
+            "photo_to_monet": {
+              "status": "computed",
+              "value": 0.013203506395220756,
+              "subset_std": 0.0032765864446311775,
+              "subsets": 50,
+              "subset_size": 30,
+              "note": "Subset SD is not training-seed uncertainty; unbiased KID estimates may be negative"
+            },
+            "monet_to_photo": {
+              "status": "computed",
+              "value": 0.02630334481596947,
+              "subset_std": 0.004183719040106543,
+              "subsets": 50,
+              "subset_size": 30,
+              "note": "Subset SD is not training-seed uncertainty; unbiased KID estimates may be negative"
+            }
+          }
+        }
+      }
+    },
+    "ended_utc": "2026-09-29T12:34:37.920019+00:00",
+    "elapsed_seconds": 2813.571411516983
+  },
+  "arms/identity2p5/run_summary.json": {
+    "task": "cyclegan",
+    "mode": "full",
+    "device": "cuda",
+    "started_utc": "2026-09-29T12:34:39.522297+00:00",
+    "status": "completed",
+    "is_final_result": false,
+    "config": {
+      "mode": "full",
+      "seed": 2342,
+      "image_size": 256,
+      "base_channels": 64,
+      "residual_blocks": 9,
+      "batch_size": 1,
+      "learning_rate": 5e-05,
+      "betas": [
+        0.5,
+        0.999
+      ],
+      "cycle_weight": 10.0,
+      "identity_weight": 2.5,
+      "replay_size": 50,
+      "epochs": 10,
+      "constant_epochs": 5,
+      "max_steps": null,
+      "checkpoint_every": 500,
+      "log_every": 50,
+      "allow_synthetic": false,
+      "select_best": true,
+      "validation_every_epochs": 2,
+      "evaluate_after_run": false,
+      "evaluation": {
+        "allow_metric_downloads": true,
+        "max_images": null,
+        "batch_size": 16,
+        "kid_subsets": 50,
+        "kid_subset_size": 100,
+        "prdc_k": 5,
+        "seed": 2342
+      },
+      "data": {
+        "monet_dir": "task3_gan/data/monet_jpg",
+        "photo_dir": "task3_gan/data/photo_jpg",
+        "manifest_dir": "task3_gan/srinidhi/data_processed/part3_manifests",
+        "source_note": "Verified class ZIP SHA256 5060b62d4a6a0194de10b849ea43b649f308ae516f0bf659b62ee404ca153e1d; unique-content independent 80/10/10 splits frozen at seed 2342; source receipts in reproducibility/manifests/srinidhi/part-c-source-snapshot."
+      },
+      "precision": "bf16",
+      "replay_device": "device"
+    },
+    "source_sha256": {
+      "src/lab1/__init__.py": "4597cd6743deb8dc143f2be2f7757c8d8d8fb367716dbcb4cb9626a025265217",
+      "src/lab1/common.py": "6659501f6490e5dc1c72decbb48f1c745a2e876bea24a89fea32b381518677ce",
+      "task3_gan/srinidhi/config.json": "6f8174e53f29143e02ccd8b263062f4a03f3e5a6fae639e8e3e54f966f9fe51f",
+      "task3_gan/srinidhi/evaluate_local.py": "4cb02bb71263f3a507562a99dec4b485fbcd0ed1ff08fc3757f1886e015dacfc",
+      "task3_gan/srinidhi/src/cyclegan.py": "b7567023c01324d6c64086c3a169750fe946cdc9eff4cec7d05e94c9992f43d8",
+      "scripts/tune_cyclegan.py": "d395fc92e8e62fd5a91ec7c478e881f6627dece102064c07a5d1a45fade0c78c"
+    },
+    "environment": {
+      "captured_utc": "2026-09-29T12:34:39.547336+00:00",
+      "python": "3.12.14",
+      "platform": "Linux-6.14.0-36-generic-x86_64-with-glibc2.39",
+      "machine": "x86_64",
+      "packages": {
+        "torch": "2.11.0+cu128",
+        "torchvision": "0.26.0+cu128",
+        "numpy": "2.5.3",
+        "pandas": "3.0.6",
+        "scikit-learn": "1.9.1",
+        "scipy": "1.16.3",
+        "matplotlib": "3.11.2",
+        "datasets": null,
+        "Pillow": "12.3.0",
+        "clean-fid": "0.1.35",
+        "lpips": "0.1.4",
+        "prdc": "0.2"
+      },
+      "cuda_available": true,
+      "cuda_build": "12.8",
+      "cudnn": 91900,
+      "gpus": [
+        {
+          "index": 0,
+          "name": "NVIDIA GeForce RTX 5090",
+          "memory_bytes": 33668988928,
+          "compute_capability": [
+            12,
+            0
+          ]
+        }
+      ],
+      "mps_available": false,
+      "nvidia_smi": "name, uuid, driver_version, memory.total [MiB]\nNVIDIA GeForce RTX 5090, GPU-88287816-dbdd-a65e-9998-41fb2bcbc1fd, 580.95.05, 32607 MiB"
+    },
+    "resumed": false,
+    "tuning_arm": "identity2p5",
+    "protocol_sha256": "9b9749a20ffcc484428f070867b634524369d2edb3e118d730e696271969da68",
+    "warm_start_source_sha256": "d8b37673ce3cbda3397740863fcde33126eb029a9cc5a7c7cdde9dcf064d9b7e",
+    "invocation": "/venv/main/bin/python scripts/tune_cyclegan.py --action train-arm --output reproducibility/raw_logs/srinidhi/vast-part3-tuning-20260929 --arm identity2p5 --device cuda",
+    "summary": {
+      "part": 3,
+      "mode": "full",
+      "device": "cuda",
+      "precision": "bf16",
+      "replay_device": "device",
+      "seed": 2342,
+      "data_kind": "explicit_class_manifests",
+      "class_results": true,
+      "completed_updates": 56240,
+      "completed_epoch_fraction": 10.0,
+      "steps_per_epoch": 5624,
+      "epoch_definition": "one shuffled pass through larger training domain; smaller domain sampled independently with replacement",
+      "parameter_counts": {
+        "G_photo_to_monet": 11378179,
+        "G_monet_to_photo": 11378179,
+        "D_photo": 2764737,
+        "D_monet": 2764737
+      },
+      "training_seconds": 2298.5158388090786,
+      "session_wall_seconds": 2891.419499652926,
+      "training_source_images_per_second": 48.93592556589858,
+      "throughput_definition": "two source images per complete paired-domain G/D update; excludes data loading and evaluation",
+      "peak_gpu_memory_bytes": 1573897728,
+      "memory_note": "CUDA peak allocated memory; not reserved memory",
+      "nan_events": 0,
+      "checkpoint": "/workspace/Data266_Lab_tuning_20260929/reproducibility/raw_logs/srinidhi/vast-part3-tuning-20260929/arms/identity2p5/last.pt",
+      "best_checkpoint": "/workspace/Data266_Lab_tuning_20260929/reproducibility/raw_logs/srinidhi/vast-part3-tuning-20260929/arms/identity2p5/best.pt",
+      "best_selection": {
+        "metric": "mean_validation_KID_both_directions",
+        "step": 44992,
+        "value": 0.016203977004624903,
+        "validation_only": true
+      },
+      "metrics_status": "Run evaluate_checkpoint for held-out evaluation; no scores inferred from loss",
+      "human_audit_status": "Requires independent real ratings by two humans",
+      "kaggle_submission_status": "Not submitted; actual class format unverified",
+      "initialization": {
+        "kind": "warm_start",
+        "checkpoint": "/workspace/Data266_Lab_tuning_20260929/task3_gan/srinidhi/checkpoints/best.pt",
+        "checkpoint_sha256": "d8b37673ce3cbda3397740863fcde33126eb029a9cc5a7c7cdde9dcf064d9b7e",
+        "source_config": {
+          "mode": "full",
+          "seed": 2342,
+          "image_size": 256,
+          "base_channels": 64,
+          "residual_blocks": 9,
+          "batch_size": 1,
+          "learning_rate": 0.0001,
+          "betas": [
+            0.5,
+            0.999
+          ],
+          "cycle_weight": 10.0,
+          "identity_weight": 5.0,
+          "replay_size": 50,
+          "epochs": 30,
+          "constant_epochs": 15,
+          "max_steps": null,
+          "checkpoint_every": 500,
+          "log_every": 50,
+          "allow_synthetic": false,
+          "select_best": true,
+          "validation_every_epochs": 5,
+          "evaluate_after_run": false,
+          "evaluation": {
+            "allow_metric_downloads": true,
+            "max_images": null,
+            "batch_size": 16,
+            "kid_subsets": 50,
+            "kid_subset_size": 100,
+            "prdc_k": 5,
+            "seed": 2342
+          },
+          "data": {
+            "monet_dir": "task3_gan/data/monet_jpg",
+            "photo_dir": "task3_gan/data/photo_jpg",
+            "manifest_dir": "task3_gan/srinidhi/data_processed/part3_manifests",
+            "source_note": "Verified class ZIP SHA256 5060b62d4a6a0194de10b849ea43b649f308ae516f0bf659b62ee404ca153e1d; unique-content independent 80/10/10 splits frozen at seed 2342; source receipts in reproducibility/manifests/srinidhi/part-c-source-snapshot."
+          },
+          "precision": "bf16",
+          "replay_device": "device"
+        },
+        "source_global_step": 168720,
+        "source_best_selection": {
+          "metric": "mean_validation_KID_both_directions",
+          "step": 168720,
+          "value": 0.019753425605595114,
+          "validation_only": true
+        },
+        "source_best_validation_score": 0.019753425605595114,
+        "manifest_fingerprint": "35184a0643321f99efc8df06544328b25c3364b66f29c76545ab47e01fe3438a",
+        "restored": [
+          "all_four_network_weights"
+        ],
+        "reset": [
+          "optimizers",
+          "schedulers",
+          "replay_pools",
+          "rng",
+          "global_step",
+          "training_seconds",
+          "best_selection"
+        ],
+        "selection_note": "Source scores are provenance only; selection is recomputed on this run's validation settings.",
+        "baseline_validation": {
+          "step": 0,
+          "split": "val",
+          "metric": "mean_validation_KID_both_directions",
+          "status": "computed",
+          "value": 0.019753425605595114,
+          "directions": {
+            "photo_to_monet": {
+              "status": "computed",
+              "value": 0.013203506395220756,
+              "subset_std": 0.0032765864446311775,
+              "subsets": 50,
+              "subset_size": 30,
+              "note": "Subset SD is not training-seed uncertainty; unbiased KID estimates may be negative"
+            },
+            "monet_to_photo": {
+              "status": "computed",
+              "value": 0.02630334481596947,
+              "subset_std": 0.004183719040106543,
+              "subsets": 50,
+              "subset_size": 30,
+              "note": "Subset SD is not training-seed uncertainty; unbiased KID estimates may be negative"
+            }
+          }
+        }
+      }
+    },
+    "ended_utc": "2026-09-29T13:22:53.185893+00:00",
+    "elapsed_seconds": 2893.612819674192
+  }
+}

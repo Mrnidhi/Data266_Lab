@@ -1,0 +1,40 @@
+{
+  "status": "training_evaluation_exports_backup_and_gpu_shutdown_complete",
+  "final_metrics_sha256": "c2f777e8afa247422e483f861a8444321221be1a41331d9c43dcb80822c3ae38",
+  "selected_checkpoint_sha256": "c6775f21d2b6ccc214ae235f366a01f636f0b214e686ca53d2858ecb84d0ec91",
+  "backup": {
+    "verified_complete": true,
+    "file_count": 39183,
+    "total_bytes": 6185348875,
+    "manifest_sha256": "19839c7a8e1f9af7edc5235cf8fc5f3ee415088b064791b7b13f135270e8f3d5",
+    "local_path": "runs/part3-tuning-vast-backup-20260929/final-full-experiment"
+  },
+  "shutdown": {
+    "instance_id": 53353269,
+    "state": "stopped",
+    "verified_utc": "2026-09-29T13:32:43.716587+00:00",
+    "verification": "Vast Instances page shows Start instance and storage-only $0.023/hour; direct SSH unavailable after guard stop signal.",
+    "gpu_billing_stopped": true,
+    "retained_disk_usd_per_hour": 0.023,
+    "disk_retained": true,
+    "destroyed": false,
+    "screenshot": "vast-stopped-final.png",
+    "backup_manifest_sha256": "19839c7a8e1f9af7edc5235cf8fc5f3ee415088b064791b7b13f135270e8f3d5",
+    "backup_file_count": 39183,
+    "backup_bytes": 6185348875
+  },
+  "publication_verification": {
+    "publication": "/Users/srinidhigowda/Documents/Gpu Lab/Data266_Lab/runs/part3-tuned-publication-20260929",
+    "manifest_files_verified": 3013,
+    "mismatches": 0,
+    "notebook_code_cells": 5,
+    "notebook_errors": 0,
+    "notebook_sha256": "0783a75f825a85cc334d26b8114289a27f3a3cf4ccfd21a72294fe9bbc659978",
+    "selected_checkpoint_sha256": "c6775f21d2b6ccc214ae235f366a01f636f0b214e686ca53d2858ecb84d0ec91",
+    "baseline_checkpoint_sha256_unchanged": "d8b37673ce3cbda3397740863fcde33126eb029a9cc5a7c7cdde9dcf064d9b7e",
+    "results_warm_start_context_added": true
+  },
+  "human_audit": "pending_real_ratings",
+  "submission_format": "unverified",
+  "monitor_status": "PAUSED"
+}
