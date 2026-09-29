@@ -4,7 +4,8 @@ Architecture/loss references: Zhu et al. https://arxiv.org/abs/1703.10593
 Evaluation: https://github.com/GaParmar/clean-fid,
 https://github.com/richzhang/PerceptualSimilarity,
 https://github.com/clovaai/generative-evaluation-prdc.
-No pretrained weights are used by the four trainable networks.
+The four trainable networks start from scratch or from an explicitly recorded
+checkpoint produced by this project.
 """
 from __future__ import annotations
 
@@ -35,6 +36,7 @@ DIRECTIONS = ("photo_to_monet", "monet_to_photo")
 METRICS = ("fid", "kid", "precision", "recall", "density", "coverage", "lpips_cycle", "content_cosine")
 RESUME_FIELDS = ("seed", "image_size", "base_channels", "residual_blocks", "learning_rate", "betas",
                  "cycle_weight", "identity_weight", "epochs", "constant_epochs", "batch_size", "replay_size", "precision")
+ARCHITECTURE_DEFAULTS = {"image_size": 256, "base_channels": 64, "residual_blocks": 9}
 
 
 def _recipe_value(config, field):
@@ -258,6 +260,67 @@ def load_checkpoint(path, models, optimizers=None, schedulers=None, pools=None, 
     return checkpoint
 
 
+def _warm_start_checkpoint(path, config, provenance):
+    path = Path(path).expanduser().resolve()
+    def digest():
+        with path.open("rb") as handle:
+            return hashlib.file_digest(handle, "sha256").hexdigest()
+    source_hash = digest()
+    checkpoint = torch.load(path, map_location="cpu", weights_only=False)
+    if checkpoint.get("format_version") != 1:
+        raise ValueError("Unsupported CycleGAN checkpoint format")
+    for field, default in ARCHITECTURE_DEFAULTS.items():
+        if checkpoint["config"].get(field, default) != config.get(field, default):
+            raise ValueError(f"Warm start must preserve architecture field {field}")
+    if checkpoint["state"]["manifest_fingerprint"] != provenance["manifest_fingerprint"]:
+        raise ValueError("Warm start data manifest mismatch")
+    if digest() != source_hash:
+        raise ValueError("Warm-start checkpoint changed while loading; pause its writer and retry")
+    initialization = {
+        "kind": "warm_start", "checkpoint": str(path), "checkpoint_sha256": source_hash,
+        "source_config": checkpoint["config"], "source_global_step": checkpoint["state"]["global_step"],
+        "source_best_selection": checkpoint["state"].get("best_selection"),
+        "source_best_validation_score": checkpoint["state"].get("best_validation_score"),
+        "manifest_fingerprint": provenance["manifest_fingerprint"],
+        "restored": ["all_four_network_weights"],
+        "reset": ["optimizers", "schedulers", "replay_pools", "rng", "global_step", "training_seconds", "best_selection"],
+        "selection_note": "Source scores are provenance only; selection is recomputed on this run's validation settings.",
+    }
+    return checkpoint, initialization
+
+
+def _validate_and_select_best(models, data, provenance, output_dir, device, config,
+                              state, optimizers, schedulers, pools, baseline=False):
+    current = state["global_step"]
+    print(f"cyclegan/{config.get('mode', 'smoke')} step={current} validating"
+          + (" warm-start baseline" if baseline else ""), flush=True)
+    preserved = rng_state()
+    try:
+        validation = evaluate_models(models, data, provenance, output_dir / "validation" / f"step_{current:07d}",
+                                     device, "val", config.get("evaluation", {}))
+    finally:
+        restore_rng(preserved)
+    kids = [validation["directions"][d]["metrics"]["kid"] for d in DIRECTIONS]
+    value = (sum(x["value"] for x in kids) / 2
+             if all(x["status"] == "computed" and isinstance(x["value"], (int, float))
+                    and math.isfinite(x["value"]) for x in kids) else None)
+    if baseline:
+        state["initialization"]["baseline_validation"] = {
+            "step": 0, "split": "val", "metric": "mean_validation_KID_both_directions",
+            "status": "computed" if value is not None else "unavailable", "value": value,
+            "directions": {direction: kid for direction, kid in zip(DIRECTIONS, kids)},
+        }
+        _json(output_dir / "initialization.json", state["initialization"])
+        if value is None:
+            raise RuntimeError("Warm-start baseline requires finite validation KID in both directions before training")
+    if value is not None and (state["best_validation_score"] is None or value < state["best_validation_score"]):
+        state["best_validation_score"] = value
+        state["best_selection"] = {"metric": "mean_validation_KID_both_directions", "step": current,
+                                   "value": value, "validation_only": True}
+        save_checkpoint(output_dir / "best.pt", models, optimizers, schedulers, pools, config, state)
+    save_checkpoint(output_dir / "last.pt", models, optimizers, schedulers, pools, config, state)
+
+
 def _preserve_best_checkpoint(resume, output_dir, restored, provenance):
     source, destination = Path(resume).parent / "best.pt", Path(output_dir) / "best.pt"
     selection = restored["state"].get("best_selection")
@@ -278,6 +341,7 @@ def _preserve_best_checkpoint(resume, output_dir, restored, provenance):
     valid = (candidate.get("format_version") == 1
              and all(_recipe_value(candidate.get("config", {}), key) == _recipe_value(restored["config"], key) for key in RESUME_FIELDS)
              and candidate_state.get("manifest_fingerprint") == provenance["manifest_fingerprint"]
+             and candidate_state.get("initialization") == restored["state"].get("initialization")
              and candidate_state.get("best_selection") == selection
              and candidate_state.get("best_validation_score") == restored["state"].get("best_validation_score")
              and candidate_state.get("global_step") == selection.get("step")
@@ -679,14 +743,21 @@ def score_human_audit(rater_one, rater_two):
     return result
 
 
-def run(config: dict, output_dir: Path, device: str, resume: Path | None = None) -> dict:
+def run(config: dict, output_dir: Path, device: str, resume: Path | None = None,
+        warm_start: Path | None = None) -> dict:
+    if resume is not None and warm_start is not None:
+        raise ValueError("resume and warm_start are mutually exclusive")
     config, output_dir = resolve_config(config), Path(output_dir)
     precision, replay_device = _training_options(config, device)
     config["precision"], config["replay_device"] = precision, replay_device
     mode, seed = config.get("mode", "smoke"), int(config.get("seed", 2342))
+    if warm_start is not None and Path(warm_start).expanduser().resolve().parent == output_dir.resolve():
+        raise ValueError("Warm start requires a separate output directory to preserve the source run")
     output_dir.mkdir(parents=True, exist_ok=True)
     if resume is None and ((output_dir / "last.pt").exists() or (output_dir / "training_log.jsonl").exists()):
         raise FileExistsError("Existing CycleGAN run: resume explicitly or choose a fresh output directory")
+    if warm_start is not None and ((output_dir / "best.pt").exists() or (output_dir / "initialization.json").exists()):
+        raise FileExistsError("Warm start requires a fresh output directory")
     if int(config.get("batch_size", 1)) != 1:
         raise ValueError("This independently implemented training loop fixes batch_size=1")
     random.seed(seed)
@@ -697,7 +768,9 @@ def run(config: dict, output_dir: Path, device: str, resume: Path | None = None)
     if config.get("cpu_threads") and str(device) == "cpu":
         torch.set_num_threads(int(config["cpu_threads"]))
     data, provenance = prepare_data(config)
-    restored = None
+    restored, initialized, initialization = None, None, None
+    if warm_start is not None:
+        initialized, initialization = _warm_start_checkpoint(warm_start, config, provenance)
     if resume is not None:
         restored = torch.load(resume, map_location="cpu", weights_only=False)
         for field in RESUME_FIELDS:
@@ -736,15 +809,24 @@ def run(config: dict, output_dir: Path, device: str, resume: Path | None = None)
     pools = {domain: ReplayPool(config.get("replay_size", 50), device=pool_device) for domain in ("photo", "monet")}
     state = {"global_step": 0, "training_seconds": 0., "nan_events": 0, "peak_gpu_memory_bytes": 0,
              "best_validation_score": None, "manifest_fingerprint": provenance["manifest_fingerprint"]}
+    if initialized is not None:
+        load_checkpoint(initialized, models, restore_random=False)
+        state["initialization"] = initialization
+        del initialized
     if restored is not None:
         load_checkpoint(restored, models, optimizers, schedulers, pools)
         state = restored["state"]
         del restored
+    if "initialization" in state:
+        _json(output_dir / "initialization.json", state["initialization"])
     target_steps = epochs * steps_per_epoch
     if config.get("max_steps") is not None:
         target_steps = min(target_steps, int(config["max_steps"]))
     if target_steps <= state["global_step"]:
         raise ValueError("No new updates requested; increase max_steps within the existing epoch schedule")
+    if warm_start is not None and provenance["class_results"] and config.get("select_best", True):
+        _validate_and_select_best(models, data, provenance, output_dir, device, config,
+                                  state, optimizers, schedulers, pools, baseline=True)
     if str(device).startswith("cuda"):
         torch.cuda.reset_peak_memory_stats()
     log_path = output_dir / "training_log.jsonl"
@@ -819,19 +901,8 @@ def run(config: dict, output_dir: Path, device: str, resume: Path | None = None)
             save_grid(models, data, output_dir / "grids" / f"step_{current:07d}.png", device)
             save_checkpoint(output_dir / "last.pt", models, optimizers, schedulers, pools, config, state)
         if provenance["class_results"] and config.get("select_best", True) and epoch_done and (current // steps_per_epoch) % validation_epochs == 0:
-            print(f"cyclegan/{mode} step={current} validating", flush=True)
-            preserved = rng_state()
-            validation = evaluate_models(models, data, provenance, output_dir / "validation" / f"step_{current:07d}", device, "val", config.get("evaluation", {}))
-            restore_rng(preserved)
-            kids = [validation["directions"][d]["metrics"]["kid"] for d in DIRECTIONS]
-            if all(x["status"] == "computed" for x in kids):
-                value = sum(x["value"] for x in kids) / 2
-                if state["best_validation_score"] is None or value < state["best_validation_score"]:
-                    state["best_validation_score"] = value
-                    state["best_selection"] = {"metric": "mean_validation_KID_both_directions", "step": current,
-                                               "value": value, "validation_only": True}
-                    save_checkpoint(output_dir / "best.pt", models, optimizers, schedulers, pools, config, state)
-            save_checkpoint(output_dir / "last.pt", models, optimizers, schedulers, pools, config, state)
+            _validate_and_select_best(models, data, provenance, output_dir, device, config,
+                                      state, optimizers, schedulers, pools)
             if str(device).startswith("cuda"):
                 torch.cuda.reset_peak_memory_stats()
     report = {"part": 3, "mode": mode, "device": str(device), "precision": precision, "replay_device": replay_device,
@@ -849,6 +920,8 @@ def run(config: dict, output_dir: Path, device: str, resume: Path | None = None)
               "best_checkpoint": str(output_dir / "best.pt") if (output_dir / "best.pt").exists() else None,
               "best_selection": state.get("best_selection"), "metrics_status": "Run evaluate_checkpoint for held-out evaluation; no scores inferred from loss",
               "human_audit_status": "Requires independent real ratings by two humans", "kaggle_submission_status": "Not submitted; actual class format unverified"}
+    if "initialization" in state:
+        report["initialization"] = state["initialization"]
     if config.get("evaluate_after_run", False):
         evaluation = evaluate_models(models, data, provenance, output_dir / f"evaluation_step_{state['global_step']:07d}", device, "val", config.get("evaluation", {}))
         report["evaluation"] = evaluation
@@ -914,7 +987,10 @@ def main():
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--device", default="cpu")
     parser.add_argument("--checkpoint", type=Path)
-    parser.add_argument("--resume", type=Path)
+    initialization = parser.add_mutually_exclusive_group()
+    initialization.add_argument("--resume", type=Path)
+    initialization.add_argument("--warm-start", type=Path,
+                                help="Start a separate run from project checkpoint weights with a fresh training state")
     parser.add_argument("--split", choices=("val", "test"), default="test")
     parser.add_argument("--input-dir", type=Path)
     parser.add_argument("--manifest", type=Path)
@@ -931,7 +1007,7 @@ def main():
         config = json.loads(Path(args.config).read_text())
         config = {**config[args.mode], "mode": args.mode} if "smoke" in config else {**config, "mode": args.mode}
         if args.action == "train":
-            result = run(config, args.output_dir, args.device, args.resume)
+            result = run(config, args.output_dir, args.device, args.resume, args.warm_start)
         elif args.action == "evaluate":
             if not args.checkpoint:
                 parser.error("evaluate requires --checkpoint")

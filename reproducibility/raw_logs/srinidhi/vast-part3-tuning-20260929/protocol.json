@@ -1,0 +1,99 @@
+{
+  "format_version": 1,
+  "created_utc": "2026-09-29T11:19:59.113134+00:00",
+  "status": "prepared_not_trained",
+  "source_checkpoint": "task3_gan/srinidhi/checkpoints/best.pt",
+  "source_checkpoint_sha256": "d8b37673ce3cbda3397740863fcde33126eb029a9cc5a7c7cdde9dcf064d9b7e",
+  "source_global_step": 168720,
+  "source_manifest_fingerprint": "35184a0643321f99efc8df06544328b25c3364b66f29c76545ab47e01fe3438a",
+  "source_config": {
+    "mode": "full",
+    "seed": 2342,
+    "image_size": 256,
+    "base_channels": 64,
+    "residual_blocks": 9,
+    "batch_size": 1,
+    "learning_rate": 0.0001,
+    "betas": [
+      0.5,
+      0.999
+    ],
+    "cycle_weight": 10.0,
+    "identity_weight": 5.0,
+    "replay_size": 50,
+    "epochs": 30,
+    "constant_epochs": 15,
+    "max_steps": null,
+    "checkpoint_every": 500,
+    "log_every": 50,
+    "allow_synthetic": false,
+    "select_best": true,
+    "validation_every_epochs": 5,
+    "evaluate_after_run": false,
+    "evaluation": {
+      "allow_metric_downloads": true,
+      "max_images": null,
+      "batch_size": 16,
+      "kid_subsets": 50,
+      "kid_subset_size": 100,
+      "prdc_k": 5,
+      "seed": 2342
+    },
+    "data": {
+      "monet_dir": "task3_gan/data/monet_jpg",
+      "photo_dir": "task3_gan/data/photo_jpg",
+      "manifest_dir": "task3_gan/srinidhi/data_processed/part3_manifests",
+      "source_note": "Verified class ZIP SHA256 5060b62d4a6a0194de10b849ea43b649f308ae516f0bf659b62ee404ca153e1d; unique-content independent 80/10/10 splits frozen at seed 2342; source receipts in reproducibility/manifests/srinidhi/part-c-source-snapshot."
+    },
+    "precision": "bf16",
+    "replay_device": "device"
+  },
+  "arms": {
+    "identity5": {
+      "config": "configs/identity5.json",
+      "config_sha256": "e4c2027bb60f4dd93dc42f0b75206dcce546223dfeb95623f7328e96e7ed7ec9",
+      "run_dir": "arms/identity5",
+      "identity_weight": 5.0
+    },
+    "identity2p5": {
+      "config": "configs/identity2p5.json",
+      "config_sha256": "9983eac1fdc649069c970de71d7d27d92ec6c7cc6e2ba4355e3607dacea6eea6",
+      "run_dir": "arms/identity2p5",
+      "identity_weight": 2.5
+    }
+  },
+  "selection": {
+    "split": "val",
+    "metric": "mean_validation_KID_both_directions",
+    "lower_is_better": true,
+    "include_unchanged_source": true,
+    "ties_favor_unchanged_source": true,
+    "require_all_arms_complete": true,
+    "visual_review_required_before_publication": true
+  },
+  "training": {
+    "additional_epochs_per_arm": 10,
+    "constant_lr_epochs": 5,
+    "linear_decay_epochs": 5,
+    "learning_rate": 5e-05,
+    "seed": 2342,
+    "validation_epochs": [
+      0,
+      2,
+      4,
+      6,
+      8,
+      10
+    ],
+    "restore": "all four source network weights",
+    "reset": [
+      "optimizers",
+      "schedulers",
+      "replay_pools",
+      "rng",
+      "global_step",
+      "selection"
+    ]
+  },
+  "test_policy": "No test evaluation or publication during prepare/train-arm/select."
+}

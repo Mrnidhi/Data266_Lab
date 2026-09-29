@@ -1,5 +1,6 @@
 """Small CPU checks for training correctness, provenance, and exact resume."""
 import csv
+import hashlib
 import json
 from pathlib import Path
 import random
@@ -272,7 +273,134 @@ def test_resume_into_fresh_directory_preserves_prior_best_without_improvement(tm
     assert (destination / "best.pt").read_bytes() == original
 
 
-@pytest.mark.parametrize("problem", ["future", "recipe", "data", "stale", "missing", "destination"])
+def test_warm_start_resets_state_and_revalidates_baseline_without_modifying_source(tmp_path, selected_best_run, monkeypatch):
+    config, source = selected_best_run
+    source_path = source / "last.pt"
+    saved = torch.load(source_path, map_location="cpu", weights_only=False)
+    saved["state"].update(training_seconds=987., nan_events=99, peak_gpu_memory_bytes=12345)
+    saved["rng"] = {"must_not_restore_source_rng": True}
+    for optimizer in saved["optimizers"].values():
+        optimizer["param_groups"][0]["lr"] = 0.
+    torch.save(saved, source_path)
+    original = source_path.read_bytes()
+    evaluations = []
+    def evaluate(*args, **kwargs):
+        evaluations.append((args[5], args[6]))
+        score = 0.1 if len(evaluations) == 1 else 0.3
+        return {"directions": {name: {"metrics": {"kid": {"status": "computed", "value": score}}}
+                               for name in cyclegan.DIRECTIONS}}
+    monkeypatch.setattr(cyclegan, "evaluate_models", evaluate)
+    destination = tmp_path / "fine_tune"
+    recipe = dict(config, learning_rate=5e-5, identity_weight=2.5, cycle_weight=9.,
+                  seed=2343, replay_size=3, epochs=4, constant_epochs=2, max_steps=1)
+    result = run(recipe, destination, "cpu", warm_start=source_path)
+    baseline = torch.load(destination / "best.pt", map_location="cpu", weights_only=False)
+    final = torch.load(destination / "last.pt", map_location="cpu", weights_only=False)
+    assert baseline["state"]["global_step"] == 0
+    assert baseline["state"]["training_seconds"] == baseline["state"]["nan_events"] == 0
+    assert baseline["state"]["peak_gpu_memory_bytes"] == 0
+    assert baseline["state"]["best_validation_score"] == pytest.approx(0.1)
+    assert all(not optimizer["state"] for optimizer in baseline["optimizers"].values())
+    assert all(optimizer["param_groups"][0]["lr"] == 5e-5 for optimizer in baseline["optimizers"].values())
+    assert all(scheduler["last_epoch"] == 0 for scheduler in baseline["schedulers"].values())
+    assert all(pool == {"capacity": 3, "images": []} for pool in baseline["replay_pools"].values())
+    assert "torch" in baseline["rng"] and "must_not_restore_source_rng" not in baseline["rng"]
+    for name, weights in saved["models"].items():
+        assert all(torch.equal(value, baseline["models"][name][key]) for key, value in weights.items())
+        assert any(not torch.equal(value, final["models"][name][key]) for key, value in weights.items())
+    assert final["state"]["global_step"] == result["completed_updates"] == 1
+    assert final["state"]["best_selection"]["step"] == result["best_selection"]["step"] == 0
+    assert final["state"]["nan_events"] == 0
+    assert [row["step"] for row in map(json.loads, (destination / "training_log.jsonl").read_text().splitlines())] == [1]
+    initialization = result["initialization"]
+    assert initialization == json.loads((destination / "initialization.json").read_text())
+    assert initialization == final["state"]["initialization"]
+    assert initialization["source_global_step"] == 1
+    assert initialization["checkpoint_sha256"] == hashlib.sha256(original).hexdigest()
+    assert initialization["source_config"] == saved["config"]
+    assert initialization["source_best_validation_score"] == 0.2
+    assert initialization["baseline_validation"]["value"] == 0.1
+    assert evaluations == [("val", recipe["evaluation"])] * 2
+    assert source_path.read_bytes() == original
+
+
+def test_warm_start_requires_usable_validation_baseline_before_updates(tmp_path, selected_best_run, monkeypatch):
+    config, source = selected_best_run
+    def unavailable(*args, **kwargs):
+        return {"directions": {name: {"metrics": {"kid": {"status": "unavailable", "value": None}}}
+                               for name in cyclegan.DIRECTIONS}}
+    monkeypatch.setattr(cyclegan, "evaluate_models", unavailable)
+    destination = tmp_path / "missing_baseline"
+    with pytest.raises(RuntimeError, match="finite validation KID"):
+        run(config, destination, "cpu", warm_start=source / "last.pt")
+    assert not (destination / "training_log.jsonl").exists()
+    assert not (destination / "last.pt").exists()
+    assert json.loads((destination / "initialization.json").read_text())["baseline_validation"]["status"] == "unavailable"
+
+
+@pytest.mark.parametrize("changes,match", [
+    ({"image_size": 36}, "architecture field image_size"),
+    ({"base_channels": 16}, "architecture field base_channels"),
+    ({"residual_blocks": 2}, "architecture field residual_blocks"),
+    ({"synthetic_images": 5}, "data manifest mismatch"),
+])
+def test_warm_start_rejects_architecture_or_data_changes(tmp_path, changes, match):
+    config = smoke_config()
+    source = tmp_path / "source"
+    run(dict(config, max_steps=1), source, "cpu")
+    destination = tmp_path / "changed"
+    with pytest.raises(ValueError, match=match):
+        run(dict(config, **changes), destination, "cpu", warm_start=source / "last.pt")
+    assert not (destination / "last.pt").exists()
+    assert not (destination / "training_log.jsonl").exists()
+
+
+def test_warm_start_and_resume_are_mutually_exclusive_and_source_directory_is_protected(tmp_path, monkeypatch):
+    destination = tmp_path / "new"
+    with pytest.raises(ValueError, match="mutually exclusive"):
+        run(smoke_config(), destination, "cpu", resume=tmp_path / "a.pt", warm_start=tmp_path / "b.pt")
+    assert not destination.exists()
+    with pytest.raises(ValueError, match="separate output directory"):
+        run(smoke_config(), destination, "cpu", warm_start=destination / "last.pt")
+    assert not destination.exists()
+    monkeypatch.setattr("sys.argv", ["cyclegan", "train", "--output-dir", str(destination),
+                                   "--resume", "old.pt", "--warm-start", "old.pt"])
+    with pytest.raises(SystemExit) as error:
+        cyclegan.main()
+    assert error.value.code == 2
+
+
+def test_warm_started_run_resume_matches_continuation_and_preserves_baseline(tmp_path, selected_best_run):
+    config, source = selected_best_run
+    recipe = dict(config, learning_rate=5e-5, identity_weight=2.5, epochs=4, constant_epochs=2, max_steps=2)
+    uninterrupted = tmp_path / "uninterrupted_finetune"
+    first = tmp_path / "first_finetune"
+    continued = tmp_path / "continued_finetune"
+    run(recipe, uninterrupted, "cpu", warm_start=source / "last.pt")
+    run(dict(recipe, max_steps=1), first, "cpu", warm_start=source / "last.pt")
+    result = run(recipe, continued, "cpu", resume=first / "last.pt")
+    a = torch.load(uninterrupted / "last.pt", map_location="cpu", weights_only=False)
+    b = torch.load(continued / "last.pt", map_location="cpu", weights_only=False)
+    assert result["completed_updates"] == 2
+    assert result["initialization"]["source_global_step"] == 1
+    assert result["best_selection"]["step"] == 0
+    assert (continued / "best.pt").read_bytes() == (first / "best.pt").read_bytes()
+    for name in a["models"]:
+        assert all(torch.equal(a["models"][name][key], b["models"][name][key]) for key in a["models"][name])
+    for name in a["optimizers"]:
+        for index, state in a["optimizers"][name]["state"].items():
+            for key, tensor in state.items():
+                assert torch.equal(tensor, b["optimizers"][name]["state"][index][key])
+    assert a["schedulers"] == b["schedulers"]
+    for domain in ("photo", "monet"):
+        assert all(torch.equal(x, y) for x, y in zip(a["replay_pools"][domain]["images"], b["replay_pools"][domain]["images"]))
+    assert torch.equal(a["rng"]["torch"], b["rng"]["torch"])
+    assert a["rng"]["python"] == b["rng"]["python"]
+    with pytest.raises(ValueError, match="preserve identity_weight"):
+        run(dict(recipe, identity_weight=1.), tmp_path / "changed_resume", "cpu", resume=first / "last.pt")
+
+
+@pytest.mark.parametrize("problem", ["future", "recipe", "data", "initialization", "stale", "missing", "destination"])
 def test_resume_rejects_inconsistent_best_checkpoint(tmp_path, selected_best_run, problem):
     config, source = selected_best_run
     path = source / "best.pt"
@@ -290,6 +418,8 @@ def test_resume_rejects_inconsistent_best_checkpoint(tmp_path, selected_best_run
             candidate["config"]["learning_rate"] *= 2
         elif problem == "data":
             candidate["state"]["manifest_fingerprint"] = "different data"
+        elif problem == "initialization":
+            candidate["state"]["initialization"] = {"checkpoint_sha256": "different weights"}
         else:
             candidate["state"]["best_selection"]["value"] = 0.1
         torch.save(candidate, path)
