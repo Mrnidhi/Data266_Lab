@@ -292,6 +292,8 @@ def _warm_start_checkpoint(path, config, provenance):
 def _validate_and_select_best(models, data, provenance, output_dir, device, config,
                               state, optimizers, schedulers, pools, baseline=False):
     current = state["global_step"]
+    state["pending_validation"] = {"step": current, "baseline": baseline}
+    save_checkpoint(output_dir / "last.pt", models, optimizers, schedulers, pools, config, state)
     print(f"cyclegan/{config.get('mode', 'smoke')} step={current} validating"
           + (" warm-start baseline" if baseline else ""), flush=True)
     preserved = rng_state()
@@ -313,12 +315,82 @@ def _validate_and_select_best(models, data, provenance, output_dir, device, conf
         _json(output_dir / "initialization.json", state["initialization"])
         if value is None:
             raise RuntimeError("Warm-start baseline requires finite validation KID in both directions before training")
+    state["pending_validation"] = None
+    state["last_validation_step"] = current
     if value is not None and (state["best_validation_score"] is None or value < state["best_validation_score"]):
         state["best_validation_score"] = value
         state["best_selection"] = {"metric": "mean_validation_KID_both_directions", "step": current,
                                    "value": value, "validation_only": True}
         save_checkpoint(output_dir / "best.pt", models, optimizers, schedulers, pools, config, state)
     save_checkpoint(output_dir / "last.pt", models, optimizers, schedulers, pools, config, state)
+
+
+def _restore_validation_progress(restored, resume, steps_per_epoch, provenance):
+    """Older boundary checkpoints need conservative inference; new ones are explicit."""
+    state, config = restored["state"], restored["config"]
+    current = state["global_step"]
+    if "pending_validation" not in state:
+        pending = None
+        if provenance["class_results"] and config.get("select_best", True):
+            if current == 0 and state.get("initialization", {}).get("kind") == "warm_start":
+                if state["initialization"].get("baseline_validation", {}).get("status") != "computed":
+                    pending = {"step": 0, "baseline": True}
+            elif current > 0 and current % (steps_per_epoch * max(1, int(config.get("validation_every_epochs", 5)))) == 0:
+                completed = (state.get("last_validation_step") == current
+                             or (state.get("best_selection") or {}).get("step") == current)
+                summary_path = Path(resume).parent / "run_summary.json"
+                if not completed and summary_path.is_file():
+                    try:
+                        summary = json.loads(summary_path.read_text())
+                        completed = (summary.get("completed_updates") == current
+                                     and summary.get("steps_per_epoch") == steps_per_epoch
+                                     and summary.get("best_selection") == state.get("best_selection")
+                                     and summary.get("initialization") == state.get("initialization"))
+                    except (OSError, ValueError):
+                        pass
+                if not completed:
+                    pending = {"step": current, "baseline": False}
+        state["pending_validation"] = pending
+    pending = state["pending_validation"]
+    if pending is not None and (not isinstance(pending, dict) or pending.get("step") != current
+                                or type(pending.get("baseline")) is not bool
+                                or (pending["baseline"] and (current != 0 or "initialization" not in state))):
+        raise ValueError("Pending validation is inconsistent with the resumed checkpoint")
+
+
+def _recover_selected_validation(restored, resume):
+    """Finish the narrow crash window after best.pt is committed but before last.pt."""
+    state = restored["state"]
+    pending = state.get("pending_validation")
+    path = Path(resume).parent / "best.pt"
+    if pending is None or not path.is_file():
+        return False
+    candidate = torch.load(path, map_location="cpu", weights_only=False)
+    selected = candidate.get("state", {})
+    current = state["global_step"]
+    if (selected.get("global_step") != current or selected.get("last_validation_step") != current
+            or selected.get("pending_validation") is not None):
+        return False
+    source_initialization = dict(state.get("initialization", {}))
+    selected_initialization = dict(selected.get("initialization", {}))
+    if pending["baseline"]:
+        source_initialization.pop("baseline_validation", None)
+        selected_initialization.pop("baseline_validation", None)
+    if (candidate.get("format_version") != 1
+            or source_initialization != selected_initialization
+            or selected.get("manifest_fingerprint") != state["manifest_fingerprint"]
+            or any(_recipe_value(candidate.get("config", {}), key) != _recipe_value(restored["config"], key) for key in RESUME_FIELDS)
+            or any(name not in candidate.get("models", {})
+                   or weights.keys() != candidate["models"][name].keys()
+                   or any(not torch.equal(value, candidate["models"][name][key]) for key, value in weights.items())
+                   for name, weights in restored["models"].items())):
+        raise ValueError("Best checkpoint does not match the pending validation weights/recipe")
+    # _preserve_best_checkpoint verifies selection metadata before this state is used.
+    for key in ("best_selection", "best_validation_score", "pending_validation", "last_validation_step"):
+        state[key] = selected.get(key)
+    if "initialization" in selected:
+        state["initialization"] = selected["initialization"]
+    return True
 
 
 def _preserve_best_checkpoint(resume, output_dir, restored, provenance):
@@ -768,7 +840,9 @@ def run(config: dict, output_dir: Path, device: str, resume: Path | None = None,
     if config.get("cpu_threads") and str(device) == "cpu":
         torch.set_num_threads(int(config["cpu_threads"]))
     data, provenance = prepare_data(config)
+    steps_per_epoch = max(len(data["train_photo"]), len(data["train_monet"]))
     restored, initialized, initialization = None, None, None
+    recovered_selection = False
     if warm_start is not None:
         initialized, initialization = _warm_start_checkpoint(warm_start, config, provenance)
     if resume is not None:
@@ -787,6 +861,8 @@ def run(config: dict, output_dir: Path, device: str, resume: Path | None = None,
                         last_line = line
             if last_line and json.loads(last_line)["step"] > restored["state"]["global_step"]:
                 raise ValueError("Log extends beyond the requested checkpoint; resume into a new directory to preserve run history")
+        _restore_validation_progress(restored, resume, steps_per_epoch, provenance)
+        recovered_selection = _recover_selected_validation(restored, resume)
         _preserve_best_checkpoint(resume, output_dir, restored, provenance)
     _json(output_dir / "resolved_config.json", config)
     _json(output_dir / "data_manifest.json", provenance)
@@ -796,7 +872,6 @@ def run(config: dict, output_dir: Path, device: str, resume: Path | None = None,
                                        lr=config.get("learning_rate", 1e-4), betas=tuple(config.get("betas", [.5, .999]))),
         "discriminators": torch.optim.Adam(list(models["D_photo"].parameters()) + list(models["D_monet"].parameters()),
                                           lr=config.get("learning_rate", 1e-4), betas=tuple(config.get("betas", [.5, .999])))}
-    steps_per_epoch = max(len(data["train_photo"]), len(data["train_monet"]))
     epochs = int(config.get("epochs", 30))
     constant = int(config.get("constant_epochs", epochs // 2))
     if epochs < 1 or not 0 <= constant <= epochs:
@@ -808,7 +883,8 @@ def run(config: dict, output_dir: Path, device: str, resume: Path | None = None,
     pool_device = device if replay_device == "device" else "cpu"
     pools = {domain: ReplayPool(config.get("replay_size", 50), device=pool_device) for domain in ("photo", "monet")}
     state = {"global_step": 0, "training_seconds": 0., "nan_events": 0, "peak_gpu_memory_bytes": 0,
-             "best_validation_score": None, "manifest_fingerprint": provenance["manifest_fingerprint"]}
+             "best_validation_score": None, "manifest_fingerprint": provenance["manifest_fingerprint"],
+             "pending_validation": None, "last_validation_step": None}
     if initialized is not None:
         load_checkpoint(initialized, models, restore_random=False)
         state["initialization"] = initialization
@@ -822,15 +898,21 @@ def run(config: dict, output_dir: Path, device: str, resume: Path | None = None,
     target_steps = epochs * steps_per_epoch
     if config.get("max_steps") is not None:
         target_steps = min(target_steps, int(config["max_steps"]))
-    if target_steps <= state["global_step"]:
+    pending = state.get("pending_validation")
+    if target_steps < state["global_step"] or (target_steps == state["global_step"] and not (pending or recovered_selection)):
         raise ValueError("No new updates requested; increase max_steps within the existing epoch schedule")
-    if warm_start is not None and provenance["class_results"] and config.get("select_best", True):
+    session_start = time.perf_counter()
+    if recovered_selection:
+        save_checkpoint(output_dir / "last.pt", models, optimizers, schedulers, pools, config, state)
+    if pending is not None:
+        _validate_and_select_best(models, data, provenance, output_dir, device, config,
+                                  state, optimizers, schedulers, pools, baseline=pending["baseline"])
+    elif warm_start is not None and provenance["class_results"] and config.get("select_best", True):
         _validate_and_select_best(models, data, provenance, output_dir, device, config,
                                   state, optimizers, schedulers, pools, baseline=True)
     if str(device).startswith("cuda"):
         torch.cuda.reset_peak_memory_stats()
     log_path = output_dir / "training_log.jsonl"
-    session_start = time.perf_counter()
     session_initial_step = state["global_step"]
     print(f"cyclegan/{mode} training device={device} step={session_initial_step}/{target_steps}; "
           "ETA estimates cover remaining training steps; evaluation/export may add time", flush=True)
@@ -897,10 +979,15 @@ def run(config: dict, output_dir: Path, device: str, resume: Path | None = None,
                   f"D_monet_loss={scalar_losses['discriminator_monet']:.4f} "
                   f"step_seconds={duration:.3f} elapsed={elapsed:.1f}s eta_steps_est={eta:.1f}s", flush=True)
         epoch_done = current % steps_per_epoch == 0
+        validation_due = (provenance["class_results"] and config.get("select_best", True)
+                          and epoch_done and (current // steps_per_epoch) % validation_epochs == 0)
+        if validation_due:
+            state["pending_validation"] = {"step": current, "baseline": False}
         if current % interval == 0 or current == target_steps or epoch_done:
             save_grid(models, data, output_dir / "grids" / f"step_{current:07d}.png", device)
-            save_checkpoint(output_dir / "last.pt", models, optimizers, schedulers, pools, config, state)
-        if provenance["class_results"] and config.get("select_best", True) and epoch_done and (current // steps_per_epoch) % validation_epochs == 0:
+            if not validation_due:
+                save_checkpoint(output_dir / "last.pt", models, optimizers, schedulers, pools, config, state)
+        if validation_due:
             _validate_and_select_best(models, data, provenance, output_dir, device, config,
                                       state, optimizers, schedulers, pools)
             if str(device).startswith("cuda"):

@@ -334,7 +334,10 @@ def test_warm_start_requires_usable_validation_baseline_before_updates(tmp_path,
     with pytest.raises(RuntimeError, match="finite validation KID"):
         run(config, destination, "cpu", warm_start=source / "last.pt")
     assert not (destination / "training_log.jsonl").exists()
-    assert not (destination / "last.pt").exists()
+    checkpoint = torch.load(destination / "last.pt", weights_only=False)
+    assert checkpoint["state"]["global_step"] == 0
+    assert checkpoint["state"]["pending_validation"] == {"step": 0, "baseline": True}
+    assert all(not optimizer["state"] for optimizer in checkpoint["optimizers"].values())
     assert json.loads((destination / "initialization.json").read_text())["baseline_validation"]["status"] == "unavailable"
 
 
@@ -398,6 +401,176 @@ def test_warm_started_run_resume_matches_continuation_and_preserves_baseline(tmp
     assert a["rng"]["python"] == b["rng"]["python"]
     with pytest.raises(ValueError, match="preserve identity_weight"):
         run(dict(recipe, identity_weight=1.), tmp_path / "changed_resume", "cpu", resume=first / "last.pt")
+
+
+def _test_validation_result(value=0.2):
+    return {"directions": {name: {"metrics": {"kid": {"status": "computed", "value": value}}}
+                           for name in cyclegan.DIRECTIONS}}
+
+
+@pytest.mark.parametrize("interrupted_step", [1, 2])
+@pytest.mark.parametrize("legacy", [False, True])
+def test_interrupted_validation_resumes_before_updates_and_finalizes_full_step(
+        tmp_path, selected_best_run, monkeypatch, interrupted_step, legacy):
+    config, _ = selected_best_run
+    reference = tmp_path / "reference"
+    run(config, reference, "cpu")
+    destination = tmp_path / "interrupted"
+    events = []
+    def interrupt(*args, **kwargs):
+        step = int(args[3].name.split("_")[-1])
+        random.random()
+        torch.rand(1)
+        if step == interrupted_step:
+            raise KeyboardInterrupt("validation interrupted")
+        return _test_validation_result()
+    monkeypatch.setattr(cyclegan, "evaluate_models", interrupt)
+    with pytest.raises(KeyboardInterrupt, match="validation interrupted"):
+        run(config, destination, "cpu")
+    pending_path = destination / "last.pt"
+    pending = torch.load(pending_path, weights_only=False)
+    assert pending["state"]["pending_validation"] == {"step": interrupted_step, "baseline": False}
+    if legacy:
+        pending["state"].pop("pending_validation")
+        pending["state"].pop("last_validation_step")
+        torch.save(pending, pending_path)
+    def evaluate(*args, **kwargs):
+        events.append(("validation", int(args[3].name.split("_")[-1])))
+        return _test_validation_result()
+    original_step = torch.optim.Adam.step
+    def optimizer_step(self, *args, **kwargs):
+        events.append(("optimizer", None))
+        return original_step(self, *args, **kwargs)
+    monkeypatch.setattr(cyclegan, "evaluate_models", evaluate)
+    monkeypatch.setattr(torch.optim.Adam, "step", optimizer_step)
+    result = run(config, destination, "cpu", resume=pending_path)
+    assert events[0] == ("validation", interrupted_step)
+    assert sum(event[0] == "optimizer" for event in events) == 2 * (2 - interrupted_step)
+    assert result["completed_updates"] == 2
+    assert [json.loads(line)["step"] for line in (destination / "training_log.jsonl").read_text().splitlines()] == [1, 2]
+    assert (destination / "run_summary.json").is_file()
+    expected = torch.load(reference / "last.pt", weights_only=False)
+    actual = torch.load(pending_path, weights_only=False)
+    assert actual["state"]["pending_validation"] is None
+    assert actual["state"]["last_validation_step"] == 2
+    assert actual["state"]["best_selection"] == expected["state"]["best_selection"]
+    assert actual["schedulers"] == expected["schedulers"]
+    assert all(torch.equal(value, actual["models"][name][key])
+               for name, weights in expected["models"].items() for key, value in weights.items())
+    assert torch.equal(actual["rng"]["torch"], expected["rng"]["torch"])
+    assert actual["rng"]["python"] == expected["rng"]["python"]
+
+
+@pytest.mark.parametrize("legacy", [False, True])
+def test_completed_run_does_not_repeat_validation_on_noop_resume(tmp_path, selected_best_run, monkeypatch, legacy):
+    config, _ = selected_best_run
+    destination = tmp_path / "complete"
+    run(config, destination, "cpu")
+    path = destination / "last.pt"
+    if legacy:
+        checkpoint = torch.load(path, weights_only=False)
+        checkpoint["state"].pop("pending_validation")
+        checkpoint["state"].pop("last_validation_step")
+        torch.save(checkpoint, path)
+    original = path.read_bytes()
+    monkeypatch.setattr(cyclegan, "evaluate_models", lambda *args, **kwargs: pytest.fail("completed validation repeated"))
+    with pytest.raises(ValueError, match="No new updates requested"):
+        run(config, destination, "cpu", resume=path)
+    assert path.read_bytes() == original
+
+
+def test_interrupted_warm_start_baseline_resumes_before_first_update(tmp_path, selected_best_run, monkeypatch):
+    config, source = selected_best_run
+    destination = tmp_path / "baseline_interrupt"
+    original = (source / "last.pt").read_bytes()
+    def interrupt(*args, **kwargs):
+        raise KeyboardInterrupt("baseline interrupted")
+    monkeypatch.setattr(cyclegan, "evaluate_models", interrupt)
+    with pytest.raises(KeyboardInterrupt, match="baseline interrupted"):
+        run(config, destination, "cpu", warm_start=source / "last.pt")
+    pending = torch.load(destination / "last.pt", weights_only=False)
+    assert pending["state"]["global_step"] == 0
+    assert pending["state"]["pending_validation"] == {"step": 0, "baseline": True}
+    assert not (destination / "training_log.jsonl").exists()
+    steps = []
+    def evaluate(*args, **kwargs):
+        steps.append(int(args[3].name.split("_")[-1]))
+        return _test_validation_result()
+    monkeypatch.setattr(cyclegan, "evaluate_models", evaluate)
+    result = run(config, destination, "cpu", resume=destination / "last.pt")
+    assert steps == [0, 1, 2]
+    assert result["completed_updates"] == 2
+    assert result["initialization"]["baseline_validation"]["status"] == "computed"
+    assert result["best_selection"]["step"] == 0
+    assert (source / "last.pt").read_bytes() == original
+
+
+@pytest.mark.parametrize("legacy", [False, True])
+def test_completed_step_zero_baseline_is_not_repeated_on_resume(tmp_path, selected_best_run, monkeypatch, legacy):
+    config, source = selected_best_run
+    destination = tmp_path / "ready_baseline"
+    original_forward = cyclegan.cycle_forward
+    def interrupt(*args, **kwargs):
+        raise KeyboardInterrupt("first update interrupted")
+    monkeypatch.setattr(cyclegan, "cycle_forward", interrupt)
+    with pytest.raises(KeyboardInterrupt, match="first update interrupted"):
+        run(config, destination, "cpu", warm_start=source / "last.pt")
+    path = destination / "last.pt"
+    checkpoint = torch.load(path, weights_only=False)
+    assert checkpoint["state"]["global_step"] == 0
+    assert checkpoint["state"]["pending_validation"] is None
+    if legacy:
+        checkpoint["state"].pop("pending_validation")
+        checkpoint["state"].pop("last_validation_step")
+        torch.save(checkpoint, path)
+    steps = []
+    def evaluate(*args, **kwargs):
+        steps.append(int(args[3].name.split("_")[-1]))
+        return _test_validation_result()
+    monkeypatch.setattr(cyclegan, "evaluate_models", evaluate)
+    monkeypatch.setattr(cyclegan, "cycle_forward", original_forward)
+    result = run(config, destination, "cpu", resume=path)
+    assert steps == [1, 2]
+    assert result["completed_updates"] == 2
+    assert result["best_selection"]["step"] == 0
+
+
+@pytest.mark.parametrize("interrupted_step", [0, 1, 2])
+def test_resume_recovers_best_saved_before_last_without_revalidation(
+        tmp_path, selected_best_run, monkeypatch, interrupted_step):
+    config, source = selected_best_run
+    destination = tmp_path / "selection_interrupt"
+    original_save = cyclegan.save_checkpoint
+    def fail_last(path, models, optimizers, schedulers, pools, config, state):
+        if (Path(path).name == "last.pt" and state.get("last_validation_step") == interrupted_step
+                and state.get("pending_validation") is None):
+            raise KeyboardInterrupt("selection commit interrupted")
+        return original_save(path, models, optimizers, schedulers, pools, config, state)
+    # Every validation improves so the final-step case also writes best.pt.
+    def evaluate(*args, **kwargs):
+        step = int(args[3].name.split("_")[-1])
+        return _test_validation_result(0.3 - step * 0.05)
+    monkeypatch.setattr(cyclegan, "evaluate_models", evaluate)
+    monkeypatch.setattr(cyclegan, "save_checkpoint", fail_last)
+    with pytest.raises(KeyboardInterrupt, match="selection commit interrupted"):
+        run(config, destination, "cpu", warm_start=source / "last.pt" if interrupted_step == 0 else None)
+    pending = torch.load(destination / "last.pt", weights_only=False)
+    assert pending["state"]["pending_validation"]["step"] == interrupted_step
+    selected = torch.load(destination / "best.pt", weights_only=False)
+    assert selected["state"]["last_validation_step"] == interrupted_step
+    calls = []
+    def record_evaluation(*args, **kwargs):
+        calls.append(int(args[3].name.split("_")[-1]))
+        return evaluate(*args, **kwargs)
+    monkeypatch.setattr(cyclegan, "evaluate_models", record_evaluation)
+    monkeypatch.setattr(cyclegan, "save_checkpoint", original_save)
+    result = run(config, destination, "cpu", resume=destination / "last.pt")
+    assert calls == list(range(interrupted_step + 1, 3))
+    assert result["completed_updates"] == 2
+    assert result["best_selection"]["step"] == 2
+    actual = torch.load(destination / "last.pt", weights_only=False)
+    assert actual["state"]["pending_validation"] is None
+    assert actual["state"]["last_validation_step"] == 2
 
 
 @pytest.mark.parametrize("problem", ["future", "recipe", "data", "initialization", "stale", "missing", "destination"])

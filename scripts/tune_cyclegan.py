@@ -55,6 +55,24 @@ def resolve_path(path):
     return path.resolve() if path.is_absolute() else (ROOT / path).resolve()
 
 
+def selection_path(path, output):
+    """Selection links follow the experiment, including its relative source location."""
+    return os.path.relpath(Path(path).resolve(), Path(output).resolve())
+
+
+def resolve_selection_path(output, path):
+    """Resolve a selection link against the directory containing selection.json."""
+    if Path(path).is_absolute():
+        raise ValueError("Selection artifact paths must be relative to selection.json")
+    return (Path(output).resolve() / path).resolve()
+
+
+def require_no_training_failure(run):
+    if (Path(run) / "training_failure.json").exists():
+        raise ValueError("This arm has a recorded non-finite training failure; preserve its evidence "
+                         "and investigate before starting a separately declared experiment")
+
+
 @contextlib.contextmanager
 def project_directory():
     old = Path.cwd()
@@ -148,6 +166,7 @@ def train_arm(output, arm, device="cuda", checkpoint=None, resume=None, max_step
         raise ValueError("max_steps must be a positive cumulative update count")
     config["max_steps"] = max_steps
     run = output / protocol["arms"][arm]["run_dir"]
+    require_no_training_failure(run)
     if (run / "run_summary.json").exists() and read_json(run / "run_summary.json").get("status") == "completed":
         raise FileExistsError("This arm is already complete; it will not restart")
     if resume is None and run.exists() and any(run.iterdir()):
@@ -217,7 +236,7 @@ def finite(value, label):
     return value
 
 
-def validation_kid(path, manifest):
+def validation_kid(path, manifest, output):
     result = read_json(path)
     if (result.get("split") != "val" or result.get("class_results") is not True
             or result.get("data_kind") != "explicit_class_manifests"
@@ -236,7 +255,7 @@ def validation_kid(path, manifest):
             raise ValueError("Both validation KID values must be computed")
         scores[direction] = finite(kid.get("value"), f"{direction} KID")
     return {"value": sum(scores.values()) / 2, "directions": scores,
-            "metrics_path": str(path), "metrics_sha256": digest(path)}
+            "metrics_path": selection_path(path, output), "metrics_sha256": digest(path)}
 
 
 def select(output, checkpoint=None):
@@ -244,6 +263,7 @@ def select(output, checkpoint=None):
     candidates, baselines = [], []
     for arm, spec in protocol["arms"].items():
         run = output / spec["run_dir"]
+        require_no_training_failure(run)
         wrapper = read_json(run / "run_summary.json")
         summary, config = wrapper.get("summary", {}), read_json(run / "resolved_config.json")
         planned = read_json(output / spec["config"])
@@ -259,7 +279,7 @@ def select(output, checkpoint=None):
         if (manifest.get("manifest_fingerprint") != protocol["source_manifest_fingerprint"]
                 or summary.get("initialization", {}).get("checkpoint_sha256") != protocol["source_checkpoint_sha256"]):
             raise ValueError("Arm/source provenance differs from the frozen protocol")
-        baseline = validation_kid(run / "validation/step_0000000/metrics.json", manifest)
+        baseline = validation_kid(run / "validation/step_0000000/metrics.json", manifest, output)
         baseline["arm"] = arm
         baselines.append(baseline)
         selection = summary.get("best_selection", {})
@@ -267,7 +287,7 @@ def select(output, checkpoint=None):
         if (selection.get("metric") != METRIC or selection.get("validation_only") is not True
                 or isinstance(step, bool) or not isinstance(step, int) or not 0 <= step <= expected):
             raise ValueError("Missing validation-only best checkpoint selection")
-        result = validation_kid(run / "validation" / f"step_{step:07d}" / "metrics.json", manifest)
+        result = validation_kid(run / "validation" / f"step_{step:07d}" / "metrics.json", manifest, output)
         if not math.isclose(result["value"], finite(selection.get("value"), "selection KID"), abs_tol=1e-12):
             raise ValueError("Best selection score differs from validation metrics")
         best = run / "best.pt"
@@ -279,19 +299,22 @@ def select(output, checkpoint=None):
                 or any(saved.get("config", {}).get(key) != value for key, value in config.items() if key != "max_steps")):
             raise ValueError("Selected checkpoint differs from saved validation evidence")
         del saved
-        candidates.append(dict(result, kind="arm", arm=arm, step=step, checkpoint=str(best), checkpoint_sha256=digest(best)))
+        candidates.append(dict(result, kind="arm", arm=arm, step=step,
+                               checkpoint=selection_path(best, output), checkpoint_sha256=digest(best)))
     baseline = baselines[0]
     if any(not math.isclose(item["directions"][d], baseline["directions"][d], abs_tol=1e-6, rel_tol=1e-6)
            for item in baselines[1:] for d in DIRECTIONS):
         raise ValueError("Unchanged-source validation scores disagree between arms; investigate before selection")
     unchanged = dict(baseline, kind="unchanged_source", arm=None, step=protocol["source_global_step"],
-                     checkpoint=str(source), checkpoint_sha256=protocol["source_checkpoint_sha256"])
+                     checkpoint=selection_path(source, output), checkpoint_sha256=protocol["source_checkpoint_sha256"])
     # Step-zero arm files wrap unchanged weights with a new schedule: retain the
     # original source file instead of publishing it as a fine-tuned improvement.
     ranking = sorted([unchanged, *(row for row in candidates if row["step"] > 0)],
                      key=lambda row: (row["value"], row["kind"] != "unchanged_source", row.get("arm") or ""))
     result = {"created_utc": utc_now(), "status": "validation_selected_pending_visual_review",
               "split": "val", "metric": METRIC, "protocol_sha256": digest(output / "protocol.json"),
+              "path_base": "selection_json_directory",
+              "path_note": "Retain the unchanged source checkpoint's relative location when moving this experiment; verify its SHA-256.",
               "source_checkpoint_sha256": protocol["source_checkpoint_sha256"],
               "baseline_rechecks": baselines, "completed_arm_candidates": candidates,
               "ranking": ranking, "winner": ranking[0],

@@ -3,6 +3,7 @@ import copy
 import importlib.util
 import json
 from pathlib import Path
+import shutil
 
 import pytest
 import torch
@@ -155,6 +156,20 @@ def test_runner_records_failure_without_claiming_completion(experiment, fake_tra
     assert "fixture NaN" in (run / "RUN_LOG.txt").read_text()
 
 
+def test_recorded_nonfinite_failure_blocks_resume_without_rewriting_evidence(experiment, fake_training, monkeypatch):
+    output = experiment[0]
+    tune.train_arm(output, "identity5", max_steps=3)
+    run = output / "arms/identity5"
+    tune.write_json(run / "training_failure.json", {"step": 4, "nan_events": 1})
+    before = {name: (run / name).read_bytes() for name in ("last.pt", "run_summary.json", "RUN_LOG.txt")}
+    def must_not_train(*args, **kwargs):
+        pytest.fail("A recorded non-finite failure must be investigated before another run")
+    monkeypatch.setattr(fake_training, "run", must_not_train)
+    with pytest.raises(ValueError, match="recorded non-finite training failure"):
+        tune.train_arm(output, "identity5", resume=run / "last.pt")
+    assert before == {name: (run / name).read_bytes() for name in before}
+
+
 def test_select_ranks_complete_arms_using_validation_and_keeps_source(experiment):
     output, source, _, protocol = experiment
     before = tune.digest(source)
@@ -164,7 +179,7 @@ def test_select_ranks_complete_arms_using_validation_and_keeps_source(experiment
     assert result["winner"]["arm"] == "identity2p5"
     assert result["mean_kid_improvement"] == pytest.approx(.005)
     assert result["source_checkpoint_sha256"] == before
-    assert result["winner"]["checkpoint_sha256"] == tune.digest(result["winner"]["checkpoint"])
+    assert result["winner"]["checkpoint_sha256"] == tune.digest(tune.resolve_selection_path(output, result["winner"]["checkpoint"]))
     assert not result["published"] and not result["test_evaluated"]
     assert tune.digest(source) == before
     assert not list(output.rglob("evaluation*"))
@@ -176,8 +191,40 @@ def test_step_zero_best_retains_original_source(experiment):
         completed_arm(output, source, protocol, arm, .02, step=0)
     result = tune.select(output)
     assert result["winner"]["kind"] == "unchanged_source"
-    assert result["winner"]["checkpoint"] == str(source)
+    assert tune.resolve_selection_path(output, result["winner"]["checkpoint"]) == source
     assert result["mean_kid_improvement"] == 0
+
+
+def test_selection_links_and_hashes_survive_relocating_experiment_and_source(experiment, tmp_path):
+    output, source, _, protocol = experiment
+    for arm in tune.ARMS:
+        completed_arm(output, source, protocol, arm)
+    tune.select(output)
+    moved = tmp_path / "relocated_repository" / output.name
+    shutil.copytree(output, moved)
+    shutil.copyfile(source, moved.parent / source.name)
+    selection = tune.read_json(moved / "selection.json")
+    assert selection["path_base"] == "selection_json_directory"
+    rows = selection["baseline_rechecks"] + selection["completed_arm_candidates"] + selection["ranking"] + [selection["winner"]]
+    for row in rows:
+        for field, hash_field in (("checkpoint", "checkpoint_sha256"), ("metrics_path", "metrics_sha256")):
+            if field in row:
+                assert not Path(row[field]).is_absolute()
+                moved_file = tune.resolve_selection_path(moved, row[field])
+                assert moved_file.is_relative_to(moved.parent)
+                assert tune.digest(moved_file) == row[hash_field]
+    with pytest.raises(ValueError, match="must be relative"):
+        tune.resolve_selection_path(moved, source)
+
+
+def test_recorded_nonfinite_failure_blocks_selection_despite_zero_checkpoint_count(experiment):
+    output, source, _, protocol = experiment
+    runs = [completed_arm(output, source, protocol, arm) for arm in tune.ARMS]
+    assert tune.read_json(runs[1] / "run_summary.json")["summary"]["nan_events"] == 0
+    tune.write_json(runs[1] / "training_failure.json", {"step": 7, "nan_events": 1})
+    with pytest.raises(ValueError, match="recorded non-finite training failure"):
+        tune.select(output)
+    assert not (output / "selection.json").exists()
 
 
 @pytest.mark.parametrize("problem", ["partial", "test_split", "unavailable", "nan", "bool", "count", "wrong_checkpoint", "baseline_disagrees"])
