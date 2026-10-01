@@ -5,11 +5,15 @@ Repository: https://github.com/Mrnidhi/Data266_Lab.git
 Experiment evidence commit before this handoff: df915a2.
 
 CURRENT USER TASK
-The user completed a personal Part 3 visual review in My_review.csv and confirmed
-using AI assistance for writing. On October 1 the user chose to continue with
-this single review for now. Preserve the original ratings and their provenance.
-Continue from saved training results; no retraining is needed for rating analysis.
-First inspect the lab computer's files and tell the user what is present/missing.
+On October 1 the user asked to improve Part 3 for the class leaderboard and
+reported access to an RTX 5090 for at least six hours. The new GPU connection
+has not been provided or verified; no new training has started. Read
+PART3_NEXT_GPU_PLAN.txt and the October 1 update in task3_gan/CLASS_PROTOCOL.md.
+First obtain the exact class evaluator and establish a comparable baseline.
+The proposed next experiment is a matched control versus discriminator
+augmentation, not a guaranteed improvement. No new GPU rental is requested.
+Preserve the user's completed single personal review and its provenance;
+ratings apply to the September 29 selected checkpoint, not future models.
 Do not assume the Mac's files or this desktop chat exist on the lab computer.
 
 START HERE
@@ -125,7 +129,7 @@ REMAINING COURSE DELIVERABLES
    Competition: https://www.kaggle.com/competitions/data-266-fall-2026-gan-image-style-transfer
    The class overview says the final score averages FID and MiFID, lower better,
    and uses 256x256 RGB JPG outputs. Local Clean-FID/KID is a separate protocol.
-   The authenticated account showed 'No submissions found' on September 29;
+   The authenticated account showed 'No submissions found' on October 1;
    refresh account state before asserting a current score/rank. Displayed rank
    order conflicted with the stated lower-is-better rule; do not invent a rank.
 3. Coordinate Revanth's independently trained results in revanth0211/ folders.
@@ -138,19 +142,16 @@ REMAINING COURSE DELIVERABLES
    No official Kaggle/Canvas submission is established by this handoff.
 
 OPERATIONAL BOUNDARIES
-- No training, new rentals, paid sessions or cloud-resource changes are needed
-  to continue human review. Do not restart old jobs from RUNPOD_HANDOFF.md.
+- The new controlled Part 3 GPU experiment is authorized on the user's
+  available RTX 5090 after readiness checks. The earlier review-only task
+  required no retraining. Do not rent GPUs or restart old cloud jobs from
+  RUNPOD_HANDOFF.md. Read NEXT_SESSION_PROMPT.md for the current task.
 - Preserve baseline and selected evidence, frozen splits and unrelated files.
 - Do not synthesize human ratings or report a local metric as a Kaggle result.
 - Do not tune against test/leaderboard feedback or alter submitted images.
 - Do not mark the whole lab complete while required artifacts are missing.
 
 FIRST PROMPT FOR THE NEW VS CODE CHAT
-Read VSCODE_HANDOFF.txt and the referenced result reports. Continue my DATA266
-Lab 1, Pair 49, from the completed experiments. My personal Part 3 review is
-complete and I am proceeding with a single review for now. Read its saved
-summary and provenance. Inspect this computer's files, locate my current CSVs,
-and tell me what is available or missing. Preserve entered ratings and do not
-retrain, rent GPUs, overwrite evidence, or use AI ratings as human ratings.
-Help prepare the remaining class evaluation, report and submission files from
-saved results, with the second human review and agreement clearly pending.
+Copy the complete contents of NEXT_SESSION_PROMPT.md into the new chat.
+It supersedes the earlier review-only prompt with the October 1 request for
+controlled Part 3 improvement using the available RTX 5090 for about six hours.
