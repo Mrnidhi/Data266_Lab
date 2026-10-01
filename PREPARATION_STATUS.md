@@ -1,5 +1,11 @@
 # Lab Pair 49 — preparation status
 
+This file records the initial September preparation checks. Current experiment
+status is in [README.md](README.md); the October 1 replacement of Part 1 is in
+[PART1_FINALIZATION.md](PART1_FINALIZATION.md). Historical shared receipts may
+refer to Part 1 runs removed at the user's request; the fresh desktop evidence
+is the source for its current results.
+
 This is the shared team repository. Srinidhi's code and configurations live inside his named task folders; Revanth has separate `revanth0211/` scaffolds for his independent work. The initial commit contains prepared code and synthetic CPU verification, not final submission results.
 
 ## Verified locally

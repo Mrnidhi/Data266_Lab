@@ -1,0 +1,11 @@
+{
+  "files": 66,
+  "crc_and_content_hashes_verified": true,
+  "contains_trained_final_weights": true,
+  "contains_executed_notebook": true,
+  "contains_frozen_processed_split": true,
+  "archive": "dist/Part1_Srinidhi_2342.zip",
+  "bytes": 139084197,
+  "sha256": "0c04518fae0b574010e4b7258a112e958945617ef0f1eacd1b72d735b639738d",
+  "scope": "Srinidhi Part 1 only; not the combined Canvas submission"
+}

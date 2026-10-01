@@ -1,25 +1,25 @@
 # Lab Pair 49 — compute allocation and portable runs
 
-Checked September 18, 2026. This is an adaptive plan, not a reservation or a paid-resource authorization. The prepared models and dataset splits stay the same across platforms.
+Updated October 1, 2026. Current Part 1 work runs on the user's Windows desktop; the cloud cost records below describe earlier Parts 2/3 work. This plan does not allocate resources.
 
 ## Current allocation
 
-Updated September 18, 2026 after the user reported that the college lab is closed for the next seven days. Complete training and submission preparation using the local Mac plus authorized cloud GPUs.
+The user requested a fresh desktop Part 1 run after the earlier checkpoint download could not be located, and explicitly requested deletion of previous Part 1 runs. Their old cloud metrics and batch benchmarks no longer define the Part 1 publication. Parts 2/3 evidence is preserved.
 
 | Work | Placement and status |
 |---|---|
-| Part 1: character GPT | Completed on RunPod RTX 4090. Checkpoints, executed notebook, metrics and logs verified locally; pod stopped. |
+| Part 1: character GPT | Completed from scratch on the Windows desktop RTX 5090 on October 1; 100K/10K TinyStories, 12 complete epochs and 18,732 updates. Canonical evidence: `reproducibility/raw_logs/srinidhi/desktop-20261001/part1-full/`. |
 | Part 2: Yelp sentiment | Completed the reference suite and six validation-only trials on one RunPod RTX 5090. All checkpoints and logs were verified locally before stopping; final inference and reporting use the Mac CPU. |
-| Part 3: CycleGAN | Class archive received. Training and any GPU decision are deferred until Part 2 finishes and its pod stops. |
-| Reports, notebooks, packaging, checksums | Local Mac, with verified local backups of every cloud training run. |
+| Part 3: CycleGAN | Original 30-epoch run and two September 29 continuation arms completed on cloud RTX 5090. Selected continuation metrics and remaining review/class evaluation are in `report/PART3_FINETUNING_RESULTS.md`. |
+| Reports, notebooks, packaging, checksums | Part 1 finalized on the Windows desktop. Older Parts 2/3 large local artifacts must be transferred and verified separately if absent here. |
 
-The earlier college/free-GPU allocation is superseded. No final submission may claim a college-GPU run that did not occur. Each task retains actual hardware, environment, source and training provenance.
+The desktop environment is Python 3.12.14, PyTorch 2.11.0+cu128 and CUDA 12.8 with verified RTX 5090 `sm_120` support. See `verification/part1_desktop_environment.json`. Fifteen Part 1/common preflight tests and 24 finalization/GPT gate checks passed, including causal masking, target coverage, cache integrity, interrupted resume, Unicode, Windows resident-memory reporting and rejection of altered evidence/unsafe archives. The documented native Windows smoke CLI passed. Full run and export receipts establish actual training completion separately: 15.11 minutes of timed training-step work, 18.32 minutes recorded wall time and 1.186 million scored targets/second. No new GPU rental is used for Part 1. Each task retains its actual hardware, environment, source and training provenance.
 
 ## Part 2 cost and stopping policy
 
 The completed session was observed from 2026-09-19 01:32:44 UTC to 02:43:51 UTC (about 71 minutes). Estimated compute plus container cost: **$1.18**, before any tax; this is a duration-based estimate, not an invoice. The RunPod console confirmed **$0.00/hour** after stop. See `verification/runpod_part_b_session_20260918.json` and the 96-file backup receipt. Existing GPU training processes finished normally, but new CUDA contexts became unavailable late in the session; final inference therefore runs on the local Apple M3 CPU. No extra paid resource was started.
 
-The user explicitly removed the initial $3 allowance and authorized continued research-guided experiments for better Part 2 results. Keep one RTX 5090 active, measure throughput and costs, preserve checkpoints, and stop after useful work finishes. This is not authorization for unrelated purchases or an unbounded resource fleet. The current on-demand quote is $0.99/hour plus approximately $0.004/hour for a 30 GB container disk, before any applicable tax. A real-data benchmark is in verification/sentiment_5090_benchmark.json. Candidate runtimes depend on their actual architecture, stopping epoch and concurrent workload.
+For that earlier Part 2 session, the user removed the initial $3 allowance and authorized continued research-guided experiments. The quoted rate at that time was $0.99/hour plus approximately $0.004/hour for a 30 GB container disk, before any tax. A real-data benchmark is in verification/sentiment_5090_benchmark.json. This historic authorization and price record does not call for a new rental; current Part 1 uses the desktop. Candidate runtimes depend on actual architecture, stopping epoch and workload.
 
 Use a single GPU initially. The user authorized parallel independent work; separate validation-only candidate processes can share the existing GPU if measured throughput improves. More selected GPUs do not accelerate one single-device model. Quote any additional GPU allocation before starting it.
 
@@ -32,7 +32,7 @@ Sources: [RunPod pricing](https://www.runpod.io/pricing), [billing and storage b
 1. Prepare frozen data and evaluator weights on CPU, record the code revision, then run setup and a brief CUDA smoke check on the assigned device.
 2. Time representative full-architecture training batches after warm-up. Synchronize CUDA at timing boundaries; include the real data loader. Measure validation separately. Rehearsal is for timing/correctness and is not a final trained model.
 3. Compute `remaining batches × measured seconds/batch + validation + final evaluation + checkpoint/export time`. Add at least 25% scheduling headroom and data/setup time separately. Use peak VRAM, examples/second and total wall time to decide allocation.
-4. Full sentiment has 504,000 training rows: `ceil(504000 / 128) = 3,938` batches per epoch per model, at most six epochs in the reference and twelve in validation trials, with early stopping. The MLP, BiLSTM and CNN must be timed separately; early stopping may shorten training. Full GPT batches depend on the frozen stories' character-window count. GAN has `30 × max(training photos, training Monet images)` updates; the class archive has 300 Monet and 7,038 photo files; image splits still need preparation.
+4. Full sentiment has 504,000 training rows: `ceil(504000 / 128) = 3,938` batches per epoch per model, at most six epochs in the reference and twelve in validation trials, with early stopping. The MLP, BiLSTM and CNN must be timed separately; early stopping may shorten training. Full GPT batches depend on the frozen stories' character-window count. The completed baseline GAN used `30 × 5,624 = 168,720` updates after frozen image splitting; the original class archive has 300 Monet and 7,038 photo files.
 
 No full-run hours or convergence guarantee is available before those measurements. Change GPU placement freely, but do not silently shrink the model, batch size, data or epoch schedule to meet a price estimate; changed training settings define a new experiment.
 
@@ -76,4 +76,4 @@ After transferring code, run, and data, run from the cloned repository root and 
   --output runs/cyclegan-full --resume runs/cyclegan-full/last.pt
 ```
 
-These commands require actual existing full-run checkpoints. Part 1 checkpoints are available; Part 2 and Part 3 completion must be checked against their own run records. Reapply any original configuration override (for example data locations). Preserve a run with logs beyond its saved checkpoint as evidence and resume into a fresh directory if the task's history guard rejects it. Validate one resumed batch and inference on the destination before committing a long session. Local CPU and mocked-device checks establish code behavior; real 4090-to-T4 migration still requires an actual GPU test.
+These commands require actual existing full-run checkpoints. The new selected Part 1 `best.pt` is prepared for Git publication; confirm its remote commit before relying on a clone to restore it. Its `last.pt`, complete evidence and frozen processed data are included in `dist/Part1_Srinidhi_2342.zip`. Parts 2/3 completion and local weight availability must be checked against their own run records. On Windows replace `.venv/bin/python` with `.venv\Scripts\python.exe`. Reapply any original configuration override (for example data locations). Preserve a run with logs beyond its saved checkpoint as evidence and resume into a fresh directory if the task's history guard rejects it. Validate one resumed batch and inference on the destination before committing a long session. Cross-device numerical equivalence requires a real hardware check.

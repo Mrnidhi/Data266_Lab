@@ -33,7 +33,7 @@ def utc_now() -> str:
 
 def write_json(path: Path, value) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(value, indent=2, allow_nan=False, default=str) + "\n")
+    path.write_text(json.dumps(value, indent=2, allow_nan=False, default=str) + "\n", encoding="utf-8")
 
 
 def code_manifest(root: Path | None = None) -> dict:

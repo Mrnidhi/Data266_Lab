@@ -2,6 +2,8 @@ import copy
 import json
 from pathlib import Path
 import shutil
+import sys
+from types import SimpleNamespace
 
 import pytest
 from lab1.common import task_config_path
@@ -127,6 +129,43 @@ def test_offline_cache_is_hash_verified_without_download(config, tmp_path):
     paths["train"].write_text(json.dumps({"index": 3, "text": "Changed."}) + "\n")
     with pytest.raises(ValueError, match="checksum"):
         gpt.prepare_data(config)
+
+
+def test_data_cache_roundtrips_unicode_without_network(config, tmp_path, monkeypatch):
+    import datasets
+    from huggingface_hub import HfApi
+
+    train_story = "A caf\u00e9 in \u6771\u4eac made a child smile."
+    validation_story = "A dog \U0001f415 shared its toy."
+    source = {"train": [{"text": train_story}], "validation": [{"text": validation_story}]}
+    monkeypatch.setattr(datasets, "load_dataset", lambda *args, **kwargs: source)
+    monkeypatch.setattr(HfApi, "dataset_info", lambda *args, **kwargs: SimpleNamespace(sha="frozen-revision"))
+    config.update(dataset="roneneldan/TinyStories", selection="indexed_permutation",
+                  data_cache=str(tmp_path), offline=False, train_stories=1, validation_stories=1)
+    train, valid, manifest = gpt.prepare_data(config)
+    assert (train, valid) == ([train_story], [validation_story])
+    paths = {key: Path(value) for key, value in gpt.data_cache_paths(config).items()}
+    assert train_story in paths["train"].read_bytes().decode("utf-8")
+    assert validation_story in paths["validation"].read_bytes().decode("utf-8")
+    vocabulary_path = tmp_path / "vocabulary.json"
+    gpt._json(vocabulary_path, gpt.build_vocabulary(train))
+    assert "\u6771" in json.loads(vocabulary_path.read_bytes().decode("utf-8"))["tokens"]
+    config["offline"] = True
+    assert gpt.prepare_data(config) == (train, valid, manifest)
+
+
+@pytest.mark.skipif(sys.platform != "win32", reason="Exercises native Windows peak working-set API")
+def test_windows_reports_real_peak_resident_memory():
+    before = gpt._memory(torch.device("cpu"))
+    assert before["host_peak_rss_mb"] > 0
+    assert before["cuda_peak_allocated_mb"] is None
+    allocation = bytearray(16 * 1024 ** 2)
+    for offset in range(0, len(allocation), 4096):
+        allocation[offset] = 1
+    during = gpt._memory(torch.device("cpu"))["host_peak_rss_mb"]
+    del allocation
+    after = gpt._memory(torch.device("cpu"))["host_peak_rss_mb"]
+    assert after >= during >= before["host_peak_rss_mb"]
 
 
 def test_cpu_checkpoint_can_resume_with_a_new_fp16_scaler():

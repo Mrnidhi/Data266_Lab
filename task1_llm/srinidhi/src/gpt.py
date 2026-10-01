@@ -44,7 +44,7 @@ PROMPTS = [
 def _json(path: Path, value: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     temp = path.with_suffix(path.suffix + ".tmp")
-    temp.write_text(json.dumps(value, indent=2, ensure_ascii=False, allow_nan=False) + "\n")
+    temp.write_text(json.dumps(value, indent=2, ensure_ascii=False, allow_nan=False) + "\n", encoding="utf-8")
     temp.replace(path)
 
 
@@ -233,12 +233,12 @@ def prepare_data(config: dict[str, Any], previous: dict[str, Any] | None = None
     else:
         train_cache, valid_cache, manifest_cache = _cache_paths(config)
         if all(p.exists() for p in [train_cache, valid_cache, manifest_cache]):
-            manifest = json.loads(manifest_cache.read_text())
+            manifest = json.loads(manifest_cache.read_text(encoding="utf-8"))
             if _digest({k: v for k, v in manifest.items() if k != "manifest_sha256"}) != manifest["manifest_sha256"]:
                 raise ValueError("Cached data manifest checksum failed")
             cached = []
             for split, path in [("train", train_cache), ("validation", valid_cache)]:
-                records = [json.loads(line) for line in path.read_text().splitlines() if line.strip()]
+                records = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
                 expected_count = config["train_stories"] if split == "train" else config["validation_stories"]
                 if len(records) != len(manifest[split]) or len(records) != expected_count:
                     raise ValueError("Cached data count differs from manifest")
@@ -320,7 +320,7 @@ def prepare_data(config: dict[str, Any], previous: dict[str, Any] | None = None
         for split, stories, path in [("train", train, train_cache), ("validation", valid, valid_cache)]:
             path.parent.mkdir(parents=True, exist_ok=True)
             temporary = path.with_suffix(".tmp")
-            with temporary.open("w") as handle:
+            with temporary.open("w", encoding="utf-8") as handle:
                 for metadata, story in zip(manifest[split], stories):
                     handle.write(json.dumps({**metadata, "text": story}, ensure_ascii=False) + "\n")
             temporary.replace(path)
@@ -477,9 +477,41 @@ def _empty_accumulator() -> dict[str, Any]:
             "batches": 0, "training_seconds": 0.0}
 
 
+def _windows_peak_rss_bytes() -> int:
+    """Windows' lifetime peak working set, equivalent to peak resident memory."""
+    import ctypes
+    from ctypes import wintypes
+
+    class ProcessMemoryCounters(ctypes.Structure):
+        _fields_ = [("cb", wintypes.DWORD), ("PageFaultCount", wintypes.DWORD),
+                    *[(name, ctypes.c_size_t) for name in (
+                        "PeakWorkingSetSize", "WorkingSetSize", "QuotaPeakPagedPoolUsage",
+                        "QuotaPagedPoolUsage", "QuotaPeakNonPagedPoolUsage", "QuotaNonPagedPoolUsage",
+                        "PagefileUsage", "PeakPagefileUsage")]]
+
+    kernel32 = ctypes.WinDLL("kernel32", use_last_error=True)
+    psapi = ctypes.WinDLL("psapi", use_last_error=True)
+    kernel32.GetCurrentProcess.argtypes = []
+    kernel32.GetCurrentProcess.restype = wintypes.HANDLE
+    psapi.GetProcessMemoryInfo.argtypes = [wintypes.HANDLE, ctypes.POINTER(ProcessMemoryCounters),
+                                         wintypes.DWORD]
+    psapi.GetProcessMemoryInfo.restype = wintypes.BOOL
+    counters = ProcessMemoryCounters()
+    counters.cb = ctypes.sizeof(counters)
+    if not psapi.GetProcessMemoryInfo(kernel32.GetCurrentProcess(), ctypes.byref(counters), counters.cb):
+        raise ctypes.WinError(ctypes.get_last_error())
+    return int(counters.PeakWorkingSetSize)
+
+
 def _memory(device: torch.device) -> dict[str, Any]:
-    rss = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss if resource is not None else None
-    return {"host_peak_rss_mb": rss / (1024 ** 2 if sys.platform == "darwin" else 1024) if rss is not None else None,
+    if resource is not None:
+        rss = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+        peak_rss_mb = rss / (1024 ** 2 if sys.platform == "darwin" else 1024)
+    elif sys.platform == "win32":
+        peak_rss_mb = _windows_peak_rss_bytes() / 1024 ** 2
+    else:
+        peak_rss_mb = None
+    return {"host_peak_rss_mb": peak_rss_mb,
             "cuda_peak_allocated_mb": torch.cuda.max_memory_allocated(device) / 1024 ** 2
             if device.type == "cuda" else None}
 
@@ -653,7 +685,7 @@ def run(config: dict, output_dir: Path, device: str, resume: Path | None = None)
                          "step": state["global_step"], "loss": float(loss.item()),
                          "gradient_norm_before_clipping": float(grad_norm.item()), "learning_rate": used_lr,
                          "targets_per_second": tokens / max(seconds, 1e-9), **_memory(target)}
-                with metrics_path.open("a") as handle:
+                with metrics_path.open("a", encoding="utf-8") as handle:
                     handle.write(json.dumps(event, allow_nan=False) + "\n")
             if state["global_step"] % config["log_every_steps"] == 0 or state["global_step"] == planned_steps:
                 elapsed = time.perf_counter() - session_started
@@ -683,7 +715,7 @@ def run(config: dict, output_dir: Path, device: str, resume: Path | None = None)
                "learning_rate_next_step": optimizer.param_groups[0]["lr"], **_memory(target)}
         state["history"].append(row)
         state["evaluation_pending"] = False
-        with metrics_path.open("a") as handle:
+        with metrics_path.open("a", encoding="utf-8") as handle:
             handle.write(json.dumps(row, allow_nan=False) + "\n")
         print(f"gpt/{config['mode']} epoch={epoch + 1} train_loss={training['cross_entropy']:.4f} "
               f"val_loss={validation['cross_entropy']:.4f} val_perplexity={validation['perplexity']:.4f}", flush=True)
@@ -746,7 +778,7 @@ def run(config: dict, output_dir: Path, device: str, resume: Path | None = None)
                            "- Exact generated excerpt: [quote the observed failure]\n"
                            "- What failed: [your observation]\n"
                            "- Likely cause and supporting evidence: [your reasoning]\n"
-                           "- Possible improvement: [your proposal]" for i in range(1, 4)) + "\n")
+                           "- Possible improvement: [your proposal]" for i in range(1, 4)) + "\n", encoding="utf-8")
     completed_epochs = state["epoch"]
     summary = {"task": "character_gpt", "mode": config["mode"],
                "is_final_training_run": config["mode"] == "full" and completed_epochs == config["epochs"],

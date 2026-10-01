@@ -1,12 +1,7 @@
 {
   "member": "srinidhi",
-  "note": "Byte-identical copies; original raw evidence unchanged.",
+  "note": "Byte-identical copies; retained original evidence unchanged. Historical Part 1 runs removed at the user request on 2026-10-01; their commits remain in Git history.",
   "manifests": [
-    {
-      "manifest": "reproducibility/manifests/srinidhi/notebook-smoke-2026-09-18T22-31-21.299149+00-00/gpt/provenance/2026-09-18T22-31-21.303821+00-00.json",
-      "original": "reproducibility/raw_logs/srinidhi/notebook-smoke-2026-09-18T22-31-21.299149+00-00/gpt/provenance/2026-09-18T22-31-21.303821+00-00.json",
-      "sha256": "a109ac1cfc20874957fb5930a208c657aac49a405270c271a309e4a42c2846a9"
-    },
     {
       "manifest": "reproducibility/manifests/srinidhi/notebook-smoke-2026-09-18T22-31-24.196483+00-00/sentiment/provenance/2026-09-18T22-31-24.200748+00-00.json",
       "original": "reproducibility/raw_logs/srinidhi/notebook-smoke-2026-09-18T22-31-24.196483+00-00/sentiment/provenance/2026-09-18T22-31-24.200748+00-00.json",
@@ -21,11 +16,6 @@
       "manifest": "reproducibility/manifests/srinidhi/smoke-20260918T223438Z-41637/cyclegan/provenance/2026-09-18T22-35-03.468449+00-00.json",
       "original": "reproducibility/raw_logs/srinidhi/smoke-20260918T223438Z-41637/cyclegan/provenance/2026-09-18T22-35-03.468449+00-00.json",
       "sha256": "da161a1fee92490bbce25f41d11e90df14a8facf86da95efee206410d4768cbe"
-    },
-    {
-      "manifest": "reproducibility/manifests/srinidhi/smoke-20260918T223438Z-41637/gpt/provenance/2026-09-18T22-34-42.284825+00-00.json",
-      "original": "reproducibility/raw_logs/srinidhi/smoke-20260918T223438Z-41637/gpt/provenance/2026-09-18T22-34-42.284825+00-00.json",
-      "sha256": "ce36bf7eaabf24b6bd1033c55b95cb75bc8f9aebd29cf33c118e50e231720758"
     },
     {
       "manifest": "reproducibility/manifests/srinidhi/smoke-20260918T223438Z-41637/sentiment/provenance/2026-09-18T22-34-45.444476+00-00.json",

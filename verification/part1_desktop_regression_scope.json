@@ -1,0 +1,26 @@
+{
+  "scope": "Windows desktop regression audit",
+  "part1_and_common": {
+    "passed": 15,
+    "failed": 0,
+    "receipt": "verification/part1_desktop_preflight.xml"
+  },
+  "all_tests": {
+    "collection_blocker": "Linux-only fcntl import in tests/test_tune_cyclegan.py"
+  },
+  "without_linux_only_tuning_test": {
+    "passed": 153,
+    "failed": 6,
+    "failures": [
+      "one Windows symlink privilege failure",
+      "two CycleGAN notebook staging directory locks on Windows",
+      "three sentiment publication POSIX path assumptions"
+    ]
+  },
+  "checkpoint_bundle_supported_scope": {
+    "passed": 6,
+    "deselected": 1,
+    "deselection_reason": "Windows symlink creation needs OS privilege"
+  },
+  "unrelated_part2_part3_code_changed": false
+}

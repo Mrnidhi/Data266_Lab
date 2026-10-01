@@ -1,5 +1,9 @@
 # Lab Pair 49 — RunPod handoff
 
+This is the historical cloud preparation plan. Part 1 was retrained on the
+desktop RTX 5090 on October 1; use [Part 1 finalization](PART1_FINALIZATION.md)
+for its current run and artifacts. This local finalization needs no rented pod.
+
 No pod is started by any script in this package. The current preparation step does not authorize a paid run.
 
 The current [compute plan](COMPUTE_PLAN.md) prioritizes college/free GPUs and independent tasks in parallel. This paid rehearsal is optional if those resources are unavailable or insufficient. The target additional compute cost is $0; the approximate $2 allowance below is a fallback estimate, not a charge or authorization.

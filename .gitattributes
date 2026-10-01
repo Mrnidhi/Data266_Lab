@@ -2,3 +2,9 @@
 reproducibility/raw_logs/** -text whitespace=cr-at-eol
 # Preserve the generated blank rater sheets exactly as produced.
 task3_gan/srinidhi/outputs/full/evaluation/human_audit/*.csv -text whitespace=cr-at-eol
+# Part 1's training source hashes and executed notebook stay byte-identical
+# across Windows/Linux clones instead of undergoing line-ending conversion.
+src/lab1/*.py -text whitespace=cr-at-eol
+task1_llm/srinidhi/src/gpt.py -text whitespace=cr-at-eol
+task1_llm/srinidhi/src/gpt.ipynb -text whitespace=cr-at-eol
+task1_llm/srinidhi/config.json -text whitespace=cr-at-eol

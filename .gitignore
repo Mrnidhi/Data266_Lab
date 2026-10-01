@@ -31,6 +31,11 @@ dist/
 *.pt
 *.pth
 *.ckpt
+# Part 1's selected checkpoint is small enough to keep recoverable in Git.
+!/task1_llm/srinidhi/checkpoints/best.pt
+# Retain the original console locally; its dependency startup warnings contain
+# workstation paths. Publish the untouched portable metrics.jsonl training log.
+/reproducibility/raw_logs/srinidhi/desktop-20261001/part1-full/RUN_LOG.txt
 # Part 3 keeps the complete local evidence tree for Canvas packaging, while Git
 # carries the executed notebook, metrics, plots, audit panels and predictions.
 /task3_gan/srinidhi/outputs/full/raw_logs/**/training_log.jsonl

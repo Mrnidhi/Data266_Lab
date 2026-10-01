@@ -1,5 +1,11 @@
 # Visible training over SSH
 
+This is a historical September 18 connection guide. Part 1 was replaced by a
+fresh desktop RTX 5090 run on October 1 at the user's request, and its previous
+run artifacts were removed from the working tree. Use [Part 1 finalization](PART1_FINALIZATION.md)
+for current weights, results and local reproduction; the connection details and
+prices below are historical observations.
+
 Status, September 18: dedicated public-key registration and direct TCP SSH were verified. The shared `data266` tmux session ran Part A through all 12 epochs on an RTX 4090. Both checkpoints and the complete run were downloaded and verified; the pod is now stopped at $0.00/hour. Part B was not started. The private key stays outside this repository on the user's Mac. Connection details can change on a later start; obtain fresh values from RunPod.
 
 ## Recommendation after inspecting RunPod

@@ -20,7 +20,7 @@ def execute(task: str, mode: str, output_dir: Path, device: str = "auto",
     import torch
     torch.set_num_threads(min(4, torch.get_num_threads()))
     path = config_path or task_config_path(task)
-    all_configs = json.loads(path.read_text())
+    all_configs = json.loads(path.read_text(encoding="utf-8"))
     if mode not in all_configs:
         raise ValueError(f"Missing profile {mode!r} in {path.name}")
     config = apply_overrides(all_configs[mode], overrides or [])
@@ -41,7 +41,7 @@ def execute(task: str, mode: str, output_dir: Path, device: str = "auto",
     if resume is None or not (output_dir / "resolved_config.json").exists():
         write_json(output_dir / "resolved_config.json", config)
     start = time.perf_counter()
-    with (output_dir / "RUN_LOG.txt").open("a", buffering=1) as log:
+    with (output_dir / "RUN_LOG.txt").open("a", buffering=1, encoding="utf-8") as log:
         with contextlib.redirect_stdout(Tee(sys.stdout, log)), contextlib.redirect_stderr(Tee(sys.stderr, log)):
             print(json.dumps({"event": "start", "task": task, "mode": mode, "utc": utc_now(), "device": device}))
             try:

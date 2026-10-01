@@ -5,29 +5,40 @@ Repository: https://github.com/Mrnidhi/Data266_Lab.git
 Experiment evidence commit before this handoff: df915a2.
 
 CURRENT USER TASK
-The user completed a personal Part 3 visual review in My_review.csv and confirmed
-using AI assistance for writing. On October 1 the user chose to continue with
-this single review for now. Preserve the original ratings and their provenance.
-Continue from saved training results; no retraining is needed for rating analysis.
-First inspect the lab computer's files and tell the user what is present/missing.
-Do not assume the Mac's files or this desktop chat exist on the lab computer.
+The user requested finalizing Part 1 on this Windows desktop and pushing the
+result to GitHub. The earlier RunPod download could not be located; the user
+then explicitly requested a from-scratch Part 1 run and deletion of its previous
+runs. Fresh training completed on October 1 using the local RTX 5090. The canonical
+run is reproducibility/raw_logs/srinidhi/desktop-20261001/part1-full/.
+Publish only metrics and weights from this replacement run. Preserve Parts 2/3,
+the user's personal Part 3 review and its provenance. Whole-lab submission
+remains pending; Part 1 technical finalization is the current scope.
 
 START HERE
 1. Open this entire repository as the VS Code folder.
-2. Read this file, report/PART3_FINETUNING_RESULTS.md, task3_gan/CLASS_PROTOCOL.md,
-   and SUBMISSION_CHECKLIST.md. README.md still describes the original Part 3
-   baseline; use the fine-tuning report for the selected September 29 model.
-3. Locate the user's CURRENT human-rating CSVs. They may be outside the repo.
-   Ask for their local path if needed. Never overwrite them with blank templates.
-4. Use the saved single-reviewer summary for interim reporting. Do not run the
-   two-rater agreement command until a second independent human review is ready.
-5. Continue with the class evaluator/schema, teammate results, combined report,
-   and final package. Verify each completion claim against actual artifacts.
+2. Read PART1_FINALIZATION.md, task1_llm/srinidhi/README.md and that folder's
+   REQUIREMENTS_CHECKLIST.md. Check actual full-run and finalization receipts
+   before claiming completion. Read report/PART3_FINETUNING_RESULTS.md for the
+   selected September 29 CycleGAN, since its member publication is the baseline.
+3. Keep this task focused on the desktop Part 1 result. If later continuing
+   Part 3 human review, locate the current rating CSVs (possibly outside the repo)
+   and preserve all entered values; never replace them with blank templates.
+4. For Part 1, use the replacement desktop publication and selected best.pt.
+   Do not restore old Part 1 metrics or restart an obsolete cloud job. The original
+   desktop console log stays local; Git carries untouched portable metrics.jsonl.
+5. For Part 3, use the saved single-reviewer summary for interim reporting. Do not
+   run the two-rater agreement command until an independent second review exists.
+   Class evaluator/schema, teammate results, combined report and final packaging
+   remain separate course deliverables.
 
 COMPLETED EXPERIMENTS
-- Part 1: character GPT trained; validation next-character accuracy 77.38%,
-  cross-entropy 0.7197, perplexity 2.0538. This is not sentiment accuracy.
-  Read task1_llm/srinidhi/results.md and src/gpt.ipynb in that member folder.
+- Part 1: replacement full run on October 1 Windows RTX 5090, Python 3.12.14,
+  PyTorch 2.11.0+cu128 and CUDA 12.8. Configuration: 100K/10K stories, 12 epochs,
+  3 layers, 6 heads, width 192, context 256, batch 256, seed 2342; 18,732 updates.
+  Selected epoch 12: validation CE 0.721101, perplexity 2.056697, next-character
+  accuracy 77.31%. Check verification/part1_finalization.json for final exports.
+  Published evidence goes to task1_llm/srinidhi/, including an executed notebook.
+  No older RunPod Part 1 numbers are the final results of this desktop run.
 - Part 2: learned-embedding sentiment models trained and tested. Test accuracy:
   BiLSTM 96.01%, CNN 95.80%, max-pool MLP 93.20%.
   Read task2_sentiment/srinidhi/results.md and src/sentiment.ipynb there.
@@ -94,13 +105,20 @@ The command rejects blanks and mismatched sample sets. Kappa may be undefined
 when expected disagreement is zero; report that honestly, not as 0 or 1.
 
 FILES THAT A GIT CLONE DOES AND DOES NOT PROVIDE
-Git includes code, configurations, original executed notebooks, compact metrics,
+Git includes code, configurations, executed notebooks, compact metrics,
 report/PART3_FINETUNING_RESULTS.md, and fine-tuning evidence under
 reproducibility/raw_logs/srinidhi/vast-part3-tuning-20260929/.
-Git ignores runs/, ZIPs, datasets, processed data, and .pt/.pth/.ckpt weights.
-Therefore cloning/pulling does NOT transfer the current human CSV edits or the
-selected tuned publication. Copy needed artifacts separately using the user's
-chosen file-transfer method, preserving relative paths and verifying hashes.
+The new selected Part 1 task1_llm/srinidhi/checkpoints/best.pt is prepared for Git
+publication with a targeted ignore exception. Verify the remote commit before
+claiming it is pushed or assuming that cloning will transfer its weights.
+Git ignores runs/, ZIPs, datasets, processed data and other .pt/.pth/.ckpt weights.
+The Part 1 resume last.pt and frozen data are in dist/Part1_Srinidhi_2342.zip;
+its package receipt records checksums. After the selected weights are committed
+and pushed, a clone can restore Part 1 inference weights but not the entire
+processed data cache or other tasks' weights.
+Cloning/pulling does NOT transfer the current human CSV edits or selected tuned
+Part 3 publication. Copy needed artifacts separately, preserving relative paths
+and verifying hashes.
 Do not replace completed or partly completed rating sheets during a transfer.
 
 For interim analysis: transfer My_review.csv and My_review.provenance.json.
@@ -114,8 +132,10 @@ Selected checkpoint SHA-256:
   c6775f21d2b6ccc214ae235f366a01f636f0b214e686ca53d2858ecb84d0ec91
 The original baseline in task3_gan/srinidhi/checkpoints/best.pt is different;
 preserve it. Do not substitute it for selected.pt because the latter is missing.
-For full final packaging, also transfer the original Part 1 and Part 2 model
-weights from their task*/srinidhi/checkpoints/ folders and required other outputs.
+For full final packaging, use the new desktop Part 1 archive and transfer the
+Part 2 model weights from task2_sentiment/srinidhi/checkpoints/ if missing locally.
+Also transfer all required Part 2/3 outputs. Do not mix obsolete Part 1 artifacts
+with the replacement run.
 Do not transfer credentials, SSH private keys, API tokens or the .venv folder.
 
 REMAINING COURSE DELIVERABLES
@@ -138,19 +158,20 @@ REMAINING COURSE DELIVERABLES
    No official Kaggle/Canvas submission is established by this handoff.
 
 OPERATIONAL BOUNDARIES
-- No training, new rentals, paid sessions or cloud-resource changes are needed
-  to continue human review. Do not restart old jobs from RUNPOD_HANDOFF.md.
+- The fresh local Part 1 retraining is authorized. No new rentals or cloud changes
+  are needed for it or Part 3 human review. Do not restart old cloud jobs from
+  RUNPOD_HANDOFF.md. The user-authorized deletion was limited to previous Part 1
+  runs; preserve unrelated tasks and original human ratings.
 - Preserve baseline and selected evidence, frozen splits and unrelated files.
 - Do not synthesize human ratings or report a local metric as a Kaggle result.
 - Do not tune against test/leaderboard feedback or alter submitted images.
 - Do not mark the whole lab complete while required artifacts are missing.
 
 FIRST PROMPT FOR THE NEW VS CODE CHAT
-Read VSCODE_HANDOFF.txt and the referenced result reports. Continue my DATA266
-Lab 1, Pair 49, from the completed experiments. My personal Part 3 review is
-complete and I am proceeding with a single review for now. Read its saved
-summary and provenance. Inspect this computer's files, locate my current CSVs,
-and tell me what is available or missing. Preserve entered ratings and do not
-retrain, rent GPUs, overwrite evidence, or use AI ratings as human ratings.
-Help prepare the remaining class evaluation, report and submission files from
-saved results, with the second human review and agreement clearly pending.
+Read VSCODE_HANDOFF.txt, PART1_FINALIZATION.md and the requirement mapping.
+Continue my DATA266 Lab 1, Pair 49, from the fresh October 1 desktop Part 1 run.
+Verify its actual completion and publication before rerunning anything. Preserve
+the new best.pt and all raw evidence. My Part 3 personal review remains a single
+review for now; preserve its ratings/provenance. Prepare remaining class
+evaluation, teammate comparisons, combined report and final one-ZIP submission
+from real saved results, keeping second human review/agreement clearly pending.
