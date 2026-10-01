@@ -1,6 +1,6 @@
 # Part 3 CycleGAN continuation results
 
-Date: 29 September 2026. The model comparison, test evaluation, direct exports, complete local backup verification, and GPU shutdown are complete. A separate local results package includes an executed notebook. Human ratings and final submission are still pending; no exact rental bill is claimed.
+Experiment date: 29 September 2026. Human-review update: 1 October 2026. The model comparison, test evaluation, direct exports, complete local backup verification, and GPU shutdown are complete. A separate local results package includes an executed notebook. One personal visual review is now recorded; the second human review, inter-rater agreement and final submission remain pending. No exact rental bill is claimed.
 
 The validation rule selected the identity-weight-2.5 checkpoint at continuation update **44,992**, corresponding to additional epoch **8**. Its mean validation KID is **17.97% lower** than the original checkpoint's rechecked score. Its subsequently measured mean test KID is **7.52% lower** than the original test result. These are descriptive changes on the fixed splits, not statistical evidence of superiority. Several content and reconstruction metrics worsened.
 
@@ -107,7 +107,17 @@ An update processes two source images, so the image throughput above is twice th
 
 The finalization record marks final evaluation and export commands completed at 13:25:20 UTC. The exports are neutral generated-image outputs for both directions from the selected checkpoint. The actual class competition submission format has not been verified, and no competition or Canvas submission is claimed.
 
-The fixed validation review used the first six examples in each direction. Its saved assistant review reports retained broad scene composition and subtle differences, with crosshatch-like texture, softened detail, and some horizontal banding still present. It found no obvious new collapse in those twelve pairs, but explicitly did not establish perceptual superiority. This limited assistant review is separate from the required independent two-human audit. The human rating sheets remain blank; no human rating averages or agreement results are available.
+The fixed validation review used the first six examples in each direction. Its saved assistant review reports retained broad scene composition and subtle differences, with crosshatch-like texture, softened detail, and some horizontal banding still present. It found no obvious new collapse in those twelve pairs, but explicitly did not establish perceptual superiority. This limited assistant review is separate from the required independent two-human audit.
+
+On 1 October, Srinidhi supplied `runs/part3-human-review-20260929/My_review.csv` and confirmed reviewing the entire set personally, using assistance for writing. All 60 sample identities match the prepared packet (30 per direction), and all 180 scores are valid integers from 1 to 5. The source CSV retains its earlier `AI_SECOND_OPINION_NOT_HUMAN` labels unchanged; the explicit user clarification and source hash are recorded in `reproducibility/raw_logs/srinidhi/vast-part3-tuning-20260929/human-review-srinidhi-20261001.json`. This is a user-confirmed personal review with AI writing assistance. The record does not independently establish blinding or independence from earlier AI scores.
+
+| Review direction | Samples | Style | Content | Artifacts |
+|---|---:|---:|---:|---:|
+| Photo → Monet | 30 | 3.47 | 4.50 | 3.00 |
+| Monet → Photo | 30 | 2.57 | 4.73 | 3.37 |
+| All samples | 60 | 3.02 | 4.62 | 3.18 |
+
+All three criteria use 1–5, with higher scores better; an artifacts score of 5 means no visible artifacts. These single-reviewer means suggest stronger content preservation than style conversion, especially for Monet-to-photo realism. They are descriptive judgments, not a comparison against the original checkpoint. The user chose to continue with this one review for now. A second independent human review has not been completed in the available files, so Cohen's kappa and percentage agreement are not available. The rubric's two-rater audit remains incomplete.
 
 The original baseline remains preserved. The complete local backup contains **39,183 files, 6,185,348,875 bytes**, including both trial checkpoints, generated validation images, test evaluation, direct exports, and logs. Its exact inventory and every file's size and SHA-256 matched the frozen remote experiment, with zero differences; verification passed again after promotion to `runs/part3-tuning-vast-backup-20260929/final-full-experiment`. The manifest SHA-256 is `19839c7a8e1f9af7edc5235cf8fc5f3ee415088b064791b7b13f135270e8f3d5`.
 

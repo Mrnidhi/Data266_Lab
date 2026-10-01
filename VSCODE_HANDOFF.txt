@@ -5,8 +5,9 @@ Repository: https://github.com/Mrnidhi/Data266_Lab.git
 Experiment evidence commit before this handoff: df915a2.
 
 CURRENT USER TASK
-The user is completing the Part 3 human visual review on a college lab computer
-using VS Code with the Codex extension. Preserve the ratings already entered.
+The user completed a personal Part 3 visual review in My_review.csv and confirmed
+using AI assistance for writing. On October 1 the user chose to continue with
+this single review for now. Preserve the original ratings and their provenance.
 Continue from saved training results; no retraining is needed for rating analysis.
 First inspect the lab computer's files and tell the user what is present/missing.
 Do not assume the Mac's files or this desktop chat exist on the lab computer.
@@ -18,8 +19,8 @@ START HERE
    baseline; use the fine-tuning report for the selected September 29 model.
 3. Locate the user's CURRENT human-rating CSVs. They may be outside the repo.
    Ask for their local path if needed. Never overwrite them with blank templates.
-4. Confirm two independent humans finished the same sample IDs and directions.
-   Then compute the audit summary with the existing audit-score command below.
+4. Use the saved single-reviewer summary for interim reporting. Do not run the
+   two-rater agreement command until a second independent human review is ready.
 5. Continue with the class evaluator/schema, teammate results, combined report,
    and final package. Verify each completion claim against actual artifacts.
 
@@ -45,10 +46,20 @@ COMPLETED EXPERIMENTS
   stopped September 29 and its monitor paused. This is a historical shutdown
   receipt, not a live check of today's cloud account or disk charges.
 
-HUMAN REVIEW: IN PROGRESS, NOT COMPLETE
+HUMAN REVIEW: ONE PERSONAL REVIEW RECORDED; TWO-RATER AUDIT INCOMPLETE
 Working folder on the source Mac: runs/part3-human-review-20260929/
 Original shareable packet: runs/Part3_Visual_Review_20260929.zip
 The ZIP was created with blank sheets; it is not a backup of later edits.
+My_review.csv contains 60 complete ratings confirmed by the user as their
+personal review, with AI assistance for writing. Its original reviewer_type
+column still says AI_SECOND_OPINION_NOT_HUMAN. The source file was preserved,
+and My_review.provenance.json records the explicit user clarification.
+The portable summary and provenance are tracked in:
+reproducibility/raw_logs/srinidhi/vast-part3-tuning-20260929/human-review-srinidhi-20261001.json
+Style/content/artifacts means (1-5, higher better): all 60 = 3.0167/4.6167/3.1833;
+Photo -> Monet = 3.4667/4.5000/3.0000; Monet -> Photo = 2.5667/4.7333/3.3667.
+Review conditions and independence from prior AI scores were not independently
+verified. Do not claim a completed blinded two-rater audit or an agreement score.
 Each panel shows input LEFT and translated output RIGHT.
 Each human fills one CSV: rater_1.csv or rater_2.csv.
 Columns: sample_id,direction,style,content,artifacts.
@@ -59,8 +70,8 @@ The current packet has 60 fixed samples (30 per direction). PDF page 9 says
 metrics in both directions. The larger packet was our preparation choice.
 Since review is underway, do not silently change samples, drop poor outputs,
 or discard existing ratings. Document the actual sample set used.
-The working folder also contains ai_review.csv. It must remain separate from
-the two human rating sheets and must never be counted as a human rater.
+Do not count an AI-generated review as an additional human rater. The older
+ai_review.csv filename is no longer present in the current working folder.
 Keep the private sample/model key hidden from raters. The shareable ZIP omits it.
 Do not treat the older baseline audit under task3_gan/srinidhi/outputs/full/
 as the selected tuned model's audit.
@@ -92,8 +103,9 @@ selected tuned publication. Copy needed artifacts separately using the user's
 chosen file-transfer method, preserving relative paths and verifying hashes.
 Do not replace completed or partly completed rating sheets during a transfer.
 
-For human-review analysis only: the two completed CSVs plus the matching audit
-protocol/sample list are sufficient. Bring the images if reviewing on that PC.
+For interim analysis: transfer My_review.csv and My_review.provenance.json.
+For agreement later: also obtain a second independently completed human sheet
+for the same sample list. Bring the images if reviewing on that PC.
 For the tuned notebook, final image exports or model inference, transfer:
   runs/part3-tuned-publication-20260929/
 This contains publication.json, results.md, metrics_report.csv, src/cyclegan.ipynb,
@@ -107,7 +119,8 @@ weights from their task*/srinidhi/checkpoints/ folders and required other output
 Do not transfer credentials, SSH private keys, API tokens or the .venv folder.
 
 REMAINING COURSE DELIVERABLES
-1. Finish real human ratings and report agreement. Review written observations.
+1. Continue with the single-reviewer result as requested for now. A second human
+   and inter-rater agreement remain required by the rubric for final completion.
 2. Obtain/verify the class's exact FID/MiFID evaluator and submission.csv schema.
    Competition: https://www.kaggle.com/competitions/data-266-fall-2026-gan-image-style-transfer
    The class overview says the final score averages FID and MiFID, lower better,
@@ -134,9 +147,10 @@ OPERATIONAL BOUNDARIES
 
 FIRST PROMPT FOR THE NEW VS CODE CHAT
 Read VSCODE_HANDOFF.txt and the referenced result reports. Continue my DATA266
-Lab 1, Pair 49, from the completed experiments. I am currently finishing the
-Part 3 human review. Inspect this computer's files, locate my current rater CSVs,
+Lab 1, Pair 49, from the completed experiments. My personal Part 3 review is
+complete and I am proceeding with a single review for now. Read its saved
+summary and provenance. Inspect this computer's files, locate my current CSVs,
 and tell me what is available or missing. Preserve entered ratings and do not
 retrain, rent GPUs, overwrite evidence, or use AI ratings as human ratings.
-After both human sheets are complete, help calculate agreement and prepare
-the remaining class evaluation, report and submission files from saved results.
+Help prepare the remaining class evaluation, report and submission files from
+saved results, with the second human review and agreement clearly pending.
