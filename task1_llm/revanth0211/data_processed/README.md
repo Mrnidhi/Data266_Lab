@@ -1,3 +1,3 @@
 # Processed data
 
-Store your selected splits and processed data here. Shared raw datasets belong in the task-level data/ folder. Preparation is pending.
+No dataset copy is committed. The executed notebook records the deterministic seed and sampling configuration, and downloads TinyStories through Hugging Face Datasets when needed.

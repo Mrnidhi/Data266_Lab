@@ -33,8 +33,10 @@ dist/
 *.ckpt
 # Part 1's selected checkpoint is small enough to keep recoverable in Git.
 !/task1_llm/srinidhi/checkpoints/best.pt
+!/task1_llm/revanth0211/checkpoints/best_model.pt
 # Keep the three selected Part 2 models recoverable from a Git clone.
 !/task2_sentiment/srinidhi/checkpoints/*/best.pt
+!/task2_sentiment/revanth0211/checkpoints/*.pt
 # Keep original desktop paths local. Portable derived copies and both hashes
 # are preserved in the Part 2 package and published member output files.
 /reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/selected/config.json

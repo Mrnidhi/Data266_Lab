@@ -1,1 +1,2 @@
-model,split,metric,value,status,run_id,checkpoint
+best_epoch,epochs_completed,training_cross_entropy_at_best_epoch,validation_cross_entropy,perplexity,bits_per_character,generalization_gap,top1_next_character_accuracy,distinct_1gram,distinct_2gram,distinct_3gram,repeated_4gram_rate,gradient_norm_max_epoch_mean,nan_count,parameter_count,training_tokens_per_sec,generation_tokens_per_sec,peak_memory_mb,total_training_time_sec
+13,13,0.5381073669958114,0.6229930255889893,1.864500195683482,0.898788948525646,0.08488565859317787,0.805136328125,0.06756756756756757,0.3404255319148936,0.5755813953488372,0.2912621359223301,1.818156386033816,0,25385984,232543.33787225396,301.599602255336,3687.75537109375,1431.131087414

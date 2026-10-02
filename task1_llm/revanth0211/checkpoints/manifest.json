@@ -1,0 +1,6 @@
+{
+  "file": "best_model.pt",
+  "sha256": "59cda1498b876ed64f2c1426bd1fdb0dc986f2fd5f42921fa9440245440119f5",
+  "size_bytes": 101577589,
+  "selected_epoch": 13
+}

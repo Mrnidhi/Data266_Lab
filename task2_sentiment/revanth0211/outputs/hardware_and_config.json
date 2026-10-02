@@ -1,0 +1,15 @@
+{
+  "device": "cuda",
+  "gpu": "NVIDIA GeForce RTX 4090",
+  "pytorch_version": "2.14.0+cu130",
+  "cuda_version": "13.0",
+  "seed": 3143,
+  "dataset": "fancyzhx/yelp_polarity",
+  "train_n": 100000,
+  "validation_n": 10000,
+  "test_n": 20000,
+  "vocab_size": 40000,
+  "max_length": 256,
+  "batch_size": 256,
+  "epochs": 5
+}
