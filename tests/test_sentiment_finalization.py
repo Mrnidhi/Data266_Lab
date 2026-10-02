@@ -18,6 +18,24 @@ finalizer = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(finalizer)
 
 
+def test_source_cpu_takes_precedence_over_historical_cloud_receipt(tmp_path):
+    receipt = tmp_path / "verification/part_b_cpu_hardware.txt"
+    receipt.parent.mkdir()
+    receipt.write_text("Model name: Historical cloud CPU\n", encoding="utf-8")
+    sources = {"bilstm": {"provenance": {"environment": {"cpu_model": "Desktop CPU"}}}}
+    hardware = finalizer.cpu_evidence(tmp_path, sources)
+    assert hardware["details"] == "Desktop CPU"
+    assert hardware["source"] == "selected source provenance"
+
+
+def test_historical_cpu_receipt_remains_available_for_legacy_sources(tmp_path):
+    receipt = tmp_path / "verification/part_b_cpu_hardware.txt"
+    receipt.parent.mkdir()
+    receipt.write_text("Model name: Historical cloud CPU\n", encoding="utf-8")
+    sources = {"bilstm": {"provenance": {"environment": {}}}}
+    assert finalizer.cpu_evidence(tmp_path, sources)["model"] == "Historical cloud CPU"
+
+
 @pytest.fixture(scope="module")
 def frozen(tmp_path_factory):
     root = tmp_path_factory.mktemp("frozen-selection")

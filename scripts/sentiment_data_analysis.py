@@ -14,17 +14,16 @@ sys.path.insert(0, str(ROOT / "src"))
 from lab1 import sentiment as s
 
 
-def main():
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--data-dir", required=True)
-    parser.add_argument("--encoded-cache", required=True)
-    parser.add_argument("--output", type=Path, required=True)
-    args = parser.parse_args()
-    cfg = json.loads((ROOT / "task2_sentiment/srinidhi/config.json").read_text())["full"]
-    cfg.update(data_dir=args.data_dir, encoded_cache=args.encoded_cache)
+def generate(data_dir, encoded_cache, output, *, root=ROOT):
+    root, output = Path(root).resolve(), Path(output)
+    data_dir, encoded_cache = Path(data_dir), Path(encoded_cache)
+    data_dir = data_dir if data_dir.is_absolute() else root / data_dir
+    encoded_cache = encoded_cache if encoded_cache.is_absolute() else root / encoded_cache
+    cfg = json.loads((root / "task2_sentiment/srinidhi/config.json").read_text(encoding="utf-8"))["full"]
+    cfg.update(data_dir=str(data_dir), encoded_cache=str(encoded_cache))
     records = s._load_records(cfg)
     vocabulary, datasets = s._load_features(cfg, records)
-    args.output.mkdir(parents=True, exist_ok=True)
+    output.mkdir(parents=True, exist_ok=True)
     report = {"vocabulary_size": len(vocabulary), "length_definition": "Tokens after the documented preprocessing, before truncation", "splits": {}}
     fig, axes = plt.subplots(1, 2, figsize=(11, 4))
     for index, (name, data) in enumerate(datasets.items()):
@@ -41,15 +40,25 @@ def main():
             "mean_oov_rate": float(np.mean(data.oov_rates))}
         axes[0].hist(lengths, bins=np.arange(0, 2001, 50), density=True, histtype="step", label=name)
         axes[1].bar(np.arange(2) + (index - 1) * .25, counts, width=.25, label=name)
-    axes[0].axvline(cfg["max_length"], color="black", linestyle="--", label="384-token cap")
+    axes[0].axvline(cfg["max_length"], color="black", linestyle="--", label=f"{cfg['max_length']}-token cap")
     axes[0].set(xlabel="Processed token count (plot limited to 2,000)", ylabel="Density", title="Review length distribution")
     axes[1].set(xticks=[0, 1], xticklabels=["Negative", "Positive"], ylabel="Reviews", title="Class distribution")
     for ax in axes:
         ax.legend()
     fig.tight_layout()
-    fig.savefig(args.output / "data_distributions.png", dpi=160)
+    fig.savefig(output / "data_distributions.png", dpi=160)
     plt.close(fig)
-    (args.output / "data_distributions.json").write_text(json.dumps(report, indent=2) + "\n")
+    (output / "data_distributions.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+    return report
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--data-dir", required=True)
+    parser.add_argument("--encoded-cache", required=True)
+    parser.add_argument("--output", type=Path, required=True)
+    args = parser.parse_args()
+    report = generate(args.data_dir, args.encoded_cache, args.output)
     print(json.dumps(report, indent=2))
 
 

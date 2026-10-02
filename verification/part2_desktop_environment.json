@@ -1,0 +1,39 @@
+{
+  "captured_utc": "2026-10-01T23:29:57.565235+00:00",
+  "python": "3.12.14",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "machine": "AMD64",
+  "packages": {
+    "torch": "2.11.0+cu128",
+    "torchvision": "0.26.0+cu128",
+    "numpy": "2.5.3",
+    "pandas": "3.0.6",
+    "scikit-learn": "1.9.1",
+    "scipy": "1.16.3",
+    "matplotlib": "3.11.2",
+    "datasets": "5.0.1",
+    "Pillow": "12.3.0",
+    "clean-fid": null,
+    "lpips": null,
+    "prdc": null
+  },
+  "cuda_available": true,
+  "cuda_build": "12.8",
+  "cudnn": 91900,
+  "gpus": [
+    {
+      "index": 0,
+      "name": "NVIDIA GeForce RTX 5090",
+      "memory_bytes": 34190458880,
+      "compute_capability": [
+        12,
+        0
+      ]
+    }
+  ],
+  "mps_available": false,
+  "nvidia_smi": "name, uuid, driver_version, memory.total [MiB]\nNVIDIA GeForce RTX 5090, GPU-68465984-5de9-5fbf-2036-6e4f23dd51f1, 610.60, 32607 MiB",
+  "cpu_model": "Intel(R) Core(TM) Ultra 9 285K",
+  "smoke_run": "runs/part2-desktop-smoke",
+  "data_identity": "verification/part2_desktop_data_identity.json"
+}

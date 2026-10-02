@@ -1,0 +1,72 @@
+{
+  "vocabulary_size": 40000,
+  "length_definition": "Tokens after the documented preprocessing, before truncation",
+  "splits": {
+    "train": {
+      "count": 504000,
+      "negative": 252000,
+      "positive": 252000,
+      "positive_fraction": 0.5,
+      "blank_raw_reviews": 0,
+      "empty_after_preprocessing": 22,
+      "null_or_malformed_rows": 0,
+      "validation_policy": "Reject missing/malformed text, labels or IDs; no rows silently removed",
+      "length_quantiles": {
+        "0": 0.0,
+        "0.25": 32.0,
+        "0.5": 60.0,
+        "0.75": 108.0,
+        "0.9": 176.0,
+        "0.95": 231.0,
+        "0.99": 377.0,
+        "1": 821.0
+      },
+      "truncated_fraction": 0.009293650793650793,
+      "mean_oov_rate": 0.009059829883018613
+    },
+    "validation": {
+      "count": 56000,
+      "negative": 28000,
+      "positive": 28000,
+      "positive_fraction": 0.5,
+      "blank_raw_reviews": 0,
+      "empty_after_preprocessing": 1,
+      "null_or_malformed_rows": 0,
+      "validation_policy": "Reject missing/malformed text, labels or IDs; no rows silently removed",
+      "length_quantiles": {
+        "0": 0.0,
+        "0.25": 32.0,
+        "0.5": 60.0,
+        "0.75": 108.0,
+        "0.9": 176.0,
+        "0.95": 232.0,
+        "0.99": 376.0,
+        "1": 652.0
+      },
+      "truncated_fraction": 0.009285714285714286,
+      "mean_oov_rate": 0.00947851911332227
+    },
+    "test": {
+      "count": 38000,
+      "negative": 19000,
+      "positive": 19000,
+      "positive_fraction": 0.5,
+      "blank_raw_reviews": 0,
+      "empty_after_preprocessing": 0,
+      "null_or_malformed_rows": 0,
+      "validation_policy": "Reject missing/malformed text, labels or IDs; no rows silently removed",
+      "length_quantiles": {
+        "0": 1.0,
+        "0.25": 32.0,
+        "0.5": 60.0,
+        "0.75": 108.0,
+        "0.9": 175.0,
+        "0.95": 229.0,
+        "0.99": 372.0,
+        "1": 634.0
+      },
+      "truncated_fraction": 0.008842105263157894,
+      "mean_oov_rate": 0.009429172500955188
+    }
+  }
+}

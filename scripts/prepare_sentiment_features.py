@@ -15,6 +15,6 @@ if __name__ == "__main__":
     parser.add_argument("--data-dir", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
-    cfg = json.loads((ROOT / "task2_sentiment/srinidhi/config.json").read_text())[args.mode]
+    cfg = json.loads((ROOT / "task2_sentiment/srinidhi/config.json").read_text(encoding="utf-8"))[args.mode]
     cfg["data_dir"] = str(args.data_dir)
     print(json.dumps(prepare_features(cfg, args.output), indent=2))

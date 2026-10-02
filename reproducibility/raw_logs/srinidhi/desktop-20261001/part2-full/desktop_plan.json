@@ -1,0 +1,107 @@
+{
+  "format_version": 1,
+  "created_utc": "2026-10-01T23:30:07.157464+00:00",
+  "selection_rule": "Architectures and schedules were fixed before desktop training from the historical Part 2 selection: original MLP and CNN, original BiLSTM with 12 epochs/patience 4. For each family use its best validation macro-F1 checkpoint, with the configured minimum improvement and early stopping. No fresh test predictions or test metrics are used to select checkpoints.",
+  "base_config": {
+    "mode": "full",
+    "seed": 2342,
+    "dataset": "fancyzhx/yelp_polarity",
+    "dataset_revision": "main",
+    "data_dir": "task2_sentiment/srinidhi/data_processed/full",
+    "train_limit": null,
+    "validation_limit": null,
+    "test_limit": null,
+    "vocabulary_size": 40000,
+    "min_frequency": 2,
+    "embedding_dim": 128,
+    "max_length": 384,
+    "batch_size": 128,
+    "epochs": 6,
+    "early_stopping_patience": 2,
+    "early_stopping_min_delta": 0.0001,
+    "mlp_hidden": 64,
+    "lstm_hidden": 96,
+    "cnn_channels": 128,
+    "dilations": [
+      1,
+      2,
+      4,
+      8
+    ],
+    "dropout": 0.3,
+    "cnn_dropout": 0.2,
+    "learning_rates": {
+      "maxpool_mlp": 0.0015,
+      "bilstm": 0.001,
+      "dilated_cnn": 0.0008
+    },
+    "weight_decay": 0.0001,
+    "gradient_clip": 1.0,
+    "amp": true,
+    "bootstrap_samples": 1000,
+    "cpu_threads": 2,
+    "raw_data_cache": "task2_sentiment/data/huggingface",
+    "encoded_cache": "task2_sentiment/srinidhi/data_processed/full_encoded"
+  },
+  "base_config_sha256": "4b244db4f3c9c32feb22ac37a91bba8f6b779fba80b521dae4de63a854c3575a",
+  "training_source_sha256": {
+    "src/lab1/run.py": "4edd942dc83425e0c36e588ae59194fae632819e87b88ba6104a6257eafc4900",
+    "src/lab1/common.py": "9969a94baa2ef1cba3d0474262227fd178417d761b1528d4278779ef3c23bd4e",
+    "src/lab1/__init__.py": "b9849907c7465e81037a43feb0ac630d991ac608c4dbabddcbcc691f8a7b015f",
+    "task2_sentiment/srinidhi/src/sentiment.py": "ea5d6b0b8276332f35c7e1a3693763d341bf1c106bd5f712a37b6f6e2c9be6c5",
+    "task2_sentiment/srinidhi/config.json": "4b244db4f3c9c32feb22ac37a91bba8f6b779fba80b521dae4de63a854c3575a",
+    "scripts/tune_sentiment.py": "a8c029b365d7f6f1bf8f21f1992fb3784cdd5a735a6959a2de5874a47b1230f8"
+  },
+  "historical_test_metrics_already_observed": true,
+  "test_policy": "No new test access during training; official test rows stay fixed.",
+  "recipes": {
+    "maxpool_mlp": {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/recipes/maxpool_mlp.json",
+      "sha256": "4cccb2a06c7f53526f930a5654ba5bbe5f67db4056aa8b250111dc991c9d5211",
+      "recipe": {
+        "name": "desktop_maxpool_mlp",
+        "model": "maxpool_mlp",
+        "hypothesis": "Replicate the already selected family recipe on the desktop.",
+        "overrides": {
+          "epochs": 6,
+          "early_stopping_patience": 2,
+          "num_workers": 0,
+          "checkpoint_every_steps": 1000,
+          "log_every_steps": 200
+        }
+      }
+    },
+    "bilstm": {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/recipes/bilstm.json",
+      "sha256": "3cc9a90050363cd96740ee41fa4cdfaa206790799ee5f80fd2694ea6b4c3a26a",
+      "recipe": {
+        "name": "desktop_bilstm",
+        "model": "bilstm",
+        "hypothesis": "Replicate the already selected family recipe on the desktop.",
+        "overrides": {
+          "epochs": 12,
+          "early_stopping_patience": 4,
+          "num_workers": 0,
+          "checkpoint_every_steps": 1000,
+          "log_every_steps": 200
+        }
+      }
+    },
+    "dilated_cnn": {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/recipes/dilated_cnn.json",
+      "sha256": "1fe07d0de2a0ebac53053a81ea2c7fafe5ccafc12dc7f616f8d74c08d342fdb5",
+      "recipe": {
+        "name": "desktop_dilated_cnn",
+        "model": "dilated_cnn",
+        "hypothesis": "Replicate the already selected family recipe on the desktop.",
+        "overrides": {
+          "epochs": 6,
+          "early_stopping_patience": 2,
+          "num_workers": 0,
+          "checkpoint_every_steps": 1000,
+          "log_every_steps": 200
+        }
+      }
+    }
+  }
+}

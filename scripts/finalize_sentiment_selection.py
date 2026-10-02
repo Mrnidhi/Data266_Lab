@@ -46,7 +46,7 @@ def digest(path):
 
 
 def read_json(path):
-    return json.loads(Path(path).read_text())
+    return json.loads(Path(path).read_text(encoding="utf-8"))
 
 
 def evaluation_code_manifest(root):
@@ -157,21 +157,22 @@ def verify_source(root, name, selected, base):
 
 
 def cpu_evidence(root, sources):
-    path = root / "verification/part_b_cpu_hardware.txt"
-    if path.is_file():
-        raw = path.read_text()
-        fields = dict(line.split(":", 1) for line in raw.splitlines() if ":" in line)
-        model = fields.get("Model name", "").strip()
-        if model:
-            return {"model": model, "source": path.relative_to(root).as_posix(),
-                    "sha256": digest(path), "lscpu": raw,
-                    "scope": "Recorded Part B training host"}
+    # A source's own CPU measurement takes precedence over an older cloud receipt.
     for source in sources.values():
         env = source["provenance"]["environment"]
         value = env.get("cpu") or env.get("cpu_model") or env.get("cpu_hardware")
         if value:
             return {"details": value, "source": "selected source provenance",
                     "scope": "Recorded source training host"}
+    path = root / "verification/part_b_cpu_hardware.txt"
+    if path.is_file():
+        raw = path.read_text(encoding="utf-8")
+        fields = dict(line.split(":", 1) for line in raw.splitlines() if ":" in line)
+        model = fields.get("Model name", "").strip()
+        if model:
+            return {"model": model, "source": path.relative_to(root).as_posix(),
+                    "sha256": digest(path), "lscpu": raw,
+                    "scope": "Recorded Part B training host"}
     raise ValueError("Exact CPU hardware evidence is required")
 
 
@@ -258,16 +259,19 @@ def finalize(selection_path, output, *, device="cpu", root=ROOT, base_config=Non
     write_json(output / "run_summary.json", provenance)
     started = time.perf_counter()
     results, predictions = {}, {}
-    with (output / "RUN_LOG.txt").open("w", buffering=1) as log:
+    with (output / "RUN_LOG.txt").open("w", buffering=1, encoding="utf-8") as log:
         with contextlib.redirect_stdout(Tee(sys.stdout, log)), contextlib.redirect_stderr(Tee(sys.stderr, log)):
             try:
                 for name, source in sources.items():
                     print(f"Evaluating frozen {name} checkpoint on {len(test_ids)} paired test rows", flush=True)
                     training = {key: source["metadata"][key] for key in
                                 ("train_seconds", "peak_cuda_memory_bytes", "completed_training_steps")}
+                    training.update({key: source["metadata"][key] for key in
+                                     ("peak_host_rss_bytes", "host_peak_rss_scope")
+                                     if key in source["metadata"]})
                     metrics, y, probability = s.evaluate_checkpoint(source["state"], datasets["test"], output / name,
                         device, history=source["history"], training_metadata=training)
-                    with (output / name / "test_predictions.csv").open() as stream:
+                    with (output / name / "test_predictions.csv").open(encoding="utf-8", newline="") as stream:
                         rows = list(csv.DictReader(stream))
                     if ([row["example_id"] for row in rows] != test_ids
                             or [int(row["true_label"]) for row in rows] != expected_y.tolist()

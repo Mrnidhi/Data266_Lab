@@ -8,3 +8,8 @@ src/lab1/*.py -text whitespace=cr-at-eol
 task1_llm/srinidhi/src/gpt.py -text whitespace=cr-at-eol
 task1_llm/srinidhi/src/gpt.ipynb -text whitespace=cr-at-eol
 task1_llm/srinidhi/config.json -text whitespace=cr-at-eol
+# Part 2 also records training/evaluation source byte hashes in its provenance.
+task2_sentiment/srinidhi/src/sentiment.py -text whitespace=cr-at-eol
+task2_sentiment/srinidhi/src/sentiment.ipynb -text whitespace=cr-at-eol
+task2_sentiment/srinidhi/config.json -text whitespace=cr-at-eol
+scripts/*.py -text whitespace=cr-at-eol

@@ -1,4 +1,5 @@
 import json
+import hashlib
 from pathlib import Path
 
 import numpy as np
@@ -103,6 +104,35 @@ def test_preencoded_cache_matches_raw_and_rejects_stale_data(tmp_path, config):
         sentiment._load_features(cached_config, records)
 
 
+def test_local_data_and_error_csv_roundtrip_unicode(tmp_path, config):
+    text = "A caf\u00e9 in \u6771\u4eac served wonderful food \U0001f35c."
+    cfg = dict(config, mode="rehearsal", data_dir=str(tmp_path),
+               train_limit=1, validation_limit=1, test_limit=1)
+    expected = {}
+    manifest = {"mode": cfg["mode"], "seed": cfg["seed"], "sha256": {}}
+    for split in ("train", "validation", "test"):
+        expected[split] = [{"id": f"unicode:{split}:0", "label": 1, "text": text}]
+        path = tmp_path / f"{split}.jsonl"
+        path.write_text(json.dumps(expected[split][0], ensure_ascii=False) + "\n", encoding="utf-8")
+        manifest["sha256"][split] = hashlib.sha256(path.read_bytes()).hexdigest()
+    sentiment._dump(tmp_path / "manifest.json", manifest)
+    assert sentiment._load_records(cfg) == expected
+    path = tmp_path / "error_review.csv"
+    sentiment._csv(path, [{"example_id": "unicode:test:0", "text": text}])
+    assert text in path.read_bytes().decode("utf-8")
+
+
+def test_host_peak_rss_reports_resident_memory():
+    before = sentiment._host_peak_rss_bytes()
+    assert isinstance(before, int) and before > 0
+    allocation = bytearray(16 * 1024 ** 2)
+    for offset in range(0, len(allocation), 4096):
+        allocation[offset] = 1
+    during = sentiment._host_peak_rss_bytes()
+    del allocation
+    assert sentiment._host_peak_rss_bytes() >= during >= before
+
+
 def test_cpu_lengths_preserve_lstm_outputs_and_gradients(config):
     torch.manual_seed(2342)
     model = sentiment.build_model("bilstm", 20, config).eval()
@@ -129,6 +159,15 @@ def test_validation_only_candidate_cannot_access_test_split(tmp_path, config):
     assert metrics["test_evaluated"] is False and y is None and probability is None
     assert (tmp_path / "maxpool_mlp/checkpoints/best.pt").exists()
     assert not (tmp_path / "maxpool_mlp/test_predictions.csv").exists()
+    assert metrics["peak_host_rss_bytes"] > 0
+    checkpoint = tmp_path / "maxpool_mlp/checkpoints/last.pt"
+    state = torch.load(checkpoint, weights_only=False)
+    prior_peak = state["memory"]["peak_host_rss_bytes"] + 1024 ** 3
+    state["memory"]["peak_host_rss_bytes"] = prior_peak
+    torch.save(state, checkpoint)
+    resumed, _, _ = sentiment._train_one("maxpool_mlp", cfg, datasets, vocabulary,
+                                        tmp_path / "relocated", "cpu", "test-only", tmp_path)
+    assert resumed["peak_host_rss_bytes"] == prior_peak
 
 
 def test_synthetic_suite_checkpoint_reload_and_resume(tmp_path, config, monkeypatch):

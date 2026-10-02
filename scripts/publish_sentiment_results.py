@@ -2,11 +2,15 @@
 from __future__ import annotations
 
 import argparse
+import csv
 import hashlib
+import inspect
 import json
 from pathlib import Path
+import re
 import shlex
 import shutil
+import sys
 
 import nbformat
 import pandas as pd
@@ -14,22 +18,23 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 NAMES = ("maxpool_mlp", "bilstm", "dilated_cnn")
 TIMING_CONTEXT = (
-    "These source runs overlapped other Part B jobs on one RTX 5090. Their measured training times and throughput "
-    "describe that shared session and are not controlled, isolated architecture-speed comparisons. "
-    "The initial benchmark is separate evidence in verification/sentiment_5090_benchmark.json."
+    "Training times and throughput describe each recorded source invocation. Use its timestamps and hardware "
+    "provenance to establish whether workloads overlapped before comparing architecture speed. "
+    "These measurements do not constitute a controlled isolated-speed benchmark."
 )
 
 
 def write_json(path, value):
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(value, indent=2, allow_nan=False) + "\n")
+    path.write_text(json.dumps(value, indent=2, ensure_ascii=False, allow_nan=False) + "\n", encoding="utf-8")
 
 
 def normalize_repository_paths(value, root):
-    """Strip only the exact absolute repository prefix from JSON string values."""
+    """Strip only the exact repository prefix; accept native/mixed separators."""
     prefix = root.as_posix().rstrip("/") + "/"
     if isinstance(value, str):
-        return value[len(prefix):] if value.startswith(prefix) else value
+        canonical = value.replace("\\", "/")
+        return canonical[len(prefix):] if canonical.startswith(prefix) else value
     if isinstance(value, dict):
         return {key: normalize_repository_paths(item, root) for key, item in value.items()}
     if isinstance(value, list):
@@ -58,7 +63,7 @@ def copy_publication_metadata(source, target, *, derived):
             "original_bytes": len(original), "published_bytes": len(published),
             "paths_normalized": changed,
             "normalization_note": (
-                "In this derived publication copy only, recursively replace an exact absolute repository-root prefix followed by '/' in string values with a repository-relative path. All other values are preserved; original run bytes remain unchanged."
+                "In this derived publication copy only, recursively replace an exact absolute repository-root prefix followed by a path separator in string values with a POSIX repository-relative path. Native, POSIX and mixed separators are accepted. All other values are preserved; original run bytes remain unchanged."
                 if derived else "Byte-identical original-suite copy; no path normalization applied.")}
 
 
@@ -68,7 +73,7 @@ def training_hardware(provenance, cpu_evidence):
     cpu = environment.get("cpu_model") or provenance.get("cpu_model")
     cpu_source = "training provenance" if cpu else "not recorded"
     if not cpu and cpu_evidence.is_file():
-        for line in cpu_evidence.read_text().splitlines():
+        for line in cpu_evidence.read_text(encoding="utf-8").splitlines():
             if line.strip().startswith("Model name:"):
                 cpu = line.split(":", 1)[1].strip()
                 cpu_source = cpu_evidence.relative_to(ROOT).as_posix()
@@ -112,23 +117,69 @@ def copy_raw_logs(run, outputs, sources):
         training_runs.setdefault(source["source_run"], []).append(name)
     entries = [("training", source_run, sorted(names)) for source_run, names in sorted(training_runs.items())]
     entries.append(("evaluation", run.relative_to(ROOT).as_posix(), []))
-    logs = []
+    logs, omitted = [], []
     for role, source_run, models in entries:
-        source = ROOT / source_run / "RUN_LOG.txt"
-        digest = hashlib.sha256(source.read_bytes()).hexdigest()
-        source_id = hashlib.sha256(source_run.encode()).hexdigest()[:12]
-        label = "_".join(models) if models else "suite"
-        target = folder / f"{role}_{label}_{source_id}_{digest[:12]}.txt"
-        shutil.copy2(source, target)
-        if hashlib.sha256(target.read_bytes()).hexdigest() != digest:
-            raise ValueError(f"Raw log copy mismatch: {source_run}")
-        logs.append({"role": role, "models": models, "source_run": source_run,
-                     "source_path": source.relative_to(ROOT).as_posix(),
-                     "published_path": target.relative_to(outputs).as_posix(),
-                     "sha256": digest, "bytes": target.stat().st_size})
-    manifest = {"format_version": 1, "path_base": "outputs/full", "logs": logs}
+        console = ROOT / source_run / "RUN_LOG.txt"
+        raw = console.read_bytes() if console.is_file() else b""
+        host_paths = re.search(rb"[A-Za-z]:[\\/]+Users[\\/]|/home/[^/\s]+/|/Users/[^/\s]+/", raw)
+        if console.is_file() and not host_paths:
+            candidates = [console]
+        else:
+            if console.is_file():
+                omitted.append({"source_path": console.relative_to(ROOT).as_posix(),
+                                "sha256": hashlib.sha256(raw).hexdigest(), "bytes": len(raw),
+                                "reason": "Original console retained locally unchanged; startup output includes host paths."})
+            names = models if role == "training" else NAMES
+            filename = "history.json" if role == "training" else "metrics.json"
+            candidates = [ROOT / source_run / name / filename for name in names]
+            if not all(path.is_file() for path in candidates):
+                raise ValueError(f"Portable raw epoch/metric evidence is absent: {source_run}")
+        for source in candidates:
+            digest = hashlib.sha256(source.read_bytes()).hexdigest()
+            source_id = hashlib.sha256(source.relative_to(ROOT).as_posix().encode()).hexdigest()[:12]
+            label = "_".join(models) if models else "suite"
+            target = folder / f"{role}_{label}_{source.stem}_{source_id}_{digest[:12]}{source.suffix}"
+            shutil.copy2(source, target)
+            if hashlib.sha256(target.read_bytes()).hexdigest() != digest:
+                raise ValueError(f"Raw log copy mismatch: {source_run}")
+            logs.append({"role": role, "models": models, "source_run": source_run,
+                         "source_path": source.relative_to(ROOT).as_posix(),
+                         "published_path": target.relative_to(outputs).as_posix(),
+                         "sha256": digest, "bytes": target.stat().st_size})
+    manifest = {"format_version": 1, "path_base": "outputs/full", "logs": logs, "omitted_console_files": omitted}
     write_json(folder / "manifest.json", manifest)
     return manifest
+
+
+def archive_previous_publication(member, source_run):
+    """Snapshot prior publication bytes before replacing results or review sets."""
+    full = member / "outputs/full"
+    prior_summary = full / "summary.json"
+    if not prior_summary.is_file():
+        return None
+    prior_metadata = full / "publication_metadata.json"
+    if prior_metadata.is_file() and json.loads(prior_metadata.read_text(encoding="utf-8")).get("source_run") == source_run:
+        return None
+    identity = hashlib.sha256(prior_summary.read_bytes()).hexdigest()[:16]
+    history = member / "outputs/publication_history" / identity
+    inventory = {}
+    originals = [path for path in full.rglob("*") if path.is_file()]
+    originals += [member / name for name in ("metrics_report.csv", "results.md", "failure_analysis.md", "src/sentiment.ipynb")
+                  if (member / name).is_file()]
+    for path in originals:
+        relative = path.relative_to(member)
+        destination = history / relative
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        digest = hashlib.sha256(path.read_bytes()).hexdigest()
+        if destination.exists():
+            if hashlib.sha256(destination.read_bytes()).hexdigest() != digest:
+                raise ValueError("Prior publication history path already contains different bytes")
+        else:
+            shutil.copy2(path, destination)
+        inventory[relative.as_posix()] = {"sha256": digest, "bytes": path.stat().st_size}
+    write_json(history / "HISTORY_MANIFEST.json", {"scope": "Preserved prior publication; not fresh desktop results",
+                                                 "files": inventory})
+    return history
 
 
 def write_error_review(path, selected, checkpoint_sha256):
@@ -139,14 +190,12 @@ def write_error_review(path, selected, checkpoint_sha256):
         prior = pd.read_csv(path, keep_default_na=False)
         annotation_columns = [column for column in prior if column not in selected or
                               column in {"error_type", "testable_fix", "student_reviewed"}]
-        annotated = any(str(value).strip().lower() not in {"", "false", "0", "nan"}
-                        for column in annotation_columns for value in prior[column])
-        if annotated:
-            digest = hashlib.sha256(path.read_bytes()).hexdigest()
-            archive = path.parent / "review_history" / f"{path.stem}.{digest[:16]}.csv"
-            archive.parent.mkdir(exist_ok=True)
-            if not archive.exists():
-                shutil.copy2(path, archive)
+        # Preserve historical example sets even when interpretation is blank.
+        digest = hashlib.sha256(path.read_bytes()).hexdigest()
+        archive = path.parent / "review_history" / f"{path.stem}.{digest[:16]}.csv"
+        archive.parent.mkdir(exist_ok=True)
+        if not archive.exists():
+            shutil.copy2(path, archive)
         if prior.example_id.duplicated().any():
             raise ValueError("Existing error-review file has duplicate example IDs")
         prior = prior.set_index("example_id")
@@ -166,7 +215,7 @@ def write_error_review(path, selected, checkpoint_sha256):
                         selected.at[index, column] = str(old[column]).strip().lower() in {"true", "1"}
                     elif str(old[column]).strip():
                         selected.at[index, column] = old[column]
-    selected.to_csv(path, index=False)
+    selected.to_csv(path, index=False, encoding="utf-8")
 
 
 def reproduction_text(run, outputs, sources, selection):
@@ -182,18 +231,18 @@ def reproduction_text(run, outputs, sources, selection):
         if candidate.is_file():
             target = folder / f"{name}_candidate.json"
             shutil.copy2(candidate, target)
-            commands.append(shlex.join([".venv/bin/python", "scripts/tune_sentiment.py", "--candidate",
+            commands.append(shlex.join(["python", "scripts/tune_sentiment.py", "--candidate",
                 target.relative_to(ROOT).as_posix(), "--output", f"runs/reproduce-part2-{name}", "--device", "cuda"]))
         else:
             target = folder / f"{name}_full_config.json"
             write_json(target, {"full": source["config"]})
-            commands.append(shlex.join([".venv/bin/python", "-m", "lab1.run", "--task", "sentiment", "--mode", "full",
+            commands.append(shlex.join(["python", "-m", "lab1.run", "--task", "sentiment", "--mode", "full",
                 "--config", target.relative_to(ROOT).as_posix(), "--device", "cuda", "--output", f"runs/reproduce-part2-{name}"]))
-    text = ("## Reproduction commands\n\nRun from the repository root after preparing the documented environment and frozen full-data cache. "
+    text = ("## Reproduction commands\n\nRun from the repository root using the activated Python environment and frozen full-data cache. "
             "Each destination below must be new. These commands retrain the selected recipes; preserved source manifests record the original code and environment.\n\n"
             "```bash\n" + "\n".join(commands) + "\n```\n\n")
     if selection:
-        command = shlex.join([".venv/bin/python", "scripts/finalize_sentiment_selection.py", "--selection",
+        command = shlex.join(["python", "scripts/finalize_sentiment_selection.py", "--selection",
             (run / "selection_manifest.json").relative_to(ROOT).as_posix(), "--output", "runs/reproduce-part2-final-evaluation"])
         text += ("To repeat final evaluation of the **preserved selected checkpoints**, use:\n\n```bash\n" + command + "\n```\n\n"
                  "After retraining, create a new selection manifest from the new validation results, paths and checkpoint hashes before finalizing those new runs. "
@@ -233,23 +282,31 @@ def main():
     parser.add_argument("--run-dir", type=Path, required=True)
     parser.add_argument("--data-dir", type=Path, required=True)
     args = parser.parse_args()
-    run = args.run_dir.resolve()
+    print(json.dumps(publish(args.run_dir, args.data_dir), indent=2))
+
+
+def publish(run_dir, data_dir, *, verify=True):
+    run = Path(run_dir).resolve()
     relative = run.relative_to(ROOT).as_posix()
-    summary = json.loads((run / "summary.json").read_text())
-    provenance = json.loads((run / "run_summary.json").read_text())
-    cfg = json.loads((run / "config.json").read_text())
-    audit = json.loads((run / "data_audit.json").read_text())
+    summary = json.loads((run / "summary.json").read_text(encoding="utf-8"))
+    provenance = json.loads((run / "run_summary.json").read_text(encoding="utf-8"))
+    cfg = json.loads((run / "config.json").read_text(encoding="utf-8"))
+    audit = json.loads((run / "data_audit.json").read_text(encoding="utf-8"))
     selection_path = run / "selection_manifest.json"
-    selection = json.loads(selection_path.read_text()) if selection_path.is_file() else None
+    selection = json.loads(selection_path.read_text(encoding="utf-8")) if selection_path.is_file() else None
     sources = model_sources(run, cfg, provenance, selection)
     if not (provenance["status"] == "completed" and summary["mode"] == "full"
             and not summary["synthetic"] and set(summary["models"]) == set(NAMES)
             and audit["split_counts"] == {"train": 504000, "validation": 56000, "test": 38000}):
         raise ValueError("Only a completed full official-data run can be published")
+    if verify and selection:
+        from finalize_part2 import verify_evaluation
+        verify_evaluation(ROOT, run, data_dir)
     member = ROOT / "task2_sentiment/srinidhi"
     outputs = member / "outputs/full"
     if not selection and (outputs / "selection_manifest.json").exists():
         raise ValueError("Published selection metadata exists; use the matching selected suite")
+    archive_previous_publication(member, relative)
     outputs.mkdir(parents=True, exist_ok=True)
     publication_metadata = []
     derived = provenance.get("artifact_type") == "assembled_validation_selection"
@@ -266,7 +323,9 @@ def main():
         shutil.copy2(selection_path, outputs / "selection_manifest.json")
     write_json(outputs / "training_sources.json", sources)
     copy_raw_logs(run, outputs, sources)
-    test_records = [json.loads(line) for line in (args.data_dir / "test.jsonl").read_text().splitlines()]
+    from sentiment_data_analysis import generate
+    generate(data_dir, cfg["encoded_cache"], outputs, root=ROOT)
+    test_records = [json.loads(line) for line in (Path(data_dir) / "test.jsonl").read_text(encoding="utf-8").splitlines()]
     rows, checkpoints, comparison = [], {}, []
     for name in NAMES:
         source_info = sources[name]
@@ -280,7 +339,7 @@ def main():
         write_json(model_dir / "training_config.json", model_config)
         write_json(model_dir / "training_provenance.json", source_info["provenance"])
         metrics = summary["models"][name]
-        history = json.loads((run / name / "history.json").read_text())
+        history = json.loads((run / name / "history.json").read_text(encoding="utf-8"))
         if metrics["count"] != 38000:
             raise ValueError("Incomplete test evaluation")
         checkpoints[name] = {}
@@ -320,8 +379,10 @@ def main():
             add(f"{metric}_95ci_high", bounds["high"])
         for key in ("parameter_count", "train_seconds", "peak_cuda_memory_bytes", "selected_epoch", "selected_validation_macro_f1", "completed_training_steps"):
             add(key, metrics[key], "training")
+        if "peak_host_rss_bytes" in metrics:
+            add("peak_host_rss_bytes", metrics["peak_host_rss_bytes"], "training")
         add("examples_per_second", 504000 * len(history) / metrics["train_seconds"], "training")
-        for slice_name, values in json.loads((run / name / "slices.json").read_text()).items():
+        for slice_name, values in json.loads((run / name / "slices.json").read_text(encoding="utf-8")).items():
             add("support", values["count"], slice_name)
             if values["count"]:
                 add("macro_f1", values["macro"]["f1"], slice_name)
@@ -339,8 +400,8 @@ def main():
                            "max_length": model_config["max_length"], "batch_size": model_config["batch_size"],
                            "initial_learning_rate": model_config["learning_rates"][name], "dropout": model_config["dropout"],
                            "training_cpu": hardware["cpu"], "training_gpu": hardware["gpu"]})
-    pd.DataFrame(rows).to_csv(member / "metrics_report.csv", index=False)
-    pd.DataFrame(comparison).to_csv(outputs / "model_comparison.csv", index=False)
+    pd.DataFrame(rows).to_csv(member / "metrics_report.csv", index=False, encoding="utf-8")
+    pd.DataFrame(comparison).to_csv(outputs / "model_comparison.csv", index=False, encoding="utf-8")
     write_json(member / "checkpoints/manifest.json", checkpoints)
     reproduction = reproduction_text(run, outputs, sources, selection)
     source_table = "| Model | Actual training run | CPU | GPU | Configuration |\n| --- | --- | --- | --- | --- |\n"
@@ -382,11 +443,14 @@ def main():
         "outputs/full/model_comparison.csv summarizes the three models. Each model's required_20_errors_for_review.csv contains five errors from each required category. "
         "Student review is recorded only by explicit student_reviewed values; newly generated interpretation fields remain blank and unreviewed. "
         "Existing annotations are retained for unchanged checkpoint predictions; annotated prior sets are archived under review_history. "
-        "Teammate comparisons and the combined final report require the teammate's actual results.\n\n" + reproduction + "\n")
+        "Teammate comparisons and the combined final report require the teammate's actual results.\n\n" + reproduction + "\n", encoding="utf-8")
 
     notebook = build_notebook(reproduction)
     nbformat.write(notebook, member / "src/sentiment.ipynb")
-    print(json.dumps({"run": relative, "metric_rows": len(rows), "models": comparison, "manual_review_complete": False}, indent=2))
+    receipt = {"run": relative, "metric_rows": len(rows), "models": comparison,
+               "manual_review_complete": False, "historical_publications_preserved": True}
+    write_json(ROOT / "verification/part2_export.json", receipt)
+    return receipt
 
 
 def build_notebook(reproduction):
@@ -395,26 +459,28 @@ def build_notebook(reproduction):
         "Generating this notebook does not execute its cells. The accompanying sentiment.py contains the complete model and training implementation; "
         "these presentation and inference cells do not retrain the models."),
         nbformat.v4.new_code_cell('''from pathlib import Path
-import json
+import json, os, sys
 import pandas as pd
 import torch
 from IPython.display import display, Image
 ROOT = next(p for p in [Path.cwd(), *Path.cwd().parents] if (p / "pyproject.toml").is_file())
+os.chdir(ROOT)
+sys.path.insert(0, str(ROOT / "src"))
 MEMBER = ROOT / "task2_sentiment/srinidhi"
 OUTPUTS = MEMBER / "outputs/full"
-summary = json.loads((OUTPUTS / "summary.json").read_text())
-provenance = json.loads((OUTPUTS / "run_summary.json").read_text())
+summary = json.loads((OUTPUTS / "summary.json").read_text(encoding="utf-8"))
+provenance = json.loads((OUTPUTS / "run_summary.json").read_text(encoding="utf-8"))
 assert provenance["status"] == "completed" and summary["mode"] == "full"
 print("Evaluation provenance")
 display(provenance.get("evaluation_environment", provenance.get("environment", {})))
-sources = json.loads((OUTPUTS / "training_sources.json").read_text())
+sources = json.loads((OUTPUTS / "training_sources.json").read_text(encoding="utf-8"))
 for name, source in sources.items():
     print(name, "training source:", source["source_run"])
     display(source["hardware"])
-    display(json.loads((OUTPUTS / name / "training_config.json").read_text()))
+    display(json.loads((OUTPUTS / name / "training_config.json").read_text(encoding="utf-8")))
 selection_path = OUTPUTS / "selection_manifest.json"
 if selection_path.is_file():
-    selection = json.loads(selection_path.read_text())
+    selection = json.loads(selection_path.read_text(encoding="utf-8"))
     print("Selection rule:", selection["selection_rule"])
     selected_models = [{"model": name, "source_run": source["source_run"],
                         "selected_epoch": source["selected_epoch"],
@@ -422,10 +488,10 @@ if selection_path.is_file():
                         "checkpoint_sha256": source["sha256"]}
                        for name, source in selection["selected"].items()]
     display(pd.DataFrame(selected_models))
-display(json.loads((OUTPUTS / "data_audit.json").read_text()))'''),
+display(json.loads((OUTPUTS / "data_audit.json").read_text(encoding="utf-8")))'''),
         nbformat.v4.new_markdown_cell("## Data analysis\n\nReview lengths are measured after the documented preprocessing and before truncation. "
             "The table records label counts, class balance, blank or empty reviews, length quantiles, truncation and unknown-token rates for each split."),
-        nbformat.v4.new_code_cell('''distributions = json.loads((OUTPUTS / "data_distributions.json").read_text())
+        nbformat.v4.new_code_cell('''distributions = json.loads((OUTPUTS / "data_distributions.json").read_text(encoding="utf-8"))
 print(distributions["length_definition"])
 display(pd.DataFrame.from_dict(distributions["splits"], orient="index"))
 display(Image(filename=str(OUTPUTS / "data_distributions.png"), width=1000))'''),
@@ -443,40 +509,93 @@ with pd.option_context("display.max_rows", None, "display.max_colwidth", 100):
             "five near-threshold errors, and five long-review slice failures per model. Error types and testable fixes require student review."),
         nbformat.v4.new_code_cell('''for name in ("maxpool_mlp", "bilstm", "dilated_cnn"):
     print(name)
-    display(pd.read_csv(OUTPUTS / name / "required_20_errors_for_review.csv"))'''),
-        nbformat.v4.new_markdown_cell("## Checkpoints and fresh CPU inference"),
+    with pd.option_context("display.max_rows", None, "display.max_colwidth", None):
+        display(pd.read_csv(OUTPUTS / name / "required_20_errors_for_review.csv", keep_default_na=False))'''),
+        nbformat.v4.new_markdown_cell("## Preprocessing and three independently trained architectures\n\n"
+            "HTML and whitespace are normalized; text is lowercased, contractions are expanded and punctuation is removed. "
+            "A frozen custom stopword list keeps negation and contrast cues. The vocabulary is fitted only on training reviews. "
+            "Token IDs use learned embeddings initialized from scratch, never pretrained vectors. "
+            "The baseline max-pool MLP uses unordered lexical features; the BiLSTM models bidirectional context; "
+            "the residual dilated CNN expands its receptive field with masked convolutions. PAD is excluded from pooling, "
+            "packed LSTM lengths exclude padding, and CNN intermediate features are masked after each convolution. "
+            "Each model optimizes binary cross-entropy with AdamW, gradient clipping and validation-driven learning-rate decay/early stopping."),
+        nbformat.v4.new_code_cell('''import inspect
+from IPython.display import Code
+from lab1.sentiment import tokenize, MaxPoolMLP, BiLSTM, ResidualDilatedBlock, DilatedCNN
+example = "<p>I didn't like the food, but the staff were friendly!</p>"
+tokens = tokenize(example)
+assert "not" in tokens and "but" in tokens
+print("Raw review:", example)
+print("Processed words:", tokens)
+for component in (tokenize, MaxPoolMLP, BiLSTM, ResidualDilatedBlock, DilatedCNN):
+    print(component.__name__)
+    display(Code(inspect.getsource(component), language="python"))'''),
+        nbformat.v4.new_markdown_cell("## Checkpoints and fresh CPU/CUDA inference\n\n"
+            "Both saved weights are hashed for each model. Fresh independent model instances must yield identical logits "
+            "on each available device. Right padding must not change predictions. These demonstrations are separate from "
+            "the held-out test metrics and do not retrain the models."),
         nbformat.v4.new_code_cell('''import hashlib
 from lab1.sentiment import Reviews, build_model, collate_reviews
 torch.set_num_threads(2)
-manifest = json.loads((MEMBER / "checkpoints/manifest.json").read_text())
+manifest = json.loads((MEMBER / "checkpoints/manifest.json").read_text(encoding="utf-8"))
 texts = ["The meal was delicious and the staff were friendly.", "The food was cold and the service was terrible."]
+requested_device = os.environ.get("LAB1_PART2_INFERENCE", "auto")
+if requested_device == "cuda" and not torch.cuda.is_available():
+    raise RuntimeError("CUDA inference was requested but is unavailable")
+INFERENCE_DEVICES = ["cpu"] + (["cuda"] if requested_device != "cpu" and torch.cuda.is_available() else [])
+inference_receipt = {"models": {}, "devices_requested": INFERENCE_DEVICES}
 for name, files in manifest.items():
     for filename, info in files.items():
         assert hashlib.sha256((ROOT / info["path"]).read_bytes()).hexdigest() == info["sha256"]
-    saved = torch.load(ROOT / files["best.pt"]["path"], map_location="cpu", weights_only=False)
-    model = build_model(name, len(saved["vocabulary"]), saved["config"]).eval()
-    model.load_state_dict(saved["model"], strict=True)
+        state = torch.load(ROOT / info["path"], map_location="cpu", weights_only=False)
+        assert state["model_name"] == name
+        assert all(torch.isfinite(value).all() for value in state["model"].values())
+        if filename == "best.pt":
+            saved = state
+        else:
+            del state
     data = Reviews([{"id": str(i), "text": t, "label": 0} for i,t in enumerate(texts)], saved["vocabulary"], saved["config"]["max_length"])
     ids, _, _ = collate_reviews([data[i] for i in range(len(data))])
-    with torch.inference_mode():
-        probabilities = torch.sigmoid(model(ids))
-    assert torch.isfinite(probabilities).all()
-    print(name, "selected epoch", saved["epoch"])
-    print(model)
-    display(pd.DataFrame({"demo_text": texts, "positive_probability": probabilities.numpy()}))
-print("All six checkpoint hashes verified. Demo predictions are separate from test metrics.")'''),
-        nbformat.v4.new_markdown_cell("## Raw log excerpts\n\nThe complete unedited log copies are included in outputs/full/raw_logs. "
-            "Their manifest preserves each original source path and SHA-256. These cells verify the copied bytes and display only the final 12,000 characters."),
+    verified = []
+    for device in INFERENCE_DEVICES:
+        model = build_model(name, len(saved["vocabulary"]), saved["config"]).to(device).eval()
+        model.load_state_dict(saved["model"], strict=True)
+        independent = build_model(name, len(saved["vocabulary"]), saved["config"]).to(device).eval()
+        independent.load_state_dict(saved["model"], strict=True)
+        probe = ids.to(device)
+        padded = torch.nn.functional.pad(probe, (0, 7), value=0)
+        with torch.inference_mode():
+            logits = model(probe)
+            assert torch.equal(logits, independent(probe))
+            torch.testing.assert_close(logits, model(padded), rtol=1e-4, atol=1e-5)
+            probabilities = torch.sigmoid(logits).cpu()
+        assert torch.isfinite(probabilities).all()
+        print(name, device, "selected epoch", saved["epoch"])
+        print(model)
+        display(pd.DataFrame({"demo_text": texts, "positive_probability": probabilities.numpy()}))
+        verified.append({"device": device, "finite_logits": True, "independent_reload_identical": True,
+                         "right_padding_invariant": True, "parameter_count": sum(p.numel() for p in model.parameters())})
+        del model, independent
+    inference_receipt["models"][name] = {"checkpoint_sha256": files["best.pt"]["sha256"], "devices": verified}
+destination = ROOT / "verification/part2_checkpoint_inference.json"
+destination.parent.mkdir(parents=True, exist_ok=True)
+destination.write_text(json.dumps(inference_receipt, indent=2)+"\\n", encoding="utf-8")
+print("All six checkpoint hashes verified. Fresh CPU/CUDA checks are separate from test metrics.")'''),
+        nbformat.v4.new_markdown_cell("## Complete preserved raw training/evaluation output\n\n"
+            "Unedited log copies or original epoch/metric JSON are included in outputs/full/raw_logs. "
+            "The manifest preserves each original source path and SHA-256. Original consoles containing host-specific "
+            "startup paths remain local unchanged and are identified as omitted. The complete portable evidence appears below."),
         nbformat.v4.new_code_cell('''import hashlib
-log_manifest = json.loads((OUTPUTS / "raw_logs/manifest.json").read_text())
+log_manifest = json.loads((OUTPUTS / "raw_logs/manifest.json").read_text(encoding="utf-8"))
 for info in log_manifest["logs"]:
     log = OUTPUTS / info["published_path"]
     assert hashlib.sha256(log.read_bytes()).hexdigest() == info["sha256"]
     print(info["role"], info["models"], "original:", info["source_path"])
     print("Published copy:", log.relative_to(ROOT))
-    print(log.read_text()[-12000:])'''),
+    print(log.read_text(encoding="utf-8"))'''),
         nbformat.v4.new_markdown_cell(reproduction)]
-    return nbformat.v4.new_notebook(cells=cells, metadata={"kernelspec": {"display_name": "Python 3", "language": "python", "name": "python3"}})
+    return nbformat.v4.new_notebook(cells=cells, metadata={"kernelspec": {"display_name": "Python 3", "language": "python", "name": "python3"},
+        "lab1": {"task": "sentiment", "mode": "completed_full_run_evidence"}})
 
 
 if __name__ == "__main__":
