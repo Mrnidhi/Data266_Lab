@@ -20,6 +20,10 @@ Current class labels are **A=Monet, B=Photo**: `pred_A2B` contains 300 Monet-to-
 
 No official Kaggle upload, rank, top-five finish, 10/10 mark, or completed human audit is claimed.
 
+For future fine-tuning, the [separate retraining backup](../part3-retuning-20261002/README.md)
+preserves all checkpoint variants and both full optimizer/EMA/replay/RNG states.
+Its guide distinguishes a new warm-start from continuing the original training state.
+
 ## Retrieve and open
 
 After cloning this repository, run from its root with Git LFS installed:
