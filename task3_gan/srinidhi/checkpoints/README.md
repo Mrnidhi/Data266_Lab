@@ -1,4 +1,10 @@
-# Selected Part 3 checkpoints
+# Part 3 checkpoints
+
+**Current weights are in the [October 2 verified Git LFS package](../../../reproducibility/packages/part3-20261002/README.md).** After extracting the complete ZIP, use `task3_gan/srinidhi/checkpoints/selected.pt`: LR `5e-5`, epoch-four paired EMA, SHA-256 `0c2eab37c42062bbd7b3b2c5c5c097adc949535ff77a9f805ad89842f6f8073b`. This 113,182,935-byte candidate is for inference; it contains both EMA generators and same-update raw discriminators. Original warm-start weights and provenance are also in the archive. The current model's executed notebook and outputs travel with it.
+
+## Historical baseline checkpoint records
+
+The manifest and records below describe the earlier 30-epoch model. Their historical local archive paths are not download links; use the current package above for the latest complete backup.
 
 The full 30-epoch run completed on Vast instance `51639909`. Model binaries are present locally and excluded from ordinary Git. Include both files in the final Canvas ZIP.
 

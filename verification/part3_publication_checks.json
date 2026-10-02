@@ -1,0 +1,26 @@
+{
+  "verified_utc": "2026-10-02T17:17:06.516149+00:00",
+  "purpose": "Pre-push verification of Part3 source provenance, portable summaries and Git LFS pointers.",
+  "frozen_source_bytes_match_staged_git": {
+    "scripts/study_cyclegan_ema.py": "43b68f8b91ca2287ea1e0c2396805c1432d6943a7a5c25e5b075616a514e43e7",
+    "task3_gan/srinidhi/src/cyclegan_ema.py": "de459e1830e3c3f065d99bf796776933f3532019e693952ada2e70fd7721223a",
+    "task3_gan/srinidhi/src/cyclegan.py": "0094e6a272d2e7b03d86bc85c7c34e91587a7f0699570e33a22b2e7edfa37b19",
+    "src/lab1/common.py": "9969a94baa2ef1cba3d0474262227fd178417d761b1528d4278779ef3c23bd4e",
+    "src/lab1/__init__.py": "b9849907c7465e81037a43feb0ac630d991ac608c4dbabddcbcc691f8a7b015f",
+    "scripts/select_cyclegan_ema_deadline.py": "65bbd3ef5ff4bcf557406432326ec088e622d2e11f404dfee1fbfa329f2e6cc2",
+    "scripts/evaluate_part3_class.py": "ed94b11cc6e4d3e53fff83559910152e1bb1b8778ab7a7a9e2eac119b9bfc3ff"
+  },
+  "zip_sha256": "705cf7fc23d84aea8351a2acd9bbf256c4f7dd36df3000e4569ef318a9193f1c",
+  "zip_bytes": 1230602460,
+  "dataset_sha256": "7529feac2b43278597ea795038f8e10aa673c0dc98d8de9f92071e236281e9cd",
+  "ordinary_git_blobs_over_100_MiB": [],
+  "generated_csv_json_evaluator_bytes_preserved": true,
+  "cpu_tests": {
+    "command": "python -m pytest -q tests/test_cyclegan_augmentation.py tests/test_cyclegan_ema.py tests/test_study_cyclegan_ema.py tests/test_select_cyclegan_ema_deadline.py tests/test_tune_cyclegan.py",
+    "cuda_visible_devices": "",
+    "passed": 100,
+    "duration_seconds": 32.87
+  },
+  "external_lfs_upload": "Both archive objects uploaded successfully before branch push; fresh remote retrieval verification follows push.",
+  "official_kaggle_submission": false
+}

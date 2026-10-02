@@ -11,7 +11,7 @@ from __future__ import annotations
 import argparse
 import contextlib
 import copy
-import fcntl
+import errno
 import hashlib
 import json
 import math
@@ -27,6 +27,13 @@ sys.path.insert(0, str(ROOT / "src"))
 from lab1.common import Tee, code_manifest, environment, resolve_device, utc_now, write_json
 
 ARMS = {"identity5": 5.0, "identity2p5": 2.5}
+EXPERIMENT_ARMS = {
+    "identity": {name: {"identity_weight": weight} for name, weight in ARMS.items()},
+    "monet_translation": {
+        "control": {"monet_translation_ratio": 0.0},
+        "monet_translation": {"monet_translation_ratio": 0.0625},
+    },
+}
 DIRECTIONS = ("photo_to_monet", "monet_to_photo")
 METRIC = "mean_validation_KID_both_directions"
 
@@ -47,7 +54,7 @@ def load_checkpoint(path):
 
 def portable_path(path):
     path = Path(path).expanduser().resolve()
-    return str(path.relative_to(ROOT)) if path.is_relative_to(ROOT) else str(path)
+    return path.relative_to(ROOT).as_posix() if path.is_relative_to(ROOT) else str(path)
 
 
 def resolve_path(path):
@@ -57,7 +64,7 @@ def resolve_path(path):
 
 def selection_path(path, output):
     """Selection links follow the experiment, including its relative source location."""
-    return os.path.relpath(Path(path).resolve(), Path(output).resolve())
+    return Path(os.path.relpath(Path(path).resolve(), Path(output).resolve())).as_posix()
 
 
 def resolve_selection_path(output, path):
@@ -83,7 +90,43 @@ def project_directory():
         os.chdir(old)
 
 
-def prepare(output, checkpoint, config_path, expected_sha256=None):
+@contextlib.contextmanager
+def runner_lock(path):
+    """Hold a nonblocking OS lock on both native Windows and POSIX hosts."""
+    with Path(path).open("a+b") as lock:
+        if os.name == "nt":
+            import msvcrt
+            lock.seek(0, os.SEEK_END)
+            if lock.tell() == 0:
+                lock.write(b"\0")
+                lock.flush()
+            lock.seek(0)
+            try:
+                msvcrt.locking(lock.fileno(), msvcrt.LK_NBLCK, 1)
+            except OSError as error:
+                if error.errno in (errno.EACCES, errno.EAGAIN, errno.EDEADLK):
+                    raise RuntimeError("This arm already has a live runner") from error
+                raise
+            try:
+                yield
+            finally:
+                lock.seek(0)
+                msvcrt.locking(lock.fileno(), msvcrt.LK_UNLCK, 1)
+        else:
+            import fcntl
+            try:
+                fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            except BlockingIOError as error:
+                raise RuntimeError("This arm already has a live runner") from error
+            try:
+                yield
+            finally:
+                fcntl.flock(lock, fcntl.LOCK_UN)
+
+
+def prepare(output, checkpoint, config_path, expected_sha256=None, experiment="identity"):
+    if experiment not in EXPERIMENT_ARMS:
+        raise ValueError(f"Unknown experiment: {experiment}")
     output, checkpoint = Path(output).resolve(), Path(checkpoint).expanduser().resolve()
     if output.exists() and any(output.iterdir()):
         raise FileExistsError("Prepare requires a new, empty experiment directory")
@@ -109,11 +152,18 @@ def prepare(output, checkpoint, config_path, expected_sha256=None):
                 precision="bf16", replay_device="device", max_steps=None, allow_synthetic=False,
                 select_best=True, validation_every_epochs=2, evaluate_after_run=False)
     base.setdefault("evaluation", {}).update(allow_metric_downloads=True, max_images=None, seed=2342)
+    if experiment == "monet_translation":
+        # Preserve the selected parent's losses; only the augmentation differs
+        # between these two new arms. Legacy identity protocols stay readable.
+        base["identity_weight"] = saved["config"]["identity_weight"]
+        base["cycle_weight"] = saved["config"]["cycle_weight"]
     if digest(checkpoint) != source_hash:
         raise ValueError("Source checkpoint changed during preparation")
-    configs = {arm: dict(copy.deepcopy(base), identity_weight=weight) for arm, weight in ARMS.items()}
+    configs = {arm: dict(copy.deepcopy(base), **overrides)
+               for arm, overrides in EXPERIMENT_ARMS[experiment].items()}
     protocol = {
-        "format_version": 1, "created_utc": utc_now(), "status": "prepared_not_trained",
+        "format_version": 1, "experiment": experiment,
+        "created_utc": utc_now(), "status": "prepared_not_trained",
         "source_checkpoint": portable_path(checkpoint), "source_checkpoint_sha256": source_hash,
         "source_global_step": saved["state"]["global_step"],
         "source_manifest_fingerprint": fingerprint, "source_config": saved["config"],
@@ -127,12 +177,22 @@ def prepare(output, checkpoint, config_path, expected_sha256=None):
             "reset": ["optimizers", "schedulers", "replay_pools", "rng", "global_step", "selection"]},
         "test_policy": "No test evaluation or publication during prepare/train-arm/select.",
     }
+    if experiment == "monet_translation":
+        protocol["intervention"] = {
+            "target": "Monet discriminator real/fake inputs and generator adversarial path",
+            "translation_ratio": 0.0625, "maximum_pixels_at_256": 16,
+            "unchanged": ["cycle losses", "identity losses", "photo discriminator",
+                          "unaugmented replay contents", "validation", "export"],
+            "rng": "Checkpointed Torch CPU RNG; Python data/replay RNG is untouched",
+        }
     output.mkdir(parents=True, exist_ok=True)
     for arm, config in configs.items():
         path = output / "configs" / f"{arm}.json"
         write_json(path, config)
-        protocol["arms"][arm] = {"config": str(path.relative_to(output)), "config_sha256": digest(path),
-                                 "run_dir": f"arms/{arm}", "identity_weight": ARMS[arm]}
+        protocol["arms"][arm] = {"config": path.relative_to(output).as_posix(), "config_sha256": digest(path),
+                                 "run_dir": f"arms/{arm}", "identity_weight": config["identity_weight"]}
+        if experiment == "monet_translation":
+            protocol["arms"][arm]["monet_translation_ratio"] = config["monet_translation_ratio"]
     write_json(output / "protocol.json", protocol)
     (output / "protocol.sha256").write_text(digest(output / "protocol.json") + "\n")
     return protocol
@@ -143,7 +203,9 @@ def load_protocol(output, checkpoint=None):
     if digest(output / "protocol.json") != (output / "protocol.sha256").read_text().strip():
         raise ValueError("The frozen protocol was modified")
     protocol = read_json(output / "protocol.json")
-    if protocol.get("format_version") != 1 or set(protocol.get("arms", {})) != set(ARMS):
+    experiment = protocol.get("experiment", "identity")
+    if (protocol.get("format_version") != 1 or experiment not in EXPERIMENT_ARMS
+            or set(protocol.get("arms", {})) != set(EXPERIMENT_ARMS[experiment])):
         raise ValueError("Unsupported tuning protocol")
     for arm, entry in protocol["arms"].items():
         if entry["config"] != f"configs/{arm}.json" or entry["run_dir"] != f"arms/{arm}":
@@ -159,7 +221,7 @@ def load_protocol(output, checkpoint=None):
 def train_arm(output, arm, device="cuda", checkpoint=None, resume=None, max_steps=None):
     from lab1 import cyclegan as cg
     output, protocol, source = load_protocol(output, checkpoint)
-    if arm not in ARMS:
+    if arm not in protocol["arms"]:
         raise ValueError(f"Unknown arm: {arm}")
     config = read_json(output / protocol["arms"][arm]["config"])
     if max_steps is not None and (isinstance(max_steps, bool) or not isinstance(max_steps, int) or max_steps < 1):
@@ -184,11 +246,7 @@ def train_arm(output, arm, device="cuda", checkpoint=None, resume=None, max_step
         del restored
     device = resolve_device(device)
     run.mkdir(parents=True, exist_ok=True)
-    with (run / ".runner.lock").open("a") as lock:
-        try:
-            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
-        except BlockingIOError as error:
-            raise RuntimeError("This arm already has a live runner") from error
+    with runner_lock(run / ".runner.lock"):
         manifest = {"task": "cyclegan", "mode": "full", "device": device,
             "started_utc": utc_now(), "status": "running", "is_final_result": False,
             "config": config, "source_sha256": code_manifest(), "environment": environment(),
@@ -331,7 +389,9 @@ def main():
     parser.add_argument("--checkpoint", type=Path, help="Source; can relocate it only if its frozen SHA-256 matches")
     parser.add_argument("--expected-sha256", help="Additional source identity check for prepare")
     parser.add_argument("--config", type=Path, default=ROOT / "task3_gan/srinidhi/config.json")
-    parser.add_argument("--arm", choices=tuple(ARMS))
+    parser.add_argument("--experiment", choices=tuple(EXPERIMENT_ARMS), default="identity",
+                        help="Protocol to freeze during prepare; existing protocols retain their own type")
+    parser.add_argument("--arm", choices=tuple(name for arms in EXPERIMENT_ARMS.values() for name in arms))
     parser.add_argument("--device", default="cuda")
     parser.add_argument("--resume", type=Path)
     parser.add_argument("--max-steps", type=int, help="Cumulative update cap within the unchanged 10-epoch schedule")
@@ -339,7 +399,7 @@ def main():
     if args.action == "prepare":
         if args.checkpoint is None:
             parser.error("prepare requires --checkpoint")
-        result = prepare(args.output, args.checkpoint, args.config, args.expected_sha256)
+        result = prepare(args.output, args.checkpoint, args.config, args.expected_sha256, args.experiment)
     elif args.action == "train-arm":
         if args.arm is None:
             parser.error("train-arm requires --arm")

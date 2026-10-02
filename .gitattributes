@@ -13,6 +13,10 @@ task2_sentiment/srinidhi/src/sentiment.py -text whitespace=cr-at-eol
 task2_sentiment/srinidhi/src/sentiment.ipynb -text whitespace=cr-at-eol
 task2_sentiment/srinidhi/config.json -text whitespace=cr-at-eol
 scripts/*.py -text whitespace=cr-at-eol
+task3_gan/srinidhi/src/*.py -text whitespace=cr-at-eol
+reproducibility/packages/part3-20261002/*.json -text whitespace=cr-at-eol
+reproducibility/packages/part3-20261002/*.csv -text whitespace=cr-at-eol
+reproducibility/packages/part3-20261002/*.ipynb -text whitespace=cr-at-eol
 # Generated metric and review records carry SHA-256 links; preserve their bytes.
 task1_llm/srinidhi/outputs/** -text whitespace=cr-at-eol
 task1_llm/srinidhi/metrics_report.csv -text whitespace=cr-at-eol
@@ -32,3 +36,5 @@ reproducibility/baselines/** -text whitespace=cr-at-eol
 # AI draft verification records this generated prose's exact byte hash.
 task2_sentiment/srinidhi/failure_analysis.md -text whitespace=cr-at-eol
 task2_sentiment/srinidhi/checkpoints/maxpool_mlp/best.pt filter=lfs diff=lfs merge=lfs -text
+reproducibility/packages/part3-20261002/Part3.zip filter=lfs diff=lfs merge=lfs -text
+reproducibility/packages/part3-20261002/dataset.zip filter=lfs diff=lfs merge=lfs -text

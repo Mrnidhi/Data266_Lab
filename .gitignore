@@ -5,6 +5,8 @@
 .cache/
 .DS_Store
 *.zip
+!/reproducibility/packages/part3-20261002/Part3.zip
+!/reproducibility/packages/part3-20261002/dataset.zip
 __pycache__/
 .pytest_cache/
 *.egg-info/

@@ -1,5 +1,13 @@
 # Part 3 — Srinidhi's CycleGAN (seed 2342)
 
+**Current model: [October 2 verified package](../../reproducibility/packages/part3-20261002/README.md).** Fetch Git LFS files and extract that complete ZIP for the current executed notebook, weights, JPEGs, class CSV, full metrics and reproduction commands. It selects the LR `5e-5` epoch-four EMA candidate using validation KID; local class composite `(FID + MiFID) / 2` is **50.172385**. Official upload/rank and both independent ratings of the current model remain pending.
+
+Current class **A=Monet, B=Photo**: `pred_A2B` contains 300 Monet-to-Photo JPEGs; `pred_B2A` contains 7,038 Photo-to-Monet JPEGs. Older A/B filenames below use the historical opposite mapping. Share only the extracted `human_review_packet.zip` with raters; the complete backup retains original provenance and the private mapping.
+
+## Historical baseline documentation
+
+The remaining notebook, metrics, configuration, manifest and `outputs/full/` in this member directory record the earlier 30-epoch baseline. The instructions and results below describe that historical run; use the extracted October 2 package for the current model.
+
 Full training and held-out evaluation are complete on the real class data and frozen splits. The selected checkpoint completed all 30 epochs (168,720 updates) with zero non-finite events, and both translation directions were evaluated on the frozen test split. The executed notebook, metrics, plots, fixed audit panels and direct prediction exports are saved in this folder. No class Kaggle submission was generated or sent automatically because the class submission schema is still unverified.
 
 ## Configuration

@@ -78,10 +78,18 @@ def main():
             for i in range(8):
                 pixels = np.random.default_rng(2342 + i).integers(0, 256, (64, 64, 3), dtype=np.uint8)
                 Image.fromarray(pixels).save(folder / f"{i:02d}.png")
-            features = fid.get_folder_features(str(folder), model=feature_model, num_workers=0,
+            # Clean-FID 0.1.35's folder glob lists upper/lowercase extensions,
+            # counting each file twice on case-insensitive Windows filesystems.
+            # Explicit paths preserve one embedding per fixture on every OS.
+            files = [str(path) for path in sorted(folder.iterdir())]
+            features = fid.get_files_features(files, model=feature_model, num_workers=0,
                                                batch_size=2, device=torch.device("cpu"), mode="clean", verbose=False)
-        assert features.shape == (8, 2048) and np.isfinite(features).all()
-        report["checks"]["cleanfid_features"] = {"status": "passed", "shape": list(features.shape), "mode": "clean"}
+        if features.shape != (8, 2048) or not np.isfinite(features).all():
+            raise RuntimeError(f"Clean-FID expected 8 finite 2048D embeddings; got shape={features.shape}, "
+                               f"nonfinite_count={int((~np.isfinite(features)).sum())}")
+        report["checks"]["cleanfid_features"] = {"status": "passed", "shape": list(features.shape), "mode": "clean",
+                                                   "file_count": len(files), "finite": True,
+                                                   "file_enumeration": "explicit_unique_paths"}
         fake = features + np.random.default_rng(2342).normal(0, .01, features.shape)
         kid = float(fid.kernel_distance(features, fake, num_subsets=2, max_subset_size=6))
         assert np.isfinite(kid)

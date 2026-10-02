@@ -1,4 +1,6 @@
-# Srinidhi — CycleGAN results
+# Srinidhi — historical CycleGAN baseline results
+
+**Current results are in the [October 2 verified package](../../reproducibility/packages/part3-20261002/README.md).** Its validation-selected LR `5e-5` epoch-four EMA model has local class composite **50.172385**. Extract the archive for its current notebook, weights, outputs and full report. Current class A=Monet and B=Photo; legacy A/B names in older evidence used the opposite mapping. Current-model human ratings and official leaderboard results remain pending. The tables and recorded numbers below preserve the original 30-epoch baseline.
 
 Status: actual full training and held-out evaluation are published. Human ratings, Kaggle results, student interpretation, and team comparison remain pending.
 

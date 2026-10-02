@@ -4,6 +4,8 @@ import importlib.util
 import json
 from pathlib import Path
 import shutil
+import subprocess
+import sys
 
 import pytest
 import torch
@@ -261,3 +263,58 @@ def test_invalid_or_incomparable_evidence_cannot_select(experiment, problem):
     with pytest.raises(ValueError):
         tune.select(output)
     assert not (output / "selection.json").exists()
+
+
+def test_translation_protocol_preserves_parent_losses_and_freezes_one_change(experiment, tmp_path):
+    _, source, config_file, _ = experiment
+    saved = tune.load_checkpoint(source)
+    saved["config"]["identity_weight"] = 2.5
+    torch.save(saved, source)
+    output = tmp_path / "translation"
+    protocol = tune.prepare(output, source, config_file, experiment="monet_translation")
+    control = tune.read_json(output / "configs/control.json")
+    augmented = tune.read_json(output / "configs/monet_translation.json")
+    assert control["identity_weight"] == augmented["identity_weight"] == 2.5
+    assert control["cycle_weight"] == augmented["cycle_weight"] == 10.0
+    assert control["monet_translation_ratio"] == 0.0
+    assert augmented["monet_translation_ratio"] == 0.0625
+    assert {k: v for k, v in control.items() if k != "monet_translation_ratio"} == {
+        k: v for k, v in augmented.items() if k != "monet_translation_ratio"}
+    assert tune.load_protocol(output)[1] == protocol
+    completed_arm(output, source, protocol, "control", .018)
+    completed_arm(output, source, protocol, "monet_translation", .015)
+    result = tune.select(output)
+    assert result["winner"]["arm"] == "monet_translation"
+    assert result["test_evaluated"] is False
+
+
+def test_legacy_protocol_without_experiment_field_remains_readable(experiment):
+    output, source, _, protocol = experiment
+    protocol.pop("experiment")
+    tune.write_json(output / "protocol.json", protocol)
+    (output / "protocol.sha256").write_text(tune.digest(output / "protocol.json") + "\n")
+    assert tune.load_protocol(output)[2] == source
+
+
+def test_runner_lock_blocks_other_process_then_releases(tmp_path):
+    lock_path = tmp_path / "runner.lock"
+    code = """
+import importlib.util, pathlib, sys
+spec = importlib.util.spec_from_file_location('tuning_lock', sys.argv[1])
+tune = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(tune)
+try:
+    with tune.runner_lock(pathlib.Path(sys.argv[2])):
+        print('acquired')
+except RuntimeError as error:
+    print(str(error))
+    sys.exit(7)
+"""
+    command = [sys.executable, "-c", code, str(Path(tune.__file__).resolve()), str(lock_path)]
+    with tune.runner_lock(lock_path):
+        blocked = subprocess.run(command, capture_output=True, text=True, timeout=20)
+        assert blocked.returncode == 7, blocked.stderr
+        assert "live runner" in blocked.stdout
+    released = subprocess.run(command, capture_output=True, text=True, timeout=20)
+    assert released.returncode == 0, released.stderr
+    assert "acquired" in released.stdout

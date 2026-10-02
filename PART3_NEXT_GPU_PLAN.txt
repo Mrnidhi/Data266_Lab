@@ -1,5 +1,109 @@
-DATA266 PART 3 - SIX-HOUR RTX 5090 PLAN
-Prepared October 1, 2026. Proposed work; no new training is running.
+DATA266 PART 3 - COMPLETED DEADLINE-AMENDED ROUND
+Completed October 2, 2026, before 10:02 AM Pacific; lab access ends at 11 AM.
+
+The matched epoch-four comparison selected lr5e5 EMA, checkpoint SHA-256
+0c2eab37c42062bbd7b3b2c5c5c097adc949535ff77a9f805ad89842f6f8073b.
+Mean validation KID: 0.01400575514184311 (10.75% lower than the source).
+All five declared candidates and both directional guardrails were checked.
+The original eight-epoch study is not claimed complete; see the amendment below.
+
+Supplied class evaluator, unchanged definitions, N_EVAL=300 per direction:
+Monet to Photo: FID 98.14146494530618, MiFID 0.41855111718177795.
+Photo to Monet: FID 101.72240120756967, MiFID 0.407122939825058.
+Directional means: FID 99.93193307643793, MiFID 0.41283702850341797.
+Local arithmetic combined score: 50.17238505247067; prior score 50.85948906091201.
+This is a 1.35% decrease: FID improved, while MiFID became slightly worse.
+No official Kaggle submission/rank or top-five/10-out-of-10 result is claimed.
+
+Final ZIP: runs/part3-final-package-20261002.zip (1,230,602,460 bytes).
+ZIP SHA-256: 705cf7fc23d84aea8351a2acd9bbf256c4f7dd36df3000e4569ef318a9193f1c.
+Receipt: runs/part3-final-package-20261002.receipt.json.
+Verified archive: 10,523 files; 7,338 class JPEGs; executed notebook, four code
+cells, zero errors, fresh CPU inference in both directions. Separate held-out
+evaluation is complete. Raw study evidence and previous package are preserved.
+
+Before 11 AM: copy the final ZIP and receipt off this lab computer and confirm
+the copied files are readable. Retain Downloads/dataset.zip separately if full
+evaluation or training will be needed later. Read the package MANUAL_STEPS.txt.
+Remaining human actions: official CSV submission, two independent ratings of
+the fixed 30-image packet, student review, teammate comparison, combined report
+and final course submission. No additional GPU experiment is queued.
+
+Historical planning estimates follow below.
+
+Hard access deadline amendment: October 2, 2026, 7:52 AM Pacific
+The user requires completion before 11 AM Pacific today. The prospective
+deadline_amendment.json was frozen at update 8,417, before any nonzero
+validation result existed. It restricts the comparison to epoch four in both
+arms: unchanged source plus paired raw/EMA candidates from each learning rate,
+five candidates total. The first already-running eight-epoch invocation is
+left intact, but its epoch-eight results are excluded from selection. The
+second arm uses max_steps=22496; both selected endpoints therefore retain four
+constant-rate epochs from the original schedule. The original eight-epoch
+protocol remains unchanged as historical evidence and is not claimed complete.
+Training has a 10:15 AM cooperative cutoff (10:17 AM hard guard), class scoring
+ends by 10:35 AM, and finalization by 10:50 AM, leaving ten minutes before access
+ends. The deadline coordinator and guard act only on this study's processes.
+Current progress: runs/part3-ema-study-20261002/deadline_workflow_status.json.
+This replaces the earlier six-hour allowance below; no additional trial is queued.
+
+Original continuation plan: October 2, 2026, 7:35 AM Pacific
+The user requested a focused rework targeting top five while staying within
+assignment requirements. A new, finite validation-only comparison is starting:
+runs/part3-ema-study-20261002/protocol.json. Two eight-epoch continuations use
+learning rates 0.00005 and 0.00002, with paired generator EMA (beta 0.999).
+Raw and EMA candidates are assessed at epochs four and eight. Selection keeps
+the current source eligible and rejects candidates that worsen either
+direction's validation KID beyond the frozen numerical tolerance. Both arms
+must finish before selection; there are no automatic extra trials. The current
+checkpoint and prior package below are preserved. The 200-step GPU benchmark
+started at 7:35 AM; the shared six-hour round ends at 1:35 PM Pacific.
+Only the frozen winner is passed to the unchanged supplied class evaluator.
+If the source remains best, its verified class outputs are reused. Official
+ranking remains unconfirmed, and no Kaggle upload or new automation is queued.
+Current progress: runs/part3-ema-study-20261002/workflow_status.json once the
+benchmark passes and the sequential workflow begins.
+
+Prior completed study: October 2, 2026 (Pacific)
+The paired continuation study, supplied class scoring, separate held-out
+evaluation, fixed visual review and technical packaging are complete. Both
+arms completed 56,240 updates without recorded NaN events. Control epoch 8
+was selected by frozen mean validation KID (0.015693356920965018).
+Selected checkpoint SHA-256:
+5261abcdfe3bdbe67c7c98551bd4134a09947136b4e344d27ecb9e81027c9c3f
+Final local class averages: FID 101.30833844835257, MiFID 0.4106396734714508.
+These are modest improvements over the source; they are not an official rank.
+Verified results and manual steps: runs/part3-final-package-20261001/.
+Verified ZIP: runs/part3-final-package-20261001.zip (1,738,545,715 bytes).
+The executed notebook has four code cells, no errors, and fresh CPU inference
+in both directions. All 7,338 class exports and their provenance were checked.
+Two independent human ratings, teammate comparison, combined report and
+official submission remain pending. No further training is queued, no Kaggle
+upload occurred, and both one-time automations remain disabled.
+The older planning and progress notes below are retained as historical context.
+
+Execution update: October 1, 2026, 9:00 PM Pacific
+The local desktop prerequisites have been resolved. Parts 1 and 2 completed,
+the selected checkpoint and frozen data were verified, the supplied instructor
+notebook was run, and the controlled paired continuation study is now running.
+The executable protocol is runs/part3-translation-study-20261001/protocol.json.
+Its workflow_status.json and per-arm RUN_LOG.txt files record current progress.
+The 200-update benchmark passed with zero NaN events. The local measured speed
+supports approximately 3.5-4 hours for the paired computation and final scoring,
+not the faster historical rental-machine timings below. Both one-time GPU
+handoff checks have executed and are disabled; no recurring monitor was added.
+
+The original selected checkpoint's complete class outputs and CSV are in
+runs/part3-class-selected-complete-20261001. Mean local class FID is
+101.95515654090585 and mean MiFID is 0.4124293476343155. These are not an official
+Kaggle score or rank. task3_gan/CLASS_PROTOCOL.md records the now-verified
+evaluator, JPEG settings, class A/B mapping, and remaining score-sign caveat.
+The study uses frozen validation KID for selection, with the source eligible.
+The predeclared continuation ends after two matched ten-epoch arms; the old
+optional second-seed allocation below is not queued or an automatic extension.
+Final visual review, human ratings, reporting, and submission remain separate.
+
+Historical proposal (resolved prerequisites are retained for provenance)
 
 Immediate prerequisites
 1. Verify the user's available RTX 5090, free memory, current workloads, CUDA

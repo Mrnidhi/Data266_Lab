@@ -35,13 +35,51 @@ from .common import project_root, task_config_path
 DIRECTIONS = ("photo_to_monet", "monet_to_photo")
 METRICS = ("fid", "kid", "precision", "recall", "density", "coverage", "lpips_cycle", "content_cosine")
 RESUME_FIELDS = ("seed", "image_size", "base_channels", "residual_blocks", "learning_rate", "betas",
-                 "cycle_weight", "identity_weight", "epochs", "constant_epochs", "batch_size", "replay_size", "precision")
+                 "cycle_weight", "identity_weight", "epochs", "constant_epochs", "batch_size", "replay_size", "precision",
+                 "monet_translation_ratio")
 ARCHITECTURE_DEFAULTS = {"image_size": 256, "base_channels": 64, "residual_blocks": 9}
 
 
 def _recipe_value(config, field):
     # Checkpoints predating mixed precision were always FP32.
-    return config.get(field, "fp32" if field == "precision" else None)
+    defaults = {"precision": "fp32", "monet_translation_ratio": 0.0}
+    return config.get(field, defaults.get(field))
+
+
+def _translation_ratio(value):
+    if (isinstance(value, bool) or not isinstance(value, (int, float))
+            or not math.isfinite(value) or not 0 <= value <= 1):
+        raise ValueError("monet_translation_ratio must be a finite number between 0 and 1")
+    return float(value)
+
+
+def translation_augment(image, ratio=0.0):
+    """Differentiable integer translation with the DiffAugment zero-border rule.
+
+    Reference: mit-han-lab/data-efficient-gans, DiffAugment_pytorch.py
+    https://github.com/mit-han-lab/data-efficient-gans/blob/master/DiffAugment_pytorch.py
+    CPU Torch offsets use the existing checkpointed Torch RNG, independently of
+    Python's data/crop/replay RNG. No extra generator/checkpoint state is needed.
+    The disabled path consumes no random numbers and returns the original tensor.
+    """
+    ratio = _translation_ratio(ratio)
+    if ratio == 0:
+        return image
+    if image.ndim != 4 or min(image.shape) < 1:
+        raise ValueError("Translation augmentation requires a nonempty NCHW tensor")
+    count, _, height, width = image.shape
+    vertical, horizontal = int(height * ratio + .5), int(width * ratio + .5)
+    if vertical == 0 and horizontal == 0:
+        return image
+    # Off-image coordinates address the single zero border after clamping;
+    # they must not wrap around or replicate image-edge pixels.
+    dy = torch.randint(-vertical, vertical + 1, (count, 1, 1), device="cpu").to(image.device)
+    dx = torch.randint(-horizontal, horizontal + 1, (count, 1, 1), device="cpu").to(image.device)
+    rows = (torch.arange(height, device=image.device)[None, :, None] + dy + 1).clamp(0, height + 1)
+    columns = (torch.arange(width, device=image.device)[None, None, :] + dx + 1).clamp(0, width + 1)
+    batches = torch.arange(count, device=image.device)[:, None, None]
+    padded = F.pad(image, (1, 1, 1, 1)).permute(0, 2, 3, 1)
+    return padded[batches, rows, columns].permute(0, 3, 1, 2).contiguous()
 
 
 def _training_options(config, device):
@@ -187,10 +225,10 @@ def cycle_forward(models, photo, monet):
             "identity_monet": models["G_photo_to_monet"](monet)}
 
 
-def generator_losses(models, photo, monet, output, cycle_weight=10., identity_weight=5.):
+def generator_losses(models, photo, monet, output, cycle_weight=10., identity_weight=5., monet_translation_ratio=0.0):
     """identity_weight is absolute, unlike the original repo's relative flag."""
     raw = {
-        "gan_photo_to_monet": ((models["D_monet"](output["fake_monet"]).float() - 1) ** 2).mean(),
+        "gan_photo_to_monet": ((models["D_monet"](translation_augment(output["fake_monet"], monet_translation_ratio)).float() - 1) ** 2).mean(),
         "gan_monet_to_photo": ((models["D_photo"](output["fake_photo"]).float() - 1) ** 2).mean(),
         "cycle_photo_l1": F.l1_loss(output["cycle_photo"].float(), photo.float()),
         "cycle_monet_l1": F.l1_loss(output["cycle_monet"].float(), monet.float()),
@@ -202,8 +240,10 @@ def generator_losses(models, photo, monet, output, cycle_weight=10., identity_we
     return raw
 
 
-def discriminator_loss(discriminator, real, fake):
-    return 0.5 * (((discriminator(real).float() - 1) ** 2).mean() + (discriminator(fake.detach()).float() ** 2).mean())
+def discriminator_loss(discriminator, real, fake, translation_ratio=0.0):
+    real_input = translation_augment(real, translation_ratio)
+    fake_input = translation_augment(fake.detach(), translation_ratio)
+    return 0.5 * (((discriminator(real_input).float() - 1) ** 2).mean() + (discriminator(fake_input).float() ** 2).mean())
 
 
 def rng_state():
@@ -595,6 +635,22 @@ def build_metric_feature_extractor(device, cache_dir=None, download=True):
     return model
 
 
+def _metric_image_features(fid_module, folder, expected_count, **feature_args):
+    """Extract each exported PNG exactly once, including on case-insensitive hosts."""
+    # clean-fid's folder helper globs both PNG and png, which duplicates every
+    # matching file on Windows. Our exports are PNG; enumerate the directory once.
+    paths = sorted({path.resolve() for path in Path(folder).iterdir()
+                    if path.is_file() and path.suffix.lower() == ".png"})
+    if len(paths) != expected_count:
+        raise ValueError(f"Expected {expected_count} metric images in {folder}; found {len(paths)}")
+    features = np.asarray(fid_module.get_files_features([str(path) for path in paths], **feature_args))
+    if features.ndim != 2 or features.shape[0] != expected_count or features.shape[1] < 1:
+        raise ValueError(f"Expected {expected_count} feature rows in {folder}; got shape {features.shape}")
+    if not np.isfinite(features).all():
+        raise ValueError(f"Non-finite metric features in {folder}")
+    return features
+
+
 @torch.no_grad()
 def evaluate_models(models, data, provenance, output_dir, device, split="test", options=None):
     """Both directions. Optional metric failures are explicit, never fabricated zeros."""
@@ -691,8 +747,8 @@ def evaluate_models(models, data, provenance, output_dir, device, split="test", 
                 try:
                     feature_args = {"model": feature_model, "num_workers": 0, "batch_size": options.get("batch_size", 16),
                                     "device": torch.device(device), "mode": "clean", "verbose": False}
-                    real_features = fid_module.get_folder_features(str(folder / "real_target"), **feature_args)
-                    fake_features = fid_module.get_folder_features(str(folder / "generated"), **feature_args)
+                    real_features = _metric_image_features(fid_module, folder / "real_target", n_real, **feature_args)
+                    fake_features = _metric_image_features(fid_module, folder / "generated", n_source, **feature_args)
                     if min(n_real, n_source) < 2:
                         raise ValueError("FID/KID need at least two images per distribution")
                     entry["metrics"]["fid"] = _measurement(fid_module.fid_from_feats(real_features, fake_features))
@@ -821,7 +877,9 @@ def run(config: dict, output_dir: Path, device: str, resume: Path | None = None,
         raise ValueError("resume and warm_start are mutually exclusive")
     config, output_dir = resolve_config(config), Path(output_dir)
     precision, replay_device = _training_options(config, device)
+    monet_translation_ratio = _translation_ratio(config.get("monet_translation_ratio", 0.0))
     config["precision"], config["replay_device"] = precision, replay_device
+    config["monet_translation_ratio"] = monet_translation_ratio
     mode, seed = config.get("mode", "smoke"), int(config.get("seed", 2342))
     if warm_start is not None and Path(warm_start).expanduser().resolve().parent == output_dir.resolve():
         raise ValueError("Warm start requires a separate output directory to preserve the source run")
@@ -938,13 +996,16 @@ def run(config: dict, output_dir: Path, device: str, resume: Path | None = None,
             models[name].requires_grad_(False)
         with _training_autocast(precision):
             output = cycle_forward(models, photo, monet)
-            losses = generator_losses(models, photo, monet, output, config.get("cycle_weight", 10.), config.get("identity_weight", 5.))
+            losses = generator_losses(models, photo, monet, output, config.get("cycle_weight", 10.),
+                                      config.get("identity_weight", 5.), monet_translation_ratio)
         losses["generator_total"].backward()
         for name in ("D_photo", "D_monet"):
             models[name].requires_grad_(True)
         with _training_autocast(precision):
             for domain, real in (("photo", photo), ("monet", monet)):
-                losses[f"discriminator_{domain}"] = discriminator_loss(models[f"D_{domain}"], real, pools[domain].query(output[f"fake_{domain}"]))
+                losses[f"discriminator_{domain}"] = discriminator_loss(
+                    models[f"D_{domain}"], real, pools[domain].query(output[f"fake_{domain}"]),
+                    translation_ratio=monet_translation_ratio if domain == "monet" else 0.0)
         (losses["discriminator_photo"] + losses["discriminator_monet"]).backward()
         norms = {name: _grad_norm(model) for name, model in models.items()}
         scalar_losses = {name: float(value.detach()) for name, value in losses.items()}
@@ -993,6 +1054,7 @@ def run(config: dict, output_dir: Path, device: str, resume: Path | None = None,
             if str(device).startswith("cuda"):
                 torch.cuda.reset_peak_memory_stats()
     report = {"part": 3, "mode": mode, "device": str(device), "precision": precision, "replay_device": replay_device,
+              "monet_translation_ratio": monet_translation_ratio,
               "seed": seed, "data_kind": provenance["kind"],
               "class_results": provenance["class_results"], "completed_updates": state["global_step"],
               "completed_epoch_fraction": state["global_step"] / steps_per_epoch, "steps_per_epoch": steps_per_epoch,
