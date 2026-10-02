@@ -1,0 +1,49 @@
+{
+  "format_version": 1,
+  "path_base": "outputs/full",
+  "logs": [
+    {
+      "role": "training",
+      "models": [
+        "bilstm"
+      ],
+      "source_run": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/bilstm",
+      "source_path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/bilstm/RUN_LOG.txt",
+      "published_path": "raw_logs/training_bilstm_RUN_LOG_a3c6eac51ccd_e45813eb50c4.txt",
+      "sha256": "e45813eb50c4b8e886eebe2fd479ccde6ce0f83d32a0e5658413c42d4622a3c4",
+      "bytes": 33521
+    },
+    {
+      "role": "training",
+      "models": [
+        "dilated_cnn"
+      ],
+      "source_run": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/dilated_cnn",
+      "source_path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/dilated_cnn/RUN_LOG.txt",
+      "published_path": "raw_logs/training_dilated_cnn_RUN_LOG_618d51401b75_fbf8b5676016.txt",
+      "sha256": "fbf8b5676016e9f79f2965027fe8cdbb681dd3c23890eb7dbea59986ba85cc6c",
+      "bytes": 17287
+    },
+    {
+      "role": "training",
+      "models": [
+        "maxpool_mlp"
+      ],
+      "source_run": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/maxpool_mlp",
+      "source_path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/maxpool_mlp/RUN_LOG.txt",
+      "published_path": "raw_logs/training_maxpool_mlp_RUN_LOG_71c8bf661f36_f12c5a6bb6d4.txt",
+      "sha256": "f12c5a6bb6d41244d9ac3bc7629692840aec62cba1caa6e512157ddde2bf3822",
+      "bytes": 17114
+    },
+    {
+      "role": "evaluation",
+      "models": [],
+      "source_run": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/selected",
+      "source_path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/selected/RUN_LOG.txt",
+      "published_path": "raw_logs/evaluation_suite_RUN_LOG_33ef1617500c_045f882738b5.txt",
+      "sha256": "045f882738b5fe63c85de08340590f0bc1317a14ad70967807cd465d83e27028",
+      "bytes": 199
+    }
+  ],
+  "omitted_console_files": []
+}

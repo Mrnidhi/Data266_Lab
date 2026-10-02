@@ -1,62 +1,47 @@
-# Part 1 — desktop run and portable package
+# Part 1: selected character GPT and portable package
 
 Repository: https://github.com/Mrnidhi/Data266_Lab
 
-This package contains Srinidhi's replacement character GPT trained from scratch
-on the Windows desktop RTX 5090 on October 1, 2026. The completed run uses
-100,000 TinyStories training stories, 10,000 validation stories, 12 complete
-epochs and 18,732 updates. The selected epoch-12 checkpoint achieved validation
-cross-entropy **0.7211**, character perplexity **2.0567** and next-character
-accuracy **77.31%**. The raw run is
-`reproducibility/raw_logs/srinidhi/desktop-20261001/part1-full/`.
-Training completion and all selected metrics are established by its `summary.json`,
-the published `task1_llm/srinidhi/results.md` and verification receipts.
+Srinidhi's selected model trained from scratch on 100,000 training and 10,000
+validation TinyStories for **16 complete epochs and 28,416 updates** on the
+Windows desktop RTX 5090. Epoch 16 had the best validation loss. At its trained
+context length of 512, CE is **0.551181**, perplexity **1.735301**, bits per
+character **0.795186** and next-character accuracy **82.44%**.
 
-The user requested replacement of previous Part 1 runs after the older saved
-weights could not be located. This package's metrics and checkpoints come
-only from the fresh desktop run. No cloud rental is needed to reproduce it on
-an appropriately configured NVIDIA desktop.
+The model was selected using the rule frozen before training. On identical
+256-character windows, validation CE fell from baseline **0.721101** to
+**0.599380**, exceeding the required 0.005 improvement. With dropout disabled,
+train CE is **0.591177** and the validation-minus-train gap is **+0.008204**.
+Validation loss improved throughout training; there was no late rise in the
+recorded curve. These results do not prove reliable story coherence or broad
+production performance.
 
-## Contents and scope
+The selected source is
+`reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part1/depth_context_full/`.
+The original baseline remains in its raw run, metadata snapshot and
+`dist/Part1_Baseline_20261001.zip`. Original source/configuration and raw evidence
+are preserved. The selected recipe is in
+`task1_llm/srinidhi/outputs/full/reproduction_config.json`; the original member
+`config.json` remains the baseline recipe.
 
-`dist/Part1_Srinidhi_2342.zip` at the repository root contains one `Part 1/`
-folder. Extract that folder and open it as the working directory. Paths inside
-the archive retain the repository layout:
+## What to open
 
-- `task1_llm/srinidhi/src/gpt.ipynb`: executed notebook with visible outputs.
-- `task1_llm/srinidhi/checkpoints/best.pt` and `last.pt`: selected and resumable
-  checkpoints; `manifest.json` supplies file sizes and SHA-256 hashes.
-- `task1_llm/srinidhi/data_processed/full/`: frozen processed training and
-  validation stories plus their split manifest. Character vocabulary token
-  order is saved in the raw run and published `outputs/full/vocabulary.json`;
-  the notebook displays both integer mapping dictionaries.
-- `task1_llm/srinidhi/outputs/full/`: curves, diagnostics, generations and
-  vocabulary/data metadata; `metrics_report.csv`, `results.md` and
-  `failure_analysis.md` are in the member folder.
-- `reproducibility/raw_logs/srinidhi/desktop-20261001/part1-full/`: portable
-  untouched step/epoch metrics, history, source/data manifests and run summaries.
-- `verification/`: desktop environment, saved-checkpoint inference, notebook
-  and export/finalization records.
-- `src/`, `scripts/`, `pyproject.toml` and `requirements.txt`: runtime,
-  reproducible setup and finalization tools.
+Extract `dist/Part1_Srinidhi_2342.zip` and open its `Part 1/` folder as the working
+directory. It contains the member's executed notebook, best/last weights, frozen
+story cache, outputs, metric CSV, failure analysis, source and setup files.
+The notebook explains preprocessing and manual attention, shows all required
+metrics/curves and ten actual continuations, and checks saved-model inference.
+It does not train the model again.
 
-The original console `RUN_LOG.txt` is retained locally without editing it.
-Library startup warnings contain machine-specific paths, so it is omitted
-from Git and the ZIP. The untouched `metrics.jsonl` is the portable raw
-training evidence. The selected Part 1 `best.pt` has a targeted Git-ignore
-exception for publication; its presence in a remote commit must be checked
-before claiming a push or relying on a clone to restore it. The larger
-processed story cache and resume `last.pt` travel in the ZIP.
+The comparison receipt is included, but repeating the two-model comparison
+requires the separately preserved baseline run and checkpoint. History copies
+and local backup checkpoints are excluded from the selected ZIP. The original
+console log stays local because library warnings include machine-specific
+paths; unedited `metrics.jsonl` provides the portable training log.
 
-This is a Part 1 technical package. Student review of the AI-assisted analysis,
-independent teammate results, the team comparison and combined report remain
-separate requirements. Canvas asks for one final ZIP with separate Part 1,
-Part 2 and Part 3 folders and one combined `Report.pdf` with the GitHub link.
-Do not submit this Part 1 ZIP as though it were the entire lab.
+## Setup and one smoke command
 
-## Windows setup
-
-From the cloned repository root or extracted `Part 1/` root, use Python 3.12:
+From the repository or extracted `Part 1/` root, use Python 3.12:
 
 ```powershell
 py -3.12 -m venv .venv
@@ -65,93 +50,75 @@ py -3.12 -m venv .venv
 .venv\Scripts\python.exe -m pip install -r requirements.txt
 .venv\Scripts\python.exe -m pip install --no-deps -e .
 .venv\Scripts\python.exe -m pip check
-```
-
-The repository's requirements cover all three tasks. The standalone archive
-uses generated Part 1-only requirements and package metadata, so its setup
-does not need GAN evaluation extras. The desktop's recorded environment is
-Python 3.12.14, PyTorch 2.11.0+cu128 and CUDA 12.8; its RTX 5090 `sm_120`
-support was checked before training. The exact installed versions are in
-`verification/part1_desktop_environment.json` and the raw provenance manifest.
-Select `.venv\Scripts\python.exe` as the VS Code notebook kernel. If the
-`py` launcher is unavailable, create `.venv` with an installed Python 3.12
-executable instead.
-
-After setup, reproduce an offline smoke check with **one command**:
-
-```powershell
 .venv\Scripts\python.exe -m lab1.run --task gpt --mode smoke --device cpu
 ```
 
-This uses synthetic stories and a smaller model and writes to a new timestamped
-folder under `runs/`. It establishes that the runner works; full-data results
-come from the complete recorded run.
+Select `.venv\Scripts\python.exe` as the notebook kernel. If `py` is unavailable,
+use an installed Python 3.12 interpreter. On Linux/macOS use `python3.12` and
+`.venv/bin/python`. CPU smoke uses synthetic data and a smaller model; it is
+an execution check, not full training evidence. The recorded desktop uses
+Python 3.12.14, PyTorch 2.11.0+cu128 and CUDA 12.8. Full GPU training needs a
+compatible NVIDIA device/driver; the standalone requirements omit GAN extras.
 
-On Linux/macOS create the environment with `python3.12 -m venv .venv` and
-replace `.venv\Scripts\python.exe` with `.venv/bin/python` in the commands.
-GPU full reproduction requires CUDA-capable PyTorch and compatible NVIDIA
-drivers. The smoke command works on CPU.
+## Reproduce or resume training
 
-## Training, resume and finalization
-
-The original desktop command was:
+Use the selected recipe and a new empty output directory:
 
 ```powershell
-.venv\Scripts\python.exe -m lab1.run --task gpt --mode full --device cuda --output reproducibility/raw_logs/srinidhi/desktop-20261001/part1-full
+.venv\Scripts\python.exe -m lab1.run --task gpt --mode full --device cuda --config task1_llm/srinidhi/outputs/full/reproduction_config.json --set offline=true --output runs/part1-new-full
 ```
 
-Do not rerun it into a populated directory. For a new full reproduction use
-a fresh output path, for example:
+The ZIP contains the verified story cache. A Git clone does not include that
+cache; use `--set offline=false` to prepare public TinyStories data. Full mode
+covers every story window in every epoch and does not treat a step-capped run
+as complete. Numerical results can differ across GPU/PyTorch environments.
+
+To resume a genuinely interrupted matching run, retain its full evidence
+folder and checkpoint, use its original output path and add:
+
+```text
+--resume <matching-run>/checkpoints/last.pt
+```
+
+Use the same explicit reproduction config and original overrides. The
+checkpoint contains model, optimizer, scheduler, AMP, RNG and progress state.
+Do not restart completed training into its existing evidence directory.
+
+## Verify existing results and build the ZIP
+
+After training and the grounded three-case failure analysis are complete:
 
 ```powershell
-.venv\Scripts\python.exe -m lab1.run --task gpt --mode full --device cuda --set offline=true --output runs/part1-new-full
+.venv\Scripts\python.exe scripts/finalize_gpt.py --run-dir reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part1/depth_context_full
 ```
 
-Offline full training uses the included hash-verified frozen story cache.
-For a clone without the cache, omit `--set offline=true` to prepare the public
-TinyStories data. The split source revision, row identifiers and text hashes
-remain explicit in each new manifest. Full mode does not accept a step cap
-as a completed run.
+This verifies full epoch/target coverage, source/data/checkpoint hashes and
+metric identities, publishes selected outputs, executes the seven-cell results
+notebook, checks fresh CPU/CUDA inference and creates the Part 1 ZIP. It does
+not start another training run. The three failure excerpts are checked against
+the actual saved text; their AI-assisted interpretations still need student review.
 
-To resume the original run, keep its complete evidence directory and use:
-
-```powershell
-.venv\Scripts\python.exe -m lab1.run --task gpt --mode full --device cuda --output reproducibility/raw_logs/srinidhi/desktop-20261001/part1-full --resume reproducibility/raw_logs/srinidhi/desktop-20261001/part1-full/checkpoints/last.pt
-```
-
-The checkpoint carries model, optimizer, scheduler, AMP, RNG, vocabulary,
-manifest and within-epoch progress. Floating-point results can differ across
-GPU/PyTorch environments even with the same split and seed.
-
-After training completes, this command verifies the run, publishes Part 1,
-executes only its results notebook, checks saved inference and builds the ZIP:
-
-```powershell
-.venv\Scripts\python.exe scripts/finalize_gpt.py --run-dir reproducibility/raw_logs/srinidhi/desktop-20261001/part1-full
-```
-
-The export-only command is:
-
-```powershell
-.venv\Scripts\python.exe scripts/publish_gpt_results.py --run-dir reproducibility/raw_logs/srinidhi/desktop-20261001/part1-full
-```
-
-The notebook displays the actual run's metrics, curves and generations and
-verifies saved checkpoint inference; executing it does not repeat twelve
-training epochs. The finalizer cross-checks complete epoch/window coverage,
-selected checkpoint, metric identities, untouched raw logs and processed-data
-hashes. See `verification/part1_export.json`, `part1_notebook.json`,
-`part1_checkpoint_inference.json` and `part1_finalization.json` for recorded
-checks. The ZIP CRC and SHA-256 receipt is
-`dist/part1_package_verification.json` in the producing repository.
-
-Before transferring the ZIP, verify its checksum against that receipt and
-retain a second copy outside the workstation. From the producing repository:
+Receipts are in `verification/part1_export.json`, `part1_notebook.json`,
+`part1_checkpoint_inference.json`, `part1_finalization.json` and
+`part1_package_portability.json`. The portability check executes the notebook
+and CPU smoke from a fresh extraction with the pinned existing interpreter;
+it is not a clean dependency installation. The ZIP inventory, CRC and SHA-256
+receipt is `dist/part1_package_verification.json`.
 
 ```powershell
 Get-FileHash -Algorithm SHA256 dist/Part1_Srinidhi_2342.zip
 .venv\Scripts\python.exe scripts/finalize_gpt.py --verify-archive dist/Part1_Srinidhi_2342.zip
 ```
 
-Read `task1_llm/srinidhi/REQUIREMENTS_CHECKLIST.md` for the rubric mapping and
-the student/team obligations that automated checks cannot establish.
+Keep a verified backup outside the workstation. Best/last weights are real
+checkpoint bytes in the ZIP; selected `best.pt` is prepared for normal Git
+publication to `main`. Check the remote commit before relying on a clone.
+
+## Submission scope
+
+This is Srinidhi's Part 1 package. Student understanding/viva, independent
+teammate results, team comparisons and the combined report remain required.
+See `task1_llm/srinidhi/REQUIREMENTS_CHECKLIST.md` and `AI_USE.md`. Canvas needs
+one ZIP with separate Part 1, Part 2 and Part 3 folders and a combined
+`Report.pdf` containing the repository link. This individual ZIP does not
+complete the whole assignment.

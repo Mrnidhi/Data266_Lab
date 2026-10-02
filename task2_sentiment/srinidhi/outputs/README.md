@@ -1,24 +1,16 @@
 # Part 2 outputs
 
-`full/` contains the October 1 desktop evaluation of three newly trained,
-validation-selected checkpoints on all 38,000 official Yelp test reviews.
-Training and final evaluation used Intel Core Ultra 9 285K / RTX 5090;
-fresh saved-checkpoint checks also ran on CPU. Selected epochs are MLP 5,
-BiLSTM 11 and CNN 6. Historical cloud/Mac publication is preserved under
-`publication_history/b257a1079ef85973/` and is not the current result source.
+`full/` contains the current evaluation of the validation-selected wider MLP, retained BiLSTM and original CNN on all 38,000 official test reviews. Selected epochs are 5, 11 and 6; source histories completed 9, 12 and 6 epochs respectively.
 
-- `model_comparison.csv` and the member-level `metrics_report.csv`: model and slice metrics, intervals and paired comparisons.
-- `selection_manifest.json` and `training_sources.json`: three fixed desktop candidates, the frozen validation selection rule and exact per-model source runs.
-- Model subfolders: predictions, training history, confusion matrix, ROC/PR and training plots, metrics and the required 20 errors for review.
-- `data_distributions.json/png`: label counts, review lengths, truncation and OOV statistics.
-- `raw_logs/manifest.json`: exact log copies and source hashes. `publication_metadata.json` documents portable path normalization in derived metadata copies.
+- `summary.json`, `model_comparison.csv` and member-level `metrics_report.csv` contain measured results.
+- `selection_manifest.json` records all seven candidates, the frozen 0.001 validation tolerance and selected hashes. The original CNN remains selected because the wider CNN's gain was smaller than that tolerance.
+- `training_sources.json` and per-model `training_config.json` identify actual settings, CPU/GPU and source runs.
+- Model subfolders contain predictions, histories, metrics, curves, training plots and twenty errors each. Required metrics include Brier/ECE, bootstrap intervals, McNemar comparisons, slices, training time, examples/second and memory.
+- `data_distributions.json/png` and `data_audit.json` document balance, lengths, truncation, OOV and duplicates.
+- `raw_logs/manifest.json` maps portable logs to sources; `publication_metadata.json` records path-normalized metadata and original/published hashes.
 
-Student error-review fields remain blank/false until the student reviews them.
-Each model's separate `ai_error_review_draft.csv` contains twenty AI-assisted
-interpretations keyed to example/checkpoint/source-text hashes. These and the
-member's all-model failure analysis do not establish manual review. Human
-packets remain byte-identical to those shown in the executed notebook.
-Fresh source evidence is under
-`reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/`.
-The old cloud run remains historical evidence under
-`reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/`.
+The selected suite is `reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/selected/`. Compact recipes and completed candidate evidence are retained in `quality_search/desktop-quality-20261001/`.
+
+Each `ai_error_review_draft.csv` provides AI-assisted hypotheses and future testable fixes, linked to current packet, checkpoint and text hashes. Human `error_type` and `testable_fix` fields remain blank and all 60 `student_reviewed` flags are false. These drafts support student review; they do not complete it.
+
+The preceding desktop publication is preserved under `publication_history/026926f7d98246d3/`; older publications remain historical. New ZIPs omit recursive history while retaining current publication and compact candidate evidence. Metric, notebook, saved-model and extracted-package checks passed for the selected suite. See the [finalization guide](../../../PART2_FINALIZATION.md).

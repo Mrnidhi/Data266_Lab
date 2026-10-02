@@ -1,0 +1,36 @@
+{
+  "created_utc": "2026-10-02T00:55:53.393503+00:00",
+  "baseline_commit": "87f00dcab165e0afd198bafef64ba1139bf0f6b8",
+  "scope": "One from-scratch depth/context capacity candidate; not a causal attribution study or global optimum",
+  "run": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part1/depth_context_full",
+  "config": "task1_llm/srinidhi/experiments/desktop-quality-20261001/depth_context_candidate.json",
+  "config_sha256": "90a26ebabbffd24fd38add9b264c3013a04fff8e40b62b218191d19ebcdbceaa",
+  "baseline_run": "reproducibility/raw_logs/srinidhi/desktop-20261001/part1-full",
+  "baseline_checkpoint": "task1_llm/srinidhi/checkpoints/best.pt",
+  "baseline_checkpoint_sha256": "da90fb8bb2d7a71d9d33a75447a04c02345705307d9a9a39eff569468817e9b0",
+  "data_manifest_file": "task1_llm/srinidhi/data_processed/full/gpt_641f4529e37b28d2/manifest.json",
+  "data_manifest_sha256": "bfc64c9ae2e6fd611c71758882c4f7294b0a451682bc5496f21add2f13faafbe",
+  "selection": {
+    "metric": "Full validation cross-entropy on identical 256-character story windows",
+    "minimum_ce_improvement_nats": 0.005,
+    "otherwise": "Retain baseline; do not choose based on generation or test scores",
+    "native_context": "Report context512 validation separately; not a direct comparison with baseline256"
+  },
+  "training": {
+    "initialization": "random; own manual causal attention; no pretrained weights",
+    "full_epochs": 16,
+    "seed": 2342,
+    "data": "Same frozen 100000 training and 10000 validation stories",
+    "source_unchanged": true
+  },
+  "runtime_note": "GPU may overlap independently logged Part2 candidates; wall time is not an isolated speed benchmark",
+  "references": [
+    "https://arxiv.org/html/2305.07759v2",
+    "https://arxiv.org/abs/2002.04745"
+  ],
+  "limits": "Single candidate and initialization; no guarantee of grade, production readiness, or better validation performance.",
+  "startup_attempt": {
+    "run": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part1/depth_context",
+    "outcome": "Stopped after plan-writer used incorrect manifest path; no checkpoint or validation metric was produced; source bytes preserved. No score informed this plan."
+  }
+}

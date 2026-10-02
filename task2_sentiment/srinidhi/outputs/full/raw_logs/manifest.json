@@ -29,18 +29,18 @@
       "models": [
         "maxpool_mlp"
       ],
-      "source_run": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/maxpool_mlp",
-      "source_path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/maxpool_mlp/RUN_LOG.txt",
-      "published_path": "raw_logs/training_maxpool_mlp_RUN_LOG_71c8bf661f36_f12c5a6bb6d4.txt",
-      "sha256": "f12c5a6bb6d41244d9ac3bc7629692840aec62cba1caa6e512157ddde2bf3822",
-      "bytes": 17114
+      "source_run": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/mlp_wide_regularized",
+      "source_path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/mlp_wide_regularized/RUN_LOG.txt",
+      "published_path": "raw_logs/training_maxpool_mlp_RUN_LOG_1a490061a788_262da68512f6.txt",
+      "sha256": "262da68512f652ff65f4c4601a09b884ac8ce4762c44a914ab049adb5c80de4e",
+      "bytes": 25972
     },
     {
       "role": "evaluation",
       "models": [],
-      "source_run": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/selected",
-      "source_path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/selected/RUN_LOG.txt",
-      "published_path": "raw_logs/evaluation_suite_RUN_LOG_33ef1617500c_045f882738b5.txt",
+      "source_run": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/selected",
+      "source_path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/selected/RUN_LOG.txt",
+      "published_path": "raw_logs/evaluation_suite_RUN_LOG_5a2cb7c6ea41_045f882738b5.txt",
       "sha256": "045f882738b5fe63c85de08340590f0bc1317a14ad70967807cd465d83e27028",
       "bytes": 199
     }

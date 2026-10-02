@@ -1,0 +1,15 @@
+{
+  "name": "cnn_regularized",
+  "model": "dilated_cnn",
+  "hypothesis": "Stronger convolution-block and head dropout may reduce the validation loss gap while retaining the current model size and receptive field.",
+  "overrides": {
+    "epochs": 12,
+    "early_stopping_patience": 4,
+    "early_stopping_min_delta": 0.0001,
+    "num_workers": 0,
+    "checkpoint_every_steps": 1000,
+    "log_every_steps": 200,
+    "dropout": 0.5,
+    "cnn_dropout": 0.3
+  }
+}

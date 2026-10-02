@@ -245,3 +245,105 @@ def test_archive_verifier_rejects_path_traversal(tmp_path):
         handle.writestr("Part 1/../outside.txt", "unsafe")
     with pytest.raises(ValueError, match="Unsafe or noncanonical"):
         finalizer.verify_archive(archive)
+
+
+def test_portable_inventory_selects_recipe_receipt_and_excludes_history(tmp_path):
+    root = tmp_path / "repository"
+    member = root / "task1_llm/srinidhi"
+    selected_run = "reproducibility/raw_logs/srinidhi/quality/selected"
+    evidence = {"run": selected_run, "config": {"context_length": 512},
+                "summary": {"manifest_sha256": "same-frozen-data"}, "cache_paths": {}}
+    experiment = member / "experiments/quality"
+    config = experiment / "candidate.json"
+    write(config, {"full": evidence["config"]})
+    plan = {"run": selected_run, "config": config.relative_to(root).as_posix(),
+            "config_sha256": publisher.digest(config)}
+    write(experiment / "plan.json", plan)
+    checkpoint = root / selected_run / "checkpoints/best.pt"
+    checkpoint.parent.mkdir(parents=True)
+    checkpoint.write_bytes(b"selected checkpoint")
+    receipt = {"promotion_rule": {"preferred_run": selected_run},
+               "protocol": {"manifest_sha256": "same-frozen-data"},
+               "candidates": [{"run": selected_run, "checkpoint_sha256": publisher.digest(checkpoint)}]}
+    write(root / "verification/part1_quality_comparison.json", receipt)
+    included = ["PART1_FINALIZATION.md", "scripts/compare_gpt_candidates.py",
+                "tests/test_compare_gpt_candidates.py", "task1_llm/srinidhi/outputs/full/config.json"]
+    excluded = ["task1_llm/srinidhi/outputs/publication_history/baseline/best.pt",
+                "task1_llm/srinidhi/checkpoints/snapshots/old.pt",
+                "task1_llm/srinidhi/experiments/quality/partial-run/checkpoints/last.pt",
+                "task1_llm/srinidhi/runs/partial/metrics.jsonl",
+                "reproducibility/raw_logs/srinidhi/quality/aborted/metrics.jsonl",
+                "reproducibility/baselines/part1/baseline.zip"]
+    for relative in included + excluded:
+        path = root / relative
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(b"fixture")
+    files, _ = finalizer.package_files(root, evidence)
+    assert set(included) <= files.keys()
+    assert not set(excluded) & files.keys()
+    assert config.relative_to(root).as_posix() in files
+    assert (experiment / "plan.json").relative_to(root).as_posix() in files
+    assert "verification/part1_quality_comparison.json" in files
+
+    # A receipt selecting another model is excluded from a baseline re-export.
+    receipt["promotion_rule"]["preferred_run"] = "different-run"
+    write(root / "verification/part1_quality_comparison.json", receipt)
+    files, _ = finalizer.package_files(root, evidence)
+    assert "verification/part1_quality_comparison.json" not in files
+
+    # A matching run name alone cannot pass off unrelated model weights.
+    receipt["promotion_rule"]["preferred_run"] = selected_run
+    receipt["candidates"][0]["checkpoint_sha256"] = "wrong-checkpoint"
+    write(root / "verification/part1_quality_comparison.json", receipt)
+    with pytest.raises(ValueError, match="different checkpoint"):
+        finalizer.package_files(root, evidence)
+    receipt["candidates"][0]["checkpoint_sha256"] = publisher.digest(checkpoint)
+    write(root / "verification/part1_quality_comparison.json", receipt)
+    write(config, {"full": {"context_length": 256}})
+    with pytest.raises(ValueError, match="frozen plan"):
+        finalizer.package_files(root, evidence)
+
+
+def test_notebook_reproduction_uses_selected_recipe_without_changing_baseline(tmp_path):
+    member = tmp_path / "task1_llm/srinidhi"
+    (member / "src").mkdir(parents=True)
+    (member / "failure_analysis.md").write_text("# Fixture observations\n", encoding="utf-8")
+    original = {"full": {"layers": 3, "context_length": 256, "epochs": 12}}
+    write(member / "config.json", original)
+    selected = {"layers": 6, "context_length": 512, "epochs": 16,
+                "data_cache": "task1_llm/srinidhi/data_processed/full", "offline": True}
+    evidence = {"run": "reproducibility/raw_logs/srinidhi/quality/selected", "config": selected}
+    publisher.build_notebook(tmp_path, evidence)
+    reproduction = member / "outputs/full/reproduction_config.json"
+    assert publisher.read_json(reproduction) == {"full": selected}
+    assert publisher.read_json(member / "config.json") == original
+    notebook = nbformat.read(member / "src/gpt.ipynb", as_version=4)
+    command_cell = next(cell.source for cell in notebook.cells if "## Reproduce and demo" in cell.source)
+    assert "--config task1_llm/srinidhi/outputs/full/reproduction_config.json" in command_cell
+    assert "--mode full --device cuda --set offline=true" not in command_cell
+    assert str(tmp_path) not in command_cell
+    assert notebook.metadata["lab1"]["source_run"] == evidence["run"]
+
+
+def test_matched_loss_note_uses_same_model_and_reports_validation_rise(tmp_path):
+    run = "reproducibility/raw_logs/selected"
+    checkpoint = tmp_path / run / "checkpoints/best.pt"
+    checkpoint.parent.mkdir(parents=True)
+    checkpoint.write_bytes(b"selected weights")
+    evidence = {"run": run, "summary": {"manifest_sha256": "frozen-data"},
+                "history": [{"validation": {"cross_entropy": value}} for value in (.7, .5, .6)]}
+    receipt = {"promotion_rule": {"preferred_run": run},
+               "protocol": {"manifest_sha256": "frozen-data", "context_length": 256},
+               "candidates": [{"run": run, "checkpoint_sha256": publisher.digest(checkpoint),
+                               "matched_context_metrics": {"train": {"cross_entropy": .4},
+                                                           "validation": {"cross_entropy": .5}},
+                               "matched_eval_generalization_gap": .1}]}
+    path = tmp_path / "verification/part1_quality_comparison.json"
+    write(path, receipt)
+    note = publisher.matched_evaluation_note(tmp_path, evidence)
+    assert "train CE is 0.400000" in note and "validation CE is 0.500000" in note
+    assert "gap is +0.100000" in note and "rose in 1 epoch transitions" in note
+    receipt["candidates"][0]["checkpoint_sha256"] = "unrelated-weights"
+    write(path, receipt)
+    with pytest.raises(ValueError, match="different selected checkpoint"):
+        publisher.matched_evaluation_note(tmp_path, evidence)

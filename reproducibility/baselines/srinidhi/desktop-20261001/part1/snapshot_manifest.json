@@ -1,0 +1,86 @@
+{
+  "created_utc": "2026-10-02T01:00:48.540488+00:00",
+  "baseline_commit": "87f00dcab165e0afd198bafef64ba1139bf0f6b8",
+  "scope": "Unmodified baseline publication metadata; notebook references original repository paths and is not a standalone snapshot notebook",
+  "raw_run": "reproducibility/raw_logs/srinidhi/desktop-20261001/part1-full",
+  "portable_archive": "dist/Part1_Baseline_20261001.zip",
+  "archive_sha256": "0c04518fae0b574010e4b7258a112e958945617ef0f1eacd1b72d735b639738d",
+  "files": {
+    "task1_llm/srinidhi/README.md": {
+      "sha256": "4dc86a6541ba32e30f8ca8509933772f520a2a726413acc2009a089623a01c0d",
+      "bytes": 8655
+    },
+    "task1_llm/srinidhi/results.md": {
+      "sha256": "fba58079d076b3a2815955f228d294b0acfb200dc4f740012f949a555035e175",
+      "bytes": 3192
+    },
+    "task1_llm/srinidhi/failure_analysis.md": {
+      "sha256": "24ef0cd8df1dd954255c8aa339061e0e2dd0f0ecafede94d558f12e9c43f5a1a",
+      "bytes": 4527
+    },
+    "task1_llm/srinidhi/metrics_report.csv": {
+      "sha256": "d3049e0daf3a780230ed5061820f7da8c6f08ee414ba431dd0e17ee1d97aeb57",
+      "bytes": 6703
+    },
+    "task1_llm/srinidhi/src/gpt.ipynb": {
+      "sha256": "ff7707e24ae98b84a1f1f4f3115ad6feebdf3014cf020412eb0c1cfbbc80cd15",
+      "bytes": 823528
+    },
+    "task1_llm/srinidhi/checkpoints/manifest.json": {
+      "sha256": "ec03d2602e31b77eb73eec3a26b4b0e24c0a322f9a80e3180e9843d6a7ab3c3f",
+      "bytes": 557
+    },
+    "task1_llm/srinidhi/REQUIREMENTS_CHECKLIST.md": {
+      "sha256": "82ed51a727e331c9c11c7ab4f4a434cfc736f05a4e53451d6f52dbc0f3d97e78",
+      "bytes": 6599
+    },
+    "verification/part1_checkpoint_inference.json": {
+      "sha256": "1318f247f7c307f7bccc7c4d7f1d79756580333519ceae91a678452ce7443825",
+      "bytes": 462
+    },
+    "verification/part1_desktop_environment.json": {
+      "sha256": "6b3fdc234fcf643562ed2fc5f0c83db4f47228dcf792032bc7ae47a23afe720f",
+      "bytes": 892
+    },
+    "verification/part1_desktop_regression_scope.json": {
+      "sha256": "97c608588f42022885ede25a56e0e041e39de0bbaee596eec152afa77914491a",
+      "bytes": 755
+    },
+    "verification/part1_desktop_smoke.json": {
+      "sha256": "42b926dcd54f7b4a838a236ec4b3bb344b8cf0d78d052e14e41be6e73ddeeedb",
+      "bytes": 304
+    },
+    "verification/part1_export.json": {
+      "sha256": "473beaa6eaca340ec571b3066b417d7c5c656c23616915c005cc36d7112b80c0",
+      "bytes": 1557
+    },
+    "verification/part1_finalization.json": {
+      "sha256": "08697f5ec8a1c3ffdae434efe8ee65c3419adda454c6a7d1b332626d1ece64a6",
+      "bytes": 4246
+    },
+    "verification/part1_git_integrity.json": {
+      "sha256": "fb113ffd31a55634e854c0778ff06aa28a69666e07cfee4c8a53f61cc9bd73b7",
+      "bytes": 808
+    },
+    "verification/part1_notebook.json": {
+      "sha256": "4125da63b04df6a85fe0d658ce2987b7d1e6be0082a3157fcdb5aa5efdcf3c0e",
+      "bytes": 345
+    },
+    "verification/part1_package.json": {
+      "sha256": "8b3803acfc45b6d3aede2c9bdf210a3d66dd8f7a1f8298abe8b0ea6998f3bfb7",
+      "bytes": 402
+    },
+    "verification/part1_package_portability.json": {
+      "sha256": "a129ccb368c496e802822e7ee920b7de00030d9617bb4edf3c7009d8d1761d71",
+      "bytes": 1287
+    },
+    "PART1_FINALIZATION.md": {
+      "sha256": "e8380164426b999431526ffad480e936579287e3003fe4f3238cc3c882a9d123",
+      "bytes": 7937
+    },
+    "dist/part1_package_verification.json": {
+      "sha256": "1bfea4cd558cae53194a9a0330af3a09446eb0975a6d55ce1a805c712740576d",
+      "bytes": 413
+    }
+  }
+}

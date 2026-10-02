@@ -3,9 +3,9 @@
   "visible_output_cells": 7,
   "errors": 0,
   "all_outputs_visible": true,
-  "seconds": 6.369857800000318,
+  "seconds": 7.2374965000017255,
   "notebook": "task1_llm/srinidhi/src/gpt.ipynb",
   "mode": "completed_full_run_evidence",
-  "sha256": "ff7707e24ae98b84a1f1f4f3115ad6feebdf3014cf020412eb0c1cfbbc80cd15",
+  "sha256": "44202c03a8737851c2a406b952febc13733094093fec1cf9100e5eec3e5e1cc8",
   "interpreter_version": "3.12.14"
 }

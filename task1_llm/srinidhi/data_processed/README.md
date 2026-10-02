@@ -16,8 +16,10 @@ constructs and displays its own `char_to_idx` and `idx_to_char` dictionaries.
 Window coverage
 and padding behavior are documented in the member README and tests.
 
-The fresh desktop full run records its manifest and vocabulary under
-`reproducibility/raw_logs/srinidhi/desktop-20261001/part1-full/`. Its frozen
+The selected run records its manifest and vocabulary under
+`reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part1/depth_context_full/`.
+It uses exactly the same frozen story split and vocabulary as the preserved
+October 1 baseline. Its frozen
 story cache and character mappings are included in `dist/Part1_Srinidhi_2342.zip` for
 portable offline reproduction. Large data remain excluded from Git; a clone
 alone obtains documentation and metadata, not the cached story files. Raw

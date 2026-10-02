@@ -1,0 +1,55 @@
+{
+  "created_utc": "2026-10-02T00:55:28.676381+00:00",
+  "plan_sha256": "296612c341f4a9b4390902350ff1efb93df2909d1da6c8294d494df8508bf5f3",
+  "test_inference_performed": false,
+  "controls": [
+    {
+      "candidate_id": "desktop_maxpool_mlp",
+      "model_name": "maxpool_mlp",
+      "validation_macro_f1": 0.9264224689043884,
+      "selected_epoch": 5,
+      "parameter_count": 5128321,
+      "sha256": "8e3007821edf5d69b3d485b7c3d5a534c2ad0b83021895e8ced26e4d187128b6",
+      "source_metadata_sha256": {
+        "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/maxpool_mlp/maxpool_mlp/checkpoints/best.pt": "8e3007821edf5d69b3d485b7c3d5a534c2ad0b83021895e8ced26e4d187128b6",
+        "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/maxpool_mlp/maxpool_mlp/checkpoints/last.pt": "aa362adfc48bf52211b69ad4df3fbe68265ae34bb409f164d1afe40899f71701",
+        "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/maxpool_mlp/maxpool_mlp/history.json": "195f2ec06f298c755193737f47590c762f1aa0aa65e06f38f3f75c7868c33073",
+        "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/maxpool_mlp/maxpool_mlp/validation_selection.json": "00645627097f07c8ff36189da3dec13004240a3e01b51c2edcd76cab80b62c95",
+        "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/maxpool_mlp/config.json": "b7557065e5d9f0af7bf9831d3ad30155cd119efea2337a87b96363bb286700aa",
+        "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/maxpool_mlp/provenance.json": "7b8aa9d779ae0e508828b0e12b89bbede83a45ff1aa66045e5aa542358d46c82"
+      }
+    },
+    {
+      "candidate_id": "desktop_bilstm",
+      "model_name": "bilstm",
+      "validation_macro_f1": 0.9588569539349926,
+      "selected_epoch": 11,
+      "parameter_count": 5305985,
+      "sha256": "0758cbe7405758fe6f99079f02fd3359aa1367d120cdd984c361c03a34fd54ba",
+      "source_metadata_sha256": {
+        "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/bilstm/bilstm/checkpoints/best.pt": "0758cbe7405758fe6f99079f02fd3359aa1367d120cdd984c361c03a34fd54ba",
+        "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/bilstm/bilstm/checkpoints/last.pt": "948cad15072dc00a6940d05073960e3ddb7dd00389fcc0697bc70e20adee630e",
+        "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/bilstm/bilstm/history.json": "ed545c418149e320c62fd93286a46970a1e4386dd9344adf49317437b7b2a95f",
+        "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/bilstm/bilstm/validation_selection.json": "5a972f726544695302fdbcd07ea78808e6fa4fd18c16670ee67052de98423dcf",
+        "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/bilstm/config.json": "55976d013e75fb55819300839a7ead50b4c7946d7ec7f0912f71b2c46025a005",
+        "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/bilstm/provenance.json": "b04bbfb969be747140c76b53fcc909d323e83c78c8384fa1be9fd46dc03b79c0"
+      }
+    },
+    {
+      "candidate_id": "desktop_dilated_cnn",
+      "model_name": "dilated_cnn",
+      "validation_macro_f1": 0.9534456770367985,
+      "selected_epoch": 6,
+      "parameter_count": 5539073,
+      "sha256": "f3883a005a369ef495c99bebe3cd51c4a7858c3f58121b6dbcfecee341dd8ac2",
+      "source_metadata_sha256": {
+        "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/dilated_cnn/dilated_cnn/checkpoints/best.pt": "f3883a005a369ef495c99bebe3cd51c4a7858c3f58121b6dbcfecee341dd8ac2",
+        "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/dilated_cnn/dilated_cnn/checkpoints/last.pt": "a82dc57ab44e4691ee851e9fec10a84bc3351d69e691a592c67a3f9dd031a299",
+        "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/dilated_cnn/dilated_cnn/history.json": "7396b2721fd4d94ba8c30182d25a4c6d7186e0f197e6aeb470c3d8c5856d8cee",
+        "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/dilated_cnn/dilated_cnn/validation_selection.json": "20855f99d3cfceb67da03878bd987f8e49838d4af4e63191ca4e12f75a62236e",
+        "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/dilated_cnn/config.json": "b7557065e5d9f0af7bf9831d3ad30155cd119efea2337a87b96363bb286700aa",
+        "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/dilated_cnn/provenance.json": "9e4978eb63a3da30b479167c850b6926d4e3b4d9f44d9555eda52a1a65f90402"
+      }
+    }
+  ]
+}

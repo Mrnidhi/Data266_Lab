@@ -1,26 +1,26 @@
 {
   "format_version": 1,
-  "source_run": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/selected",
+  "source_run": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/selected",
   "derived_suite": true,
   "scope": "Publication copies of config.json and run_summary.json only; no metric, checkpoint, hardware or raw-source changes.",
   "files": [
     {
-      "source_path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/selected/config.json",
+      "source_path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/selected/config.json",
       "published_path": "task2_sentiment/srinidhi/outputs/full/config.json",
-      "original_sha256": "e5d67a20ed5f6507e73cbdcf12ac80fdb97fa8bf63478c5a4fa6bf1b59d25590",
-      "published_sha256": "27156c4c17c393131f96842a1e2f6ec5184da701be26adb2a9aa65f3365b5c1a",
-      "original_bytes": 5032,
-      "published_bytes": 4926,
+      "original_sha256": "2e53686ee7889d4ca7ce8b33f203e3702e193c431a6394d94c661f8615eaf2b8",
+      "published_sha256": "1e76ff493a690195e1225c8ebff0abee906aab2cf5dc7bbbd73c136376f6df6f",
+      "original_bytes": 5034,
+      "published_bytes": 4928,
       "paths_normalized": true,
       "normalization_note": "In this derived publication copy only, recursively replace an exact absolute repository-root prefix followed by a path separator in string values with a POSIX repository-relative path. Native, POSIX and mixed separators are accepted. All other values are preserved; original run bytes remain unchanged."
     },
     {
-      "source_path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/selected/run_summary.json",
+      "source_path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/selected/run_summary.json",
       "published_path": "task2_sentiment/srinidhi/outputs/full/run_summary.json",
-      "original_sha256": "97020d5c0de1e252dbfcab640642d284defc68b0ca5ba9e9f532607d99a3a7c1",
-      "published_sha256": "3f3256b5eb4582b1c11b2d6ee9b13dc2a51baf36ef772785f52f2889c1f92335",
-      "original_bytes": 48010,
-      "published_bytes": 47904,
+      "original_sha256": "4954b8567cf2251a0df6a74d5b236cd53ab2cef9e39bc84a15fb1ca5f8da08c9",
+      "published_sha256": "4a21fb242b2ee2a48481786b3a7f4e5bc700729ab1ef61c780cd15a4b437b99c",
+      "original_bytes": 49221,
+      "published_bytes": 49115,
       "paths_normalized": true,
       "normalization_note": "In this derived publication copy only, recursively replace an exact absolute repository-root prefix followed by a path separator in string values with a POSIX repository-relative path. Native, POSIX and mixed separators are accepted. All other values are preserved; original run bytes remain unchanged."
     }

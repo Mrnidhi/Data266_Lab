@@ -1,0 +1,70 @@
+{
+  "observed_utc": "2026-10-02T01:52:11.157190+00:00",
+  "scope": "Monitoring snapshot of actual validation-selected best checkpoints; not a model-selection decision or test evaluation. Backups remain local and canonical raw files are unchanged.",
+  "candidates": [
+    {
+      "candidate": "cnn_regularized",
+      "model": "dilated_cnn",
+      "run_status": "completed",
+      "source_best": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/cnn_regularized/dilated_cnn/checkpoints/best.pt",
+      "observed_best_epoch": 7,
+      "observed_best_step": 27566,
+      "selected_validation_macro_f1": 0.9533211532614958,
+      "verified_finite_model_parameters": true,
+      "backup": "runs/quality-checkpoint-backups/part2/cnn_regularized.epoch7.edb491fea7abbcaf.pt",
+      "backup_sha256": "edb491fea7abbcaf211bf8c74e358c5901764f92c12d28ef0c390353794f3418",
+      "source_still_matches_observed_backup": true,
+      "latest_resumable_checkpoint": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/cnn_regularized/dilated_cnn/checkpoints/last.pt",
+      "latest_resumable_checkpoint_exists": true,
+      "last_checkpoint_bytes": 67309015
+    },
+    {
+      "candidate": "cnn_wide_regularized",
+      "model": "dilated_cnn",
+      "run_status": "completed",
+      "source_best": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/cnn_wide_regularized/dilated_cnn/checkpoints/best.pt",
+      "observed_best_epoch": 9,
+      "observed_best_step": 35442,
+      "selected_validation_macro_f1": 0.9541785348999801,
+      "verified_finite_model_parameters": true,
+      "backup": "runs/quality-checkpoint-backups/part2/cnn_wide_regularized.epoch9.9d83593910b277f0.pt",
+      "backup_sha256": "9d83593910b277f0f343279b6ebfc4eb38ebc39b614e47ae60ffb2a4faa3fa11",
+      "source_still_matches_observed_backup": true,
+      "latest_resumable_checkpoint": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/cnn_wide_regularized/dilated_cnn/checkpoints/last.pt",
+      "latest_resumable_checkpoint_exists": true,
+      "last_checkpoint_bytes": 104378199
+    },
+    {
+      "candidate": "mlp_regularized",
+      "model": "maxpool_mlp",
+      "run_status": "completed",
+      "source_best": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/mlp_regularized/maxpool_mlp/checkpoints/best.pt",
+      "observed_best_epoch": 7,
+      "observed_best_step": 27566,
+      "selected_validation_macro_f1": 0.9271780764438384,
+      "verified_finite_model_parameters": true,
+      "backup": "runs/quality-checkpoint-backups/part2/mlp_regularized.epoch7.43ec55ddaf25eeb4.pt",
+      "backup_sha256": "43ec55ddaf25eeb444ace8fe5492aa721981ca3a525cab9031dd0b82814cbcb7",
+      "source_still_matches_observed_backup": true,
+      "latest_resumable_checkpoint": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/mlp_regularized/maxpool_mlp/checkpoints/last.pt",
+      "latest_resumable_checkpoint_exists": true,
+      "last_checkpoint_bytes": 62362439
+    },
+    {
+      "candidate": "mlp_wide_regularized",
+      "model": "maxpool_mlp",
+      "run_status": "completed",
+      "source_best": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/mlp_wide_regularized/maxpool_mlp/checkpoints/best.pt",
+      "observed_best_epoch": 5,
+      "observed_best_step": 19690,
+      "selected_validation_macro_f1": 0.928285278783434,
+      "verified_finite_model_parameters": true,
+      "backup": "runs/quality-checkpoint-backups/part2/mlp_wide_regularized.epoch5.5ae7df4f747e8920.pt",
+      "backup_sha256": "5ae7df4f747e89209ec2ca1381652bf3ed0fcf671a6f15605cb08323a0d9599c",
+      "source_still_matches_observed_backup": true,
+      "latest_resumable_checkpoint": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/mlp_wide_regularized/maxpool_mlp/checkpoints/last.pt",
+      "latest_resumable_checkpoint_exists": true,
+      "last_checkpoint_bytes": 124098695
+    }
+  ]
+}

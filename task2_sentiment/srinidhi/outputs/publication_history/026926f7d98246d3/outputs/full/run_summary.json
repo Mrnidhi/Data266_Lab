@@ -1,0 +1,1181 @@
+{
+  "task": "sentiment",
+  "mode": "full",
+  "status": "completed",
+  "artifact_type": "assembled_validation_selection",
+  "assembled_results": true,
+  "description": "Derived evaluation of separately selected original checkpoints; no training in this invocation.",
+  "selection_rule": "Architectures and schedules were fixed before desktop training from the historical Part 2 selection: original MLP and CNN, original BiLSTM with 12 epochs/patience 4. For each family use its best validation macro-F1 checkpoint, with the configured minimum improvement and early stopping. No fresh test predictions or test metrics are used to select checkpoints.",
+  "selection_manifest_sha256": "0d590696619c90fbce43e9707b72decc147ddf6c594e4ed2e3aba312f32981d7",
+  "selection_frozen_utc": "2026-10-02T00:27:17.482170+00:00",
+  "evaluation_started_utc": "2026-10-02T00:27:38.822333+00:00",
+  "source_runs": {
+    "maxpool_mlp": {
+      "candidate_id": "desktop_maxpool_mlp",
+      "model_name": "maxpool_mlp",
+      "source_run": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/maxpool_mlp",
+      "checkpoint": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/maxpool_mlp/maxpool_mlp/checkpoints/best.pt",
+      "sha256": "8e3007821edf5d69b3d485b7c3d5a534c2ad0b83021895e8ced26e4d187128b6",
+      "config": {
+        "mode": "full",
+        "seed": 2342,
+        "dataset": "fancyzhx/yelp_polarity",
+        "dataset_revision": "main",
+        "data_dir": "task2_sentiment/srinidhi/data_processed/full",
+        "train_limit": null,
+        "validation_limit": null,
+        "test_limit": null,
+        "vocabulary_size": 40000,
+        "min_frequency": 2,
+        "embedding_dim": 128,
+        "max_length": 384,
+        "batch_size": 128,
+        "epochs": 6,
+        "early_stopping_patience": 2,
+        "early_stopping_min_delta": 0.0001,
+        "mlp_hidden": 64,
+        "lstm_hidden": 96,
+        "cnn_channels": 128,
+        "dilations": [
+          1,
+          2,
+          4,
+          8
+        ],
+        "dropout": 0.3,
+        "cnn_dropout": 0.2,
+        "learning_rates": {
+          "maxpool_mlp": 0.0015,
+          "bilstm": 0.001,
+          "dilated_cnn": 0.0008
+        },
+        "weight_decay": 0.0001,
+        "gradient_clip": 1.0,
+        "amp": true,
+        "bootstrap_samples": 1000,
+        "cpu_threads": 2,
+        "raw_data_cache": "task2_sentiment/data/huggingface",
+        "encoded_cache": "task2_sentiment/srinidhi/data_processed/full_encoded",
+        "num_workers": 0,
+        "checkpoint_every_steps": 1000,
+        "log_every_steps": 200,
+        "validation_only": true
+      },
+      "validation_macro_f1": 0.9264224689043884,
+      "selected_epoch": 5,
+      "parameter_count": 5128321,
+      "train_seconds": 86.92748030000439,
+      "provenance": {
+        "candidate": {
+          "name": "desktop_maxpool_mlp",
+          "model": "maxpool_mlp",
+          "hypothesis": "Replicate the already selected family recipe on the desktop.",
+          "overrides": {
+            "epochs": 6,
+            "early_stopping_patience": 2,
+            "num_workers": 0,
+            "checkpoint_every_steps": 1000,
+            "log_every_steps": 200
+          }
+        },
+        "config": {
+          "mode": "full",
+          "seed": 2342,
+          "dataset": "fancyzhx/yelp_polarity",
+          "dataset_revision": "main",
+          "data_dir": "task2_sentiment/srinidhi/data_processed/full",
+          "train_limit": null,
+          "validation_limit": null,
+          "test_limit": null,
+          "vocabulary_size": 40000,
+          "min_frequency": 2,
+          "embedding_dim": 128,
+          "max_length": 384,
+          "batch_size": 128,
+          "epochs": 6,
+          "early_stopping_patience": 2,
+          "early_stopping_min_delta": 0.0001,
+          "mlp_hidden": 64,
+          "lstm_hidden": 96,
+          "cnn_channels": 128,
+          "dilations": [
+            1,
+            2,
+            4,
+            8
+          ],
+          "dropout": 0.3,
+          "cnn_dropout": 0.2,
+          "learning_rates": {
+            "maxpool_mlp": 0.0015,
+            "bilstm": 0.001,
+            "dilated_cnn": 0.0008
+          },
+          "weight_decay": 0.0001,
+          "gradient_clip": 1.0,
+          "amp": true,
+          "bootstrap_samples": 1000,
+          "cpu_threads": 2,
+          "raw_data_cache": "task2_sentiment/data/huggingface",
+          "encoded_cache": "task2_sentiment/srinidhi/data_processed/full_encoded",
+          "num_workers": 0,
+          "checkpoint_every_steps": 1000,
+          "log_every_steps": 200,
+          "validation_only": true
+        },
+        "started_utc": "2026-10-01T23:30:09.324344+00:00",
+        "status": "completed",
+        "source_sha256": {
+          "src\\lab1\\__init__.py": "b9849907c7465e81037a43feb0ac630d991ac608c4dbabddcbcc691f8a7b015f",
+          "src\\lab1\\common.py": "9969a94baa2ef1cba3d0474262227fd178417d761b1528d4278779ef3c23bd4e",
+          "src\\lab1\\run.py": "4edd942dc83425e0c36e588ae59194fae632819e87b88ba6104a6257eafc4900",
+          "task1_llm\\srinidhi\\config.json": "4abfd4cdfd6d6e0cd7643aaf88f601dd4a304c47152e41640c763a67b1be0d6f",
+          "task1_llm\\srinidhi\\src\\gpt.py": "ddf1adb228f3ae8cb6ea94361f153408a3b36f34cdb34ac2c6fac218eb548664",
+          "task2_sentiment\\srinidhi\\config.json": "4b244db4f3c9c32feb22ac37a91bba8f6b779fba80b521dae4de63a854c3575a",
+          "task2_sentiment\\srinidhi\\src\\sentiment.py": "ea5d6b0b8276332f35c7e1a3693763d341bf1c106bd5f712a37b6f6e2c9be6c5",
+          "task3_gan\\srinidhi\\config.json": "024eac9a34069a835858b73a5877acd97709cbbf0261dec550eceef10ae03092",
+          "task3_gan\\srinidhi\\evaluate_local.py": "322cc4f1be766fa0e7e1db130b89b1b8f1b65a82c9f29428fe2a0855fb70f9a9",
+          "task3_gan\\srinidhi\\src\\cyclegan.py": "98f1a2901eccb0f366f726654a1297830fa5541786a21ad264e2b29b7f5cd71e"
+        },
+        "environment": {
+          "captured_utc": "2026-10-01T23:30:09.385154+00:00",
+          "python": "3.12.14",
+          "platform": "Windows-11-10.0.26200-SP0",
+          "machine": "AMD64",
+          "packages": {
+            "torch": "2.11.0+cu128",
+            "torchvision": "0.26.0+cu128",
+            "numpy": "2.5.3",
+            "pandas": "3.0.6",
+            "scikit-learn": "1.9.1",
+            "scipy": "1.16.3",
+            "matplotlib": "3.11.2",
+            "datasets": "5.0.1",
+            "Pillow": "12.3.0",
+            "clean-fid": null,
+            "lpips": null,
+            "prdc": null
+          },
+          "cuda_available": true,
+          "cuda_build": "12.8",
+          "cudnn": 91900,
+          "gpus": [
+            {
+              "index": 0,
+              "name": "NVIDIA GeForce RTX 5090",
+              "memory_bytes": 34190458880,
+              "compute_capability": [
+                12,
+                0
+              ]
+            }
+          ],
+          "mps_available": false,
+          "nvidia_smi": "name, uuid, driver_version, memory.total [MiB]\nNVIDIA GeForce RTX 5090, GPU-68465984-5de9-5fbf-2036-6e4f23dd51f1, 610.60, 32607 MiB",
+          "cpu_model": "Intel(R) Core(TM) Ultra 9 285K"
+        },
+        "test_policy": "No test predictions or test metrics; selection uses validation macro-F1 only",
+        "training_source_sha256": {
+          "src/lab1/run.py": "4edd942dc83425e0c36e588ae59194fae632819e87b88ba6104a6257eafc4900",
+          "src/lab1/common.py": "9969a94baa2ef1cba3d0474262227fd178417d761b1528d4278779ef3c23bd4e",
+          "src/lab1/__init__.py": "b9849907c7465e81037a43feb0ac630d991ac608c4dbabddcbcc691f8a7b015f",
+          "task2_sentiment/srinidhi/src/sentiment.py": "ea5d6b0b8276332f35c7e1a3693763d341bf1c106bd5f712a37b6f6e2c9be6c5",
+          "task2_sentiment/srinidhi/config.json": "4b244db4f3c9c32feb22ac37a91bba8f6b779fba80b521dae4de63a854c3575a",
+          "scripts/tune_sentiment.py": "a8c029b365d7f6f1bf8f21f1992fb3784cdd5a735a6959a2de5874a47b1230f8"
+        },
+        "result": {
+          "model_name": "maxpool_mlp",
+          "selected_epoch": 5,
+          "selected_validation_macro_f1": 0.9264224689043884,
+          "parameter_count": 5128321,
+          "train_seconds": 86.92748030000439,
+          "peak_cuda_memory_bytes": 162652160,
+          "peak_host_rss_bytes": 3087147008,
+          "host_peak_rss_scope": "process lifetime peak resident memory, including data preparation",
+          "completed_training_steps": 23628,
+          "test_evaluated": false
+        },
+        "ended_utc": "2026-10-01T23:31:53.143253+00:00",
+        "elapsed_seconds": 102.04833319999852
+      },
+      "recipe_path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/recipes/maxpool_mlp.json",
+      "recipe_sha256": "4cccb2a06c7f53526f930a5654ba5bbe5f67db4056aa8b250111dc991c9d5211",
+      "source_metadata_sha256": {
+        "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/maxpool_mlp/maxpool_mlp/checkpoints/best.pt": "8e3007821edf5d69b3d485b7c3d5a534c2ad0b83021895e8ced26e4d187128b6",
+        "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/maxpool_mlp/maxpool_mlp/checkpoints/last.pt": "aa362adfc48bf52211b69ad4df3fbe68265ae34bb409f164d1afe40899f71701",
+        "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/maxpool_mlp/maxpool_mlp/history.json": "195f2ec06f298c755193737f47590c762f1aa0aa65e06f38f3f75c7868c33073",
+        "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/maxpool_mlp/maxpool_mlp/validation_selection.json": "00645627097f07c8ff36189da3dec13004240a3e01b51c2edcd76cab80b62c95",
+        "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/maxpool_mlp/config.json": "b7557065e5d9f0af7bf9831d3ad30155cd119efea2337a87b96363bb286700aa",
+        "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/maxpool_mlp/provenance.json": "7b8aa9d779ae0e508828b0e12b89bbede83a45ff1aa66045e5aa542358d46c82"
+      }
+    },
+    "bilstm": {
+      "candidate_id": "desktop_bilstm",
+      "model_name": "bilstm",
+      "source_run": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/bilstm",
+      "checkpoint": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/bilstm/bilstm/checkpoints/best.pt",
+      "sha256": "0758cbe7405758fe6f99079f02fd3359aa1367d120cdd984c361c03a34fd54ba",
+      "config": {
+        "mode": "full",
+        "seed": 2342,
+        "dataset": "fancyzhx/yelp_polarity",
+        "dataset_revision": "main",
+        "data_dir": "task2_sentiment/srinidhi/data_processed/full",
+        "train_limit": null,
+        "validation_limit": null,
+        "test_limit": null,
+        "vocabulary_size": 40000,
+        "min_frequency": 2,
+        "embedding_dim": 128,
+        "max_length": 384,
+        "batch_size": 128,
+        "epochs": 12,
+        "early_stopping_patience": 4,
+        "early_stopping_min_delta": 0.0001,
+        "mlp_hidden": 64,
+        "lstm_hidden": 96,
+        "cnn_channels": 128,
+        "dilations": [
+          1,
+          2,
+          4,
+          8
+        ],
+        "dropout": 0.3,
+        "cnn_dropout": 0.2,
+        "learning_rates": {
+          "maxpool_mlp": 0.0015,
+          "bilstm": 0.001,
+          "dilated_cnn": 0.0008
+        },
+        "weight_decay": 0.0001,
+        "gradient_clip": 1.0,
+        "amp": true,
+        "bootstrap_samples": 1000,
+        "cpu_threads": 2,
+        "raw_data_cache": "task2_sentiment/data/huggingface",
+        "encoded_cache": "task2_sentiment/srinidhi/data_processed/full_encoded",
+        "num_workers": 0,
+        "checkpoint_every_steps": 1000,
+        "log_every_steps": 200,
+        "validation_only": true
+      },
+      "validation_macro_f1": 0.9588569539349926,
+      "selected_epoch": 11,
+      "parameter_count": 5305985,
+      "train_seconds": 2911.480776100001,
+      "provenance": {
+        "candidate": {
+          "name": "desktop_bilstm",
+          "model": "bilstm",
+          "hypothesis": "Replicate the already selected family recipe on the desktop.",
+          "overrides": {
+            "epochs": 12,
+            "early_stopping_patience": 4,
+            "num_workers": 0,
+            "checkpoint_every_steps": 1000,
+            "log_every_steps": 200
+          }
+        },
+        "config": {
+          "mode": "full",
+          "seed": 2342,
+          "dataset": "fancyzhx/yelp_polarity",
+          "dataset_revision": "main",
+          "data_dir": "task2_sentiment/srinidhi/data_processed/full",
+          "train_limit": null,
+          "validation_limit": null,
+          "test_limit": null,
+          "vocabulary_size": 40000,
+          "min_frequency": 2,
+          "embedding_dim": 128,
+          "max_length": 384,
+          "batch_size": 128,
+          "epochs": 12,
+          "early_stopping_patience": 4,
+          "early_stopping_min_delta": 0.0001,
+          "mlp_hidden": 64,
+          "lstm_hidden": 96,
+          "cnn_channels": 128,
+          "dilations": [
+            1,
+            2,
+            4,
+            8
+          ],
+          "dropout": 0.3,
+          "cnn_dropout": 0.2,
+          "learning_rates": {
+            "maxpool_mlp": 0.0015,
+            "bilstm": 0.001,
+            "dilated_cnn": 0.0008
+          },
+          "weight_decay": 0.0001,
+          "gradient_clip": 1.0,
+          "amp": true,
+          "bootstrap_samples": 1000,
+          "cpu_threads": 2,
+          "raw_data_cache": "task2_sentiment/data/huggingface",
+          "encoded_cache": "task2_sentiment/srinidhi/data_processed/full_encoded",
+          "num_workers": 0,
+          "checkpoint_every_steps": 1000,
+          "log_every_steps": 200,
+          "validation_only": true
+        },
+        "started_utc": "2026-10-01T23:31:56.116609+00:00",
+        "status": "completed",
+        "source_sha256": {
+          "src\\lab1\\__init__.py": "b9849907c7465e81037a43feb0ac630d991ac608c4dbabddcbcc691f8a7b015f",
+          "src\\lab1\\common.py": "9969a94baa2ef1cba3d0474262227fd178417d761b1528d4278779ef3c23bd4e",
+          "src\\lab1\\run.py": "4edd942dc83425e0c36e588ae59194fae632819e87b88ba6104a6257eafc4900",
+          "task1_llm\\srinidhi\\config.json": "4abfd4cdfd6d6e0cd7643aaf88f601dd4a304c47152e41640c763a67b1be0d6f",
+          "task1_llm\\srinidhi\\src\\gpt.py": "ddf1adb228f3ae8cb6ea94361f153408a3b36f34cdb34ac2c6fac218eb548664",
+          "task2_sentiment\\srinidhi\\config.json": "4b244db4f3c9c32feb22ac37a91bba8f6b779fba80b521dae4de63a854c3575a",
+          "task2_sentiment\\srinidhi\\src\\sentiment.py": "ea5d6b0b8276332f35c7e1a3693763d341bf1c106bd5f712a37b6f6e2c9be6c5",
+          "task3_gan\\srinidhi\\config.json": "024eac9a34069a835858b73a5877acd97709cbbf0261dec550eceef10ae03092",
+          "task3_gan\\srinidhi\\evaluate_local.py": "322cc4f1be766fa0e7e1db130b89b1b8f1b65a82c9f29428fe2a0855fb70f9a9",
+          "task3_gan\\srinidhi\\src\\cyclegan.py": "98f1a2901eccb0f366f726654a1297830fa5541786a21ad264e2b29b7f5cd71e"
+        },
+        "environment": {
+          "captured_utc": "2026-10-01T23:31:56.169909+00:00",
+          "python": "3.12.14",
+          "platform": "Windows-11-10.0.26200-SP0",
+          "machine": "AMD64",
+          "packages": {
+            "torch": "2.11.0+cu128",
+            "torchvision": "0.26.0+cu128",
+            "numpy": "2.5.3",
+            "pandas": "3.0.6",
+            "scikit-learn": "1.9.1",
+            "scipy": "1.16.3",
+            "matplotlib": "3.11.2",
+            "datasets": "5.0.1",
+            "Pillow": "12.3.0",
+            "clean-fid": null,
+            "lpips": null,
+            "prdc": null
+          },
+          "cuda_available": true,
+          "cuda_build": "12.8",
+          "cudnn": 91900,
+          "gpus": [
+            {
+              "index": 0,
+              "name": "NVIDIA GeForce RTX 5090",
+              "memory_bytes": 34190458880,
+              "compute_capability": [
+                12,
+                0
+              ]
+            }
+          ],
+          "mps_available": false,
+          "nvidia_smi": "name, uuid, driver_version, memory.total [MiB]\nNVIDIA GeForce RTX 5090, GPU-68465984-5de9-5fbf-2036-6e4f23dd51f1, 610.60, 32607 MiB",
+          "cpu_model": "Intel(R) Core(TM) Ultra 9 285K"
+        },
+        "test_policy": "No test predictions or test metrics; selection uses validation macro-F1 only",
+        "training_source_sha256": {
+          "src/lab1/run.py": "4edd942dc83425e0c36e588ae59194fae632819e87b88ba6104a6257eafc4900",
+          "src/lab1/common.py": "9969a94baa2ef1cba3d0474262227fd178417d761b1528d4278779ef3c23bd4e",
+          "src/lab1/__init__.py": "b9849907c7465e81037a43feb0ac630d991ac608c4dbabddcbcc691f8a7b015f",
+          "task2_sentiment/srinidhi/src/sentiment.py": "ea5d6b0b8276332f35c7e1a3693763d341bf1c106bd5f712a37b6f6e2c9be6c5",
+          "task2_sentiment/srinidhi/config.json": "4b244db4f3c9c32feb22ac37a91bba8f6b779fba80b521dae4de63a854c3575a",
+          "scripts/tune_sentiment.py": "a8c029b365d7f6f1bf8f21f1992fb3784cdd5a735a6959a2de5874a47b1230f8"
+        },
+        "result": {
+          "model_name": "bilstm",
+          "selected_epoch": 11,
+          "selected_validation_macro_f1": 0.9588569539349926,
+          "parameter_count": 5305985,
+          "train_seconds": 2911.480776100001,
+          "peak_cuda_memory_bytes": 229768704,
+          "peak_host_rss_bytes": 3493978112,
+          "host_peak_rss_scope": "process lifetime peak resident memory, including data preparation",
+          "completed_training_steps": 47256,
+          "test_evaluated": false
+        },
+        "ended_utc": "2026-10-02T00:22:40.378591+00:00",
+        "elapsed_seconds": 3042.5561519000003
+      },
+      "recipe_path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/recipes/bilstm.json",
+      "recipe_sha256": "3cc9a90050363cd96740ee41fa4cdfaa206790799ee5f80fd2694ea6b4c3a26a",
+      "source_metadata_sha256": {
+        "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/bilstm/bilstm/checkpoints/best.pt": "0758cbe7405758fe6f99079f02fd3359aa1367d120cdd984c361c03a34fd54ba",
+        "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/bilstm/bilstm/checkpoints/last.pt": "948cad15072dc00a6940d05073960e3ddb7dd00389fcc0697bc70e20adee630e",
+        "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/bilstm/bilstm/history.json": "ed545c418149e320c62fd93286a46970a1e4386dd9344adf49317437b7b2a95f",
+        "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/bilstm/bilstm/validation_selection.json": "5a972f726544695302fdbcd07ea78808e6fa4fd18c16670ee67052de98423dcf",
+        "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/bilstm/config.json": "55976d013e75fb55819300839a7ead50b4c7946d7ec7f0912f71b2c46025a005",
+        "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/bilstm/provenance.json": "b04bbfb969be747140c76b53fcc909d323e83c78c8384fa1be9fd46dc03b79c0"
+      }
+    },
+    "dilated_cnn": {
+      "candidate_id": "desktop_dilated_cnn",
+      "model_name": "dilated_cnn",
+      "source_run": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/dilated_cnn",
+      "checkpoint": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/dilated_cnn/dilated_cnn/checkpoints/best.pt",
+      "sha256": "f3883a005a369ef495c99bebe3cd51c4a7858c3f58121b6dbcfecee341dd8ac2",
+      "config": {
+        "mode": "full",
+        "seed": 2342,
+        "dataset": "fancyzhx/yelp_polarity",
+        "dataset_revision": "main",
+        "data_dir": "task2_sentiment/srinidhi/data_processed/full",
+        "train_limit": null,
+        "validation_limit": null,
+        "test_limit": null,
+        "vocabulary_size": 40000,
+        "min_frequency": 2,
+        "embedding_dim": 128,
+        "max_length": 384,
+        "batch_size": 128,
+        "epochs": 6,
+        "early_stopping_patience": 2,
+        "early_stopping_min_delta": 0.0001,
+        "mlp_hidden": 64,
+        "lstm_hidden": 96,
+        "cnn_channels": 128,
+        "dilations": [
+          1,
+          2,
+          4,
+          8
+        ],
+        "dropout": 0.3,
+        "cnn_dropout": 0.2,
+        "learning_rates": {
+          "maxpool_mlp": 0.0015,
+          "bilstm": 0.001,
+          "dilated_cnn": 0.0008
+        },
+        "weight_decay": 0.0001,
+        "gradient_clip": 1.0,
+        "amp": true,
+        "bootstrap_samples": 1000,
+        "cpu_threads": 2,
+        "raw_data_cache": "task2_sentiment/data/huggingface",
+        "encoded_cache": "task2_sentiment/srinidhi/data_processed/full_encoded",
+        "num_workers": 0,
+        "checkpoint_every_steps": 1000,
+        "log_every_steps": 200,
+        "validation_only": true
+      },
+      "validation_macro_f1": 0.9534456770367985,
+      "selected_epoch": 6,
+      "parameter_count": 5539073,
+      "train_seconds": 240.7418473999969,
+      "provenance": {
+        "candidate": {
+          "name": "desktop_dilated_cnn",
+          "model": "dilated_cnn",
+          "hypothesis": "Replicate the already selected family recipe on the desktop.",
+          "overrides": {
+            "epochs": 6,
+            "early_stopping_patience": 2,
+            "num_workers": 0,
+            "checkpoint_every_steps": 1000,
+            "log_every_steps": 200
+          }
+        },
+        "config": {
+          "mode": "full",
+          "seed": 2342,
+          "dataset": "fancyzhx/yelp_polarity",
+          "dataset_revision": "main",
+          "data_dir": "task2_sentiment/srinidhi/data_processed/full",
+          "train_limit": null,
+          "validation_limit": null,
+          "test_limit": null,
+          "vocabulary_size": 40000,
+          "min_frequency": 2,
+          "embedding_dim": 128,
+          "max_length": 384,
+          "batch_size": 128,
+          "epochs": 6,
+          "early_stopping_patience": 2,
+          "early_stopping_min_delta": 0.0001,
+          "mlp_hidden": 64,
+          "lstm_hidden": 96,
+          "cnn_channels": 128,
+          "dilations": [
+            1,
+            2,
+            4,
+            8
+          ],
+          "dropout": 0.3,
+          "cnn_dropout": 0.2,
+          "learning_rates": {
+            "maxpool_mlp": 0.0015,
+            "bilstm": 0.001,
+            "dilated_cnn": 0.0008
+          },
+          "weight_decay": 0.0001,
+          "gradient_clip": 1.0,
+          "amp": true,
+          "bootstrap_samples": 1000,
+          "cpu_threads": 2,
+          "raw_data_cache": "task2_sentiment/data/huggingface",
+          "encoded_cache": "task2_sentiment/srinidhi/data_processed/full_encoded",
+          "num_workers": 0,
+          "checkpoint_every_steps": 1000,
+          "log_every_steps": 200,
+          "validation_only": true
+        },
+        "started_utc": "2026-10-02T00:22:49.870966+00:00",
+        "status": "completed",
+        "source_sha256": {
+          "src\\lab1\\__init__.py": "b9849907c7465e81037a43feb0ac630d991ac608c4dbabddcbcc691f8a7b015f",
+          "src\\lab1\\common.py": "9969a94baa2ef1cba3d0474262227fd178417d761b1528d4278779ef3c23bd4e",
+          "src\\lab1\\run.py": "4edd942dc83425e0c36e588ae59194fae632819e87b88ba6104a6257eafc4900",
+          "task1_llm\\srinidhi\\config.json": "4abfd4cdfd6d6e0cd7643aaf88f601dd4a304c47152e41640c763a67b1be0d6f",
+          "task1_llm\\srinidhi\\src\\gpt.py": "ddf1adb228f3ae8cb6ea94361f153408a3b36f34cdb34ac2c6fac218eb548664",
+          "task2_sentiment\\srinidhi\\config.json": "4b244db4f3c9c32feb22ac37a91bba8f6b779fba80b521dae4de63a854c3575a",
+          "task2_sentiment\\srinidhi\\src\\sentiment.py": "ea5d6b0b8276332f35c7e1a3693763d341bf1c106bd5f712a37b6f6e2c9be6c5",
+          "task3_gan\\srinidhi\\config.json": "024eac9a34069a835858b73a5877acd97709cbbf0261dec550eceef10ae03092",
+          "task3_gan\\srinidhi\\evaluate_local.py": "322cc4f1be766fa0e7e1db130b89b1b8f1b65a82c9f29428fe2a0855fb70f9a9",
+          "task3_gan\\srinidhi\\src\\cyclegan.py": "98f1a2901eccb0f366f726654a1297830fa5541786a21ad264e2b29b7f5cd71e"
+        },
+        "environment": {
+          "captured_utc": "2026-10-02T00:22:50.151616+00:00",
+          "python": "3.12.14",
+          "platform": "Windows-11-10.0.26200-SP0",
+          "machine": "AMD64",
+          "packages": {
+            "torch": "2.11.0+cu128",
+            "torchvision": "0.26.0+cu128",
+            "numpy": "2.5.3",
+            "pandas": "3.0.6",
+            "scikit-learn": "1.9.1",
+            "scipy": "1.16.3",
+            "matplotlib": "3.11.2",
+            "datasets": "5.0.1",
+            "Pillow": "12.3.0",
+            "clean-fid": null,
+            "lpips": null,
+            "prdc": null
+          },
+          "cuda_available": true,
+          "cuda_build": "12.8",
+          "cudnn": 91900,
+          "gpus": [
+            {
+              "index": 0,
+              "name": "NVIDIA GeForce RTX 5090",
+              "memory_bytes": 34190458880,
+              "compute_capability": [
+                12,
+                0
+              ]
+            }
+          ],
+          "mps_available": false,
+          "nvidia_smi": "name, uuid, driver_version, memory.total [MiB]\nNVIDIA GeForce RTX 5090, GPU-68465984-5de9-5fbf-2036-6e4f23dd51f1, 610.60, 32607 MiB",
+          "cpu_model": "Intel(R) Core(TM) Ultra 9 285K"
+        },
+        "test_policy": "No test predictions or test metrics; selection uses validation macro-F1 only",
+        "training_source_sha256": {
+          "src/lab1/run.py": "4edd942dc83425e0c36e588ae59194fae632819e87b88ba6104a6257eafc4900",
+          "src/lab1/common.py": "9969a94baa2ef1cba3d0474262227fd178417d761b1528d4278779ef3c23bd4e",
+          "src/lab1/__init__.py": "b9849907c7465e81037a43feb0ac630d991ac608c4dbabddcbcc691f8a7b015f",
+          "task2_sentiment/srinidhi/src/sentiment.py": "ea5d6b0b8276332f35c7e1a3693763d341bf1c106bd5f712a37b6f6e2c9be6c5",
+          "task2_sentiment/srinidhi/config.json": "4b244db4f3c9c32feb22ac37a91bba8f6b779fba80b521dae4de63a854c3575a",
+          "scripts/tune_sentiment.py": "a8c029b365d7f6f1bf8f21f1992fb3784cdd5a735a6959a2de5874a47b1230f8"
+        },
+        "result": {
+          "model_name": "dilated_cnn",
+          "selected_epoch": 6,
+          "selected_validation_macro_f1": 0.9534456770367985,
+          "parameter_count": 5539073,
+          "train_seconds": 240.7418473999969,
+          "peak_cuda_memory_bytes": 470373888,
+          "peak_host_rss_bytes": 3339632640,
+          "host_peak_rss_scope": "process lifetime peak resident memory, including data preparation",
+          "completed_training_steps": 23628,
+          "test_evaluated": false
+        },
+        "ended_utc": "2026-10-02T00:27:15.482604+00:00",
+        "elapsed_seconds": 263.2146718999993
+      },
+      "recipe_path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/recipes/dilated_cnn.json",
+      "recipe_sha256": "1fe07d0de2a0ebac53053a81ea2c7fafe5ccafc12dc7f616f8d74c08d342fdb5",
+      "source_metadata_sha256": {
+        "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/dilated_cnn/dilated_cnn/checkpoints/best.pt": "f3883a005a369ef495c99bebe3cd51c4a7858c3f58121b6dbcfecee341dd8ac2",
+        "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/dilated_cnn/dilated_cnn/checkpoints/last.pt": "a82dc57ab44e4691ee851e9fec10a84bc3351d69e691a592c67a3f9dd031a299",
+        "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/dilated_cnn/dilated_cnn/history.json": "7396b2721fd4d94ba8c30182d25a4c6d7186e0f197e6aeb470c3d8c5856d8cee",
+        "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/dilated_cnn/dilated_cnn/validation_selection.json": "20855f99d3cfceb67da03878bd987f8e49838d4af4e63191ca4e12f75a62236e",
+        "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/dilated_cnn/config.json": "b7557065e5d9f0af7bf9831d3ad30155cd119efea2337a87b96363bb286700aa",
+        "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/dilated_cnn/provenance.json": "9e4978eb63a3da30b479167c850b6926d4e3b4d9f44d9555eda52a1a65f90402"
+      }
+    }
+  },
+  "config": {
+    "mode": "full",
+    "seed": 2342,
+    "dataset": "fancyzhx/yelp_polarity",
+    "dataset_revision": "main",
+    "data_dir": "task2_sentiment/srinidhi/data_processed/full",
+    "train_limit": null,
+    "validation_limit": null,
+    "test_limit": null,
+    "vocabulary_size": 40000,
+    "min_frequency": 2,
+    "embedding_dim": 128,
+    "max_length": 384,
+    "batch_size": 128,
+    "epochs": 6,
+    "early_stopping_patience": 2,
+    "early_stopping_min_delta": 0.0001,
+    "mlp_hidden": 64,
+    "lstm_hidden": 96,
+    "cnn_channels": 128,
+    "dilations": [
+      1,
+      2,
+      4,
+      8
+    ],
+    "dropout": 0.3,
+    "cnn_dropout": 0.2,
+    "learning_rates": {
+      "maxpool_mlp": 0.0015,
+      "bilstm": 0.001,
+      "dilated_cnn": 0.0008
+    },
+    "weight_decay": 0.0001,
+    "gradient_clip": 1.0,
+    "amp": true,
+    "bootstrap_samples": 1000,
+    "cpu_threads": 2,
+    "raw_data_cache": "task2_sentiment/data/huggingface",
+    "encoded_cache": "task2_sentiment/srinidhi/data_processed/full_encoded",
+    "artifact_type": "assembled_validation_selection",
+    "model_configs": {
+      "maxpool_mlp": {
+        "mode": "full",
+        "seed": 2342,
+        "dataset": "fancyzhx/yelp_polarity",
+        "dataset_revision": "main",
+        "data_dir": "task2_sentiment/srinidhi/data_processed/full",
+        "train_limit": null,
+        "validation_limit": null,
+        "test_limit": null,
+        "vocabulary_size": 40000,
+        "min_frequency": 2,
+        "embedding_dim": 128,
+        "max_length": 384,
+        "batch_size": 128,
+        "epochs": 6,
+        "early_stopping_patience": 2,
+        "early_stopping_min_delta": 0.0001,
+        "mlp_hidden": 64,
+        "lstm_hidden": 96,
+        "cnn_channels": 128,
+        "dilations": [
+          1,
+          2,
+          4,
+          8
+        ],
+        "dropout": 0.3,
+        "cnn_dropout": 0.2,
+        "learning_rates": {
+          "maxpool_mlp": 0.0015,
+          "bilstm": 0.001,
+          "dilated_cnn": 0.0008
+        },
+        "weight_decay": 0.0001,
+        "gradient_clip": 1.0,
+        "amp": true,
+        "bootstrap_samples": 1000,
+        "cpu_threads": 2,
+        "raw_data_cache": "task2_sentiment/data/huggingface",
+        "encoded_cache": "task2_sentiment/srinidhi/data_processed/full_encoded",
+        "num_workers": 0,
+        "checkpoint_every_steps": 1000,
+        "log_every_steps": 200,
+        "validation_only": true
+      },
+      "bilstm": {
+        "mode": "full",
+        "seed": 2342,
+        "dataset": "fancyzhx/yelp_polarity",
+        "dataset_revision": "main",
+        "data_dir": "task2_sentiment/srinidhi/data_processed/full",
+        "train_limit": null,
+        "validation_limit": null,
+        "test_limit": null,
+        "vocabulary_size": 40000,
+        "min_frequency": 2,
+        "embedding_dim": 128,
+        "max_length": 384,
+        "batch_size": 128,
+        "epochs": 12,
+        "early_stopping_patience": 4,
+        "early_stopping_min_delta": 0.0001,
+        "mlp_hidden": 64,
+        "lstm_hidden": 96,
+        "cnn_channels": 128,
+        "dilations": [
+          1,
+          2,
+          4,
+          8
+        ],
+        "dropout": 0.3,
+        "cnn_dropout": 0.2,
+        "learning_rates": {
+          "maxpool_mlp": 0.0015,
+          "bilstm": 0.001,
+          "dilated_cnn": 0.0008
+        },
+        "weight_decay": 0.0001,
+        "gradient_clip": 1.0,
+        "amp": true,
+        "bootstrap_samples": 1000,
+        "cpu_threads": 2,
+        "raw_data_cache": "task2_sentiment/data/huggingface",
+        "encoded_cache": "task2_sentiment/srinidhi/data_processed/full_encoded",
+        "num_workers": 0,
+        "checkpoint_every_steps": 1000,
+        "log_every_steps": 200,
+        "validation_only": true
+      },
+      "dilated_cnn": {
+        "mode": "full",
+        "seed": 2342,
+        "dataset": "fancyzhx/yelp_polarity",
+        "dataset_revision": "main",
+        "data_dir": "task2_sentiment/srinidhi/data_processed/full",
+        "train_limit": null,
+        "validation_limit": null,
+        "test_limit": null,
+        "vocabulary_size": 40000,
+        "min_frequency": 2,
+        "embedding_dim": 128,
+        "max_length": 384,
+        "batch_size": 128,
+        "epochs": 6,
+        "early_stopping_patience": 2,
+        "early_stopping_min_delta": 0.0001,
+        "mlp_hidden": 64,
+        "lstm_hidden": 96,
+        "cnn_channels": 128,
+        "dilations": [
+          1,
+          2,
+          4,
+          8
+        ],
+        "dropout": 0.3,
+        "cnn_dropout": 0.2,
+        "learning_rates": {
+          "maxpool_mlp": 0.0015,
+          "bilstm": 0.001,
+          "dilated_cnn": 0.0008
+        },
+        "weight_decay": 0.0001,
+        "gradient_clip": 1.0,
+        "amp": true,
+        "bootstrap_samples": 1000,
+        "cpu_threads": 2,
+        "raw_data_cache": "task2_sentiment/data/huggingface",
+        "encoded_cache": "task2_sentiment/srinidhi/data_processed/full_encoded",
+        "num_workers": 0,
+        "checkpoint_every_steps": 1000,
+        "log_every_steps": 200,
+        "validation_only": true
+      }
+    }
+  },
+  "environment": {
+    "captured_utc": "2026-10-01T23:30:09.385154+00:00",
+    "python": "3.12.14",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "machine": "AMD64",
+    "packages": {
+      "torch": "2.11.0+cu128",
+      "torchvision": "0.26.0+cu128",
+      "numpy": "2.5.3",
+      "pandas": "3.0.6",
+      "scikit-learn": "1.9.1",
+      "scipy": "1.16.3",
+      "matplotlib": "3.11.2",
+      "datasets": "5.0.1",
+      "Pillow": "12.3.0",
+      "clean-fid": null,
+      "lpips": null,
+      "prdc": null
+    },
+    "cuda_available": true,
+    "cuda_build": "12.8",
+    "cudnn": 91900,
+    "gpus": [
+      {
+        "index": 0,
+        "name": "NVIDIA GeForce RTX 5090",
+        "memory_bytes": 34190458880,
+        "compute_capability": [
+          12,
+          0
+        ]
+      }
+    ],
+    "mps_available": false,
+    "nvidia_smi": "name, uuid, driver_version, memory.total [MiB]\nNVIDIA GeForce RTX 5090, GPU-68465984-5de9-5fbf-2036-6e4f23dd51f1, 610.60, 32607 MiB",
+    "cpu_model": "Intel(R) Core(TM) Ultra 9 285K",
+    "cpu": {
+      "details": "Intel(R) Core(TM) Ultra 9 285K",
+      "source": "selected source provenance",
+      "scope": "Recorded source training host"
+    }
+  },
+  "environment_scope": "Representative source training environment; per-model originals are in source_runs.",
+  "evaluation_environment": {
+    "captured_utc": "2026-10-02T00:27:38.912539+00:00",
+    "python": "3.12.14",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "machine": "AMD64",
+    "packages": {
+      "torch": "2.11.0+cu128",
+      "torchvision": "0.26.0+cu128",
+      "numpy": "2.5.3",
+      "pandas": "3.0.6",
+      "scikit-learn": "1.9.1",
+      "scipy": "1.16.3",
+      "matplotlib": "3.11.2",
+      "datasets": "5.0.1",
+      "Pillow": "12.3.0",
+      "clean-fid": null,
+      "lpips": null,
+      "prdc": null
+    },
+    "cuda_available": true,
+    "cuda_build": "12.8",
+    "cudnn": 91900,
+    "gpus": [
+      {
+        "index": 0,
+        "name": "NVIDIA GeForce RTX 5090",
+        "memory_bytes": 34190458880,
+        "compute_capability": [
+          12,
+          0
+        ]
+      }
+    ],
+    "mps_available": false,
+    "nvidia_smi": "name, uuid, driver_version, memory.total [MiB]\nNVIDIA GeForce RTX 5090, GPU-68465984-5de9-5fbf-2036-6e4f23dd51f1, 610.60, 32607 MiB"
+  },
+  "device": "cuda",
+  "source_sha256": {
+    "src\\lab1\\__init__.py": "b9849907c7465e81037a43feb0ac630d991ac608c4dbabddcbcc691f8a7b015f",
+    "src\\lab1\\common.py": "9969a94baa2ef1cba3d0474262227fd178417d761b1528d4278779ef3c23bd4e",
+    "src\\lab1\\run.py": "4edd942dc83425e0c36e588ae59194fae632819e87b88ba6104a6257eafc4900",
+    "task1_llm\\srinidhi\\config.json": "4abfd4cdfd6d6e0cd7643aaf88f601dd4a304c47152e41640c763a67b1be0d6f",
+    "task1_llm\\srinidhi\\src\\gpt.py": "ddf1adb228f3ae8cb6ea94361f153408a3b36f34cdb34ac2c6fac218eb548664",
+    "task2_sentiment\\srinidhi\\config.json": "4b244db4f3c9c32feb22ac37a91bba8f6b779fba80b521dae4de63a854c3575a",
+    "task2_sentiment\\srinidhi\\src\\sentiment.py": "ea5d6b0b8276332f35c7e1a3693763d341bf1c106bd5f712a37b6f6e2c9be6c5",
+    "task3_gan\\srinidhi\\config.json": "024eac9a34069a835858b73a5877acd97709cbbf0261dec550eceef10ae03092",
+    "task3_gan\\srinidhi\\evaluate_local.py": "322cc4f1be766fa0e7e1db130b89b1b8f1b65a82c9f29428fe2a0855fb70f9a9",
+    "task3_gan\\srinidhi\\src\\cyclegan.py": "98f1a2901eccb0f366f726654a1297830fa5541786a21ad264e2b29b7f5cd71e",
+    "scripts/select_sentiment_candidates.py": "412720683a37be7b0c49477836e8dd999db29271083a56c5564ca0ffdbaa2bb2",
+    "scripts/finalize_sentiment_selection.py": "c56f585a7437ba68e6cdd391e9f708860cd8b4b6922e375ed8b96483304b8e26",
+    "scripts/tune_sentiment.py": "a8c029b365d7f6f1bf8f21f1992fb3784cdd5a735a6959a2de5874a47b1230f8"
+  },
+  "source_sha256_scope": "Current project sources and selector/finalizer/tuning scripts; original training evidence remains in source_runs.",
+  "started_utc": "2026-10-02T00:27:38.822333+00:00",
+  "summary": {
+    "mode": "full",
+    "synthetic": false,
+    "models": {
+      "maxpool_mlp": {
+        "count": 38000,
+        "accuracy": 0.931921052631579,
+        "mcc": 0.8639534272101965,
+        "brier": 0.05284625926707595,
+        "confusion_matrix": [
+          [
+            17859,
+            1141
+          ],
+          [
+            1446,
+            17554
+          ]
+        ],
+        "threshold": 0.5,
+        "macro": {
+          "precision": 0.932032381751558,
+          "recall": 0.9319210526315789,
+          "f1": 0.9319166665844245
+        },
+        "micro": {
+          "precision": 0.931921052631579,
+          "recall": 0.931921052631579,
+          "f1": 0.931921052631579
+        },
+        "weighted": {
+          "precision": 0.9320323817515581,
+          "recall": 0.931921052631579,
+          "f1": 0.9319166665844245
+        },
+        "per_class": [
+          {
+            "label": 0,
+            "precision": 0.925097125097125,
+            "recall": 0.9399473684210526,
+            "f1": 0.932463124918418,
+            "support": 19000
+          },
+          {
+            "label": 1,
+            "precision": 0.938967638405991,
+            "recall": 0.9238947368421052,
+            "f1": 0.931370208250431,
+            "support": 19000
+          }
+        ],
+        "ece_15": 0.027213658512513353,
+        "ece_definition": "Top-label confidence ECE; 15 equal-width bins on [0,1]; threshold 0.5.",
+        "roc_auc": 0.981636984764543,
+        "pr_auc_trapezoidal": 0.9823718971902946,
+        "bootstrap_95_percentile": {
+          "accuracy": {
+            "low": 0.9292105263157895,
+            "high": 0.9345
+          },
+          "macro_f1": {
+            "low": 0.9292072061957165,
+            "high": 0.9344881732571072
+          },
+          "mcc": {
+            "low": 0.8586106567943932,
+            "high": 0.8691249795358135
+          }
+        },
+        "bootstrap_samples": 1000,
+        "uncertainty_scope": "IID test-row resampling; does not include training-seed uncertainty.",
+        "test_loss": 0.18780950866247478,
+        "selected_epoch": 5,
+        "selected_validation_macro_f1": 0.9264224689043884,
+        "parameter_count": 5128321,
+        "mode": "full",
+        "synthetic": false,
+        "train_seconds": 86.92748030000439,
+        "peak_cuda_memory_bytes": 162652160,
+        "peak_host_rss_bytes": 3087147008,
+        "host_peak_rss_scope": "process lifetime peak resident memory, including data preparation",
+        "resume_scaler_status": "checkpoint_evaluation_only",
+        "completed_training_steps": 23628,
+        "evaluation_host_peak_rss_bytes": 2694193152,
+        "evaluation_host_peak_rss_scope": "evaluation process lifetime peak resident memory"
+      },
+      "bilstm": {
+        "count": 38000,
+        "accuracy": 0.9612105263157895,
+        "mcc": 0.9224250591845816,
+        "brier": 0.029803467741264394,
+        "confusion_matrix": [
+          [
+            18291,
+            709
+          ],
+          [
+            765,
+            18235
+          ]
+        ],
+        "threshold": 0.5,
+        "macro": {
+          "precision": 0.9612145328774933,
+          "recall": 0.9612105263157895,
+          "f1": 0.9612104420747551
+        },
+        "micro": {
+          "precision": 0.9612105263157895,
+          "recall": 0.9612105263157895,
+          "f1": 0.9612105263157895
+        },
+        "weighted": {
+          "precision": 0.9612145328774934,
+          "recall": 0.9612105263157895,
+          "f1": 0.961210442074755
+        },
+        "per_class": [
+          {
+            "label": 0,
+            "precision": 0.9598551637279596,
+            "recall": 0.9626842105263158,
+            "f1": 0.9612676056338029,
+            "support": 19000
+          },
+          {
+            "label": 1,
+            "precision": 0.962573902027027,
+            "recall": 0.9597368421052631,
+            "f1": 0.9611532785157073,
+            "support": 19000
+          }
+        ],
+        "ece_15": 0.014531404478661929,
+        "ece_definition": "Top-label confidence ECE; 15 equal-width bins on [0,1]; threshold 0.5.",
+        "roc_auc": 0.9934010664819942,
+        "pr_auc_trapezoidal": 0.9935085887819308,
+        "bootstrap_95_percentile": {
+          "accuracy": {
+            "low": 0.9591309210526316,
+            "high": 0.963078947368421
+          },
+          "macro_f1": {
+            "low": 0.959130357761888,
+            "high": 0.9630786168912975
+          },
+          "mcc": {
+            "low": 0.9182619325100142,
+            "high": 0.9261592747173191
+          }
+        },
+        "bootstrap_samples": 1000,
+        "uncertainty_scope": "IID test-row resampling; does not include training-seed uncertainty.",
+        "test_loss": 0.11111508190004449,
+        "selected_epoch": 11,
+        "selected_validation_macro_f1": 0.9588569539349926,
+        "parameter_count": 5305985,
+        "mode": "full",
+        "synthetic": false,
+        "train_seconds": 2911.480776100001,
+        "peak_cuda_memory_bytes": 229768704,
+        "peak_host_rss_bytes": 3493978112,
+        "host_peak_rss_scope": "process lifetime peak resident memory, including data preparation",
+        "resume_scaler_status": "checkpoint_evaluation_only",
+        "completed_training_steps": 47256,
+        "evaluation_host_peak_rss_bytes": 2814107648,
+        "evaluation_host_peak_rss_scope": "evaluation process lifetime peak resident memory"
+      },
+      "dilated_cnn": {
+        "count": 38000,
+        "accuracy": 0.9562631578947368,
+        "mcc": 0.9125637089167522,
+        "brier": 0.033396921238986986,
+        "confusion_matrix": [
+          [
+            18083,
+            917
+          ],
+          [
+            745,
+            18255
+          ]
+        ],
+        "threshold": 0.5,
+        "macro": {
+          "precision": 0.9563005517881553,
+          "recall": 0.9562631578947368,
+          "f1": 0.9562622618163114
+        },
+        "micro": {
+          "precision": 0.9562631578947368,
+          "recall": 0.9562631578947368,
+          "f1": 0.9562631578947368
+        },
+        "weighted": {
+          "precision": 0.9563005517881553,
+          "recall": 0.9562631578947368,
+          "f1": 0.9562622618163114
+        },
+        "per_class": [
+          {
+            "label": 0,
+            "precision": 0.960431272572764,
+            "recall": 0.9517368421052631,
+            "f1": 0.9560642910013747,
+            "support": 19000
+          },
+          {
+            "label": 1,
+            "precision": 0.9521698310035468,
+            "recall": 0.9607894736842105,
+            "f1": 0.956460232631248,
+            "support": 19000
+          }
+        ],
+        "ece_15": 0.012759035404108648,
+        "ece_definition": "Top-label confidence ECE; 15 equal-width bins on [0,1]; threshold 0.5.",
+        "roc_auc": 0.9917749709141273,
+        "pr_auc_trapezoidal": 0.991868380653359,
+        "bootstrap_95_percentile": {
+          "accuracy": {
+            "low": 0.9542361842105264,
+            "high": 0.9581842105263157
+          },
+          "macro_f1": {
+            "low": 0.9542244147086671,
+            "high": 0.9581805305784845
+          },
+          "mcc": {
+            "low": 0.908475761584062,
+            "high": 0.9163976899570747
+          }
+        },
+        "bootstrap_samples": 1000,
+        "uncertainty_scope": "IID test-row resampling; does not include training-seed uncertainty.",
+        "test_loss": 0.11972266261201156,
+        "selected_epoch": 6,
+        "selected_validation_macro_f1": 0.9534456770367985,
+        "parameter_count": 5539073,
+        "mode": "full",
+        "synthetic": false,
+        "train_seconds": 240.7418473999969,
+        "peak_cuda_memory_bytes": 470373888,
+        "peak_host_rss_bytes": 3339632640,
+        "host_peak_rss_scope": "process lifetime peak resident memory, including data preparation",
+        "resume_scaler_status": "checkpoint_evaluation_only",
+        "completed_training_steps": 23628,
+        "evaluation_host_peak_rss_bytes": 2882334720,
+        "evaluation_host_peak_rss_scope": "evaluation process lifetime peak resident memory"
+      }
+    },
+    "paired_mcnemar": {
+      "bilstm": {
+        "table": [
+          [
+            34825,
+            588
+          ],
+          [
+            1701,
+            886
+          ]
+        ],
+        "table_definition": "Rows baseline correct/incorrect, columns other correct/incorrect",
+        "discordant_pairs": 2289,
+        "pvalue_exact_two_sided": 1.303491563145497e-124,
+        "test": "Paired exact McNemar (binomial), no continuity correction",
+        "multiple_comparisons": "Two prespecified baseline comparisons; p-values are unadjusted."
+      },
+      "dilated_cnn": {
+        "table": [
+          [
+            34815,
+            598
+          ],
+          [
+            1523,
+            1064
+          ]
+        ],
+        "table_definition": "Rows baseline correct/incorrect, columns other correct/incorrect",
+        "discordant_pairs": 2121,
+        "pvalue_exact_two_sided": 1.5497944409153588e-92,
+        "test": "Paired exact McNemar (binomial), no continuity correction",
+        "multiple_comparisons": "Two prespecified baseline comparisons; p-values are unadjusted."
+      }
+    },
+    "manual_error_review_complete": false,
+    "artifact_type": "assembled_validation_selection",
+    "selection_manifest_sha256": "0d590696619c90fbce43e9707b72decc147ddf6c594e4ed2e3aba312f32981d7",
+    "fingerprint": "46cab25959c841830bee44977b7bb78bf829d5420c90869e8d073736efa09e31"
+  },
+  "ended_utc": "2026-10-02T00:27:56.882964+00:00",
+  "elapsed_seconds": 17.802628800000093
+}

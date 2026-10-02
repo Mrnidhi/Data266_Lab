@@ -270,8 +270,45 @@ def metric_rows(evidence):
     return rows
 
 
+def matched_evaluation_note(root, evidence):
+    """Explain overfitting using the selected model's same-mode split losses."""
+    path = Path(root) / "verification/part1_quality_comparison.json"
+    if not path.is_file():
+        return ""
+    comparison = read_json(path)
+    if comparison.get("promotion_rule", {}).get("preferred_run") != evidence["run"]:
+        return ""
+    rows = [row for row in comparison["candidates"] if row["run"] == evidence["run"]]
+    require(len(rows) == 1 and rows[0]["checkpoint_sha256"] ==
+            digest(Path(root) / evidence["run"] / "checkpoints/best.pt"),
+            "Matched evaluation refers to a different selected checkpoint")
+    require(comparison["protocol"]["manifest_sha256"] == evidence["summary"]["manifest_sha256"],
+            "Matched evaluation refers to a different frozen split")
+    metrics = rows[0]["matched_context_metrics"]
+    if "train" not in metrics:
+        return ""
+    train, validation = (metrics[split]["cross_entropy"] for split in ("train", "validation"))
+    gap = validation - train
+    close(rows[0]["matched_eval_generalization_gap"], gap, "matched evaluation gap")
+    history = evidence["history"]
+    rises = sum(later["validation"]["cross_entropy"] > earlier["validation"]["cross_entropy"]
+                for earlier, later in zip(history, history[1:]))
+    trend = (f"Validation loss rose in {rises} epoch transitions; the lowest-loss checkpoint was retained. "
+             if rises else "Validation loss decreased at every recorded epoch; no late rise was observed. ")
+    return (f"Overfitting check: with dropout disabled and identical {comparison['protocol']['context_length']}-character "
+            f"windows, the selected model's train CE is {train:.6f}, validation CE is {validation:.6f}, "
+            f"and validation-minus-train gap is {gap:+.6f}. " + trend +
+            "This is a fairer split comparison than online training loss, but one split and seed cannot establish general reliability.")
+
+
 def build_notebook(root, evidence):
     member = Path(root) / "task1_llm/srinidhi"
+    # The member's original config remains immutable training-source evidence.
+    # A selected experimental run can have a different architecture/schedule,
+    # so reproduction must explicitly use its verified resolved configuration.
+    reproduction_path = member / "outputs/full/reproduction_config.json"
+    write_json(reproduction_path, {"full": evidence["config"]})
+    reproduction_relative = reproduction_path.relative_to(Path(root)).as_posix()
     cells = [
         nbformat.v4.new_markdown_cell("# Part 1: character GPT from scratch\n\n"
             "Srinidhi, Lab Pair 49, seed 2342. The preserved complete desktop training run appears below. "
@@ -348,7 +385,8 @@ print("Validation characters mapped to UNK:", summary["validation_unknown_charac
             "EOS and mapped UNK targets are included. The generalization gap is validation eval-mode CE minus online "
             "training-mode CE for the selected checkpoint epoch. Distinct-1/2/3 and repeated 4-gram rate use lowercase "
             "word n-grams in continuations, excluding prompts. Reported timing/memory describe training on the recorded "
-            "GPU. Fresh inference checks below have separate timing and do not replace those metrics."),
+            "GPU. Fresh inference checks below have separate timing and do not replace those metrics.\n\n" +
+            matched_evaluation_note(root, evidence)),
         nbformat.v4.new_code_cell('''metrics = pd.read_csv(MEMBER / "metrics_report.csv")
 with pd.option_context("display.max_rows", None, "display.max_colwidth", None):
     display(metrics[["split", "metric", "value"]])
@@ -415,8 +453,10 @@ print("Both checkpoint hashes verified; fresh inference verification saved.")'''
         nbformat.v4.new_markdown_cell("## Reproduce and demo\n\n"
             "From the extracted Part 1 root, install the dependencies and package described in README.md. "
             "A quick CPU smoke test uses `python -m lab1.run --task gpt --mode smoke --device cpu`. "
-            "The complete frozen data split is included: a fresh full run uses "
-            "`python -m lab1.run --task gpt --mode full --device cuda --set offline=true`. "
+            "The complete frozen data split is included. The explicit reproduction config is an exact copy "
+            "of this selected run's resolved recipe; the original member config also remains available. "
+            "A fresh full run uses "
+            f"`python -m lab1.run --task gpt --mode full --device cuda --config {reproduction_relative} --set offline=true`. "
             "To re-execute only this evidence notebook and package the existing completed run, use "
             f"`python scripts/finalize_gpt.py --run-dir {evidence['run']}`. The individual Part 1 bundle is one "
             "component of the eventual three-part team Canvas submission. Review the model rationale and observed "
@@ -480,6 +520,7 @@ def publish(root, run):
         f"{summary['best_validation']['bits_per_character']:.6f}; next-character accuracy: "
         f"{summary['best_validation']['next_character_accuracy']:.4%}; generalization gap: "
         f"{selected['generalization_gap_cross_entropy']:.6f}. All required metrics are in metrics_report.csv.\n\n"
+        + matched_evaluation_note(root, evidence) + "\n\n"
         "Metric interpretation: perplexity=exp(CE); bits per character=CE/ln(2). The gap compares validation "
         "eval-mode CE with the selected epoch's online training-mode CE, so dropout and model updates affect that comparison. "
         "Unseen validation characters map to UNK and are counted. Distinct-1/2/3 and repeated 4-grams use lowercase regex "

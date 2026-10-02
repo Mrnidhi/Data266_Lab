@@ -1,0 +1,136 @@
+{
+  "candidate": {
+    "name": "cnn_regularized",
+    "model": "dilated_cnn",
+    "hypothesis": "Stronger convolution-block and head dropout may reduce the validation loss gap while retaining the current model size and receptive field.",
+    "overrides": {
+      "epochs": 12,
+      "early_stopping_patience": 4,
+      "early_stopping_min_delta": 0.0001,
+      "num_workers": 0,
+      "checkpoint_every_steps": 1000,
+      "log_every_steps": 200,
+      "dropout": 0.5,
+      "cnn_dropout": 0.3
+    }
+  },
+  "config": {
+    "mode": "full",
+    "seed": 2342,
+    "dataset": "fancyzhx/yelp_polarity",
+    "dataset_revision": "main",
+    "data_dir": "task2_sentiment/srinidhi/data_processed/full",
+    "train_limit": null,
+    "validation_limit": null,
+    "test_limit": null,
+    "vocabulary_size": 40000,
+    "min_frequency": 2,
+    "embedding_dim": 128,
+    "max_length": 384,
+    "batch_size": 128,
+    "epochs": 12,
+    "early_stopping_patience": 4,
+    "early_stopping_min_delta": 0.0001,
+    "mlp_hidden": 64,
+    "lstm_hidden": 96,
+    "cnn_channels": 128,
+    "dilations": [
+      1,
+      2,
+      4,
+      8
+    ],
+    "dropout": 0.5,
+    "cnn_dropout": 0.3,
+    "learning_rates": {
+      "maxpool_mlp": 0.0015,
+      "bilstm": 0.001,
+      "dilated_cnn": 0.0008
+    },
+    "weight_decay": 0.0001,
+    "gradient_clip": 1.0,
+    "amp": true,
+    "bootstrap_samples": 1000,
+    "cpu_threads": 2,
+    "raw_data_cache": "task2_sentiment/data/huggingface",
+    "encoded_cache": "task2_sentiment/srinidhi/data_processed/full_encoded",
+    "num_workers": 0,
+    "checkpoint_every_steps": 1000,
+    "log_every_steps": 200,
+    "validation_only": true
+  },
+  "started_utc": "2026-10-02T01:14:13.376346+00:00",
+  "status": "completed",
+  "source_sha256": {
+    "src\\lab1\\__init__.py": "b9849907c7465e81037a43feb0ac630d991ac608c4dbabddcbcc691f8a7b015f",
+    "src\\lab1\\common.py": "9969a94baa2ef1cba3d0474262227fd178417d761b1528d4278779ef3c23bd4e",
+    "src\\lab1\\run.py": "4edd942dc83425e0c36e588ae59194fae632819e87b88ba6104a6257eafc4900",
+    "task1_llm\\srinidhi\\config.json": "4abfd4cdfd6d6e0cd7643aaf88f601dd4a304c47152e41640c763a67b1be0d6f",
+    "task1_llm\\srinidhi\\src\\gpt.py": "ddf1adb228f3ae8cb6ea94361f153408a3b36f34cdb34ac2c6fac218eb548664",
+    "task2_sentiment\\srinidhi\\config.json": "4b244db4f3c9c32feb22ac37a91bba8f6b779fba80b521dae4de63a854c3575a",
+    "task2_sentiment\\srinidhi\\src\\sentiment.py": "ea5d6b0b8276332f35c7e1a3693763d341bf1c106bd5f712a37b6f6e2c9be6c5",
+    "task3_gan\\srinidhi\\config.json": "024eac9a34069a835858b73a5877acd97709cbbf0261dec550eceef10ae03092",
+    "task3_gan\\srinidhi\\evaluate_local.py": "322cc4f1be766fa0e7e1db130b89b1b8f1b65a82c9f29428fe2a0855fb70f9a9",
+    "task3_gan\\srinidhi\\src\\cyclegan.py": "98f1a2901eccb0f366f726654a1297830fa5541786a21ad264e2b29b7f5cd71e"
+  },
+  "environment": {
+    "captured_utc": "2026-10-02T01:14:13.434361+00:00",
+    "python": "3.12.14",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "machine": "AMD64",
+    "packages": {
+      "torch": "2.11.0+cu128",
+      "torchvision": "0.26.0+cu128",
+      "numpy": "2.5.3",
+      "pandas": "3.0.6",
+      "scikit-learn": "1.9.1",
+      "scipy": "1.16.3",
+      "matplotlib": "3.11.2",
+      "datasets": "5.0.1",
+      "Pillow": "12.3.0",
+      "clean-fid": null,
+      "lpips": null,
+      "prdc": null
+    },
+    "cuda_available": true,
+    "cuda_build": "12.8",
+    "cudnn": 91900,
+    "gpus": [
+      {
+        "index": 0,
+        "name": "NVIDIA GeForce RTX 5090",
+        "memory_bytes": 34190458880,
+        "compute_capability": [
+          12,
+          0
+        ]
+      }
+    ],
+    "mps_available": false,
+    "nvidia_smi": "name, uuid, driver_version, memory.total [MiB]\nNVIDIA GeForce RTX 5090, GPU-68465984-5de9-5fbf-2036-6e4f23dd51f1, 610.60, 32607 MiB",
+    "cpu_model": "Intel(R) Core(TM) Ultra 9 285K"
+  },
+  "test_policy": "No test predictions or test metrics; selection uses validation macro-F1 only",
+  "training_source_sha256": {
+    "src/lab1/run.py": "4edd942dc83425e0c36e588ae59194fae632819e87b88ba6104a6257eafc4900",
+    "src/lab1/common.py": "9969a94baa2ef1cba3d0474262227fd178417d761b1528d4278779ef3c23bd4e",
+    "src/lab1/__init__.py": "b9849907c7465e81037a43feb0ac630d991ac608c4dbabddcbcc691f8a7b015f",
+    "task2_sentiment/srinidhi/src/sentiment.py": "ea5d6b0b8276332f35c7e1a3693763d341bf1c106bd5f712a37b6f6e2c9be6c5",
+    "task2_sentiment/srinidhi/config.json": "4b244db4f3c9c32feb22ac37a91bba8f6b779fba80b521dae4de63a854c3575a",
+    "scripts/tune_sentiment.py": "a8c029b365d7f6f1bf8f21f1992fb3784cdd5a735a6959a2de5874a47b1230f8"
+  },
+  "result": {
+    "model_name": "dilated_cnn",
+    "selected_epoch": 7,
+    "selected_validation_macro_f1": 0.9533211532614958,
+    "parameter_count": 5539073,
+    "train_seconds": 936.4936993000083,
+    "peak_cuda_memory_bytes": 470373888,
+    "peak_host_rss_bytes": 3344539648,
+    "host_peak_rss_scope": "process lifetime peak resident memory, including data preparation",
+    "completed_training_steps": 43318,
+    "test_evaluated": false
+  },
+  "ended_utc": "2026-10-02T01:30:41.114004+00:00",
+  "elapsed_seconds": 985.4161772000007
+}

@@ -1,0 +1,112 @@
+{
+  "created_utc": "2026-10-02T02:57:07.757052+00:00",
+  "script_sha256": "6a5f4435caf1825598c76a0dd8cec3da71ad0791a14c13152cc52a04141e7995",
+  "evaluation_only": true,
+  "training_evidence_modified": false,
+  "selection_metric": "lowest matched-context validation cross_entropy",
+  "best_validation_candidate": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part1/depth_context_full",
+  "promotion_rule": {
+    "reference_run": "reproducibility/raw_logs/srinidhi/desktop-20261001/part1-full",
+    "minimum_cross_entropy_improvement_nats": 0.005,
+    "observed_improvement_nats": 0.12172122147037878,
+    "candidate_qualifies": true,
+    "preferred_run": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part1/depth_context_full",
+    "automatic_publication_performed": false
+  },
+  "interpretation": "Validation comparison for model development; not an untouched test estimate or a guarantee of generation quality.",
+  "protocol": {
+    "context_length": 256,
+    "batch_size": 128,
+    "window_rule": "story-bounded nonoverlapping targets; pad tails; score all characters and EOS exactly once",
+    "model_mode": "eval; dropout disabled",
+    "device": "cuda",
+    "device_name": "NVIDIA GeForce RTX 5090",
+    "torch_version": "2.11.0+cu128",
+    "precision": "torch.bfloat16",
+    "manifest_sha256": "0a7edd96782498ba83bdab0599119d9f216c53b8ff11e1aba30aa3a03fc2ac0b",
+    "data": {
+      "train": {
+        "stories": 100000,
+        "windows": 399361,
+        "scored_targets_including_eos": 89574787,
+        "unknown_characters": 0
+      },
+      "validation": {
+        "stories": 10000,
+        "windows": 39009,
+        "scored_targets_including_eos": 8718099,
+        "unknown_characters": 4
+      }
+    }
+  },
+  "candidates": [
+    {
+      "run": "reproducibility/raw_logs/srinidhi/desktop-20261001/part1-full",
+      "checkpoint_sha256": "da90fb8bb2d7a71d9d33a75447a04c02345705307d9a9a39eff569468817e9b0",
+      "selected_epoch": 12,
+      "parameter_count": 1427904,
+      "native_context_length": 256,
+      "native_validation_from_training": {
+        "cross_entropy": 0.7211012821932281,
+        "perplexity": 2.0566969676447893,
+        "bits_per_character": 1.0403292437988432,
+        "next_character_accuracy": 0.7731199198357348,
+        "scored_targets_including_eos": 8718099
+      },
+      "matched_context_metrics": {
+        "train": {
+          "cross_entropy": 0.7202462459117429,
+          "perplexity": 2.054939168715454,
+          "bits_per_character": 1.0390956871957644,
+          "next_character_accuracy": 0.7730228484941862,
+          "scored_targets_including_eos": 89574787
+        },
+        "validation": {
+          "cross_entropy": 0.7211012895862533,
+          "perplexity": 2.056696982850002,
+          "bits_per_character": 1.040329254464724,
+          "next_character_accuracy": 0.7731199198357348,
+          "scored_targets_including_eos": 8718099
+        }
+      },
+      "evaluation_seconds": 39.58453999999983,
+      "matched_eval_generalization_gap": 0.0008550436745103918
+    },
+    {
+      "run": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part1/depth_context_full",
+      "checkpoint_sha256": "7945aa8a334f0b00c81aaf82a34137f41a34c4a7f2c1ef1986c2346b40c5bcc8",
+      "selected_epoch": 16,
+      "parameter_count": 4928512,
+      "native_context_length": 512,
+      "native_validation_from_training": {
+        "cross_entropy": 0.5511810427880228,
+        "perplexity": 1.7353012731444417,
+        "bits_per_character": 0.7951861570622881,
+        "next_character_accuracy": 0.8244307617979562,
+        "scored_targets_including_eos": 8718099
+      },
+      "matched_context_metrics": {
+        "train": {
+          "cross_entropy": 0.5911765321237293,
+          "perplexity": 1.8061121147747035,
+          "bits_per_character": 0.8528874511848393,
+          "next_character_accuracy": 0.810906432855933,
+          "scored_targets_including_eos": 89574787
+        },
+        "validation": {
+          "cross_entropy": 0.5993800681158745,
+          "perplexity": 1.8209895609114268,
+          "bits_per_character": 0.8647226518784613,
+          "next_character_accuracy": 0.8091203139583526,
+          "scored_targets_including_eos": 8718099
+        }
+      },
+      "evaluation_seconds": 81.88434059999781,
+      "matched_eval_generalization_gap": 0.008203535992145183
+    }
+  ],
+  "ranking": [
+    "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part1/depth_context_full",
+    "reproducibility/raw_logs/srinidhi/desktop-20261001/part1-full"
+  ]
+}

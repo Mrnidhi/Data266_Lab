@@ -322,3 +322,90 @@ def test_ai_draft_rejects_invented_or_misrepresented_source_cases(tmp_path, colu
     draft.to_csv(draft_path, index=False, encoding="utf-8")
     with pytest.raises(ValueError, match=problem):
         pipeline.verify_ai_error_draft(packet, draft_path, "bilstm", "real-checkpoint-fixture")
+
+
+def quality_package_fixture(tmp_path):
+    root, evidence = package_fixture(tmp_path)
+    parent = (root / evidence["run"]).parent
+    candidate = parent / "training/extra_mlp"
+    write = publisher.write_json
+    write(candidate / "provenance.json", {"status": "completed"})
+    write(candidate / "maxpool_mlp/history.json", [{"epoch": 1}])
+    weight = candidate / "maxpool_mlp/checkpoints/best.pt"
+    weight.parent.mkdir(parents=True)
+    weight.write_bytes(b"unselected candidate weights")
+    recipe_path = root / "task2_sentiment/srinidhi/experiments/quality/extra_mlp.json"
+    recipe = {"name": "extra_mlp", "model": "maxpool_mlp", "overrides": {"dropout": .5}}
+    write(recipe_path, recipe)
+    baseline_path = parent / "baseline_selection.json"
+    write(baseline_path, {"selected": evidence["selection"]["selected"]})
+    source_script = root / "scripts/run_sentiment_quality.py"
+    source_script.write_text("# Frozen quality script\n", encoding="utf-8")
+    plan = {"baseline_selection_path": baseline_path.relative_to(root).as_posix(),
+            "baseline_selection_sha256": pipeline.digest(baseline_path),
+            "training_source_sha256": {},
+            "orchestration_sha256": {source_script.relative_to(root).as_posix(): pipeline.digest(source_script)},
+            "recipes": {"extra_mlp": {"path": recipe_path.relative_to(root).as_posix(),
+                                       "sha256": pipeline.digest(recipe_path), "recipe": recipe}},
+            "candidate_count": 1}
+    write(parent / "quality_plan.json", plan)
+    plan_sha = pipeline.digest(parent / "quality_plan.json")
+    write(parent / "baseline_validation_receipt.json", {"plan_sha256": plan_sha})
+    files = [candidate / "provenance.json", candidate / "maxpool_mlp/history.json", weight]
+    row = {"source_run": candidate.relative_to(root).as_posix(), "candidate_id": "extra_mlp",
+           "role": "new_validation_candidate",
+           "source_metadata_sha256": {p.relative_to(root).as_posix(): pipeline.digest(p) for p in files}}
+    evidence["selection"].update(quality_plan_sha256=plan_sha, candidates=[row], candidate_count=1)
+    write(root / evidence["run"] / "selection_manifest.json", evidence["selection"])
+    write(parent / "selection_manifest.json", evidence["selection"])
+    invocation = parent / "invocations/extra_mlp.json"
+    raw = {"candidate_id": "extra_mlp", "returncode": 0, "ended_utc": "2026-10-02T00:00:00Z",
+           "command": ["C:/Users/example/AppData/python.exe", "scripts/tune_sentiment.py"]}
+    write(invocation, raw)
+    portable = root / "task2_sentiment/srinidhi/outputs/quality_search" / parent.parent.name
+    copy_path = portable / "invocations/extra_mlp.json"
+    write(copy_path, {**raw, "command": ["python", *raw["command"][1:]], "derived_evidence": {
+        "source_receipt": invocation.relative_to(root).as_posix(), "source_sha256": pipeline.digest(invocation),
+        "original_receipt_preserved": True, "transformation": "Only command[0] replaced"}})
+    write(portable / "manifest.json", {"schema_version": 1, "raw_receipts_included": False,
+        "quality_plan": {"path": (parent / "quality_plan.json").relative_to(root).as_posix(), "sha256": plan_sha},
+        "selection_manifest": {"path": (parent / "selection_manifest.json").relative_to(root).as_posix(),
+                               "sha256": pipeline.digest(parent / "selection_manifest.json")},
+        "receipts": [{"candidate_id": "extra_mlp", "source_receipt": invocation.relative_to(root).as_posix(),
+                      "source_sha256": pipeline.digest(invocation), "published_receipt": copy_path.relative_to(root).as_posix(),
+                      "published_sha256": pipeline.digest(copy_path)}]})
+    return root, evidence, candidate, recipe_path
+
+
+def test_quality_archive_includes_completed_metadata_without_unselected_weights(tmp_path):
+    root, evidence, candidate, recipe = quality_package_fixture(tmp_path)
+    parent = (root / evidence["run"]).parent
+    excluded = [candidate / "maxpool_mlp/checkpoints/best.pt",
+                parent / "training/unfinished/config.json",
+                root / "task2_sentiment/srinidhi/outputs/publication_history/old/big.zip"]
+    for path in excluded[1:]:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(b"not selected evidence")
+    files, _, _ = pipeline.package_files(root, evidence)
+    assert all(p.relative_to(root).as_posix() not in files for p in excluded)
+    assert recipe.relative_to(root).as_posix() in files
+    assert (candidate / "maxpool_mlp/history.json").relative_to(root).as_posix() in files
+    assert (parent / "quality_plan.json").relative_to(root).as_posix() in files
+    assert "scripts/run_sentiment_quality.py" in files
+    raw_invocation = parent / "invocations/extra_mlp.json"
+    assert raw_invocation.relative_to(root).as_posix() not in files
+    assert any("outputs/quality_search" in name and name.endswith("invocations/extra_mlp.json") for name in files)
+    # Extracted packages intentionally have no unselected weight binaries.
+    excluded[0].unlink()
+    raw_invocation.unlink()
+    pipeline.package_files(root, evidence)
+    publisher.write_json(recipe, {"overrides": {"dropout": .9}})
+    with pytest.raises(ValueError, match="hash changed"):
+        pipeline.package_files(root, evidence)
+
+
+def test_quality_archive_rejects_partial_candidate_before_publication(tmp_path):
+    root, evidence, candidate, _ = quality_package_fixture(tmp_path)
+    publisher.write_json(candidate / "provenance.json", {"status": "running"})
+    with pytest.raises(ValueError, match="incomplete"):
+        pipeline.package_files(root, evidence)

@@ -1,0 +1,19 @@
+{
+  "checkpoint_sha256": "da90fb8bb2d7a71d9d33a75447a04c02345705307d9a9a39eff569468817e9b0",
+  "devices": [
+    {
+      "device": "cpu",
+      "reload_logits_identical": true,
+      "causal_mask_verified": true,
+      "finite_logits": true,
+      "generated_characters": 100
+    },
+    {
+      "device": "cuda",
+      "reload_logits_identical": true,
+      "causal_mask_verified": true,
+      "finite_logits": true,
+      "generated_characters": 100
+    }
+  ]
+}

@@ -1,293 +1,97 @@
-# Part 2 — fresh desktop reproduction and finalization
+# Part 2 — reproduce and finalize
 
 Repository: https://github.com/Mrnidhi/Data266_Lab
 
-This guide describes Srinidhi's fresh October 1, 2026 desktop reproduction of
-the three selected Yelp Polarity sentiment recipes. Training uses an Intel
-Core Ultra 9 285K CPU and NVIDIA GeForce RTX 5090 with Python 3.12.14,
-PyTorch 2.11.0+cu128 and CUDA 12.8. The hardware/package receipt is
-`verification/part2_desktop_environment.json`.
-
-Finalization creates `dist/Part2_Srinidhi_2342.zip` at the producing repository
-root, containing one `Part 2/` folder. After successful creation, extract and
-open that folder as the working directory; its files preserve repository-relative paths.
-The desktop run is
-`reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/`.
-Its `desktop_plan.json` freezes runtime source hashes, base configuration and
-three recipe files before training. Each family starts from random weights
-and learns its own embeddings. The run is a replication of previously chosen
-architectures and schedules, not a new hyperparameter search.
-
-The fresh three-model training, validation selection, full test evaluation,
-publication and notebook execution completed on this desktop. The measured
-results on the same 38,000 test reviews are:
+The current evaluation is `reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/selected/`. It combines the new wider MLP with the retained desktop BiLSTM and CNN. The preceding publication remains under `task2_sentiment/srinidhi/outputs/publication_history/026926f7d98246d3/`; the baseline ZIP remains separate.
 
 | Model | Completed / selected epoch | Validation macro-F1 | Test accuracy | Test macro-F1 |
 |---|---:|---:|---:|---:|
-| MLP | 6 / 5 | 0.926422 | 93.1921% | 0.931917 |
-| BiLSTM | 12 / 11 | 0.958857 | 96.1211% | 0.961210 |
-| Dilated CNN | 6 / 6 | 0.953446 | 95.6263% | 0.956262 |
+| MLP | 9 / 5 | 0.928285 | 93.310526% | 0.933105 |
+| BiLSTM | 12 / 11 | 0.958857 | 96.121053% | 0.961210 |
+| CNN | 6 / 6 | 0.953446 | 95.626316% | 0.956262 |
 
-`verification/part2_export.json` establishes source/data/checkpoint/metric
-identity. The notebook has eight executed code cells, eight visible output
-cells and zero errors. All three saved models passed independent CPU and CUDA
-reload, finite-output and padding-invariance checks. The initial archive passed
-CRC/content-hash checks; its extracted folder also passed notebook execution,
-real-checkpoint CPU inference and the documented offline smoke command. See
-`verification/part2_package_portability.json`. The archive is rebuilt after
-final documentation and separate AI drafts; its final inventory, size and
-SHA-256 are recorded in the current package receipts, not fixed in this prose.
-Earlier cloud results are preserved under the member's publication history.
-Manual student review and team/report obligations remain pending.
+The MLP uses embedding width 256, hidden width 128 and dropout 0.5; it stopped after 9 of a maximum 12 epochs. The other models retain embedding 128 and their recorded schedules. The frozen rule prefers fewer parameters within 0.001 of each family's highest validation macro-F1. The wider CNN's 0.000733 gain is inside that tolerance, so the original CNN is retained. All seven candidates and settings are in the published selection and training-source manifests.
 
-## Windows setup and one-command smoke test
+Fresh metric/source checks, notebook execution, saved-model inference and extracted-package checks passed for this selected suite. The extracted notebook ran all eight cells without errors, and the offline CPU smoke test completed all three models. The final ZIP is rebuilt after documentation updates and checked by content hashes. Student review and teammate/report obligations remain separate.
 
-Work from the repository root with Python 3.12 and an isolated `.venv`:
+## Setup and inspect
+
+Use Python 3.12 from the repository root, or the extracted ZIP's `Part 2/` folder. Recorded training used Python 3.12.14, PyTorch 2.11.0+cu128 and CUDA 12.8 on an Intel Core Ultra 9 285K / RTX 5090.
 
 ```powershell
 py -3.12 -m venv .venv
-.venv\Scripts\python.exe -m pip install --upgrade pip
-.venv\Scripts\python.exe -m pip install torch==2.11.0 torchvision==0.26.0 --index-url https://download.pytorch.org/whl/cu128
+.venv\Scripts\python.exe -m pip install torch==2.11.0 --index-url https://download.pytorch.org/whl/cu128
 .venv\Scripts\python.exe -m pip install -r requirements.txt
 .venv\Scripts\python.exe -m pip install --no-deps -e .
 .venv\Scripts\python.exe -m pip check
-```
-
-The project requirements record exact direct dependency versions. The standalone
-archive uses a generated Part 2 environment file and package metadata so its
-setup needs only this task's runtime. If `py`
-is unavailable, create `.venv` with an installed Python 3.12 executable.
-Choose `.venv\Scripts\python.exe` as the VS Code notebook interpreter.
-The RTX 5090 requires a compatible CUDA PyTorch build; the desktop's tested
-CUDA 12.8 build supports its `sm_120` architecture. Part 2 does not need GAN
-evaluation packages from `requirements-image-metrics.txt`.
-
-After setup, one offline CPU command checks all three sentiment models using
-small synthetic data and a new timestamped output directory:
-
-```powershell
 .venv\Scripts\python.exe -m lab1.run --task sentiment --mode smoke --device cpu
 ```
 
-Smoke results establish execution, not Yelp accuracy or full training.
-On Linux/macOS replace `.venv\Scripts\python.exe` with `.venv/bin/python`
-after creating an equivalent Python environment.
+The standalone ZIP has its own pinned Part 2 dependencies. Smoke uses synthetic data and checks execution only. On Linux/macOS use `.venv/bin/python`. Select this environment's kernel for `task2_sentiment/srinidhi/src/sentiment.ipynb`.
 
-## Fixed data and recipes
+After installing Git LFS, clone users should run:
 
-The official dataset is `fancyzhx/yelp_polarity`, resolved revision
-`bbf1c97a1f0cf005e5aded43839fd814654a1557`. Its 560,000 training rows are
-stratified into 504,000 training and 56,000 validation rows with seed 2342.
-All 38,000 official test rows are reserved for final evaluation. The new
-prepared data match historical frozen row contents and ordering exactly;
-`verification/part2_desktop_data_identity.json` records both desktop byte
-hashes and normalized-LF hashes because the desktop JSONL files use CRLF.
-
-Full JSONL files and manifests are under
-`task2_sentiment/srinidhi/data_processed/full/`; encoded features are under
-`task2_sentiment/srinidhi/data_processed/full_encoded/`. The cache verifies
-content, configuration, preprocessing and vocabulary. Copies must retain
-their complete manifests and matching files. A Git clone does not supply
-these ignored dataset caches; prepare the public data or obtain the verified
-processed cache separately before full training.
-
-The common recipe has vocabulary cap 40,000, minimum frequency 2, learned
-embedding width 128, maximum length 384 tokens, batch 128, AdamW weight
-decay 0.0001, gradient clipping 1.0 and validation-based learning-rate decay.
-Lowercasing/casefolding, HTML/contraction handling, regex word tokenization
-and a customized stopword list preserve negation and contrast words. The
-vocabulary is fitted on training rows only. Stemming/lemmatization is not
-implemented; the brief makes it conditional and the student must explain
-the preprocessing choices.
-
-| Model | Architecture | Schedule |
-|---|---|---|
-| Baseline `maxpool_mlp` | Embedding → masked max pool → dense 64/ReLU/dropout → binary logit | LR 0.0015, maximum 6 epochs, early-stopping patience 2 |
-| Experimental `bilstm` | One bidirectional LSTM, 96 units per direction → masked max pool → dense 64/dropout → logit | LR 0.001, maximum 12 epochs, patience 4 |
-| Experimental `dilated_cnn` | 128 channels, four residual convolution blocks, kernel 3, dilations 1/2/4/8 → masked pool → dense 64/dropout → logit | LR 0.0008, maximum 6 epochs, patience 2 |
-
-Embedding/head dropout is 0.3 and CNN-block dropout is 0.2. Windows training
-uses `num_workers=0`. Each checkpoint updates only when validation macro-F1
-improves by more than 0.0001, following the existing selection/early-stopping
-rule; its selected epoch is not necessarily the strict numerical maximum
-over all epoch scores.
-
-The historical test results and error texts have already been inspected.
-The repeated official test set is therefore not a newly sealed holdout.
-New checkpoint selection uses validation only, and a new manifest freezes
-checkpoint paths/hashes before any new test predictions are calculated.
-Do not use new test scores or error examples to choose further recipes.
-
-The plan's “no new test access during training” shorthand concerns test
-inference, predictions and metrics. Before training, the tuner validates all
-frozen split/cache fingerprints, including test-row metadata and encoded
-arrays, then removes the test dataset from the model's training call. The
-training function receives only train/validation tensors; this workflow does
-not claim that test-file bytes were never read for integrity checks.
-
-## Run, resume and evaluate
-
-The recorded desktop command is:
-
-```powershell
-.venv\Scripts\python.exe scripts/run_sentiment_desktop.py --output reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full --stage all --device cuda
+```sh
+git lfs install
+git lfs pull
 ```
 
-For a separate reproduction choose a fresh output, for example:
+LFS applies specifically to `task2_sentiment/srinidhi/checkpoints/maxpool_mlp/best.pt`: the full file is 124,098,311 bytes. Compare it with `task2_sentiment/srinidhi/checkpoints/manifest.json`; a pointer is not loadable. Selected best weights are intended for the authorized normal push to `main`. The local ZIP packages full real best/last files, data and raw evidence, including files ignored by Git.
+
+The cache contains 504,000 training, 56,000 validation and 38,000 test reviews. Reproduction requires `data_processed/full/` and `full_encoded/` with their manifests; Git alone does not supply them. Vocabulary is fitted on training only. Each model learns its own embedding and uses the first 384 processed tokens.
+
+## Reproduce selected models
+
+Use new output directories and the actual published recipes:
 
 ```powershell
-.venv\Scripts\python.exe scripts/run_sentiment_desktop.py --output runs/part2-new-full --stage all --device cuda
+.venv\Scripts\python.exe scripts/tune_sentiment.py --candidate task2_sentiment/srinidhi/outputs/full/reproduction/maxpool_mlp_candidate.json --output runs/reproduce-part2-maxpool_mlp --device cuda
+.venv\Scripts\python.exe scripts/tune_sentiment.py --candidate task2_sentiment/srinidhi/outputs/full/reproduction/bilstm_candidate.json --output runs/reproduce-part2-bilstm --device cuda
+.venv\Scripts\python.exe scripts/tune_sentiment.py --candidate task2_sentiment/srinidhi/outputs/full/reproduction/dilated_cnn_candidate.json --output runs/reproduce-part2-dilated_cnn --device cuda
 ```
 
-To view live output for all three training logs and the selected evaluation,
-run this separate terminal viewer from the repository root:
+Use the configured validation checkpoint rule and preserve best/last files, histories and provenance. Do not run two writers against one output. Resume from matching `last.pt` only under the same frozen training contract. Different hardware/library versions can change numerical results.
+
+To evaluate the **existing preserved selection**, use:
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts/watch_sentiment_desktop.ps1
+.venv\Scripts\python.exe scripts/finalize_sentiment_selection.py --selection reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/selected/selection_manifest.json --output runs/reproduce-part2-final-evaluation --device cuda
 ```
 
-Closing the viewer does not stop the training job. The viewer follows the
-existing logs; the recorded runner command controls training.
+This needs complete local source runs or the extracted ZIP. It references preserved weights, not newly retrained ones. New runs need their own validation-selected manifest before test evaluation. Earlier test scores/texts were observed; do not choose further recipes from these results. Integrity checks read all cache fingerprints, but only training/validation tensors reach training.
 
-The runner freezes the plan, trains the three families sequentially with only
-train/validation tensors passed to training, freezes `selection_manifest.json`, and evaluates
-the selected weights into `selected/`. Its stages are `plan`, `train`,
-`evaluate` and `all`. Recipe files are saved in the run's `recipes/` folder;
-invocation provenance is in `training/<model>/provenance.json`; model histories
-and checkpoints are in `training/<model>/<model>/` beneath that run. The
-nested model name reflects the shared single-candidate training interface.
+## Finalize and verify
 
-Do not run two copies against the same active output. After an interruption,
-the same `--stage all` command checks frozen source/configuration/recipe
-hashes, keeps completed training invocations and resumes unfinished ones from
-their `last.pt`. Each checkpoint includes model/optimizer/scheduler/AMP state,
-vocabulary, configuration, RNG/shuffle state and training progress. Preserve
-the complete run and best/last files together; changed training contracts or
-source hashes are rejected. Cross-environment floating-point results may
-differ even when data, seed and resume state match.
-
-To evaluate a completed, already frozen selection independently:
+After selected evaluation and current error drafts are ready, run:
 
 ```powershell
-.venv\Scripts\python.exe scripts/finalize_sentiment_selection.py --selection reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/selection_manifest.json --output runs/part2-repeat-evaluation --device cuda
+.venv\Scripts\python.exe scripts/finalize_part2.py --run-dir reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/selected --data-dir task2_sentiment/srinidhi/data_processed/full
 ```
 
-The final evaluator verifies actual source/checkpoint/data identity and
-requires matching test IDs/labels across all three models. It calculates
-all required metrics, bootstrap intervals, slice results and paired McNemar
-tests. Using the ordinary six-epoch reference `--mode full` profile alone
-does not reproduce the selected twelve-epoch BiLSTM schedule.
+Use `--device cpu` when CUDA is unavailable. Finalization verifies metrics and source identities, publishes results, executes the notebook, checks saved-model inference and creates `dist/Part2_Srinidhi_2342.zip`. Publication preserves prior results; annotations stay linked to their own model and predictions. The ZIP contains one `Part 2/` folder with full checkpoint bytes and processed data, plus compact candidate evidence without unselected weights or recursive history.
 
-## Publish evidence and complete manual review
-
-Once desktop training and the final selected evaluation have completed, the
-end-to-end finalization command publishes the results, executes the notebook,
-checks saved inference and builds the verified Part 2 archive:
-
-```powershell
-.venv\Scripts\python.exe scripts/finalize_part2.py --run-dir reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/selected --data-dir task2_sentiment/srinidhi/data_processed/full
-```
-
-The optional `--device cpu` supports finalization without CUDA. It changes
-finalization/inference placement, not the recorded original training hardware.
-The export-only command is:
-
-```powershell
-.venv\Scripts\python.exe scripts/publish_sentiment_results.py --run-dir reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/selected --data-dir task2_sentiment/srinidhi/data_processed/full
-```
-
-Publication verifies source/checkpoint mappings and preserves previous
-publication bytes under `task2_sentiment/srinidhi/outputs/publication_history/`
-before replacing the current result files. Old annotations and review sets
-must stay traceable to their own checkpoint and predictions. Portable
-history/provenance evidence is copied byte-for-byte; original console logs
-containing machine-specific startup paths remain local without editing.
-
-The new member folder must contain `metrics_report.csv`, `results.md`, an
-executed `src/sentiment.ipynb`, actual selected weights and required outputs.
-The notebook must show actual new results and independently reload the saved
-weights. The package's verification record must identify the exact selected
-files, original training runs, completed notebook and archive hashes.
-
-Receipts are `verification/part2_export.json`, `part2_notebook.json`,
-`part2_checkpoint_inference.json` and `part2_finalization.json`. The producing
-repository stores the archive CRC/inventory/content-hash record in
-`dist/part2_package_verification.json` and the whole-file checksum in
-`dist/Part2_SHA256SUMS.txt`. Verify a transferred ZIP against that checksum
-and rerun its content checks before relying on the copy:
+Check current receipts: `verification/part2_export.json`, `part2_notebook.json`, `part2_checkpoint_inference.json` and `part2_finalization.json`. Confirm the selected suite path and checkpoint hashes before relying on them. Verify the ZIP and extracted notebook/CPU smoke:
 
 ```powershell
 Get-FileHash -Algorithm SHA256 dist/Part2_Srinidhi_2342.zip
 .venv\Scripts\python.exe scripts/finalize_part2.py --verify-archive dist/Part2_Srinidhi_2342.zip
+.venv\Scripts\python.exe scripts/finalize_part2.py --verify-portability dist/Part2_Srinidhi_2342.zip
 ```
 
-After initial finalization, adding separate AI drafts or final documentation
-does not require retraining, another test evaluation or republication. Rebuild
-only the archive while checking the existing metric/notebook/inference proof:
+Compare the whole-file hash with `dist/Part2_SHA256SUMS.txt`. Content inventory and CRC/hash checks are in `dist/part2_package_verification.json`; extracted execution is in `verification/part2_package_portability.json`. Keep a verified backup.
+
+After successful full finalization, a documentation-only package update can use saved evidence checks without retraining or reevaluating:
 
 ```powershell
-.venv\Scripts\python.exe scripts/finalize_part2.py --run-dir reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/selected --data-dir task2_sentiment/srinidhi/data_processed/full --archive-only
+.venv\Scripts\python.exe scripts/finalize_part2.py --run-dir reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/selected --data-dir task2_sentiment/srinidhi/data_processed/full --archive-only
 ```
 
-This preserves the original training, evaluation, dataset, runtime source and
-executed-notebook bytes and includes the latest member documentation and
-separate AI draft CSVs. Its receipt is `verification/part2_archive_only.json`.
+This requires unchanged frozen data, runtime, results and notebook. Its receipt is `verification/part2_archive_only.json`.
 
-All required numeric measures are listed in
-`task2_sentiment/REQUIREMENTS_CHECKLIST.md`: accuracy; macro/micro/weighted
-precision, recall and F1; confusion matrix; ROC/PR-AUC; MCC; Brier/ECE;
-bootstrap intervals; paired McNemar comparisons; slice macro-F1/error rate;
-parameter count, training time, throughput and peak memory. Metric definitions
-and uncertainty/measurement limits must accompany the numbers.
+## Complete Lab 1 deliverables
 
-For **each** model, `required_20_errors_for_review.csv` must contain five
-confident false positives, five confident false negatives, five near-threshold
-errors and five slice-specific failures. The current pipeline uses long
-reviews as the predefined slice and avoids duplicate IDs within each model.
-Each case needs an error type, explanation grounded in the full review and
-one testable fix. This creates 60 model-specific entries, not necessarily
-60 unique review texts across models.
+The [checklist](task2_sentiment/REQUIREMENTS_CHECKLIST.md) covers accuracy; macro/micro/weighted precision, recall and F1; confusion matrix; ROC/PR-AUC; MCC; Brier/ECE; bootstrap intervals; McNemar tests; slices; parameters, training time, examples/second and memory. Intervals describe test-row variation, not seed variation. Training costs describe actual invocations and workload overlap, not isolated architecture speed. The duplicate audit records seven shared train/test text hashes.
 
-Each model's separate `ai_error_review_draft.csv` and the member's
-`failure_analysis.md` provide AI-assisted classifications, exact evidence
-quotes, explanations and one testable future fix for all twenty cases. Drafts
-are keyed to example ID and the selected checkpoint SHA-256 and include the
-full source-text hash. The original `required_20_errors_for_review.csv`
-packets remain unchanged: `error_type` and `testable_fix` are blank and all
-`student_reviewed` values are false. Student review must verify the hypotheses
-against each full review and enter its own conclusions. AI drafts do not
-complete manual analysis; suggested fixes require future training/validation
-studies and an appropriate new evaluation, not tuning from this test packet.
+Each model needs 20 reviewed errors: five confident false positives, five confident false negatives, five near-threshold errors and five long-review failures. AI drafts provide exact quotes, short hypotheses and future training/validation fixes; all 60 human flags remain false. Students must inspect full reviews and record their conclusions before marking review complete. `scripts/render_sentiment_error_drafts.py` checks draft linkage and refreshes combined failure analysis while preserving human fields and notebook bytes.
 
-## Submission scope
-
-A final Part 2 archive includes the executed notebook, all best/last model
-weights, preprocessing/outputs and reproducibility evidence. Its current
-CRC/inventory/SHA-256 receipt is authoritative; retain a verified backup copy.
-Git publication uses branch `srinidhi/part2-desktop-final`, with targeted
-exceptions for the three selected member `best.pt` files. Resume/raw weights
-and dataset caches remain ignored by Git and are included in the ZIP.
-The final handoff and this remote check establish the actual published commit;
-local artifacts alone are not proof of a remote update:
-
-```powershell
-git ls-remote origin refs/heads/srinidhi/part2-desktop-final
-```
-
-Compare the returned commit with the final handoff. To inspect the published
-branch from a clone after verification:
-
-```powershell
-git fetch origin
-git switch srinidhi/part2-desktop-final
-```
-
-The course also requires each student's own core design/analysis and viva
-understanding. Assisted implementation and automatically executed training
-do not establish those requirements. Student review, independently trained
-teammate models, team comparisons and the combined report remain separate.
-
-Canvas asks for one final ZIP with separate Part 1, Part 2 and Part 3 folders
-and one combined `Report.pdf` including the GitHub link. A Part 2-only archive
-does not complete that overall submission. Preserve Part 1 and Part 3
-artifacts and human-rating provenance while finalizing this part.
+A normal final push to `main` is authorized; preserve history. Complete independent teammate comparisons, the joint report and individual viva understanding honestly under `AI_USE.md`. Canvas requires one combined ZIP with Part 1, Part 2 and Part 3 folders and a combined `Report.pdf` containing the GitHub link. This Part 2 package alone does not complete submission.

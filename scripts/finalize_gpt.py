@@ -99,6 +99,9 @@ def verify_published(root, evidence):
     for name in ("summary.json", "history.json", "generations.json", "vocabulary.json", "config.json", "data_manifest.json"):
         publisher.require(publisher.digest(member / "outputs/full" / name)
                           == publisher.digest(root / evidence["run"] / name), f"Published {name} differs from raw evidence")
+    publisher.require(publisher.read_json(member / "outputs/full/reproduction_config.json") ==
+                      {"full": evidence["config"]},
+                      "Published reproduction recipe differs from the selected run")
     raw_figures = {path.name: publisher.digest(path) for path in (root / evidence["run"] / "figures").glob("*.png")}
     copied_figures = {path.name: publisher.digest(path) for path in (member / "outputs/full/figures").glob("*.png")}
     publisher.require({"learning_curves.png", "training_diagnostics.png"} <= raw_figures.keys()
@@ -118,6 +121,44 @@ def verify_published(root, evidence):
             "notebook": verify_notebook(member / "src/gpt.ipynb")}
 
 
+def selected_experiment_files(root, evidence):
+    """Include only the selected run's frozen recipe and matching comparison."""
+    root = Path(root).resolve()
+    selected = []
+    experiments = root / "task1_llm/srinidhi/experiments"
+    for plan_path in sorted(experiments.glob("*/plan.json")):
+        plan = publisher.read_json(plan_path)
+        if plan.get("run") != evidence["run"]:
+            continue
+        relative = PurePosixPath(plan["config"])
+        publisher.require(not relative.is_absolute() and ".." not in relative.parts
+                          and "\\" not in str(relative), "Experiment config path is not portable")
+        config_path = root / str(relative)
+        publisher.require(config_path.is_file() and not config_path.is_symlink()
+                          and config_path.resolve().is_relative_to(experiments),
+                          "Selected experiment config is missing or outside the experiment directory")
+        publisher.require(publisher.digest(config_path) == plan["config_sha256"],
+                          "Selected experiment config differs from its frozen plan")
+        publisher.require(publisher.read_json(config_path).get("full") == evidence["config"],
+                          "Selected experiment recipe differs from the actual training configuration")
+        selected.extend((plan_path, config_path))
+    comparison_path = root / "verification/part1_quality_comparison.json"
+    if comparison_path.is_file():
+        comparison = publisher.read_json(comparison_path)
+        # An unrelated comparison must not prevent the original baseline from
+        # being packaged again, and must not be attached to that baseline.
+        if comparison.get("promotion_rule", {}).get("preferred_run") == evidence["run"]:
+            rows = [row for row in comparison.get("candidates", []) if row.get("run") == evidence["run"]]
+            publisher.require(len(rows) == 1 and rows[0].get("checkpoint_sha256") ==
+                              publisher.digest(root / evidence["run"] / "checkpoints/best.pt"),
+                              "Selected comparison refers to a different checkpoint")
+            publisher.require(comparison.get("protocol", {}).get("manifest_sha256") ==
+                              evidence["summary"]["manifest_sha256"],
+                              "Selected comparison refers to a different frozen dataset")
+            selected.append(comparison_path)
+    return selected
+
+
 def package_files(root, evidence):
     root = Path(root).resolve()
     files = {}
@@ -130,18 +171,24 @@ def package_files(root, evidence):
         files[path.relative_to(root).as_posix()] = path
     for name in ("pyproject.toml", "PART1_FINALIZATION.md", "AI_USE.md", ".gitattributes", ".gitignore"):
         add(root / name)
-    for directory in (root / "src/lab1", root / "task1_llm/srinidhi"):
-        for path in sorted(directory.rglob("*")):
-            if path.is_file() and not any(part in {"__pycache__", ".ipynb_checkpoints"} for part in path.parts):
-                # Include only selected full-data cache below, not old smoke/rehearsal data.
-                if "data_processed" in path.parts and path.name != "README.md":
-                    continue
-                add(path)
+    for path in sorted((root / "src/lab1").glob("*.py")):
+        add(path)
+    member = root / "task1_llm/srinidhi"
+    for path in sorted(member.glob("*")):
+        add(path)
+    for pattern in ("src/*.py", "src/*.ipynb", "outputs/full/*", "outputs/full/figures/*.png"):
+        for path in sorted(member.glob(pattern)):
+            add(path)
+    for relative in ("checkpoints/best.pt", "checkpoints/last.pt", "checkpoints/manifest.json",
+                     "checkpoints/README.md", "outputs/README.md", "data_processed/README.md"):
+        add(member / relative)
+    for path in selected_experiment_files(root, evidence):
+        add(path)
     add(root / "task1_llm/README.md")
     add(root / "task1_llm/data/README.md")
-    for name in ("publish_gpt_results.py", "finalize_gpt.py"):
+    for name in ("publish_gpt_results.py", "finalize_gpt.py", "compare_gpt_candidates.py"):
         add(root / "scripts" / name)
-    for name in ("test_gpt.py", "test_gpt_finalization.py"):
+    for name in ("test_gpt.py", "test_gpt_finalization.py", "test_compare_gpt_candidates.py"):
         add(root / "tests" / name)
     for path in evidence["cache_paths"].values():
         add(path)

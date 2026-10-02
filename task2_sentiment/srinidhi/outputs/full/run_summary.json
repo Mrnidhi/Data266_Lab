@@ -5,17 +5,17 @@
   "artifact_type": "assembled_validation_selection",
   "assembled_results": true,
   "description": "Derived evaluation of separately selected original checkpoints; no training in this invocation.",
-  "selection_rule": "Architectures and schedules were fixed before desktop training from the historical Part 2 selection: original MLP and CNN, original BiLSTM with 12 epochs/patience 4. For each family use its best validation macro-F1 checkpoint, with the configured minimum improvement and early stopping. No fresh test predictions or test metrics are used to select checkpoints.",
-  "selection_manifest_sha256": "0d590696619c90fbce43e9707b72decc147ddf6c594e4ed2e3aba312f32981d7",
-  "selection_frozen_utc": "2026-10-02T00:27:17.482170+00:00",
-  "evaluation_started_utc": "2026-10-02T00:27:38.822333+00:00",
+  "selection_rule": "For each family, consider its existing desktop control and every completed new candidate. Find the highest selected-checkpoint validation macro-F1. Among candidates within 0.001 inclusive of that maximum, prefer fewer parameters, then higher validation macro-F1, then source path and candidate ID. A wider candidate must therefore exceed a smaller control by more than 0.001 to displace it. Checkpoints follow configured early_stopping_min_delta=0.0001. No test score or test prediction enters selection. This practical tolerance does not establish statistical significance.",
+  "selection_manifest_sha256": "4eedab69b63b4c064283ab44c6ca6f8c4d19ea14d81c0c5b3941a599abbbc8b9",
+  "selection_frozen_utc": "2026-10-02T01:51:44.518951+00:00",
+  "evaluation_started_utc": "2026-10-02T01:52:59.287526+00:00",
   "source_runs": {
     "maxpool_mlp": {
-      "candidate_id": "desktop_maxpool_mlp",
+      "candidate_id": "mlp_wide_regularized",
       "model_name": "maxpool_mlp",
-      "source_run": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/maxpool_mlp",
-      "checkpoint": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/maxpool_mlp/maxpool_mlp/checkpoints/best.pt",
-      "sha256": "8e3007821edf5d69b3d485b7c3d5a534c2ad0b83021895e8ced26e4d187128b6",
+      "source_run": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/mlp_wide_regularized",
+      "checkpoint": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/mlp_wide_regularized/maxpool_mlp/checkpoints/best.pt",
+      "sha256": "5ae7df4f747e89209ec2ca1381652bf3ed0fcf671a6f15605cb08323a0d9599c",
       "config": {
         "mode": "full",
         "seed": 2342,
@@ -27,13 +27,13 @@
         "test_limit": null,
         "vocabulary_size": 40000,
         "min_frequency": 2,
-        "embedding_dim": 128,
+        "embedding_dim": 256,
         "max_length": 384,
         "batch_size": 128,
-        "epochs": 6,
-        "early_stopping_patience": 2,
+        "epochs": 12,
+        "early_stopping_patience": 4,
         "early_stopping_min_delta": 0.0001,
-        "mlp_hidden": 64,
+        "mlp_hidden": 128,
         "lstm_hidden": 96,
         "cnn_channels": 128,
         "dilations": [
@@ -42,7 +42,7 @@
           4,
           8
         ],
-        "dropout": 0.3,
+        "dropout": 0.5,
         "cnn_dropout": 0.2,
         "learning_rates": {
           "maxpool_mlp": 0.0015,
@@ -61,21 +61,25 @@
         "log_every_steps": 200,
         "validation_only": true
       },
-      "validation_macro_f1": 0.9264224689043884,
+      "validation_macro_f1": 0.928285278783434,
       "selected_epoch": 5,
-      "parameter_count": 5128321,
-      "train_seconds": 86.92748030000439,
+      "parameter_count": 10273025,
+      "train_seconds": 457.40959560000556,
       "provenance": {
         "candidate": {
-          "name": "desktop_maxpool_mlp",
+          "name": "mlp_wide_regularized",
           "model": "maxpool_mlp",
-          "hypothesis": "Replicate the already selected family recipe on the desktop.",
+          "hypothesis": "A wider lexical representation with stronger regularization may improve on both the current baseline and the previously tried weak-dropout wider model.",
           "overrides": {
-            "epochs": 6,
-            "early_stopping_patience": 2,
+            "epochs": 12,
+            "early_stopping_patience": 4,
+            "early_stopping_min_delta": 0.0001,
             "num_workers": 0,
             "checkpoint_every_steps": 1000,
-            "log_every_steps": 200
+            "log_every_steps": 200,
+            "embedding_dim": 256,
+            "mlp_hidden": 128,
+            "dropout": 0.5
           }
         },
         "config": {
@@ -89,13 +93,13 @@
           "test_limit": null,
           "vocabulary_size": 40000,
           "min_frequency": 2,
-          "embedding_dim": 128,
+          "embedding_dim": 256,
           "max_length": 384,
           "batch_size": 128,
-          "epochs": 6,
-          "early_stopping_patience": 2,
+          "epochs": 12,
+          "early_stopping_patience": 4,
           "early_stopping_min_delta": 0.0001,
-          "mlp_hidden": 64,
+          "mlp_hidden": 128,
           "lstm_hidden": 96,
           "cnn_channels": 128,
           "dilations": [
@@ -104,7 +108,7 @@
             4,
             8
           ],
-          "dropout": 0.3,
+          "dropout": 0.5,
           "cnn_dropout": 0.2,
           "learning_rates": {
             "maxpool_mlp": 0.0015,
@@ -123,7 +127,7 @@
           "log_every_steps": 200,
           "validation_only": true
         },
-        "started_utc": "2026-10-01T23:30:09.324344+00:00",
+        "started_utc": "2026-10-02T01:05:55.282698+00:00",
         "status": "completed",
         "source_sha256": {
           "src\\lab1\\__init__.py": "b9849907c7465e81037a43feb0ac630d991ac608c4dbabddcbcc691f8a7b015f",
@@ -138,7 +142,7 @@
           "task3_gan\\srinidhi\\src\\cyclegan.py": "98f1a2901eccb0f366f726654a1297830fa5541786a21ad264e2b29b7f5cd71e"
         },
         "environment": {
-          "captured_utc": "2026-10-01T23:30:09.385154+00:00",
+          "captured_utc": "2026-10-02T01:05:55.344688+00:00",
           "python": "3.12.14",
           "platform": "Windows-11-10.0.26200-SP0",
           "machine": "AMD64",
@@ -186,27 +190,33 @@
         "result": {
           "model_name": "maxpool_mlp",
           "selected_epoch": 5,
-          "selected_validation_macro_f1": 0.9264224689043884,
-          "parameter_count": 5128321,
-          "train_seconds": 86.92748030000439,
-          "peak_cuda_memory_bytes": 162652160,
-          "peak_host_rss_bytes": 3087147008,
+          "selected_validation_macro_f1": 0.928285278783434,
+          "parameter_count": 10273025,
+          "train_seconds": 457.40959560000556,
+          "peak_cuda_memory_bytes": 307027968,
+          "peak_host_rss_bytes": 3169525760,
           "host_peak_rss_scope": "process lifetime peak resident memory, including data preparation",
-          "completed_training_steps": 23628,
+          "completed_training_steps": 35442,
           "test_evaluated": false
         },
-        "ended_utc": "2026-10-01T23:31:53.143253+00:00",
-        "elapsed_seconds": 102.04833319999852
+        "ended_utc": "2026-10-02T01:14:09.919125+00:00",
+        "elapsed_seconds": 493.0742328999986
       },
-      "recipe_path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/recipes/maxpool_mlp.json",
-      "recipe_sha256": "4cccb2a06c7f53526f930a5654ba5bbe5f67db4056aa8b250111dc991c9d5211",
+      "recipe_path": "task2_sentiment/srinidhi/experiments/desktop-quality-20261001/mlp_wide_regularized.json",
+      "recipe_sha256": "588e931e248f58737b9b4e08870bf1cc2f4afde374f04ce9c205c334e36ef0b8",
+      "role": "new_validation_candidate",
       "source_metadata_sha256": {
-        "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/maxpool_mlp/maxpool_mlp/checkpoints/best.pt": "8e3007821edf5d69b3d485b7c3d5a534c2ad0b83021895e8ced26e4d187128b6",
-        "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/maxpool_mlp/maxpool_mlp/checkpoints/last.pt": "aa362adfc48bf52211b69ad4df3fbe68265ae34bb409f164d1afe40899f71701",
-        "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/maxpool_mlp/maxpool_mlp/history.json": "195f2ec06f298c755193737f47590c762f1aa0aa65e06f38f3f75c7868c33073",
-        "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/maxpool_mlp/maxpool_mlp/validation_selection.json": "00645627097f07c8ff36189da3dec13004240a3e01b51c2edcd76cab80b62c95",
-        "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/maxpool_mlp/config.json": "b7557065e5d9f0af7bf9831d3ad30155cd119efea2337a87b96363bb286700aa",
-        "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/maxpool_mlp/provenance.json": "7b8aa9d779ae0e508828b0e12b89bbede83a45ff1aa66045e5aa542358d46c82"
+        "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/mlp_wide_regularized/maxpool_mlp/checkpoints/best.pt": "5ae7df4f747e89209ec2ca1381652bf3ed0fcf671a6f15605cb08323a0d9599c",
+        "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/mlp_wide_regularized/maxpool_mlp/checkpoints/last.pt": "73a0e7fed026ef8420dd68487e074185140330655838136037ae9ea52faa0b64",
+        "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/mlp_wide_regularized/maxpool_mlp/history.json": "8c6ebfc3e99d1a138027ab49a96d4982283c7f3fd55cff70f17158b0ee13da52",
+        "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/mlp_wide_regularized/maxpool_mlp/validation_selection.json": "c4bbc6a8de9a3de508db9fa32e1cc57ee372d97a3aa7caeade33ce65f08b4e99",
+        "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/mlp_wide_regularized/config.json": "fa42bc53bcbd02efe5ea681f59550cd6ba147bf19939707eb717d44c89134d9d",
+        "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/mlp_wide_regularized/provenance.json": "add1d3fc1a1920eb06351c6c195651237d0ed2b0ddc2b59fba9d53c4c4c1bf1d"
+      },
+      "decision": {
+        "selected": true,
+        "within_practical_band": true,
+        "gap_to_highest_validation_macro_f1": 0.0
       }
     },
     "bilstm": {
@@ -406,6 +416,12 @@
         "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/bilstm/bilstm/validation_selection.json": "5a972f726544695302fdbcd07ea78808e6fa4fd18c16670ee67052de98423dcf",
         "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/bilstm/config.json": "55976d013e75fb55819300839a7ead50b4c7946d7ec7f0912f71b2c46025a005",
         "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/bilstm/provenance.json": "b04bbfb969be747140c76b53fcc909d323e83c78c8384fa1be9fd46dc03b79c0"
+      },
+      "role": "existing_desktop_control",
+      "decision": {
+        "selected": true,
+        "within_practical_band": true,
+        "gap_to_highest_validation_macro_f1": 0.0
       }
     },
     "dilated_cnn": {
@@ -605,6 +621,12 @@
         "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/dilated_cnn/dilated_cnn/validation_selection.json": "20855f99d3cfceb67da03878bd987f8e49838d4af4e63191ca4e12f75a62236e",
         "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/dilated_cnn/config.json": "b7557065e5d9f0af7bf9831d3ad30155cd119efea2337a87b96363bb286700aa",
         "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/dilated_cnn/provenance.json": "9e4978eb63a3da30b479167c850b6926d4e3b4d9f44d9555eda52a1a65f90402"
+      },
+      "role": "existing_desktop_control",
+      "decision": {
+        "selected": true,
+        "within_practical_band": true,
+        "gap_to_highest_validation_macro_f1": 0.0007328578631816
       }
     }
   },
@@ -661,13 +683,13 @@
         "test_limit": null,
         "vocabulary_size": 40000,
         "min_frequency": 2,
-        "embedding_dim": 128,
+        "embedding_dim": 256,
         "max_length": 384,
         "batch_size": 128,
-        "epochs": 6,
-        "early_stopping_patience": 2,
+        "epochs": 12,
+        "early_stopping_patience": 4,
         "early_stopping_min_delta": 0.0001,
-        "mlp_hidden": 64,
+        "mlp_hidden": 128,
         "lstm_hidden": 96,
         "cnn_channels": 128,
         "dilations": [
@@ -676,7 +698,7 @@
           4,
           8
         ],
-        "dropout": 0.3,
+        "dropout": 0.5,
         "cnn_dropout": 0.2,
         "learning_rates": {
           "maxpool_mlp": 0.0015,
@@ -788,7 +810,7 @@
     }
   },
   "environment": {
-    "captured_utc": "2026-10-01T23:30:09.385154+00:00",
+    "captured_utc": "2026-10-02T01:05:55.344688+00:00",
     "python": "3.12.14",
     "platform": "Windows-11-10.0.26200-SP0",
     "machine": "AMD64",
@@ -831,7 +853,7 @@
   },
   "environment_scope": "Representative source training environment; per-model originals are in source_runs.",
   "evaluation_environment": {
-    "captured_utc": "2026-10-02T00:27:38.912539+00:00",
+    "captured_utc": "2026-10-02T01:52:59.328639+00:00",
     "python": "3.12.14",
     "platform": "Windows-11-10.0.26200-SP0",
     "machine": "AMD64",
@@ -883,91 +905,91 @@
     "scripts/tune_sentiment.py": "a8c029b365d7f6f1bf8f21f1992fb3784cdd5a735a6959a2de5874a47b1230f8"
   },
   "source_sha256_scope": "Current project sources and selector/finalizer/tuning scripts; original training evidence remains in source_runs.",
-  "started_utc": "2026-10-02T00:27:38.822333+00:00",
+  "started_utc": "2026-10-02T01:52:59.287526+00:00",
   "summary": {
     "mode": "full",
     "synthetic": false,
     "models": {
       "maxpool_mlp": {
         "count": 38000,
-        "accuracy": 0.931921052631579,
-        "mcc": 0.8639534272101965,
-        "brier": 0.05284625926707595,
+        "accuracy": 0.9331052631578948,
+        "mcc": 0.8662202443536531,
+        "brier": 0.04985188163912808,
         "confusion_matrix": [
           [
-            17859,
-            1141
+            17774,
+            1226
           ],
           [
-            1446,
-            17554
+            1316,
+            17684
           ]
         ],
         "threshold": 0.5,
         "macro": {
-          "precision": 0.932032381751558,
-          "recall": 0.9319210526315789,
-          "f1": 0.9319166665844245
+          "precision": 0.9331149812502718,
+          "recall": 0.9331052631578948,
+          "f1": 0.9331048879152299
         },
         "micro": {
-          "precision": 0.931921052631579,
-          "recall": 0.931921052631579,
-          "f1": 0.931921052631579
+          "precision": 0.9331052631578948,
+          "recall": 0.9331052631578948,
+          "f1": 0.9331052631578948
         },
         "weighted": {
-          "precision": 0.9320323817515581,
-          "recall": 0.931921052631579,
-          "f1": 0.9319166665844245
+          "precision": 0.9331149812502718,
+          "recall": 0.9331052631578948,
+          "f1": 0.93310488791523
         },
         "per_class": [
           {
             "label": 0,
-            "precision": 0.925097125097125,
-            "recall": 0.9399473684210526,
-            "f1": 0.932463124918418,
+            "precision": 0.9310633839706652,
+            "recall": 0.9354736842105263,
+            "f1": 0.9332633237070097,
             "support": 19000
           },
           {
             "label": 1,
-            "precision": 0.938967638405991,
-            "recall": 0.9238947368421052,
-            "f1": 0.931370208250431,
+            "precision": 0.9351665785298784,
+            "recall": 0.9307368421052632,
+            "f1": 0.9329464521234503,
             "support": 19000
           }
         ],
-        "ece_15": 0.027213658512513353,
+        "ece_15": 0.013869107831864982,
         "ece_definition": "Top-label confidence ECE; 15 equal-width bins on [0,1]; threshold 0.5.",
-        "roc_auc": 0.981636984764543,
-        "pr_auc_trapezoidal": 0.9823718971902946,
+        "roc_auc": 0.9826948490304709,
+        "pr_auc_trapezoidal": 0.9833574725790227,
         "bootstrap_95_percentile": {
           "accuracy": {
-            "low": 0.9292105263157895,
-            "high": 0.9345
+            "low": 0.9305,
+            "high": 0.9357631578947369
           },
           "macro_f1": {
-            "low": 0.9292072061957165,
-            "high": 0.9344881732571072
+            "low": 0.9304999884294991,
+            "high": 0.9357615696299577
           },
           "mcc": {
-            "low": 0.8586106567943932,
-            "high": 0.8691249795358135
+            "low": 0.861021173052647,
+            "high": 0.8715246764586544
           }
         },
         "bootstrap_samples": 1000,
         "uncertainty_scope": "IID test-row resampling; does not include training-seed uncertainty.",
-        "test_loss": 0.18780950866247478,
+        "test_loss": 0.1758903203261526,
         "selected_epoch": 5,
-        "selected_validation_macro_f1": 0.9264224689043884,
-        "parameter_count": 5128321,
+        "selected_validation_macro_f1": 0.928285278783434,
+        "parameter_count": 10273025,
         "mode": "full",
         "synthetic": false,
-        "train_seconds": 86.92748030000439,
-        "peak_cuda_memory_bytes": 162652160,
-        "peak_host_rss_bytes": 3087147008,
+        "train_seconds": 457.40959560000556,
+        "peak_cuda_memory_bytes": 307027968,
+        "peak_host_rss_bytes": 3169525760,
         "host_peak_rss_scope": "process lifetime peak resident memory, including data preparation",
         "resume_scaler_status": "checkpoint_evaluation_only",
-        "completed_training_steps": 23628,
-        "evaluation_host_peak_rss_bytes": 2694193152,
+        "completed_training_steps": 35442,
+        "evaluation_host_peak_rss_bytes": 2785464320,
         "evaluation_host_peak_rss_scope": "evaluation process lifetime peak resident memory"
       },
       "bilstm": {
@@ -1049,7 +1071,7 @@
         "host_peak_rss_scope": "process lifetime peak resident memory, including data preparation",
         "resume_scaler_status": "checkpoint_evaluation_only",
         "completed_training_steps": 47256,
-        "evaluation_host_peak_rss_bytes": 2814107648,
+        "evaluation_host_peak_rss_bytes": 2908942336,
         "evaluation_host_peak_rss_scope": "evaluation process lifetime peak resident memory"
       },
       "dilated_cnn": {
@@ -1131,7 +1153,7 @@
         "host_peak_rss_scope": "process lifetime peak resident memory, including data preparation",
         "resume_scaler_status": "checkpoint_evaluation_only",
         "completed_training_steps": 23628,
-        "evaluation_host_peak_rss_bytes": 2882334720,
+        "evaluation_host_peak_rss_bytes": 2974400512,
         "evaluation_host_peak_rss_scope": "evaluation process lifetime peak resident memory"
       }
     },
@@ -1139,43 +1161,43 @@
       "bilstm": {
         "table": [
           [
-            34825,
-            588
+            34881,
+            577
           ],
           [
-            1701,
-            886
+            1645,
+            897
           ]
         ],
         "table_definition": "Rows baseline correct/incorrect, columns other correct/incorrect",
-        "discordant_pairs": 2289,
-        "pvalue_exact_two_sided": 1.303491563145497e-124,
+        "discordant_pairs": 2222,
+        "pvalue_exact_two_sided": 3.6225625785074907e-118,
         "test": "Paired exact McNemar (binomial), no continuity correction",
         "multiple_comparisons": "Two prespecified baseline comparisons; p-values are unadjusted."
       },
       "dilated_cnn": {
         "table": [
           [
-            34815,
-            598
+            34857,
+            601
           ],
           [
-            1523,
-            1064
+            1481,
+            1061
           ]
         ],
         "table_definition": "Rows baseline correct/incorrect, columns other correct/incorrect",
-        "discordant_pairs": 2121,
-        "pvalue_exact_two_sided": 1.5497944409153588e-92,
+        "discordant_pairs": 2082,
+        "pvalue_exact_two_sided": 2.809448161233942e-85,
         "test": "Paired exact McNemar (binomial), no continuity correction",
         "multiple_comparisons": "Two prespecified baseline comparisons; p-values are unadjusted."
       }
     },
     "manual_error_review_complete": false,
     "artifact_type": "assembled_validation_selection",
-    "selection_manifest_sha256": "0d590696619c90fbce43e9707b72decc147ddf6c594e4ed2e3aba312f32981d7",
+    "selection_manifest_sha256": "4eedab69b63b4c064283ab44c6ca6f8c4d19ea14d81c0c5b3941a599abbbc8b9",
     "fingerprint": "46cab25959c841830bee44977b7bb78bf829d5420c90869e8d073736efa09e31"
   },
-  "ended_utc": "2026-10-02T00:27:56.882964+00:00",
-  "elapsed_seconds": 17.802628800000093
+  "ended_utc": "2026-10-02T01:54:01.475562+00:00",
+  "elapsed_seconds": 61.96701759999996
 }

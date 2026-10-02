@@ -1,0 +1,13 @@
+{
+  "scope": "Local Git staging integrity; remote publication pending GitHub installation access",
+  "source_bytes_match_training_sha256": {
+    "src/lab1/__init__.py": "b9849907c7465e81037a43feb0ac630d991ac608c4dbabddcbcc691f8a7b015f",
+    "src/lab1/common.py": "9969a94baa2ef1cba3d0474262227fd178417d761b1528d4278779ef3c23bd4e",
+    "src/lab1/run.py": "4edd942dc83425e0c36e588ae59194fae632819e87b88ba6104a6257eafc4900",
+    "task1_llm/srinidhi/config.json": "4abfd4cdfd6d6e0cd7643aaf88f601dd4a304c47152e41640c763a67b1be0d6f",
+    "task1_llm/srinidhi/src/gpt.py": "ddf1adb228f3ae8cb6ea94361f153408a3b36f34cdb34ac2c6fac218eb548664"
+  },
+  "selected_checkpoint_matches_manifest": true,
+  "executed_notebook_matches_receipt": true,
+  "line_ending_conversion_disabled_for_training_sources_and_notebook": true
+}

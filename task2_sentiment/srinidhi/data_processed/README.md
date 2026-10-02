@@ -1,29 +1,13 @@
-# Frozen Yelp Polarity preprocessing
+# Frozen Yelp Polarity data
 
-`full/` contains selected JSONL reviews/manifests from `fancyzhx/yelp_polarity`,
-resolved revision `bbf1c97a1f0cf005e5aded43839fd814654a1557`. Seed 2342
-stratifies 560,000 official training rows into 504,000 train and 56,000
-validation rows; all 38,000 official test rows are retained. Each split is
-balanced. The October 1 desktop cache matches historical row contents and
-ordering exactly. Root `verification/part2_desktop_data_identity.json` records
-actual CRLF-byte and normalized-LF hashes; encoded features are in `full_encoded/`.
+`full/` contains JSONL splits/manifests from `fancyzhx/yelp_polarity`, revision `bbf1c97a1f0cf005e5aded43839fd814654a1557`. Seed 2342 stratifies 560,000 official training rows into 504,000 training and 56,000 validation rows. All 38,000 official test rows are retained; each split is balanced. The new selected suite uses these same frozen rows.
 
-Tokenization casefolds, expands contractions, removes HTML/punctuation and a
-frozen customized stopword list, preserving negation/contrast words. A
-40,000-word dictionary with minimum frequency two is fitted on training only.
-Each model learns its own embeddings; the first 384 tokens form the input.
-Stemming/lemmatization is omitted. Empty processed text maps to UNK: 22 train,
-one validation and zero test rows. There are zero malformed or blank raw rows.
-Duplicate texts are audited and retained; seven text hashes occur in train
-and test. Official test IDs/labels/texts are never silently changed or deleted.
+`verification/part2_desktop_data_identity.json` records byte and normalized-LF hashes and verifies historical row contents/order. Encoded features are in `full_encoded/`; copies must retain complete manifests and matching files.
 
-Distribution, truncation/OOV and duplicate evidence is in `../outputs/full/`.
-JSONL/encoded caches are ignored by Git but included in the Part 2 ZIP; a
-clone needs public-data preparation or a verified cache before full reproduction.
-Preserve complete manifests and hashes when moving data. The tuner verifies
-all split/cache fingerprints, including test metadata/arrays, then removes
-test tensors before training. Only train/validation affect weights or selection.
+Preprocessing casefolds, expands contractions, removes HTML/punctuation and selected stopwords, and preserves negation/contrast. The vocabulary cap is 40,000 with minimum frequency 2, fitted on training only. Each model learns its own embedding; input uses the first 384 processed tokens. Stemming/lemmatization is omitted to retain word forms. Empty processed text maps to UNK: 22 training rows, one validation row and no test rows. There are no malformed or blank raw rows.
 
-See [finalization guide](../../../PART2_FINALIZATION.md) for preparation,
-training, replay and package verification. Other members must keep their
-preprocessing/model artifacts in their own folders.
+Duplicate texts are audited and retained: seven hashes occur in both training and test. Official test IDs, labels and texts remain unchanged. Distributions, truncation, OOV and duplicates are documented in [current outputs](../outputs/README.md).
+
+The tuner verifies all split/cache fingerprints, including test metadata and arrays, then removes the test dataset before training. Only training/validation tensors reach training and checkpoint selection. Earlier test results were observed, so repeated evaluation is not a newly sealed holdout.
+
+Git does not include dataset caches. Use the complete local data or finalized ZIP, or prepare the public dataset and verify the manifest. The ZIP includes real processed files. See the [finalization guide](../../../PART2_FINALIZATION.md); other members keep their own preprocessing/model artifacts in their own folders.

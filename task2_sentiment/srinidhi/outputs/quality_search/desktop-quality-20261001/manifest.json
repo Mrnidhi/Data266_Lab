@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-10-02T01:52:10.657993+00:00",
+  "quality_plan": {
+    "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/quality_plan.json",
+    "sha256": "296612c341f4a9b4390902350ff1efb93df2909d1da6c8294d494df8508bf5f3"
+  },
+  "selection_manifest": {
+    "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/selection_manifest.json",
+    "sha256": "4eedab69b63b4c064283ab44c6ca6f8c4d19ea14d81c0c5b3941a599abbbc8b9"
+  },
+  "raw_receipts_included": false,
+  "receipts": [
+    {
+      "candidate_id": "cnn_regularized",
+      "source_receipt": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/invocations/cnn_regularized_2026-10-02T01-14-11.388077+00-00.json",
+      "source_sha256": "e9f3b926da51e0e83683afd9708cc6bf9e3df2173d401236816428f931d76964",
+      "published_receipt": "task2_sentiment/srinidhi/outputs/quality_search/desktop-quality-20261001/invocations/cnn_regularized_2026-10-02T01-14-11.388077+00-00.json",
+      "published_sha256": "b320e28415d77dcadbdea813c142622184f00ef350027139ed673bfd33f4f327"
+    },
+    {
+      "candidate_id": "cnn_wide_regularized",
+      "source_receipt": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/invocations/cnn_wide_regularized_2026-10-02T01-30-42.694925+00-00.json",
+      "source_sha256": "aa050f1d853806280615c451368d06047831decdbe759aba62be0692c72e8dab",
+      "published_receipt": "task2_sentiment/srinidhi/outputs/quality_search/desktop-quality-20261001/invocations/cnn_wide_regularized_2026-10-02T01-30-42.694925+00-00.json",
+      "published_sha256": "a52ed5e746cff23a7abccde8262e6f5eab69ab3aa00394cc5f155dcffa7c2012"
+    },
+    {
+      "candidate_id": "mlp_regularized",
+      "source_receipt": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/invocations/mlp_regularized_2026-10-02T00-55-46.127030+00-00.json",
+      "source_sha256": "9355e56d3fefe68b6a49d02991e3fb001a02822e1752dbfbe2bf7778585814a5",
+      "published_receipt": "task2_sentiment/srinidhi/outputs/quality_search/desktop-quality-20261001/invocations/mlp_regularized_2026-10-02T00-55-46.127030+00-00.json",
+      "published_sha256": "df68153decfe2dbf202e759c57ae6d4385a96d69539b44de43199c7b937e751f"
+    },
+    {
+      "candidate_id": "mlp_wide_regularized",
+      "source_receipt": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/invocations/mlp_wide_regularized_2026-10-02T01-05-53.252474+00-00.json",
+      "source_sha256": "b80c6a80d9151e92f734e46d8f5af522f2ddbfa4bff4a057c057978bd06dff72",
+      "published_receipt": "task2_sentiment/srinidhi/outputs/quality_search/desktop-quality-20261001/invocations/mlp_wide_regularized_2026-10-02T01-05-53.252474+00-00.json",
+      "published_sha256": "f445d91bad1a309f070507c4bb68f6626830cb7192d628f46a805b02ca97ada8"
+    }
+  ]
+}

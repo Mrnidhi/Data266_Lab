@@ -40,13 +40,23 @@ def test_roundtrip_preserves_all_models_and_only_run_files(tmp_path):
         bundle.package(root, root / "self.zip")
 
 
-def test_empty_and_symlink_runs_are_rejected(tmp_path):
+def test_empty_runs_are_rejected(tmp_path):
     empty = tmp_path / "empty"
     empty.mkdir()
     with pytest.raises(ValueError, match="checkpoint"):
         bundle.package(empty, tmp_path / "empty.zip")
+
+
+def test_symlink_runs_are_rejected(tmp_path):
+    empty = tmp_path / "empty"
+    empty.mkdir()
     root = run_folder(tmp_path)
-    (root / "linked").symlink_to(empty, target_is_directory=True)
+    try:
+        (root / "linked").symlink_to(empty, target_is_directory=True)
+    except OSError as error:
+        if getattr(error, "winerror", None) == 1314:
+            pytest.skip("Windows account lacks permission to create symbolic links")
+        raise
     with pytest.raises(ValueError, match="Symlinks"):
         bundle.package(root, tmp_path / "linked.zip")
     assert not (tmp_path / "linked.zip").exists()

@@ -1,6 +1,12 @@
 # Lab Pair 49 — compute allocation and portable runs
 
-Updated October 1, 2026. Current Part 1 work runs on the user's Windows desktop; the cloud cost records below describe earlier Parts 2/3 work. This plan does not allocate resources.
+Updated October 1, 2026. The Parts 1/2 baseline and quality-study training completed on the user's Windows desktop. Cloud cost records below describe earlier Parts 2/3 work. This plan does not allocate resources.
+
+The user requested Git consolidation first, then improvements to Parts 1/2.
+The baseline technical snapshot was pushed to `main` as `87f00dc`, and only
+`main` remains. A normal push of verified final study artifacts is authorized;
+preserve existing history and do not force push. Complete raw evidence and
+data remain in this workspace and verified archives.
 
 ## Current allocation
 
@@ -8,16 +14,39 @@ The user requested a fresh desktop Part 1 run after the earlier checkpoint downl
 
 | Work | Placement and status |
 |---|---|
-| Part 1: character GPT | Completed from scratch on the Windows desktop RTX 5090 on October 1; 100K/10K TinyStories, 12 complete epochs and 18,732 updates. Canonical evidence: `reproducibility/raw_logs/srinidhi/desktop-20261001/part1-full/`. |
-| Part 2: Yelp sentiment | Completed the reference suite and six validation-only trials on one RunPod RTX 5090. All checkpoints and logs were verified locally before stopping; final inference and reporting use the Mac CPU. |
+| Part 1: character GPT | Selected 6-layer/context-512 GPT completed 16 epochs and 28,416 updates on 100K/10K TinyStories. Native validation CE 0.551181; matched-256 CE 0.599380 versus baseline 0.721101. Evidence: `reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part1/depth_context_full/`. |
+| Part 2: Yelp sentiment | Four further candidates completed on the desktop. Validation selection chose the wider MLP and retained the original BiLSTM/CNN. Selected epochs 5/11/6 from 9/12/6 completed epochs; test accuracy 93.3105%/96.1211%/95.6263%. The eight-cell notebook, CPU/CUDA inference and extracted-package notebook/CPU smoke checks passed. |
 | Part 3: CycleGAN | Original 30-epoch run and two September 29 continuation arms completed on cloud RTX 5090. Selected continuation metrics and remaining review/class evaluation are in `report/PART3_FINETUNING_RESULTS.md`. |
-| Reports, notebooks, packaging, checksums | Part 1 finalized on the Windows desktop. Older Parts 2/3 large local artifacts must be transferred and verified separately if absent here. |
+| Reports, notebooks, packaging, checksums | Parts 1/2 technically finalized on Windows with actual weights/data in their verified ZIPs. Part 2 student review is pending. Part 3 large artifacts must still be transferred/verified if absent here; teammate comparisons and combined report are separate. |
 
-The desktop environment is Python 3.12.14, PyTorch 2.11.0+cu128 and CUDA 12.8 with verified RTX 5090 `sm_120` support. See `verification/part1_desktop_environment.json`. Fifteen Part 1/common preflight tests and 24 finalization/GPT gate checks passed, including causal masking, target coverage, cache integrity, interrupted resume, Unicode, Windows resident-memory reporting and rejection of altered evidence/unsafe archives. The documented native Windows smoke CLI passed. Full run and export receipts establish actual training completion separately: 15.11 minutes of timed training-step work, 18.32 minutes recorded wall time and 1.186 million scored targets/second. No new GPU rental is used for Part 1. Each task retains its actual hardware, environment, source and training provenance.
+The completed quality study is under
+`reproducibility/raw_logs/srinidhi/desktop-quality-20261001/`. Promotion follows
+the frozen validation rules. GPT and sentiment shared the RTX 5090 for part
+of training, so elapsed times include contention and do not establish isolated
+architecture-speed comparisons. Baseline ZIPs and raw evidence remain preserved.
 
-## Part 2 cost and stopping policy
+The desktop environment is Python 3.12.14, PyTorch 2.11.0+cu128 and CUDA 12.8
+with verified RTX 5090 support. See `verification/part1_desktop_environment.json`.
+The selected GPT recorded 6,689.37 seconds of training-step work, 7,071.67
+seconds overall, and 214,249.85 scored character/EOS targets per second during
+timed training. The finalization receipts record notebook, inference and
+package checks. No new GPU rental was used; each task retains its actual
+hardware, environment, source and training provenance.
 
-The completed session was observed from 2026-09-19 01:32:44 UTC to 02:43:51 UTC (about 71 minutes). Estimated compute plus container cost: **$1.18**, before any tax; this is a duration-based estimate, not an invoice. The RunPod console confirmed **$0.00/hour** after stop. See `verification/runpod_part_b_session_20260918.json` and the 96-file backup receipt. Existing GPU training processes finished normally, but new CUDA contexts became unavailable late in the session; final inference therefore runs on the local Apple M3 CPU. No extra paid resource was started.
+Part 2 uses the same pinned desktop environment with exact CPU
+provenance in `verification/part2_desktop_environment.json`. New validation
+selection preceded fresh test inference; old official-test results had
+already been observed. The initial three-recipe replication and later four
+candidate study have separate preserved plans. Measured training time for
+the final selected MLP/BiLSTM/CNN is 457.4096/2,911.4808/240.7418
+seconds for MLP/BiLSTM/CNN, excluding setup/validation/export; invocation
+provenance records broader elapsed time. No new GPU rental was used.
+See `PART2_FINALIZATION.md` and the fresh source run under
+`reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/selected/`.
+
+## Historical Part 2 cloud cost and stopping policy
+
+The earlier session was observed from 2026-09-19 01:32:44 UTC to 02:43:51 UTC (about 71 minutes). Estimated compute plus container cost: **$1.18**, before any tax; this is a duration-based estimate, not an invoice. The RunPod console confirmed **$0.00/hour** after stop. See `verification/runpod_part_b_session_20260918.json` and the 96-file backup receipt. Existing GPU training processes finished normally, but new CUDA contexts became unavailable late in that session; its final inference therefore ran on the local Apple M3 CPU. No extra paid resource was started.
 
 For that earlier Part 2 session, the user removed the initial $3 allowance and authorized continued research-guided experiments. The quoted rate at that time was $0.99/hour plus approximately $0.004/hour for a 30 GB container disk, before any tax. A real-data benchmark is in verification/sentiment_5090_benchmark.json. This historic authorization and price record does not call for a new rental; current Part 1 uses the desktop. Candidate runtimes depend on actual architecture, stopping epoch and workload.
 
@@ -76,4 +105,4 @@ After transferring code, run, and data, run from the cloned repository root and 
   --output runs/cyclegan-full --resume runs/cyclegan-full/last.pt
 ```
 
-These commands require actual existing full-run checkpoints. The new selected Part 1 `best.pt` is prepared for Git publication; confirm its remote commit before relying on a clone to restore it. Its `last.pt`, complete evidence and frozen processed data are included in `dist/Part1_Srinidhi_2342.zip`. Parts 2/3 completion and local weight availability must be checked against their own run records. On Windows replace `.venv/bin/python` with `.venv\Scripts\python.exe`. Reapply any original configuration override (for example data locations). Preserve a run with logs beyond its saved checkpoint as evidence and resume into a fresh directory if the task's history guard rejects it. Validate one resumed batch and inference on the destination before committing a long session. Cross-device numerical equivalence requires a real hardware check.
+These commands require actual existing full-run checkpoints. The baseline snapshot on `main` includes Parts 1/2 selected member best weights. Both best/last files, full evidence and processed data are retained in `dist/Part1_Srinidhi_2342.zip` and `dist/Part2_Srinidhi_2342.zip`. Verified final study artifacts are authorized for a normal push to `main`; baseline evidence and archives stay preserved. For the selected wider MLP, run `git lfs install` and `git lfs pull` after cloning or pulling to obtain its complete 124,098,311-byte checkpoint. ZIPs retain full checkpoint bytes. Use the complete local archive/raw cache for preserved-selection evaluation, whose paths point to original source checkpoints. Check Part 3 availability against its own records. On Windows replace `.venv/bin/python` with `.venv\Scripts\python.exe`. Reapply original configuration overrides such as data locations. Preserve a run with logs beyond its saved checkpoint as evidence and resume into a fresh directory if the history guard rejects it. Validate one resumed batch and inference on the destination before starting a long session. Cross-device numerical equivalence requires a real hardware check.

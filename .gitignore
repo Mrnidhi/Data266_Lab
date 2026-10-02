@@ -40,6 +40,13 @@ dist/
 /reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/selected/config.json
 /reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/selected/resolved_config.json
 /reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/selected/run_summary.json
+# Quality-study originals remain local; derived portable copies retain both hashes.
+/reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/invocations/
+/reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/selected/config.json
+/reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/selected/resolved_config.json
+/reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/selected/run_summary.json
+# Optional calibration was stopped when the user limited scope to the lab PDF.
+/reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/supplemental_ensemble/
 # Retain the original console locally; its dependency startup warnings contain
 # workstation paths. Publish the untouched portable metrics.jsonl training log.
 /reproducibility/raw_logs/srinidhi/desktop-20261001/part1-full/RUN_LOG.txt

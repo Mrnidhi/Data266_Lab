@@ -247,7 +247,16 @@ def reproduction_text(run, outputs, sources, selection):
         text += ("To repeat final evaluation of the **preserved selected checkpoints**, use:\n\n```bash\n" + command + "\n```\n\n"
                  "After retraining, create a new selection manifest from the new validation results, paths and checkpoint hashes before finalizing those new runs. "
                  "The command above intentionally references the original frozen selection; it does not select the newly trained runs.\n\n")
-    return text + "See results.md for metric definitions and limitations. Student error review and teammate comparisons are separate deliverables."
+    return text + "See metrics_report.csv and each model's metrics.json for full measures and metric definitions. Student error review and teammate comparisons are separate deliverables."
+
+
+def metric_comparison_table(summary):
+    table = "| Model | Test accuracy | Test macro-F1 | Parameters |\n|---|---:|---:|---:|\n"
+    for name in NAMES:
+        metrics = summary["models"][name]
+        table += (f"| {name} | {metrics['accuracy'] * 100:.6f}% | "
+                  f"{metrics['macro']['f1']:.6f} | {metrics['parameter_count']:,} |\n")
+    return table
 
 
 def select_errors(predictions, records):
@@ -420,7 +429,7 @@ def publish(run_dir, data_dir, *, verify=True):
         "All three models trained independently using 504,000 training reviews and 56,000 validation reviews; "
         "final evaluation covers all 38,000 official test reviews. Training hardware and configurations below come from each actual source run. "
         "CPU evidence sources are recorded in outputs/full/training_sources.json.\n\n"
-        + source_table + "\n" + selection_text +
+        + metric_comparison_table(summary) + "\n" + source_table + "\n" + selection_text +
         "The baseline max-pool MLP tests what unordered lexical evidence can achieve. The BiLSTM adds bidirectional sequence context; "
         "the residual dilated CNN learns local patterns over a wider receptive field. Each model learns its own embeddings from scratch. "
         "See each model's training_config.json for its actual widths, learning rates, dropout, batch size and stopping settings. "

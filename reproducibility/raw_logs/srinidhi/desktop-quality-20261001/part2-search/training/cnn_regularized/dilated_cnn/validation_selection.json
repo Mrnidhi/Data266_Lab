@@ -1,0 +1,12 @@
+{
+  "model_name": "dilated_cnn",
+  "selected_epoch": 7,
+  "selected_validation_macro_f1": 0.9533211532614958,
+  "parameter_count": 5539073,
+  "train_seconds": 936.4936993000083,
+  "peak_cuda_memory_bytes": 470373888,
+  "peak_host_rss_bytes": 3344539648,
+  "host_peak_rss_scope": "process lifetime peak resident memory, including data preparation",
+  "completed_training_steps": 43318,
+  "test_evaluated": false
+}

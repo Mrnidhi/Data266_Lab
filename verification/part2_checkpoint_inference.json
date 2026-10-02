@@ -1,21 +1,21 @@
 {
   "models": {
     "maxpool_mlp": {
-      "checkpoint_sha256": "8e3007821edf5d69b3d485b7c3d5a534c2ad0b83021895e8ced26e4d187128b6",
+      "checkpoint_sha256": "5ae7df4f747e89209ec2ca1381652bf3ed0fcf671a6f15605cb08323a0d9599c",
       "devices": [
         {
           "device": "cpu",
           "finite_logits": true,
           "independent_reload_identical": true,
           "right_padding_invariant": true,
-          "parameter_count": 5128321
+          "parameter_count": 10273025
         },
         {
           "device": "cuda",
           "finite_logits": true,
           "independent_reload_identical": true,
           "right_padding_invariant": true,
-          "parameter_count": 5128321
+          "parameter_count": 10273025
         }
       ]
     },

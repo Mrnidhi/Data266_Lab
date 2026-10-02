@@ -1,0 +1,23 @@
+{
+  "name": "cnn_wide_regularized",
+  "model": "dilated_cnn",
+  "hypothesis": "A moderately wider residual CNN with stronger dropout and a smaller learning rate may learn richer local sentiment features without the overfitting seen in the existing training curves.",
+  "overrides": {
+    "epochs": 12,
+    "early_stopping_patience": 4,
+    "early_stopping_min_delta": 0.0001,
+    "num_workers": 0,
+    "checkpoint_every_steps": 1000,
+    "log_every_steps": 200,
+    "embedding_dim": 192,
+    "cnn_channels": 192,
+    "mlp_hidden": 128,
+    "dropout": 0.5,
+    "cnn_dropout": 0.3,
+    "learning_rates": {
+      "maxpool_mlp": 0.0015,
+      "bilstm": 0.001,
+      "dilated_cnn": 0.0006
+    }
+  }
+}

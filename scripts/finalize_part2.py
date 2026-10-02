@@ -320,6 +320,7 @@ def frozen_inputs(root, evidence):
     if (parent / "desktop_plan.json").is_file():
         files.add(parent / "desktop_plan.json")
         files.update((parent / "recipes").glob("*.json"))
+    files.update(quality_study_files(root, evidence))
     return {path.relative_to(root).as_posix(): metadata(path) for path in sorted(files)}
 
 
@@ -345,6 +346,99 @@ def verify_recorded_files(root, recorded, label):
                 and metadata(actual) == expected, f"{label} bytes changed: {relative}")
 
 
+def checked_file(root, relative, checksum=None):
+    part = PurePosixPath(relative)
+    require(not part.is_absolute() and ".." not in part.parts and "\\" not in relative
+            and str(part) == relative, "Noncanonical supplemental evidence path")
+    path = Path(root) / relative
+    require(path.is_file() and not path.is_symlink() and path.resolve().is_relative_to(Path(root).resolve()),
+            f"Missing or escaping supplemental evidence: {relative}")
+    if checksum is not None:
+        require(digest(path) == checksum, f"Supplemental evidence hash changed: {relative}")
+    return path
+
+
+def quality_study_files(root, evidence):
+    """Frozen recipes and completed candidate metadata; never unselected weights."""
+    root = Path(root).resolve()
+    parent = (root / evidence["run"]).parent
+    selection = evidence["selection"]
+    expected = selection.get("quality_plan_sha256")
+    if expected is None:
+        return []  # Earlier desktop packages have no quality-study contract.
+    plan_path = checked_file(root, (parent / "quality_plan.json").relative_to(root).as_posix(), expected)
+    plan = read_json(plan_path)
+    baseline = checked_file(root, plan["baseline_selection_path"], plan["baseline_selection_sha256"])
+    receipt_path = checked_file(root, (parent / "baseline_validation_receipt.json").relative_to(root).as_posix())
+    require(read_json(receipt_path).get("plan_sha256") == expected, "Baseline receipt refers to a different quality plan")
+    files = {plan_path, baseline, receipt_path}
+    for recipe in plan["recipes"].values():
+        path = checked_file(root, recipe["path"], recipe["sha256"])
+        require(read_json(path) == recipe["recipe"], "Quality recipe differs from frozen plan")
+        files.add(path)
+    for relative, checksum in {**plan["training_source_sha256"], **plan["orchestration_sha256"]}.items():
+        files.add(checked_file(root, relative, checksum))
+    candidates = selection.get("candidates", [])
+    require(len(candidates) == plan["candidate_count"] == selection.get("candidate_count"),
+            "Quality selection omits planned candidates")
+    completed_ids = set()
+    for row in candidates:
+        source = root / row["source_run"]
+        proof = checked_file(root, (source / "provenance.json").relative_to(root).as_posix())
+        require(read_json(proof).get("status") == "completed", "Quality candidate is incomplete")
+        require(row.get("source_metadata_sha256"), "Quality candidate lacks frozen source hashes")
+        for relative, checksum in row["source_metadata_sha256"].items():
+            # The frozen selection records these hashes, but unselected weights
+            # are deliberately absent from the portable study evidence.
+            if PurePosixPath(relative).suffix.lower() in {".pt", ".pth", ".ckpt"}:
+                continue
+            path = checked_file(root, relative, checksum)
+            require(path.resolve().is_relative_to(source.resolve()), "Candidate metadata escapes its source run")
+            files.add(path)
+        if row.get("recipe_path") and row.get("recipe_sha256"):
+            files.add(checked_file(root, row["recipe_path"], row["recipe_sha256"]))
+        if row.get("role") == "new_validation_candidate":
+            completed_ids.add(row["candidate_id"])
+    require(completed_ids == set(plan["recipes"]), "Quality selection is missing completed experimental runs")
+    portable = root / "task2_sentiment/srinidhi/outputs/quality_search" / parent.parent.name
+    index_path = checked_file(root, (portable / "manifest.json").relative_to(root).as_posix())
+    index = read_json(index_path)
+    require(index.get("schema_version") == 1 and index.get("raw_receipts_included") is False,
+            "Unsupported portable quality invocation index")
+    require(index["quality_plan"] == {"path": plan_path.relative_to(root).as_posix(), "sha256": expected},
+            "Portable invocation index refers to a different quality plan")
+    files.add(checked_file(root, index["selection_manifest"]["path"], index["selection_manifest"]["sha256"]))
+    require(index["selection_manifest"]["sha256"] == digest(root / evidence["run"] / "selection_manifest.json"),
+            "Portable invocation index refers to a different selection")
+    receipts = index.get("receipts", [])
+    require(len(receipts) == len(completed_ids)
+            and {row["candidate_id"] for row in receipts} == completed_ids,
+            "Portable invocation index omits completed candidates")
+    files.add(index_path)
+    for row in receipts:
+        path = checked_file(root, row["published_receipt"], row["published_sha256"])
+        require(path.resolve().is_relative_to(portable.resolve()), "Portable invocation copy escapes its indexed folder")
+        copied = read_json(path)
+        derived = copied.get("derived_evidence", {})
+        require(copied.get("candidate_id") == row["candidate_id"] and copied.get("returncode") == 0
+                and copied.get("ended_utc") and copied.get("command", [None])[0] == "python"
+                and derived.get("source_receipt") == row["source_receipt"]
+                and derived.get("source_sha256") == row["source_sha256"]
+                and derived.get("original_receipt_preserved") is True,
+                "Portable invocation derivation/completion mismatch")
+        original = root / row["source_receipt"]
+        require(original.resolve().is_relative_to((parent / "invocations").resolve()),
+                "Original invocation path escapes the quality study")
+        if original.is_file():
+            checked_file(root, row["source_receipt"], row["source_sha256"])
+            normalized = read_json(original)
+            normalized["command"][0] = "python"
+            require({key: value for key, value in copied.items() if key != "derived_evidence"} == normalized,
+                    "Portable invocation changed more than the executable")
+        files.add(path)
+    return sorted(files)
+
+
 def package_files(root, evidence):
     root = Path(root).resolve()
     paths = {}
@@ -356,7 +450,9 @@ def package_files(root, evidence):
     for folder in (root / "src/lab1", root / "task2_sentiment/srinidhi"):
         for path in sorted(folder.rglob("*")):
             if path.is_file() and path.suffix != ".pyc" and "__pycache__" not in path.parts:
-                if "data_processed" in path.parts and not path.is_relative_to(evidence["data_dir"]) and "full_encoded" not in path.parts and path.name != "README.md":
+                if any(part in {"publication_history", "snapshots", "experiments", "quality_search"} for part in path.parts):
+                    continue
+                if "data_processed" in path.parts and not path.is_relative_to(evidence["data_dir"]) and not path.is_relative_to(evidence["feature_cache"]) and path.name != "README.md":
                     continue
                 add(path)
     for folder in (root / "task2_sentiment", root / "task2_sentiment/data"):
@@ -377,10 +473,14 @@ def package_files(root, evidence):
     add(parent / "desktop_plan.json")
     for path in (parent / "recipes").glob("*.json"):
         add(path)
+    for path in quality_study_files(root, evidence):
+        add(path)
     for name in ("AI_USE.md", "PART2_FINALIZATION.md", ".gitattributes", ".gitignore"):
         add(root / name)
     for name in ("publish_sentiment_results.py", "verify_part2_notebook.py", "finalize_part2.py", "tune_sentiment.py", "run_sentiment_desktop.py",
-                 "select_sentiment_candidates.py", "finalize_sentiment_selection.py", "sentiment_data_analysis.py"):
+                 "select_sentiment_candidates.py", "finalize_sentiment_selection.py", "sentiment_data_analysis.py",
+                 "run_sentiment_quality.py", "export_sentiment_quality_evidence.py",
+                 "render_sentiment_error_drafts.py"):
         add(root / "scripts" / name)
     add(root / "scripts/watch_sentiment_desktop.ps1")
     for pattern in ("verification/part2*.json", "verification/part2*.xml", "tests/test_*sentiment*.py", "tests/test_part2*.py"):
@@ -409,16 +509,17 @@ def package_files(root, evidence):
         "Use --device cpu when CUDA is unavailable. Exact three training recipes, frozen selection, original logs, best/last weights, "
         "processed JSONL data and encoded features are included. See member results.md for commands that retrain into new folders; "
         "create a new validation-only selection before evaluating those newly trained models.\n\n"
-        "Prior published results and annotations are retained under outputs/publication_history and review_history. They are historical "
-        "evidence, separate from this fresh desktop run. Error interpretations require honest student review; new rows remain unreviewed. "
+        "Prior publications and snapshot archives remain in the producing repository and preserved baseline ZIP. Current review_history "
+        "is retained with this run. Completed quality-study metadata is included without unselected checkpoint weights. "
+        "Error interpretations require honest student review; new rows remain unreviewed. "
         "This Part 2 technical bundle is one component of the eventual three-part team Canvas ZIP and combined Report.pdf.\n").encode()
     if (root / "PART2_FINALIZATION.md").is_file():
         paths["README.md"] = (root / "PART2_FINALIZATION.md").read_bytes()
     derived_metadata = []
     # The preserved evaluator writes machine-local cache paths. Portable copies
     # change those paths only; original local bytes and hashes remain recorded.
-    for filename in ("config.json", "resolved_config.json", "run_summary.json"):
-        relative = f"{evidence['run']}/{filename}"
+    portable_paths = {f"{evidence['run']}/{filename}" for filename in ("config.json", "resolved_config.json", "run_summary.json")}
+    for relative in sorted(portable_paths):
         if relative in paths:
             original = paths[relative].read_bytes()
             document = json.loads(original)

@@ -1,14 +1,14 @@
 {
   "best.pt": {
     "path": "task1_llm/srinidhi/checkpoints/best.pt",
-    "source": "reproducibility/raw_logs/srinidhi/desktop-20261001/part1-full/checkpoints/best.pt",
-    "sha256": "da90fb8bb2d7a71d9d33a75447a04c02345705307d9a9a39eff569468817e9b0",
-    "bytes": 27183983
+    "source": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part1/depth_context_full/checkpoints/best.pt",
+    "sha256": "7945aa8a334f0b00c81aaf82a34137f41a34c4a7f2c1ef1986c2346b40c5bcc8",
+    "bytes": 69230751
   },
   "last.pt": {
     "path": "task1_llm/srinidhi/checkpoints/last.pt",
-    "source": "reproducibility/raw_logs/srinidhi/desktop-20261001/part1-full/checkpoints/last.pt",
-    "sha256": "801304208fa196dac173d7b7b78dc6658817e3fcb0e1f1726b00d476d372f84d",
-    "bytes": 27183983
+    "source": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part1/depth_context_full/checkpoints/last.pt",
+    "sha256": "51a7919abd0a91baf964937476ff7d8d59c7e46f99df27596eed12ebb811faa2",
+    "bytes": 69230751
   }
 }

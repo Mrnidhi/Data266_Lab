@@ -1,124 +1,47 @@
 # Part 2 — Yelp sentiment, Srinidhi
 
-The October 1, 2026 desktop run freshly trained three separate classifiers
-with embeddings learned from scratch. An Intel Core Ultra 9 285K CPU and
-NVIDIA GeForce RTX 5090 ran fixed recipes sequentially using Python 3.12.14,
-PyTorch 2.11.0+cu128 and CUDA 12.8. Frozen plan and untouched evidence:
-`reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/`.
+The current `outputs/full/` publication compares three independently trained classifiers with embeddings learned from scratch. The selected suite is `reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/selected/`. Its wider MLP replaces the previous MLP; BiLSTM and CNN retain their earlier desktop checkpoints.
 
 | Model | Completed / selected epoch | Validation macro-F1 | Test accuracy | Test macro-F1 | Parameters |
 |---|---:|---:|---:|---:|---:|
-| MLP | 6 / 5 | 0.926422 | 93.1921% | 0.931917 | 5,128,321 |
-| BiLSTM | 12 / 11 | 0.958857 | 96.1211% | 0.961210 | 5,305,985 |
-| Dilated CNN | 6 / 6 | 0.953446 | 95.6263% | 0.956262 | 5,539,073 |
+| Max-pool MLP | 9 / 5 | 0.928285 | 93.310526% | 0.933105 | 10,273,025 |
+| BiLSTM | 12 / 11 | 0.958857 | 96.121053% | 0.961210 | 5,305,985 |
+| Dilated CNN | 6 / 6 | 0.953446 | 95.626316% | 0.956262 | 5,539,073 |
 
-All use the same 504,000 train, 56,000 validation and 38,000 official test
-reviews. New checkpoints were frozen from validation before new test inference.
-The repeated test is not a newly sealed holdout: earlier cloud scores/error
-texts were already observed. Architectures/schedules were fixed beforehand
-from historical selection; this is a three-recipe replication, not a fresh
-hyperparameter search. Historical nine-candidate results/annotations are
-preserved in `outputs/publication_history/b257a1079ef85973/` and described in
-[research and search](RESEARCH_AND_SEARCH.md).
+Selection considered three existing controls and four completed new candidates. The frozen rule prefers fewer parameters within 0.001 of each family's highest validation macro-F1. The wider CNN reached 0.954179 versus the original CNN's 0.953446, a gain of 0.000733; the original CNN was therefore retained. Test scores did not enter this decision. Full candidate records and hashes are in [selection_manifest.json](outputs/full/selection_manifest.json).
 
-## Architecture and preprocessing
+## Models and data
 
-| Role | Architecture | Initial LR / maximum epochs / patience |
+| Model | Selected architecture | Initial LR / maximum epochs / patience |
 |---|---|---|
-| Baseline MLP | Embedding 128 → masked max pool → dense 64/ReLU/dropout → binary logit | 0.0015 / 6 / 2 |
-| Experiment BiLSTM | Embedding 128 → bidirectional LSTM, 96 units per direction → masked max pool → dense 64/dropout → logit | 0.001 / 12 / 4 |
-| Experiment CNN | Embedding 128 → 128 channels → four residual blocks with two kernel-3 convolutions each, dilations 1/2/4/8 → masked pool → dense 64/dropout → logit | 0.0008 / 6 / 2 |
+| MLP baseline | Embedding 256 → masked max pool → dense 128/ReLU/dropout 0.5 → binary logit | 0.0015 / 12 / 4 |
+| BiLSTM experiment | Embedding 128 → bidirectional LSTM, 96 units per direction → masked max pool → dense 64/dropout 0.3 → logit | 0.001 / 12 / 4 |
+| CNN experiment | Embedding 128 → 128 channels → four residual blocks, two kernel-3 convolutions each, dilations 1/2/4/8 → masked pool → dense 64/dropout 0.3 → logit | 0.0008 / 6 / 2 |
 
-MLP tests unordered lexical evidence; BiLSTM adds sequence context; CNN learns
-local composition over an expanded receptive field. Embedding width 128 is a
-compact trainable representation held constant, not a pretrained language
-representation. Each family independently initializes its own model/embedding.
-BiLSTM packs real lengths; CNN masks padding after each convolution; all mask
-pooling. These preserve padding invariance.
+The MLP measures unordered lexical evidence; BiLSTM adds sequence context; CNN composes local patterns over a wider receptive field. The wider MLP changes both capacity and regularization, so its improvement does not isolate one cause. Each model has its own embedding; CNN-block dropout is 0.2. Padding is masked during pooling and convolution.
 
-Common settings: seed 2342, training-only vocabulary cap 40,000, minimum
-frequency two, first 384 tokens, batch 128, AdamW weight decay 0.0001, clipping
-1.0, embedding/head dropout 0.3 and CNN-block dropout 0.2. Learning rate halves
-on validation-loss plateau. Best checkpoints require validation macro-F1
-improvement greater than 0.0001; the selected epoch need not be the strict
-numerical maximum. Windows uses zero loader workers.
+All use seed 2342, a training-only vocabulary cap of 40,000, minimum frequency 2, the first 384 processed tokens, batch 128, AdamW weight decay 0.0001 and clipping 1.0. Learning rate falls on a validation-loss plateau. Checkpoint improvement must exceed 0.0001 validation macro-F1. [training_sources.json](outputs/full/training_sources.json) and each model's `training_config.json` record exact settings and CPU/GPU.
 
-The deterministic tokenizer casefolds, expands contractions, removes HTML,
-normalizes URLs and uses word tokens with customized stopwords, retaining
-negation/contrast. Stemming/lemmatization is omitted to retain word-form
-distinctions and keep a minimal deterministic pipeline; the brief makes it
-conditional. The dictionary is fitted on training only. Empty processed text
-maps to UNK: 22 train, one validation and zero test reviews. Raw malformed/blank
-counts are zero and all splits are balanced. Distribution/OOV/truncation and
-duplicate audits are in `outputs/full/`. Seven raw-text hashes are shared by
-train/test; official rows are unchanged. This is not a duplicate-clean benchmark.
+The frozen data contain 504,000 training, 56,000 validation and 38,000 test reviews, with balanced labels. Preprocessing casefolds, handles HTML/contractions, removes punctuation and selected stopwords, and retains negation/contrast. Stemming is omitted to retain word forms. Empty processed text maps to UNK: 22 training rows, one validation row and no test rows. See [data details](data_processed/README.md).
 
-The tuner verifies all split/cache fingerprints including test metadata/arrays,
-then removes the test dataset before training. Only train/validation tensors
-reach training; no new test predictions/metrics inform selection. This does
-not claim test-file bytes were never read for integrity verification.
+## Read and reproduce
 
-## Reproduce and inspect
-
-Use the pinned isolated environment from the repository root. The
-[finalization guide](../../PART2_FINALIZATION.md) records setup, exact recipes,
-resume, evaluation, packaging and the visible Windows log viewer. After setup:
+Start with [results.md](results.md), [metrics_report.csv](metrics_report.csv) and [sentiment.ipynb](src/sentiment.ipynb). The [finalization guide](../../PART2_FINALIZATION.md) gives setup, selected-recipe training, evaluation and package checks. After setup:
 
 ```powershell
 .venv\Scripts\python.exe -m lab1.run --task sentiment --mode smoke --device cpu
-.venv\Scripts\python.exe scripts/run_sentiment_desktop.py --output runs/part2-new-full --stage all --device cuda
 ```
 
-Smoke is synthetic and establishes execution only. Full reproduction needs
-verified public-data/encoded caches; ignored datasets are not supplied by a
-Git clone. The runner freezes source/config/recipes, trains each family,
-freezes new selection and evaluates. Use a new output for a new run. Reissuing
-the same command after interruption verifies the frozen contract, retains
-completed invocations and resumes unfinished ones from `last.pt`, including
-RNG/within-epoch state. Do not run two writers against one active directory.
-Numerical results can differ across hardware/library versions.
+Smoke uses synthetic data to check execution. Real reproduction requires frozen processed data and complete checkpoints. The wider MLP's exact Git LFS path is `task2_sentiment/srinidhi/checkpoints/maxpool_mlp/best.pt`; after cloning or pulling, run `git lfs install` and `git lfs pull`. See [checkpoint details](checkpoints/README.md).
 
-`src/sentiment.ipynb` has eight executed cells with visible outputs and zero
-errors. Selected models passed independent CPU/CUDA reload, finite-output
-and padding-invariance checks. The extracted Part 2 ZIP also passed notebook,
-real-model CPU and offline-smoke checks. Receipts are in root `verification/`.
+Metric/source checks, the eight-cell notebook, saved-model inference and the extracted package's notebook/CPU smoke test passed. The ZIP contains real best/last weights and processed data; its checksum and inventory are recorded in `dist/part2_package_verification.json`. A normal final push to `main` is authorized, preserving history.
 
-## Results, interpretation and review
+## Required analysis and review
 
-[Results](results.md), `metrics_report.csv` and `outputs/full/` contain
-accuracy; macro/micro/weighted precision, recall and F1; confusion matrices;
-ROC-AUC; trapezoidal PR-AUC; MCC; Brier; 15-bin top-label ECE; 1,000-draw IID
-test-row bootstrap 95% intervals for accuracy/macro-F1/MCC; two unadjusted
-exact paired McNemar tests against MLP; and predefined length/negation/OOV
-slice support, macro-F1 and error rate. Intervals describe test-sample variation,
-not training-seed variation. Undefined single-class values remain null.
+The publication includes classification metrics, ROC/PR curves, MCC, Brier score, 15-bin ECE, 1,000-draw bootstrap intervals, two exact paired McNemar comparisons against MLP, predefined length/negation/OOV slices, parameter counts, training time, examples/second and memory. Definitions and measurement limits are in [results.md](results.md).
 
-BiLSTM improves test accuracy by 2.93 percentage points over MLP and 0.49 over
-CNN in this single-seed replication, with substantially more measured training
-time. CNN has lowest ECE (0.01276); BiLSTM has lowest Brier (0.02980). These
-measure different calibration properties. Paired baseline comparisons favor
-both experiments; they do not replace seed replication or prove new-domain
-robustness. GPU memory is allocator peak, host RSS is process-lifetime peak,
-and training/evaluation host peaks are separate. Epoch training time excludes
-setup/validation/export; provenance records broader invocation elapsed time.
-These recorded costs are not a controlled speed benchmark.
+The test set has previously been observed, seven text hashes are shared between train and test, and only one training seed is represented. These results do not establish a new unseen holdout, a global optimum or production readiness. Training costs come from actual invocations; differing workload overlap limits direct speed comparisons.
 
-Each model has 20 actual errors: five confident FP, five confident FN, five
-near-threshold and five predefined long-review slice cases. Separate
-`ai_error_review_draft.csv` files and [failure analysis](failure_analysis.md)
-give 60 AI-assisted types, exact quotes, explanations and one future testable
-fix per case, bound to example/checkpoint/source-text hashes. Original human
-packets remain unchanged, with blank `error_type`/`testable_fix` and false
-`student_reviewed`. Manual review remains pending. Selected cases cannot
-estimate error-category prevalence. Interpretations are hypotheses; future
-fixes require training/validation studies and appropriate new evaluation,
-without tuning to these test errors.
+Each model has 20 real errors: five confident false positives, five confident false negatives, five near-threshold errors and five long-review errors. Separate AI draft CSVs support [failure_analysis.md](failure_analysis.md) with exact quotes and future testable fixes. All 60 human review flags are currently false. Student review, independent teammate comparisons and the combined report remain required; see the [checklist](../REQUIREMENTS_CHECKLIST.md) and [AI disclosure](../../AI_USE.md).
 
-The [requirement mapping](../REQUIREMENTS_CHECKLIST.md) separates verified
-technical artifacts from student design/analysis/viva, teammate independence,
-team comparison and combined-report obligations. See [AI disclosure](../../AI_USE.md).
-`dist/Part2_Srinidhi_2342.zip` includes both best/last weights and processed
-data. Git publication uses `srinidhi/part2-desktop-final` with selected best
-weights tracked through targeted exceptions; the final handoff and `git ls-remote`
-establish the actual remote commit before a clone is used to restore them. Canvas still
-requires one combined three-part ZIP and `Report.pdf` with the repository link.
+The preceding desktop publication remains under `outputs/publication_history/026926f7d98246d3/`; older results remain historical. Canvas requires the combined three-part ZIP and `Report.pdf`, not this Part 2 package alone.

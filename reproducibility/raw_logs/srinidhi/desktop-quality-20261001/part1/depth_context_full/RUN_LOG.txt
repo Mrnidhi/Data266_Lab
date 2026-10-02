@@ -1,0 +1,178 @@
+{"event": "start", "task": "gpt", "mode": "full", "utc": "2026-10-02T00:56:10.473403+00:00", "device": "cuda"}
+gpt/full training device=cuda step=0/28416; ETA estimates cover remaining training steps; evaluation/export may add time
+gpt/full epoch=1/16 batch=200/1776 step=200/28416 loss=2.5506 elapsed=53.8s eta_steps_est=7596.8s
+gpt/full epoch=1/16 batch=400/1776 step=400/28416 loss=2.2274 elapsed=104.6s eta_steps_est=7327.7s
+gpt/full epoch=1/16 batch=600/1776 step=600/28416 loss=2.1024 elapsed=155.9s eta_steps_est=7225.6s
+gpt/full epoch=1/16 batch=800/1776 step=800/28416 loss=1.8880 elapsed=206.5s eta_steps_est=7127.2s
+gpt/full epoch=1/16 batch=1000/1776 step=1000/28416 loss=1.5754 elapsed=257.3s eta_steps_est=7054.3s
+gpt/full epoch=1/16 batch=1200/1776 step=1200/28416 loss=1.3781 elapsed=308.4s eta_steps_est=6995.2s
+gpt/full epoch=1/16 batch=1400/1776 step=1400/28416 loss=1.2361 elapsed=359.1s eta_steps_est=6929.8s
+gpt/full epoch=1/16 batch=1600/1776 step=1600/28416 loss=1.1169 elapsed=410.2s eta_steps_est=6875.3s
+gpt/full epoch=1 validating
+gpt/full epoch=1 train_loss=1.8570 val_loss=0.9624 val_perplexity=2.6179
+gpt/full epoch=2/16 batch=24/1776 step=1800/28416 loss=1.0394 elapsed=477.1s eta_steps_est=7055.3s
+gpt/full epoch=2/16 batch=224/1776 step=2000/28416 loss=0.9906 elapsed=527.4s eta_steps_est=6966.2s
+gpt/full epoch=2/16 batch=424/1776 step=2200/28416 loss=0.9399 elapsed=577.3s eta_steps_est=6878.9s
+gpt/full epoch=2/16 batch=624/1776 step=2400/28416 loss=0.8865 elapsed=627.4s eta_steps_est=6801.3s
+gpt/full epoch=2/16 batch=824/1776 step=2600/28416 loss=0.8609 elapsed=679.2s eta_steps_est=6743.8s
+gpt/full epoch=2/16 batch=1024/1776 step=2800/28416 loss=0.8272 elapsed=731.3s eta_steps_est=6690.7s
+gpt/full epoch=2/16 batch=1224/1776 step=3000/28416 loss=0.8129 elapsed=783.5s eta_steps_est=6637.7s
+gpt/full epoch=2/16 batch=1424/1776 step=3200/28416 loss=0.7917 elapsed=835.7s eta_steps_est=6585.6s
+gpt/full epoch=2/16 batch=1624/1776 step=3400/28416 loss=0.7931 elapsed=887.6s eta_steps_est=6530.7s
+gpt/full epoch=2 validating
+gpt/full epoch=2 train_loss=0.8750 val_loss=0.7243 val_perplexity=2.0633
+gpt/full epoch=3/16 batch=48/1776 step=3600/28416 loss=0.7896 elapsed=956.6s eta_steps_est=6594.5s
+gpt/full epoch=3/16 batch=248/1776 step=3800/28416 loss=0.7693 elapsed=1008.7s eta_steps_est=6534.2s
+gpt/full epoch=3/16 batch=448/1776 step=4000/28416 loss=0.7499 elapsed=1060.8s eta_steps_est=6474.8s
+gpt/full epoch=3/16 batch=648/1776 step=4200/28416 loss=0.7484 elapsed=1112.6s eta_steps_est=6415.0s
+gpt/full epoch=3/16 batch=848/1776 step=4400/28416 loss=0.7387 elapsed=1171.6s eta_steps_est=6394.9s
+gpt/full epoch=3/16 batch=1048/1776 step=4600/28416 loss=0.7357 elapsed=1231.4s eta_steps_est=6375.4s
+gpt/full epoch=3/16 batch=1248/1776 step=4800/28416 loss=0.7411 elapsed=1290.5s eta_steps_est=6349.4s
+gpt/full epoch=3/16 batch=1448/1776 step=5000/28416 loss=0.7196 elapsed=1349.8s eta_steps_est=6321.2s
+gpt/full epoch=3/16 batch=1648/1776 step=5200/28416 loss=0.7120 elapsed=1409.5s eta_steps_est=6292.8s
+gpt/full epoch=3 validating
+gpt/full epoch=3 train_loss=0.7446 val_loss=0.6643 val_perplexity=1.9432
+gpt/full epoch=4/16 batch=72/1776 step=5400/28416 loss=0.7278 elapsed=1488.1s eta_steps_est=6342.6s
+gpt/full epoch=4/16 batch=272/1776 step=5600/28416 loss=0.7233 elapsed=1547.3s eta_steps_est=6304.1s
+gpt/full epoch=4/16 batch=472/1776 step=5800/28416 loss=0.7042 elapsed=1605.1s eta_steps_est=6258.9s
+gpt/full epoch=4/16 batch=672/1776 step=6000/28416 loss=0.7107 elapsed=1662.9s eta_steps_est=6212.7s
+gpt/full epoch=4/16 batch=872/1776 step=6200/28416 loss=0.6999 elapsed=1720.6s eta_steps_est=6165.4s
+gpt/full epoch=4/16 batch=1072/1776 step=6400/28416 loss=0.6807 elapsed=1778.4s eta_steps_est=6117.6s
+gpt/full epoch=4/16 batch=1272/1776 step=6600/28416 loss=0.6964 elapsed=1837.0s eta_steps_est=6072.2s
+gpt/full epoch=4/16 batch=1472/1776 step=6800/28416 loss=0.6757 elapsed=1893.8s eta_steps_est=6019.9s
+gpt/full epoch=4/16 batch=1672/1776 step=7000/28416 loss=0.6790 elapsed=1951.2s eta_steps_est=5969.7s
+gpt/full epoch=4 validating
+gpt/full epoch=4 train_loss=0.6962 val_loss=0.6348 val_perplexity=1.8866
+gpt/full epoch=5/16 batch=96/1776 step=7200/28416 loss=0.6567 elapsed=2026.7s eta_steps_est=5971.9s
+gpt/full epoch=5/16 batch=296/1776 step=7400/28416 loss=0.6899 elapsed=2077.4s eta_steps_est=5899.9s
+gpt/full epoch=5/16 batch=496/1776 step=7600/28416 loss=0.6816 elapsed=2143.2s eta_steps_est=5870.0s
+gpt/full epoch=5/16 batch=696/1776 step=7800/28416 loss=0.6749 elapsed=2206.5s eta_steps_est=5831.8s
+gpt/full epoch=5/16 batch=896/1776 step=8000/28416 loss=0.6623 elapsed=2270.1s eta_steps_est=5793.3s
+gpt/full epoch=5/16 batch=1096/1776 step=8200/28416 loss=0.6537 elapsed=2334.4s eta_steps_est=5755.3s
+gpt/full epoch=5/16 batch=1296/1776 step=8400/28416 loss=0.6537 elapsed=2398.6s eta_steps_est=5715.5s
+gpt/full epoch=5/16 batch=1496/1776 step=8600/28416 loss=0.6663 elapsed=2463.4s eta_steps_est=5676.1s
+gpt/full epoch=5/16 batch=1696/1776 step=8800/28416 loss=0.6511 elapsed=2526.9s eta_steps_est=5632.7s
+gpt/full epoch=5 validating
+gpt/full epoch=5 train_loss=0.6682 val_loss=0.6154 val_perplexity=1.8504
+gpt/full epoch=6/16 batch=120/1776 step=9000/28416 loss=0.6679 elapsed=2611.4s eta_steps_est=5633.6s
+gpt/full epoch=6/16 batch=320/1776 step=9200/28416 loss=0.6589 elapsed=2675.5s eta_steps_est=5588.4s
+gpt/full epoch=6/16 batch=520/1776 step=9400/28416 loss=0.6326 elapsed=2739.8s eta_steps_est=5542.6s
+gpt/full epoch=6/16 batch=720/1776 step=9600/28416 loss=0.6629 elapsed=2803.4s eta_steps_est=5494.7s
+gpt/full epoch=6/16 batch=920/1776 step=9800/28416 loss=0.6426 elapsed=2867.6s eta_steps_est=5447.3s
+gpt/full epoch=6/16 batch=1120/1776 step=10000/28416 loss=0.6427 elapsed=2931.2s eta_steps_est=5398.2s
+gpt/full epoch=6/16 batch=1320/1776 step=10200/28416 loss=0.6416 elapsed=2995.3s eta_steps_est=5349.2s
+gpt/full epoch=6/16 batch=1520/1776 step=10400/28416 loss=0.6509 elapsed=3059.4s eta_steps_est=5299.9s
+gpt/full epoch=6/16 batch=1720/1776 step=10600/28416 loss=0.6414 elapsed=3123.6s eta_steps_est=5250.0s
+gpt/full epoch=6 validating
+gpt/full epoch=6 train_loss=0.6493 val_loss=0.6013 val_perplexity=1.8245
+gpt/full epoch=7/16 batch=144/1776 step=10800/28416 loss=0.6132 elapsed=3207.9s eta_steps_est=5232.4s
+gpt/full epoch=7/16 batch=344/1776 step=11000/28416 loss=0.6318 elapsed=3271.7s eta_steps_est=5180.0s
+gpt/full epoch=7/16 batch=544/1776 step=11200/28416 loss=0.6609 elapsed=3326.7s eta_steps_est=5113.6s
+gpt/full epoch=7/16 batch=744/1776 step=11400/28416 loss=0.6445 elapsed=3367.8s eta_steps_est=5026.8s
+gpt/full epoch=7/16 batch=944/1776 step=11600/28416 loss=0.6248 elapsed=3410.3s eta_steps_est=4943.7s
+gpt/full epoch=7/16 batch=1144/1776 step=11800/28416 loss=0.6333 elapsed=3459.5s eta_steps_est=4871.4s
+gpt/full epoch=7/16 batch=1344/1776 step=12000/28416 loss=0.6370 elapsed=3500.6s eta_steps_est=4788.9s
+gpt/full epoch=7/16 batch=1544/1776 step=12200/28416 loss=0.6252 elapsed=3542.3s eta_steps_est=4708.4s
+gpt/full epoch=7/16 batch=1744/1776 step=12400/28416 loss=0.6176 elapsed=3587.8s eta_steps_est=4634.0s
+gpt/full epoch=7 validating
+gpt/full epoch=7 train_loss=0.6352 val_loss=0.5906 val_perplexity=1.8051
+gpt/full epoch=8/16 batch=168/1776 step=12600/28416 loss=0.6322 elapsed=3645.2s eta_steps_est=4575.6s
+gpt/full epoch=8/16 batch=368/1776 step=12800/28416 loss=0.6416 elapsed=3686.3s eta_steps_est=4497.3s
+gpt/full epoch=8/16 batch=568/1776 step=13000/28416 loss=0.6228 elapsed=3728.0s eta_steps_est=4420.8s
+gpt/full epoch=8/16 batch=768/1776 step=13200/28416 loss=0.6308 elapsed=3770.0s eta_steps_est=4345.8s
+gpt/full epoch=8/16 batch=968/1776 step=13400/28416 loss=0.6345 elapsed=3811.7s eta_steps_est=4271.3s
+gpt/full epoch=8/16 batch=1168/1776 step=13600/28416 loss=0.6042 elapsed=3853.7s eta_steps_est=4198.3s
+gpt/full epoch=8/16 batch=1368/1776 step=13800/28416 loss=0.6201 elapsed=3895.7s eta_steps_est=4126.1s
+gpt/full epoch=8/16 batch=1568/1776 step=14000/28416 loss=0.6338 elapsed=3937.8s eta_steps_est=4054.8s
+gpt/full epoch=8/16 batch=1768/1776 step=14200/28416 loss=0.6156 elapsed=3980.2s eta_steps_est=3984.7s
+gpt/full epoch=8 validating
+gpt/full epoch=8 train_loss=0.6241 val_loss=0.5819 val_perplexity=1.7895
+gpt/full epoch=9/16 batch=192/1776 step=14400/28416 loss=0.6291 elapsed=4035.9s eta_steps_est=3928.2s
+gpt/full epoch=9/16 batch=392/1776 step=14600/28416 loss=0.6172 elapsed=4078.2s eta_steps_est=3859.2s
+gpt/full epoch=9/16 batch=592/1776 step=14800/28416 loss=0.6298 elapsed=4120.4s eta_steps_est=3790.7s
+gpt/full epoch=9/16 batch=792/1776 step=15000/28416 loss=0.6205 elapsed=4162.7s eta_steps_est=3723.1s
+gpt/full epoch=9/16 batch=992/1776 step=15200/28416 loss=0.6124 elapsed=4205.1s eta_steps_est=3656.2s
+gpt/full epoch=9/16 batch=1192/1776 step=15400/28416 loss=0.6175 elapsed=4246.8s eta_steps_est=3589.4s
+gpt/full epoch=9/16 batch=1392/1776 step=15600/28416 loss=0.6163 elapsed=4289.3s eta_steps_est=3523.8s
+gpt/full epoch=9/16 batch=1592/1776 step=15800/28416 loss=0.6105 elapsed=4331.2s eta_steps_est=3458.4s
+gpt/full epoch=9 validating
+gpt/full epoch=9 train_loss=0.6148 val_loss=0.5752 val_perplexity=1.7775
+gpt/full epoch=10/16 batch=16/1776 step=16000/28416 loss=0.6129 elapsed=4386.5s eta_steps_est=3403.9s
+gpt/full epoch=10/16 batch=216/1776 step=16200/28416 loss=0.6140 elapsed=4428.6s eta_steps_est=3339.5s
+gpt/full epoch=10/16 batch=416/1776 step=16400/28416 loss=0.6148 elapsed=4469.5s eta_steps_est=3274.7s
+gpt/full epoch=10/16 batch=616/1776 step=16600/28416 loss=0.6020 elapsed=4510.7s eta_steps_est=3210.8s
+gpt/full epoch=10/16 batch=816/1776 step=16800/28416 loss=0.5990 elapsed=4551.7s eta_steps_est=3147.2s
+gpt/full epoch=10/16 batch=1016/1776 step=17000/28416 loss=0.6181 elapsed=4592.7s eta_steps_est=3084.1s
+gpt/full epoch=10/16 batch=1216/1776 step=17200/28416 loss=0.6133 elapsed=4633.8s eta_steps_est=3021.7s
+gpt/full epoch=10/16 batch=1416/1776 step=17400/28416 loss=0.6120 elapsed=4674.8s eta_steps_est=2959.6s
+gpt/full epoch=10/16 batch=1616/1776 step=17600/28416 loss=0.5871 elapsed=4716.1s eta_steps_est=2898.2s
+gpt/full epoch=10 validating
+gpt/full epoch=10 train_loss=0.6070 val_loss=0.5687 val_perplexity=1.7660
+gpt/full epoch=11/16 batch=40/1776 step=17800/28416 loss=0.6201 elapsed=4770.6s eta_steps_est=2845.2s
+gpt/full epoch=11/16 batch=240/1776 step=18000/28416 loss=0.5937 elapsed=4811.6s eta_steps_est=2784.3s
+gpt/full epoch=11/16 batch=440/1776 step=18200/28416 loss=0.6169 elapsed=4852.9s eta_steps_est=2724.0s
+gpt/full epoch=11/16 batch=640/1776 step=18400/28416 loss=0.5842 elapsed=4893.8s eta_steps_est=2663.9s
+gpt/full epoch=11/16 batch=840/1776 step=18600/28416 loss=0.5970 elapsed=4935.0s eta_steps_est=2604.4s
+gpt/full epoch=11/16 batch=1040/1776 step=18800/28416 loss=0.6026 elapsed=4975.9s eta_steps_est=2545.1s
+gpt/full epoch=11/16 batch=1240/1776 step=19000/28416 loss=0.6227 elapsed=5016.9s eta_steps_est=2486.3s
+gpt/full epoch=11/16 batch=1440/1776 step=19200/28416 loss=0.6147 elapsed=5058.2s eta_steps_est=2427.9s
+gpt/full epoch=11/16 batch=1640/1776 step=19400/28416 loss=0.5966 elapsed=5099.1s eta_steps_est=2369.8s
+gpt/full epoch=11 validating
+gpt/full epoch=11 train_loss=0.6005 val_loss=0.5639 val_perplexity=1.7576
+gpt/full epoch=12/16 batch=64/1776 step=19600/28416 loss=0.6074 elapsed=5154.0s eta_steps_est=2318.2s
+gpt/full epoch=12/16 batch=264/1776 step=19800/28416 loss=0.6222 elapsed=5195.1s eta_steps_est=2260.6s
+gpt/full epoch=12/16 batch=464/1776 step=20000/28416 loss=0.5907 elapsed=5236.1s eta_steps_est=2203.4s
+gpt/full epoch=12/16 batch=664/1776 step=20200/28416 loss=0.5968 elapsed=5277.6s eta_steps_est=2146.6s
+gpt/full epoch=12/16 batch=864/1776 step=20400/28416 loss=0.5910 elapsed=5318.8s eta_steps_est=2090.0s
+gpt/full epoch=12/16 batch=1064/1776 step=20600/28416 loss=0.5894 elapsed=5360.3s eta_steps_est=2033.8s
+gpt/full epoch=12/16 batch=1264/1776 step=20800/28416 loss=0.5937 elapsed=5401.7s eta_steps_est=1977.9s
+gpt/full epoch=12/16 batch=1464/1776 step=21000/28416 loss=0.5980 elapsed=5443.0s eta_steps_est=1922.2s
+gpt/full epoch=12/16 batch=1664/1776 step=21200/28416 loss=0.6007 elapsed=5485.0s eta_steps_est=1867.0s
+gpt/full epoch=12 validating
+gpt/full epoch=12 train_loss=0.5950 val_loss=0.5597 val_perplexity=1.7501
+gpt/full epoch=13/16 batch=88/1776 step=21400/28416 loss=0.5839 elapsed=5540.0s eta_steps_est=1816.3s
+gpt/full epoch=13/16 batch=288/1776 step=21600/28416 loss=0.5720 elapsed=5582.1s eta_steps_est=1761.5s
+gpt/full epoch=13/16 batch=488/1776 step=21800/28416 loss=0.5913 elapsed=5623.8s eta_steps_est=1706.7s
+gpt/full epoch=13/16 batch=688/1776 step=22000/28416 loss=0.5784 elapsed=5665.6s eta_steps_est=1652.3s
+gpt/full epoch=13/16 batch=888/1776 step=22200/28416 loss=0.5884 elapsed=5707.3s eta_steps_est=1598.0s
+gpt/full epoch=13/16 batch=1088/1776 step=22400/28416 loss=0.6054 elapsed=5748.6s eta_steps_est=1543.9s
+gpt/full epoch=13/16 batch=1288/1776 step=22600/28416 loss=0.6026 elapsed=5790.1s eta_steps_est=1490.0s
+gpt/full epoch=13/16 batch=1488/1776 step=22800/28416 loss=0.5999 elapsed=5831.3s eta_steps_est=1436.3s
+gpt/full epoch=13/16 batch=1688/1776 step=23000/28416 loss=0.5971 elapsed=5872.5s eta_steps_est=1382.8s
+gpt/full epoch=13 validating
+gpt/full epoch=13 train_loss=0.5905 val_loss=0.5568 val_perplexity=1.7452
+gpt/full epoch=14/16 batch=112/1776 step=23200/28416 loss=0.5752 elapsed=5927.7s eta_steps_est=1332.7s
+gpt/full epoch=14/16 batch=312/1776 step=23400/28416 loss=0.5972 elapsed=5969.0s eta_steps_est=1279.5s
+gpt/full epoch=14/16 batch=512/1776 step=23600/28416 loss=0.6132 elapsed=6010.6s eta_steps_est=1226.6s
+gpt/full epoch=14/16 batch=712/1776 step=23800/28416 loss=0.5897 elapsed=6051.8s eta_steps_est=1173.7s
+gpt/full epoch=14/16 batch=912/1776 step=24000/28416 loss=0.6074 elapsed=6093.0s eta_steps_est=1121.1s
+gpt/full epoch=14/16 batch=1112/1776 step=24200/28416 loss=0.5905 elapsed=6134.5s eta_steps_est=1068.7s
+gpt/full epoch=14/16 batch=1312/1776 step=24400/28416 loss=0.5789 elapsed=6175.8s eta_steps_est=1016.5s
+gpt/full epoch=14/16 batch=1512/1776 step=24600/28416 loss=0.5708 elapsed=6217.5s eta_steps_est=964.5s
+gpt/full epoch=14/16 batch=1712/1776 step=24800/28416 loss=0.5677 elapsed=6258.7s eta_steps_est=912.6s
+gpt/full epoch=14 validating
+gpt/full epoch=14 train_loss=0.5869 val_loss=0.5546 val_perplexity=1.7412
+gpt/full epoch=15/16 batch=136/1776 step=25000/28416 loss=0.5958 elapsed=6313.6s eta_steps_est=862.7s
+gpt/full epoch=15/16 batch=336/1776 step=25200/28416 loss=0.5916 elapsed=6355.3s eta_steps_est=811.1s
+gpt/full epoch=15/16 batch=536/1776 step=25400/28416 loss=0.5788 elapsed=6396.5s eta_steps_est=759.5s
+gpt/full epoch=15/16 batch=736/1776 step=25600/28416 loss=0.5801 elapsed=6438.0s eta_steps_est=708.2s
+gpt/full epoch=15/16 batch=936/1776 step=25800/28416 loss=0.6033 elapsed=6479.2s eta_steps_est=657.0s
+gpt/full epoch=15/16 batch=1136/1776 step=26000/28416 loss=0.5656 elapsed=6520.4s eta_steps_est=605.9s
+gpt/full epoch=15/16 batch=1336/1776 step=26200/28416 loss=0.5818 elapsed=6562.0s eta_steps_est=555.0s
+gpt/full epoch=15/16 batch=1536/1776 step=26400/28416 loss=0.5871 elapsed=6603.3s eta_steps_est=504.3s
+gpt/full epoch=15/16 batch=1736/1776 step=26600/28416 loss=0.6114 elapsed=6645.0s eta_steps_est=453.7s
+gpt/full epoch=15 validating
+gpt/full epoch=15 train_loss=0.5843 val_loss=0.5524 val_perplexity=1.7374
+gpt/full epoch=16/16 batch=160/1776 step=26800/28416 loss=0.5917 elapsed=6700.1s eta_steps_est=404.0s
+gpt/full epoch=16/16 batch=360/1776 step=27000/28416 loss=0.5684 elapsed=6741.5s eta_steps_est=353.6s
+gpt/full epoch=16/16 batch=560/1776 step=27200/28416 loss=0.5765 elapsed=6783.2s eta_steps_est=303.2s
+gpt/full epoch=16/16 batch=760/1776 step=27400/28416 loss=0.5970 elapsed=6824.6s eta_steps_est=253.1s
+gpt/full epoch=16/16 batch=960/1776 step=27600/28416 loss=0.5771 elapsed=6866.1s eta_steps_est=203.0s
+gpt/full epoch=16/16 batch=1160/1776 step=27800/28416 loss=0.5747 elapsed=6907.3s eta_steps_est=153.1s
+gpt/full epoch=16/16 batch=1360/1776 step=28000/28416 loss=0.5705 elapsed=6948.7s eta_steps_est=103.2s
+gpt/full epoch=16/16 batch=1560/1776 step=28200/28416 loss=0.5838 elapsed=6990.1s eta_steps_est=53.5s
+gpt/full epoch=16/16 batch=1760/1776 step=28400/28416 loss=0.5890 elapsed=7031.4s eta_steps_est=4.0s
+gpt/full epoch=16/16 batch=1776/1776 step=28416/28416 loss=0.5884 elapsed=7034.6s eta_steps_est=0.0s
+gpt/full epoch=16 validating
+gpt/full epoch=16 train_loss=0.5826 val_loss=0.5512 val_perplexity=1.7353
+{"event": "completed", "task": "gpt", "mode": "full", "elapsed_seconds": 7071.818787300001}

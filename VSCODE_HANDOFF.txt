@@ -2,15 +2,26 @@ DATA266 LAB 1 - CONTINUE IN VS CODE
 Updated: 1 October 2026. Pair 49. This is a project handoff, not the full chat history.
 All paths below are relative to the Data266_Lab repository root.
 Repository: https://github.com/Mrnidhi/Data266_Lab.git
-Experiment evidence commit before this handoff: df915a2.
+Published Parts 1/2 baseline commit: 87f00dc on main.
 
 CURRENT USER TASK
-The current request is to publish the verified desktop Parts 1 and 2 to main,
-then continue controlled validation-based improvements for those two parts.
-Fresh desktop training completed October 1 on the local RTX 5090. Preserve
-both baseline publications and all original evidence when starting experiments.
-Part 1: reproducibility/raw_logs/srinidhi/desktop-20261001/part1-full/.
-Part 2: reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/.
+The requested Git consolidation left main as the only branch, preserving the
+baseline at 87f00dc. Parts 1/2 quality-study training and validation selection
+are complete. Use normal commits/pushes to main; do not force push or create
+new branches. Check the finalization receipts before repeating any work.
+
+Current study: reproducibility/raw_logs/srinidhi/desktop-quality-20261001/
+Part 1: part1/depth_context_full/, selected epoch16/16 and28,416updates.
+Native512 CE0.551181, PPL1.735301, character accuracy82.4431%.
+Matched256 CE0.599380 versus baseline0.721101; eval train/validation gap0.008204.
+Part 2: part2-search/selected/, wider MLP plus original BiLSTM/CNN.
+Test accuracy MLP93.3105%, BiLSTM96.1211%, CNN95.6263%.
+Part2 notebook/metrics/checkpoint and extracted-package notebook/smoke checks passed.
+Use task-specific finalization receipts for exact current checks and hashes.
+Both baseline publications and ZIPs remain preserved. Training shared the GPU
+for part of the study, so timings are not isolated architecture benchmarks.
+Student manual review, teammate comparisons and the combined report remain.
+
 The earlier Part 3 improvement plan remains in PART3_NEXT_GPU_PLAN.txt,
 NEXT_SESSION_PROMPT.md and task3_gan/CLASS_PROTOCOL.md for a separate session.
 It proposes matched control versus discriminator augmentation after checking
@@ -36,17 +47,17 @@ START HERE
    Class evaluator/schema, teammate results, combined report and final packaging
    remain separate course deliverables.
 
-COMPLETED EXPERIMENTS
-- Part 1: replacement full run on October 1 Windows RTX 5090, Python 3.12.14,
-  PyTorch 2.11.0+cu128 and CUDA 12.8. Configuration: 100K/10K stories, 12 epochs,
-  3 layers, 6 heads, width 192, context 256, batch 256, seed 2342; 18,732 updates.
-  Selected epoch 12: validation CE 0.721101, perplexity 2.056697, next-character
-  accuracy 77.31%. Check verification/part1_finalization.json for final exports.
-  Published evidence goes to task1_llm/srinidhi/, including an executed notebook.
-  No older RunPod Part 1 numbers are the final results of this desktop run.
-- Part 2: learned-embedding sentiment models trained and tested. Test accuracy:
-  BiLSTM 96.12%, CNN 95.63%, max-pool MLP 93.19% on the fresh desktop run.
-  Read task2_sentiment/srinidhi/results.md and src/sentiment.ipynb there.
+COMPLETED PARTS 1/2 AND PART 3 HISTORY
+- Part1: selected deeper GPT completed October1 on Windows RTX5090, Python3.12.14,
+  PyTorch2.11.0+cu128. 100K/10K stories,16epochs,6layers,8heads,width256,
+  context512,batch128,seed2342. Native CE0.551181, PPL1.735301, accuracy82.44%.
+  Matched256 validation CE improved16.88%. Reproduce using the published
+  outputs/full/reproduction_config.json, not the preserved original config.
+  The previous12-epoch baseline and its ZIP remain historical controls.
+- Part2: selected MLP/BiLSTM/CNN test accuracy93.31%/96.12%/95.63%.
+  Selected epochs5/11/6 from9/12/6 completed epochs. Later MLP/BiLSTM validation
+  deterioration is documented; saved best checkpoints are used.
+  Current results and notebook are under task2_sentiment/srinidhi/.
 - Part 3: original 30-epoch CycleGAN completed, then two controlled 10-epoch
   continuations completed on September 29. Baseline was eligible for selection.
   Identity weight 2.5 at additional epoch 8, update 44,992, was selected using
@@ -113,18 +124,30 @@ FILES THAT A GIT CLONE DOES AND DOES NOT PROVIDE
 Git includes code, configurations, executed notebooks, compact metrics,
 report/PART3_FINETUNING_RESULTS.md, and fine-tuning evidence under
 reproducibility/raw_logs/srinidhi/vast-part3-tuning-20260929/.
-The new selected Part 1 task1_llm/srinidhi/checkpoints/best.pt is prepared for Git
-publication with a targeted ignore exception. Verify the remote commit before
-claiming it is pushed or assuming that cloning will transfer its weights.
-Git ignores runs/, ZIPs, datasets, processed data and other .pt/.pth/.ckpt weights.
-The Part 1 resume last.pt and frozen data are in dist/Part1_Srinidhi_2342.zip;
-its package receipt records checksums. After the selected weights are committed
-and pushed, a clone can restore Part 1 inference weights but not the entire
-processed data cache or other tasks' weights.
+GitHub main already contains the earlier technical Parts 1/2 snapshot at
+87f00dc, including Part 1 best.pt and the three Part 2 best.pt files. The
+earlier member branches were merged/deleted; only main remains. The completed
+quality study is the current publication. Its verified artifacts belong on main
+under the existing normal-push authorization. Git ignores runs/, ZIPs, datasets,
+processed data, raw-source checkpoints and other .pt/.pth/.ckpt weights.
+The two standalone archives are dist/Part1_Srinidhi_2342.zip and
+dist/Part2_Srinidhi_2342.zip. They carry best/last weights, frozen data and
+complete local evidence. Their package receipts record inventories/checksums.
+The selected member weights are tracked, using LFS for the large MLP.
+A clone does not supply dataset caches or raw-source checkpoint paths. The preserved-selection
+Part 2 evaluator requires the extracted archive or complete local evidence.
 Cloning/pulling does NOT transfer the current human CSV edits or selected tuned
 Part 3 publication. Copy needed artifacts separately, preserving relative paths
 and verifying hashes.
 Do not replace completed or partly completed rating sheets during a transfer.
+
+The selected wider MLP checkpoint is 124,098,311 bytes and uses
+Git LFS at task2_sentiment/srinidhi/checkpoints/maxpool_mlp/best.pt. The path
+is configured and its content hash is in the checkpoint manifest. Install
+Git LFS, then run git lfs install and git lfs pull in the clone after cloning
+or pulling. Verify the full checkpoint against its manifest; LFS pointers
+cannot be loaded as models. ZIPs contain the complete original bytes and
+training state. Preserve the verified baseline ZIPs separately.
 
 For interim analysis: transfer My_review.csv and My_review.provenance.json.
 For agreement later: also obtain a second independently completed human sheet
@@ -137,10 +160,15 @@ Selected checkpoint SHA-256:
   c6775f21d2b6ccc214ae235f366a01f636f0b214e686ca53d2858ecb84d0ec91
 The original baseline in task3_gan/srinidhi/checkpoints/best.pt is different;
 preserve it. Do not substitute it for selected.pt because the latter is missing.
-For full final packaging, use the new desktop Part 1 archive and transfer the
-Part 2 model weights from task2_sentiment/srinidhi/checkpoints/ if missing locally.
-Also transfer all required Part 2/3 outputs. Do not mix obsolete Part 1 artifacts
-with the replacement run.
+For full final packaging, use the two verified desktop archives. Part 2 now
+has fresh desktop weights, outputs, an eight-cell executed notebook and
+separate AI drafts for 60 real errors. Student review of those cases remains
+pending. Transfer required Part 3 artifacts separately if absent locally.
+Do not mix obsolete Part 1 artifacts with the replacement run.
+To display the Parts 1/2 quality-study logs in a separate terminal, run:
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/watch_quality_training.ps1
+This viewer reads actual training and finalization logs; closing it does not
+control jobs. Quality-study training and model selection are complete.
 Do not transfer credentials, SSH private keys, API tokens or the .venv folder.
 
 REMAINING COURSE DELIVERABLES
@@ -163,21 +191,30 @@ REMAINING COURSE DELIVERABLES
    No official Kaggle/Canvas submission is established by this handoff.
 
 OPERATIONAL BOUNDARIES
-- Continue Parts 1 and 2 only after the requested Git publication is verified.
-  Use the user's local RTX 5090 for controlled validation-only experiments.
+- Preserve the completed Parts 1 and 2 quality study and frozen selection.
+  Verify selected artifacts, documentation and ZIP receipts before any further
+  changes. Publish authorized verified changes normally to
+  main. Keep main as the only branch; do not force push.
   Do not rent GPUs or restart old cloud jobs. Historical deletion authorization
   was limited to prior Part 1 runs; preserve current baselines and other tasks.
 - The separate Part 3 GPU plan is preserved in NEXT_SESSION_PROMPT.md and
   PART3_NEXT_GPU_PLAN.txt; it does not replace the current Parts 1 and 2 request.
 - Preserve baseline and selected evidence, frozen splits and unrelated files.
+- Keep the work within the Lab 1 PDF requirements. Optional ensemble/calibration
+  and inference benchmarking were stopped/excluded. Check overfitting using
+  existing training/validation curves and the required Part 1 evaluation gap.
+- Show actual progress through scripts/watch_quality_training.ps1 and keep
+  the live terminal available while work runs.
 - Do not synthesize human ratings or report a local metric as a Kaggle result.
 - Do not tune against test/leaderboard feedback or alter submitted images.
 - Do not mark the whole lab complete while required artifacts are missing.
 
 FIRST PROMPT FOR THE NEW VS CODE CHAT
 Read this handoff, PART1_FINALIZATION.md, PART2_FINALIZATION.md and the
-requirement mappings. Verify Git main publication first, then improve Parts 1
-and 2 using validation-selected controlled experiments on the desktop RTX 5090.
+requirement mappings. Verify the local desktop artifacts and ZIP receipts.
+The quality-study training and selection are complete. Verify the saved
+results and finalization receipts; do not restart completed training by default. A normal push of verified final work to main is authorized; keep
+main as the only branch and do not force push.
 Preserve baseline results, raw evidence and my Part 3 personal review. Keep
 student review, teammate comparisons, combined report and final submission
 clearly distinguished from completed technical checks. Use NEXT_SESSION_PROMPT.md

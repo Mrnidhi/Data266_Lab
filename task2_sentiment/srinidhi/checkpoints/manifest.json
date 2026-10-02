@@ -2,13 +2,13 @@
   "maxpool_mlp": {
     "best.pt": {
       "path": "task2_sentiment/srinidhi/checkpoints/maxpool_mlp/best.pt",
-      "sha256": "8e3007821edf5d69b3d485b7c3d5a534c2ad0b83021895e8ced26e4d187128b6",
-      "bytes": 62361863
+      "sha256": "5ae7df4f747e89209ec2ca1381652bf3ed0fcf671a6f15605cb08323a0d9599c",
+      "bytes": 124098311
     },
     "last.pt": {
       "path": "task2_sentiment/srinidhi/checkpoints/maxpool_mlp/last.pt",
-      "sha256": "aa362adfc48bf52211b69ad4df3fbe68265ae34bb409f164d1afe40899f71701",
-      "bytes": 62361927
+      "sha256": "73a0e7fed026ef8420dd68487e074185140330655838136037ae9ea52faa0b64",
+      "bytes": 124098695
     }
   },
   "bilstm": {

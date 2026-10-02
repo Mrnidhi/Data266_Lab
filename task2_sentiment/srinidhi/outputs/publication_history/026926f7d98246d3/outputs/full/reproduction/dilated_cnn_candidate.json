@@ -1,0 +1,12 @@
+{
+  "name": "desktop_dilated_cnn",
+  "model": "dilated_cnn",
+  "hypothesis": "Replicate the already selected family recipe on the desktop.",
+  "overrides": {
+    "epochs": 6,
+    "early_stopping_patience": 2,
+    "num_workers": 0,
+    "checkpoint_every_steps": 1000,
+    "log_every_steps": 200
+  }
+}

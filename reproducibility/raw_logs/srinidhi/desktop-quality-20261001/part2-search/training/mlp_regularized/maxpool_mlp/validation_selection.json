@@ -1,0 +1,12 @@
+{
+  "model_name": "maxpool_mlp",
+  "selected_epoch": 7,
+  "selected_validation_macro_f1": 0.9271780764438384,
+  "parameter_count": 5128321,
+  "train_seconds": 559.5549761999973,
+  "peak_cuda_memory_bytes": 162652160,
+  "peak_host_rss_bytes": 3131756544,
+  "host_peak_rss_scope": "process lifetime peak resident memory, including data preparation",
+  "completed_training_steps": 43318,
+  "test_evaluated": false
+}

@@ -5,8 +5,8 @@
   "visible_output_cells": 8,
   "errors": 0,
   "all_outputs_visible": true,
-  "seconds": 6.589771299999484,
+  "seconds": 8.178371500001958,
   "python": "3.12.14",
-  "inference_device": "auto",
-  "sha256": "6e53c275b7ff1ba25652ce326f9c8ad09bb6ee2ba5680bf9bd4511c929d80ce8"
+  "inference_device": "cuda",
+  "sha256": "aeddbe084af3ffe93ee319ce6fed24d511a7f4c82cc473eccfbda7e97d5c957c"
 }

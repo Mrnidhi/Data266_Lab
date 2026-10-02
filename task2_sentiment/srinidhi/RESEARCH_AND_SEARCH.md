@@ -1,5 +1,10 @@
 # Part 2 research and validation search
 
+This document preserves the September 18 cloud study. Its nine candidates and
+selection describe that earlier work. The October 1 desktop quality study has
+seven eligible candidates and selects the wider MLP; see [current results](results.md)
+and [the current selection](outputs/full/selection_manifest.json).
+
 Research reviewed September 18, 2026. These are hypotheses to test, not guaranteed improvements or claims to match a paper's scores. All embeddings stay randomly initialized and trained on the frozen Yelp training split.
 
 ## Evidence and transfer limits

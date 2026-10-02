@@ -1,0 +1,23 @@
+{
+  "scope": "Extracted standalone Part 1 runtime verification using the recorded pinned interpreter",
+  "original_package_runtime_sha256": {
+    "src/lab1/__init__.py": "b9849907c7465e81037a43feb0ac630d991ac608c4dbabddcbcc691f8a7b015f",
+    "src/lab1/common.py": "9969a94baa2ef1cba3d0474262227fd178417d761b1528d4278779ef3c23bd4e",
+    "src/lab1/run.py": "4edd942dc83425e0c36e588ae59194fae632819e87b88ba6104a6257eafc4900",
+    "task1_llm/srinidhi/src/gpt.py": "ddf1adb228f3ae8cb6ea94361f153408a3b36f34cdb34ac2c6fac218eb548664",
+    "task1_llm/srinidhi/src/gpt.ipynb": "ff7707e24ae98b84a1f1f4f3115ad6feebdf3014cf020412eb0c1cfbbc80cd15",
+    "task1_llm/srinidhi/config.json": "4abfd4cdfd6d6e0cd7643aaf88f601dd4a304c47152e41640c763a67b1be0d6f",
+    "scripts/finalize_gpt.py": "73d1b4a7a83ebed6f9ebccaf86caf3ff90801ee617d0ce0e844b3fd9528140cc",
+    "scripts/publish_gpt_results.py": "5209b27b35916786ef0282d95d4001c22a09b4e2ca018bd5eb4fab2a04c7af66"
+  },
+  "package_crc_and_hashes_verified": true,
+  "extracted_notebook_executed_code_cells": 7,
+  "extracted_notebook_visible_output_cells": 7,
+  "extracted_notebook_errors": 0,
+  "standalone_cpu_smoke": {
+    "status": "completed",
+    "steps": 6,
+    "inference_reload_verified": true
+  },
+  "original_training_artifacts_modified": false
+}

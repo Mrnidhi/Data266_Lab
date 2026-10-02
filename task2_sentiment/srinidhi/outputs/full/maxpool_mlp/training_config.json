@@ -9,13 +9,13 @@
   "test_limit": null,
   "vocabulary_size": 40000,
   "min_frequency": 2,
-  "embedding_dim": 128,
+  "embedding_dim": 256,
   "max_length": 384,
   "batch_size": 128,
-  "epochs": 6,
-  "early_stopping_patience": 2,
+  "epochs": 12,
+  "early_stopping_patience": 4,
   "early_stopping_min_delta": 0.0001,
-  "mlp_hidden": 64,
+  "mlp_hidden": 128,
   "lstm_hidden": 96,
   "cnn_channels": 128,
   "dilations": [
@@ -24,7 +24,7 @@
     4,
     8
   ],
-  "dropout": 0.3,
+  "dropout": 0.5,
   "cnn_dropout": 0.2,
   "learning_rates": {
     "maxpool_mlp": 0.0015,

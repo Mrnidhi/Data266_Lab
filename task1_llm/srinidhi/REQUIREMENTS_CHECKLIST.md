@@ -1,4 +1,4 @@
-# Part 1 requirement mapping — October 1 desktop replacement
+# Part 1 requirement mapping — October 1 selected desktop model
 
 Source requirements: DATA266 Lab1 Fall 2026 PDF, Task 1 on pages 6–7,
 individual/team reproducibility and report instructions on pages 1–5, and the
@@ -6,12 +6,13 @@ provided Canvas submission message. This mapping concerns Srinidhi's Part 1.
 Technical evidence does not establish student authorship or all-team completion.
 
 The prior Part 1 runs were removed at the user's explicit request after their
-checkpoint download could not be located. New results refer only to
-`reproducibility/raw_logs/srinidhi/desktop-20261001/part1-full/`.
+checkpoint download could not be located. The completed baseline is preserved. The selected deeper model passed the
+frozen context-256 validation comparison; its source is
+`reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part1/depth_context_full/`.
 
 ## Task 1 technical requirements
 
-The replacement run completed all 12 epochs and 18,732 updates. The publisher
+The selected run completed all 16 epochs and 28,416 updates. The publisher
 checked source hashes, complete epoch/target coverage, frozen-cache hashes,
 checkpoint state, metric identities and exact failure excerpts; its receipt is
 `verification/part1_export.json`. The finalizer passed all notebook, fresh
@@ -29,11 +30,11 @@ outputs. See `verification/part1_notebook.json`,
 | Character-level TinyStories preprocessing | `src/gpt.py`, frozen member `data_processed/full/` JSONL and manifest | Verified |
 | Own 100K training / 10K validation split | Seed 2342 indexed selection, source revision, row IDs and text hashes in `outputs/full/data_manifest.json` | Verified |
 | Own integer mappings and fixed-length shifted sequences | `outputs/full/vocabulary.json` token order; notebook constructs `char_to_idx` / `idx_to_char`; story-bounded windows and padded-tail coverage | Verified; notebook executed |
-| From-scratch multi-head attention, LayerNorm, feedforward, residuals | Manual Q/K/V attention and 3 pre-LayerNorm blocks in `src/gpt.py` | Implemented; causal test passed |
+| From-scratch multi-head attention, LayerNorm, feedforward, residuals | Manual Q/K/V attention and 6 pre-LayerNorm blocks in `src/gpt.py` | Implemented; causal test passed |
 | Causal masking, learned token/position embeddings, LM head | Explicit lower-triangular mask and learned embeddings/head in `src/gpt.py` | Implemented; causal test passed |
 | No prebuilt Transformer/attention modules or pretrained model | Member source; direct QK-transpose/softmax/V computation | Source reviewed |
 | Cross-entropy, warm-up and learning-rate schedule | AdamW, 5% warm-up, cosine decay; config and raw step records | Verified |
-| At least ten complete epochs | Twelve completed epochs with no cap, every window/target counted; `history.json` and raw `metrics.jsonl` | Verified |
+| At least ten complete epochs | Sixteen completed epochs with no cap, every window/target counted; `history.json` and raw `metrics.jsonl` | Verified |
 | Training and validation loss plots | `outputs/full/figures/learning_curves.png` and notebook | Published; notebook outputs visible |
 | Greedy/temperature generation | Five fixed prompts, greedy and sampled continuations in `outputs/full/generations.json` | Verified and published |
 | Three observed failure cases with actual snippets and type/observation | `failure_analysis.md` and executed notebook, each tied to a saved generation | AI-assisted draft; student review required |
@@ -53,6 +54,11 @@ Definitions distinguish online train loss from eval-mode validation loss,
 character targets including EOS from word-token generation diversity, and
 timed training-step work from end-to-end runtime. Empty diversity denominators
 remain null. Undefined quantities are not replaced by invented scores.
+
+For overfitting, the same-mode context-256 evaluation gives train CE 0.591177,
+validation CE 0.599380 and gap +0.008204. Native validation loss improved at
+every completed epoch; the minimum-loss epoch-16 checkpoint was retained.
+The small positive gap does not establish performance outside the frozen split.
 
 ## Requirements still needing student/team work
 

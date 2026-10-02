@@ -16,10 +16,10 @@
     "visible_output_cells": 8,
     "errors": 0,
     "all_outputs_visible": true,
-    "seconds": 6.060137499998746,
+    "seconds": 6.073101699999825,
     "python": "3.12.14",
     "inference_device": "cpu",
-    "sha256": "9964bc2f9188484e5f21db4fc7f83dab18897fc283635463c456c2da25615add"
+    "sha256": "bad6c873796ad68fab54f7b272140203ff3964047b101423528a7ca8790a8ac3"
   },
   "standalone_cpu_smoke": {
     "status": "completed",
@@ -32,14 +32,14 @@
   "fresh_cpu_checkpoint_inference": {
     "models": {
       "maxpool_mlp": {
-        "checkpoint_sha256": "8e3007821edf5d69b3d485b7c3d5a534c2ad0b83021895e8ced26e4d187128b6",
+        "checkpoint_sha256": "5ae7df4f747e89209ec2ca1381652bf3ed0fcf671a6f15605cb08323a0d9599c",
         "devices": [
           {
             "device": "cpu",
             "finite_logits": true,
             "independent_reload_identical": true,
             "right_padding_invariant": true,
-            "parameter_count": 5128321
+            "parameter_count": 10273025
           }
         ]
       },

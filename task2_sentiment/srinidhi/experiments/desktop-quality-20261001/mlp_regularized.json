@@ -1,0 +1,10 @@
+{
+  "name": "mlp_regularized",
+  "model": "maxpool_mlp",
+  "hypothesis": "Stronger head dropout may reduce the observed training-validation loss gap without increasing model size.",
+  "overrides": {
+    "epochs": 12, "early_stopping_patience": 4, "early_stopping_min_delta": 0.0001,
+    "num_workers": 0, "checkpoint_every_steps": 1000, "log_every_steps": 200,
+    "dropout": 0.5
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "candidate_id": "mlp_wide_regularized",
+  "started_utc": "2026-10-02T01:05:53.252474+00:00",
+  "command": [
+    "python",
+    "scripts/tune_sentiment.py",
+    "--candidate",
+    "task2_sentiment/srinidhi/experiments/desktop-quality-20261001/mlp_wide_regularized.json",
+    "--output",
+    "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/mlp_wide_regularized",
+    "--device",
+    "cuda"
+  ],
+  "overlap_note": "Coordinated with concurrent Part 1 GPT context512 training in this workspace; root launches GPT after its completed benchmark. GPU timing includes possible contention and is not an isolated benchmark.",
+  "timing_is_isolated_benchmark": false,
+  "gpu_start": {
+    "utc": "2026-10-02T01:05:53.325357+00:00",
+    "returncode": 0,
+    "stdout": "name, utilization.gpu [%], memory.used [MiB], memory.total [MiB]\nNVIDIA GeForce RTX 5090, 91 %, 22138 MiB, 32607 MiB",
+    "stderr": ""
+  },
+  "ended_utc": "2026-10-02T01:14:10.853016+00:00",
+  "returncode": 0,
+  "gpu_end": {
+    "utc": "2026-10-02T01:14:10.924555+00:00",
+    "returncode": 0,
+    "stdout": "name, utilization.gpu [%], memory.used [MiB], memory.total [MiB]\nNVIDIA GeForce RTX 5090, 99 %, 22064 MiB, 32607 MiB",
+    "stderr": ""
+  },
+  "derived_evidence": {
+    "source_receipt": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/invocations/mlp_wide_regularized_2026-10-02T01-05-53.252474+00-00.json",
+    "source_sha256": "b80c6a80d9151e92f734e46d8f5af522f2ddbfa4bff4a057c057978bd06dff72",
+    "transformation": "Only command[0] replaced with portable python executable; all other recorded invocation values preserved.",
+    "original_receipt_preserved": true
+  }
+}
