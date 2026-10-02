@@ -1,3 +1,3 @@
 # Checkpoints
 
-Store checkpoints from your own training runs here and record their checksums with the run evidence. No model has been trained for this member.
+This directory contains the selected checkpoints for the mean-embedding baseline, multi-kernel CNN, and bidirectional GRU. Their SHA-256 digests are recorded in `manifest.json`.

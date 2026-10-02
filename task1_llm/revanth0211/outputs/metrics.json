@@ -1,0 +1,21 @@
+{
+  "best_epoch": 13,
+  "epochs_completed": 13,
+  "training_cross_entropy_at_best_epoch": 0.5381073669958114,
+  "validation_cross_entropy": 0.6229930255889893,
+  "perplexity": 1.864500195683482,
+  "bits_per_character": 0.898788948525646,
+  "generalization_gap": 0.08488565859317787,
+  "top1_next_character_accuracy": 0.805136328125,
+  "distinct_1gram": 0.06756756756756757,
+  "distinct_2gram": 0.3404255319148936,
+  "distinct_3gram": 0.5755813953488372,
+  "repeated_4gram_rate": 0.2912621359223301,
+  "gradient_norm_max_epoch_mean": 1.818156386033816,
+  "nan_count": 0,
+  "parameter_count": 25385984,
+  "training_tokens_per_sec": 232543.33787225396,
+  "generation_tokens_per_sec": 301.599602255336,
+  "peak_memory_mb": 3687.75537109375,
+  "total_training_time_sec": 1431.131087414
+}

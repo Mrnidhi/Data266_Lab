@@ -1,0 +1,19 @@
+{
+  "files": [
+    {
+      "file": "baseline_mean_best.pt",
+      "sha256": "5500aab3476feb4d008fe4b3f418313f483cee4a1f02cb63ea5cf39e7d2d2956",
+      "size_bytes": 20482884
+    },
+    {
+      "file": "cnn_multikernel_best.pt",
+      "sha256": "f33b528e8214a4e2579d9eb29fd22071911166d24b419ee48030eecb1dab729c",
+      "size_bytes": 26836108
+    },
+    {
+      "file": "bigru_best.pt",
+      "sha256": "dff579aa7355f84e338fb4cbd2877d9989b90dc371ba724e7f2281463461270f",
+      "size_bytes": 26495163
+    }
+  ]
+}

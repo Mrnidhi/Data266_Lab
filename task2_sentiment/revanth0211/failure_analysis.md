@@ -1,3 +1,7 @@
-# Failure analysis
+# Part 2 error review
 
-Pending evaluation of actual model outputs. Record observed failures and supporting examples after running your implementation.
+I manually reviewed all 20 cases in `outputs/error_review_20.csv`: five confident false positives, five confident false negatives, five near-threshold errors, and five failures from the long-review slice. The row-level observations are recorded in the `manual_observation` column, while the saved labels, predictions, probabilities, excerpts, and proposed fixes are unchanged.
+
+Several patterns appeared repeatedly. In mixed reviews, the model often focused on obvious positive or negative words while missing which part of the review carried the author's final opinion. Negation and idiomatic phrases also caused problems; for example, "second to none" is praise even though it contains a word that may look negative. The near-threshold cases were genuinely balanced or ambiguous, so calibration or a validation-based decision threshold may help more than simply making the classifier larger. Finally, the longest reviews were especially difficult because a 256-token input can cut off the conclusion and leave the model with only part of the writer's argument.
+
+These examples suggest four useful follow-up tests: add hard mixed-sentiment examples, evaluate a negation-aware or more context-sensitive model, tune the classification threshold on validation data, and compare the current 256-token input with a longer-context setting. I would keep the same test split for each experiment so that any improvement is directly comparable.
