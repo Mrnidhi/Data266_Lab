@@ -7,6 +7,7 @@
 *.zip
 !/reproducibility/packages/part3-20261002/Part3.zip
 !/reproducibility/packages/part3-20261002/dataset.zip
+!/reproducibility/packages/parts1-2-20261002/*.zip
 __pycache__/
 .pytest_cache/
 *.egg-info/

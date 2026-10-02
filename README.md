@@ -6,6 +6,10 @@ Each member independently implements and trains all three tasks. Members keep co
 
 ## Current status
 
+Complete selected-model offline backups, including processed data and checkpoint
+files, are available through Git LFS for [Parts 1 and 2](reproducibility/packages/parts1-2-20261002/README.md)
+and [Part 3](reproducibility/packages/part3-20261002/README.md).
+
 The October 1 quality study selected the larger GPT and wider MLP, retaining
 the original BiLSTM and CNN. The preceding desktop baseline remains in commit
 `87f00dc` and separate baseline ZIPs. These verified results are on `main`;

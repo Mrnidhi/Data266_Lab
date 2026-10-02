@@ -1,0 +1,27 @@
+{
+  "purpose": "Complete current selected Part1 and Part2 offline packages, copied unchanged before lab access ends.",
+  "archives": [
+    {
+      "files": 72,
+      "crc_and_content_hashes_verified": true,
+      "contains_trained_final_weights": true,
+      "contains_executed_notebook": true,
+      "contains_frozen_processed_split": true,
+      "archive": "dist/Part1_Srinidhi_2342.zip",
+      "bytes": 293213705,
+      "sha256": "879c648b101cd5ae38f5084ac0052c06832422d8e43ad146589b1596aba299bc",
+      "scope": "Srinidhi Part 1 only; not the combined Canvas submission"
+    },
+    {
+      "files": 291,
+      "crc_and_content_hashes_verified": true,
+      "contains_trained_final_weights": true,
+      "contains_executed_notebook": true,
+      "scope": "Srinidhi Part 2 only; not combined Canvas submission",
+      "archive": "dist/Part2_Srinidhi_2342.zip",
+      "bytes": 1305154510,
+      "sha256": "f9c11f4569efe6114ec8ed4551c3fdf27985dc7fa28ce65b500b49d58d973c89"
+    }
+  ],
+  "human_student_team_submission_obligations_remain": true
+}

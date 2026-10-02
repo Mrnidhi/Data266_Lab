@@ -38,3 +38,4 @@ task2_sentiment/srinidhi/failure_analysis.md -text whitespace=cr-at-eol
 task2_sentiment/srinidhi/checkpoints/maxpool_mlp/best.pt filter=lfs diff=lfs merge=lfs -text
 reproducibility/packages/part3-20261002/Part3.zip filter=lfs diff=lfs merge=lfs -text
 reproducibility/packages/part3-20261002/dataset.zip filter=lfs diff=lfs merge=lfs -text
+reproducibility/packages/parts1-2-20261002/*.zip filter=lfs diff=lfs merge=lfs -text
