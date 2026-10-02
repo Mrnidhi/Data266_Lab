@@ -1,0 +1,82 @@
+DATA266 PART 3 - SIX-HOUR RTX 5090 PLAN
+Prepared October 1, 2026. Proposed work; no new training is running.
+
+Immediate prerequisites
+1. Verify the user's available RTX 5090, free memory, current workloads, CUDA
+   environment, storage, and access window. The new SSH connection is unknown.
+2. Obtain the instructor's exact scoring script and submission CSV template.
+   Kaggle has no published notebook; Canvas currently requires sign-in.
+3. Inspect the selected model and data files on that machine. Git alone does
+   not contain weights or datasets. Transfer through the user's chosen method
+   and verify file hashes. Do not copy credentials or virtual environments.
+
+Why the leaderboard is not yet a model-quality comparison
+The live leaderboard has Team 41 at -41.4884; this account has no submissions.
+The class host requires all 300 Monet inputs for Monet -> Photo pred_A2B,
+including training images. Our separate local held-out result used 30 Monet
+references/sources and Clean-FID. Its FID cannot be compared directly to the
+class FID/MiFID score. The exact negative-score transform remains unverified.
+Resolve the scorer before changing the training objective to chase a number.
+Local neutral exports also use the opposite A/B convention. Create fresh class
+JPEG exports: pred_A2B from G_monet_to_photo, pred_B2A from G_photo_to_monet.
+Preserve prior exports, checkpoint keys and all historical metric labels.
+
+Proposed allocation AFTER files and GPU access are ready (planning estimates)
+0:00-0:45  Reproduce the selected checkpoint's validation score; inspect
+           unaugmented discriminator train/validation diagnostics; run a
+           200-update benchmark in a separate rehearsal output directory.
+           Calculate the current model's class score if the official scorer
+           is available. Freeze the next experiment's objective before running.
+0:45-3:00  Run a matched control and a translation-only DiffAugment arm from
+           the same selected parent. Keep the parent eligible for selection.
+3:00-5:00  If there is a credible improvement and the measured time permits,
+           repeat BOTH arms with another continuation seed. Otherwise stop
+           training early and use time for evaluation and complete exports.
+5:00-6:00  Select using validation only, inspect fixed images, evaluate/export
+           the selected model, preserve logs, verify complete backups, and
+           end the training processes before the GPU access window expires.
+           On a shared lab workstation do not power off the entire machine.
+
+Historical timing basis, not a new benchmark
+The September 29 RTX 5090 continuations each completed 56,240 updates.
+Timed update work was approximately 38 minutes; recorded wrapper sessions
+were about 47-48 minutes, excluding some initial setup and finalization.
+Discriminator augmentation, a different host, evaluation and transfer overhead
+can change these times. Recalculate the allocation after the new benchmark.
+
+Controlled first comparison
+- Parent: runs/part3-tuned-publication-20260929/checkpoints/selected.pt
+  SHA256 c6775f21d2b6ccc214ae235f366a01f636f0b214e686ca53d2858ecb84d0ec91
+- Restore all four networks; equally reset optimizer/scheduler/replay states.
+- Both arms: 256x256, batch 1, nine-block generators, identity 2.5, cycle 10,
+  replay pool 50, Adam betas 0.5/0.999, LR 0.00005, BF16 after compatibility check.
+- 56,240 updates per arm: 28,120 constant LR then linear decay; validation at
+  step zero and every 11,248 updates. Existing frozen manifests remain fixed.
+- Control: current adversarial paths. Treatment: differentiable spatial
+  translation only on the Monet discriminator's real/fake paths, including
+  the generator adversarial gradient. Maximum +/-16 pixels is a conservative
+  experiment setting, not a proven optimum. It needs implementation and tests.
+- Keep cycle/identity tensors unaugmented and replay images stored unaugmented.
+  Use a separate, saved augmentation RNG so data/replay randomness stays matched.
+- Record both directional metrics and content preservation. Predeclare the
+  primary validation selection criterion after inspecting the class scorer;
+  otherwise retain mean validation KID and label it an internal experiment.
+- Do not select hyperparameters/checkpoints using the already-inspected test
+  results or repeated leaderboard feedback. Do not transfer the old human
+  ratings to a different checkpoint. Preserve original and selected baselines.
+
+Rationale and limits
+The old Monet discriminator's real-target MSE was 0.395 on training images
+versus 1.203 on validation images. Recheck this on the selected checkpoint.
+DiffAugment addresses a plausible generalization problem, but no improvement
+is guaranteed. Identity 5 versus 2.5 was effectively tied in the previous study.
+Primary source: https://arxiv.org/html/2006.10738v4
+
+If grid/banding artifacts persist, a future matched from-scratch comparison
+of transposed-convolution versus resize-convolution upsampling is justified.
+Do not spend this six-hour window on multiple unvalidated architecture changes.
+Primary source: https://distill.pub/2016/deconv-checkerboard/
+
+Remaining gates
+GPU connection, official evaluator/schema, implementation/testing of augmentation,
+and actual benchmark are pending. No first-place score or new result is claimed.

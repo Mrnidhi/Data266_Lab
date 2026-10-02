@@ -5,14 +5,19 @@ Repository: https://github.com/Mrnidhi/Data266_Lab.git
 Experiment evidence commit before this handoff: df915a2.
 
 CURRENT USER TASK
-The user requested finalizing Part 1 on this Windows desktop and pushing the
-result to GitHub. The earlier RunPod download could not be located; the user
-then explicitly requested a from-scratch Part 1 run and deletion of its previous
-runs. Fresh training completed on October 1 using the local RTX 5090. The canonical
-run is reproducibility/raw_logs/srinidhi/desktop-20261001/part1-full/.
-Publish only metrics and weights from this replacement run. Preserve Parts 2/3,
-the user's personal Part 3 review and its provenance. Whole-lab submission
-remains pending; Part 1 technical finalization is the current scope.
+The current request is to publish the verified desktop Parts 1 and 2 to main,
+then continue controlled validation-based improvements for those two parts.
+Fresh desktop training completed October 1 on the local RTX 5090. Preserve
+both baseline publications and all original evidence when starting experiments.
+Part 1: reproducibility/raw_logs/srinidhi/desktop-20261001/part1-full/.
+Part 2: reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/.
+The earlier Part 3 improvement plan remains in PART3_NEXT_GPU_PLAN.txt,
+NEXT_SESSION_PROMPT.md and task3_gan/CLASS_PROTOCOL.md for a separate session.
+It proposes matched control versus discriminator augmentation after checking
+the exact class evaluator. No new Part 3 experiment is running in this task.
+Preserve the user's single personal Part 3 review and its provenance; those
+ratings apply to the September 29 selected checkpoint, not future models.
+Do not assume files from another machine were transferred by cloning.
 
 START HERE
 1. Open this entire repository as the VS Code folder.
@@ -20,7 +25,7 @@ START HERE
    REQUIREMENTS_CHECKLIST.md. Check actual full-run and finalization receipts
    before claiming completion. Read report/PART3_FINETUNING_RESULTS.md for the
    selected September 29 CycleGAN, since its member publication is the baseline.
-3. Keep this task focused on the desktop Part 1 result. If later continuing
+3. Follow the current desktop Parts 1 and 2 request. If later continuing
    Part 3 human review, locate the current rating CSVs (possibly outside the repo)
    and preserve all entered values; never replace them with blank templates.
 4. For Part 1, use the replacement desktop publication and selected best.pt.
@@ -40,7 +45,7 @@ COMPLETED EXPERIMENTS
   Published evidence goes to task1_llm/srinidhi/, including an executed notebook.
   No older RunPod Part 1 numbers are the final results of this desktop run.
 - Part 2: learned-embedding sentiment models trained and tested. Test accuracy:
-  BiLSTM 96.01%, CNN 95.80%, max-pool MLP 93.20%.
+  BiLSTM 96.12%, CNN 95.63%, max-pool MLP 93.19% on the fresh desktop run.
   Read task2_sentiment/srinidhi/results.md and src/sentiment.ipynb there.
 - Part 3: original 30-epoch CycleGAN completed, then two controlled 10-epoch
   continuations completed on September 29. Baseline was eligible for selection.
@@ -145,7 +150,7 @@ REMAINING COURSE DELIVERABLES
    Competition: https://www.kaggle.com/competitions/data-266-fall-2026-gan-image-style-transfer
    The class overview says the final score averages FID and MiFID, lower better,
    and uses 256x256 RGB JPG outputs. Local Clean-FID/KID is a separate protocol.
-   The authenticated account showed 'No submissions found' on September 29;
+   The authenticated account showed 'No submissions found' on October 1;
    refresh account state before asserting a current score/rank. Displayed rank
    order conflicted with the stated lower-is-better rule; do not invent a rank.
 3. Coordinate Revanth's independently trained results in revanth0211/ folders.
@@ -158,20 +163,22 @@ REMAINING COURSE DELIVERABLES
    No official Kaggle/Canvas submission is established by this handoff.
 
 OPERATIONAL BOUNDARIES
-- The fresh local Part 1 retraining is authorized. No new rentals or cloud changes
-  are needed for it or Part 3 human review. Do not restart old cloud jobs from
-  RUNPOD_HANDOFF.md. The user-authorized deletion was limited to previous Part 1
-  runs; preserve unrelated tasks and original human ratings.
+- Continue Parts 1 and 2 only after the requested Git publication is verified.
+  Use the user's local RTX 5090 for controlled validation-only experiments.
+  Do not rent GPUs or restart old cloud jobs. Historical deletion authorization
+  was limited to prior Part 1 runs; preserve current baselines and other tasks.
+- The separate Part 3 GPU plan is preserved in NEXT_SESSION_PROMPT.md and
+  PART3_NEXT_GPU_PLAN.txt; it does not replace the current Parts 1 and 2 request.
 - Preserve baseline and selected evidence, frozen splits and unrelated files.
 - Do not synthesize human ratings or report a local metric as a Kaggle result.
 - Do not tune against test/leaderboard feedback or alter submitted images.
 - Do not mark the whole lab complete while required artifacts are missing.
 
 FIRST PROMPT FOR THE NEW VS CODE CHAT
-Read VSCODE_HANDOFF.txt, PART1_FINALIZATION.md and the requirement mapping.
-Continue my DATA266 Lab 1, Pair 49, from the fresh October 1 desktop Part 1 run.
-Verify its actual completion and publication before rerunning anything. Preserve
-the new best.pt and all raw evidence. My Part 3 personal review remains a single
-review for now; preserve its ratings/provenance. Prepare remaining class
-evaluation, teammate comparisons, combined report and final one-ZIP submission
-from real saved results, keeping second human review/agreement clearly pending.
+Read this handoff, PART1_FINALIZATION.md, PART2_FINALIZATION.md and the
+requirement mappings. Verify Git main publication first, then improve Parts 1
+and 2 using validation-selected controlled experiments on the desktop RTX 5090.
+Preserve baseline results, raw evidence and my Part 3 personal review. Keep
+student review, teammate comparisons, combined report and final submission
+clearly distinguished from completed technical checks. Use NEXT_SESSION_PROMPT.md
+only when explicitly continuing the separate Part 3 experiment.
