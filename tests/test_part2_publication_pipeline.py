@@ -278,3 +278,47 @@ def test_archive_only_rejects_changed_completed_evidence_before_any_output(tmp_p
     with pytest.raises(ValueError, match="bytes changed"):
         pipeline.archive_only(root, root / evidence["run"], evidence["data_dir"])
     assert not (root / "verification/part2_archive_only.json").exists()
+
+
+def ai_draft_fixture(tmp_path):
+    packet_path, draft_path = tmp_path / "human.csv", tmp_path / "ai_error_review_draft.csv"
+    packet = pd.DataFrame([{"example_id": f"example-{index}", "checkpoint_sha256": "real-checkpoint-fixture",
+        "review_group": "confident_false_positive", "true_label": 0, "predicted_label": 1,
+        "positive_probability": .9, "original_token_length": 50, "oov_rate": .125, "has_negation": True,
+        "text": "I disliked the café food, but the staff were kind.", "student_reviewed": False} for index in range(20)])
+    packet.to_csv(packet_path, index=False, encoding="utf-8")
+    draft = packet.drop(columns=["text", "student_reviewed"]).copy()
+    draft["model"] = "bilstm"
+    draft["source_text_sha256"] = hashlib.sha256(packet.loc[0, "text"].encode("utf-8")).hexdigest()
+    draft["human_packet_sha256"] = pipeline.digest(packet_path)
+    draft["ai_draft_error_type"] = "mixed sentiment"
+    draft["ai_draft_evidence_quotes"] = json.dumps(["disliked the café food", "staff were kind"], ensure_ascii=False)
+    draft["ai_draft_reason"] = "Positive service words occur in a negative overall review."
+    draft["ai_draft_testable_fix"] = "Test contrast-focused validation examples."
+    draft["ai_draft_status"] = "AI_ASSISTED_NOT_STUDENT_REVIEW"
+    draft.to_csv(draft_path, index=False, encoding="utf-8")
+    return packet_path, draft_path
+
+
+def test_ai_draft_real_text_linkage_preserves_human_packet_and_utf8_excerpts(tmp_path):
+    packet, draft = ai_draft_fixture(tmp_path)
+    before = packet.read_bytes()
+    result = pipeline.verify_ai_error_draft(packet, draft, "bilstm", "real-checkpoint-fixture")
+    assert result["cases"] == 20 and result["all_case_text_hashes_and_quotes_verified"]
+    assert packet.read_bytes() == before and not pd.read_csv(packet).student_reviewed.any()
+
+
+@pytest.mark.parametrize("column,value,problem", [
+    ("source_text_sha256", "changed", "identity changed"),
+    ("checkpoint_sha256", "another-model", "identity changed"),
+    ("ai_draft_evidence_quotes", '["Invented words absent from the review"]', "not an exact source excerpt"),
+    ("positive_probability", .8, "case field changed"),
+    ("ai_draft_status", "STUDENT_REVIEW_COMPLETE", "misrepresented"),
+])
+def test_ai_draft_rejects_invented_or_misrepresented_source_cases(tmp_path, column, value, problem):
+    packet, draft_path = ai_draft_fixture(tmp_path)
+    draft = pd.read_csv(draft_path, keep_default_na=False)
+    draft.loc[0, column] = value
+    draft.to_csv(draft_path, index=False, encoding="utf-8")
+    with pytest.raises(ValueError, match=problem):
+        pipeline.verify_ai_error_draft(packet, draft_path, "bilstm", "real-checkpoint-fixture")

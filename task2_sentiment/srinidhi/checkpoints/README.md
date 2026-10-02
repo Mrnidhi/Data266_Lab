@@ -1,16 +1,35 @@
-# Selected Part 2 checkpoints
+# Fresh desktop Part 2 checkpoints
 
-All six required checkpoint files are saved locally under the paths below. They were copied from the validation-selected source runs and verified by SHA-256. The executed notebook verifies all six hashes and reloads each best checkpoint for fresh CPU inference. Weights are excluded from ordinary Git.
+These six files belong to the October 1, 2026 Intel Core Ultra 9 285K /
+RTX 5090 desktop run. They were selected by validation and copied from
+recorded source runs; final metrics map to these exact best hashes.
+The authoritative inventory is [manifest.json](manifest.json).
 
-| Model | File | Bytes | SHA-256 |
-| --- | --- | ---: | --- |
-| maxpool_mlp | `maxpool_mlp/best.pt` | 62,361,671 | `fc9442519f52db62c292e380fed6285a14e51f2711e7540618314d7675720e08` |
-| maxpool_mlp | `maxpool_mlp/last.pt` | 62,361,799 | `16a34b51fd4c4cb7e270e0479a4a30ecef9bb4de16666aeb8b65f956178d7421` |
-| bilstm | `bilstm/best.pt` | 64,500,785 | `ed03e33534f053c0b12ceb519c719ea9716c4ece948c20715d6a535543003529` |
-| bilstm | `bilstm/last.pt` | 64,500,977 | `5902cbd3c37ce0537b3389a16321824a7bc70373d4a2a114bbd9e9700781eba5` |
-| dilated_cnn | `dilated_cnn/best.pt` | 67,308,375 | `013aa085d21b988169e37951027b280966e5dd550aa7769752e5daf657d0ed8a` |
-| dilated_cnn | `dilated_cnn/last.pt` | 67,308,375 | `b0f85b1e7df44b7fdaacf6037519d3e9c2ad965a3599c74eed2a8069ad3fcb16` |
+| Model | Best epoch | Best bytes | Best SHA-256 |
+|---|---:|---:|---|
+| MLP | 5 | 62,361,863 | `8e3007821edf5d69b3d485b7c3d5a534c2ad0b83021895e8ced26e4d187128b6` |
+| BiLSTM | 11 | 64,500,977 | `0758cbe7405758fe6f99079f02fd3359aa1367d120cdd984c361c03a34fd54ba` |
+| CNN | 6 | 67,308,503 | `f3883a005a369ef495c99bebe3cd51c4a7858c3f58121b6dbcfecee341dd8ac2` |
 
-Portable local archive: `dist/part-b-srinidhi-20260918-checkpoints.zip` from the repository root. Size: 404,003,652 bytes. SHA-256: `ba845ee35266cf01a95be33570dcc8fb3fdecb8e341e434defef12c1228d31fe`. Archive creation verified every member checksum; it includes the derived full evaluation and selected best/last checkpoints, not the dataset or repository source. There is no hosted checkpoint download link yet. Include these actual weights in the final Canvas ZIP.
+Each best/last checkpoint contains model/optimizer/scheduler/AMP state,
+configuration, vocabulary, RNG/shuffle state and progress. Both files per
+family are present locally and in `dist/Part2_Srinidhi_2342.zip`. The three
+selected member `best.pt` files have targeted Git-ignore exceptions for Git
+publication on `srinidhi/part2-desktop-final`. The final handoff and `git ls-remote`
+establish the actual remote commit before a clone is used to restore them.
+Resume `last.pt`, raw weight copies and dataset
+caches remain ignored by Git and travel in the ZIP. No hosted ZIP/data
+download link is claimed.
 
-The complete original nine-model training backup is retained locally under `runs/part-b-full` and `runs/part-b-tuning`; its 96-file verification receipt is `verification/part_b_backup_verified.json`. Cloud container data were discarded only after this backup passed verification.
+The eight-cell executed notebook checks all six hashes and reloads best
+weights. Root `verification/part2_checkpoint_inference.json` records CPU/CUDA
+finite-output, independent-reload and padding-invariance checks;
+`verification/part2_package_portability.json` verifies real CPU inference
+and notebook execution from the extracted archive. Current archive inventory,
+CRC/file SHA and whole-ZIP SHA are in `dist/part2_package_verification.json`
+and `dist/Part2_SHA256SUMS.txt`.
+
+Earlier September cloud/Mac hashes and missing desktop download refer to
+historical publication preserved under
+`outputs/publication_history/b257a1079ef85973/`. They are not hashes or
+availability claims for these new files. See [finalization guide](../../../PART2_FINALIZATION.md).

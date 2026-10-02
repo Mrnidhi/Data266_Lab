@@ -1,0 +1,62 @@
+{
+  "run": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/selected",
+  "metric_rows": 162,
+  "models": [
+    {
+      "model": "maxpool_mlp",
+      "accuracy": 0.931921052631579,
+      "macro_f1": 0.9319166665844245,
+      "roc_auc": 0.981636984764543,
+      "mcc": 0.8639534272101965,
+      "selected_epoch": 5,
+      "epochs_run": 6,
+      "training_minutes": 1.4487913383334066,
+      "source_run": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/maxpool_mlp",
+      "embedding_dim": 128,
+      "max_length": 384,
+      "batch_size": 128,
+      "initial_learning_rate": 0.0015,
+      "dropout": 0.3,
+      "training_cpu": "Intel(R) Core(TM) Ultra 9 285K",
+      "training_gpu": "NVIDIA GeForce RTX 5090"
+    },
+    {
+      "model": "bilstm",
+      "accuracy": 0.9612105263157895,
+      "macro_f1": 0.9612104420747551,
+      "roc_auc": 0.9934010664819942,
+      "mcc": 0.9224250591845816,
+      "selected_epoch": 11,
+      "epochs_run": 12,
+      "training_minutes": 48.52467960166668,
+      "source_run": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/bilstm",
+      "embedding_dim": 128,
+      "max_length": 384,
+      "batch_size": 128,
+      "initial_learning_rate": 0.001,
+      "dropout": 0.3,
+      "training_cpu": "Intel(R) Core(TM) Ultra 9 285K",
+      "training_gpu": "NVIDIA GeForce RTX 5090"
+    },
+    {
+      "model": "dilated_cnn",
+      "accuracy": 0.9562631578947368,
+      "macro_f1": 0.9562622618163114,
+      "roc_auc": 0.9917749709141273,
+      "mcc": 0.9125637089167522,
+      "selected_epoch": 6,
+      "epochs_run": 6,
+      "training_minutes": 4.012364123333282,
+      "source_run": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/dilated_cnn",
+      "embedding_dim": 128,
+      "max_length": 384,
+      "batch_size": 128,
+      "initial_learning_rate": 0.0008,
+      "dropout": 0.3,
+      "training_cpu": "Intel(R) Core(TM) Ultra 9 285K",
+      "training_gpu": "NVIDIA GeForce RTX 5090"
+    }
+  ],
+  "manual_review_complete": false,
+  "historical_publications_preserved": true
+}

@@ -18,11 +18,27 @@ three recipe files before training. Each family starts from random weights
 and learns its own embeddings. The run is a replication of previously chosen
 architectures and schedules, not a new hyperparameter search.
 
-The full data and encoded cache have been prepared, original rows verified,
-and CUDA smoke/preflight checks passed. Fresh full training is underway.
-Completed training, selected checkpoints, final test metrics, notebook and
-submission package must be established by the actual new receipts and outputs;
-the earlier cloud numbers are preserved as historical evidence.
+The fresh three-model training, validation selection, full test evaluation,
+publication and notebook execution completed on this desktop. The measured
+results on the same 38,000 test reviews are:
+
+| Model | Completed / selected epoch | Validation macro-F1 | Test accuracy | Test macro-F1 |
+|---|---:|---:|---:|---:|
+| MLP | 6 / 5 | 0.926422 | 93.1921% | 0.931917 |
+| BiLSTM | 12 / 11 | 0.958857 | 96.1211% | 0.961210 |
+| Dilated CNN | 6 / 6 | 0.953446 | 95.6263% | 0.956262 |
+
+`verification/part2_export.json` establishes source/data/checkpoint/metric
+identity. The notebook has eight executed code cells, eight visible output
+cells and zero errors. All three saved models passed independent CPU and CUDA
+reload, finite-output and padding-invariance checks. The initial archive passed
+CRC/content-hash checks; its extracted folder also passed notebook execution,
+real-checkpoint CPU inference and the documented offline smoke command. See
+`verification/part2_package_portability.json`. The archive is rebuilt after
+final documentation and separate AI drafts; its final inventory, size and
+SHA-256 are recorded in the current package receipts, not fixed in this prose.
+Earlier cloud results are preserved under the member's publication history.
+Manual student review and team/report obligations remain pending.
 
 ## Windows setup and one-command smoke test
 
@@ -232,20 +248,39 @@ Each case needs an error type, explanation grounded in the full review and
 one testable fix. This creates 60 model-specific entries, not necessarily
 60 unique review texts across models.
 
-AI-assisted classifications belong only in clearly named `ai_draft_*`
-columns or labeled prose. Leave `error_type`, `testable_fix` and
-`student_reviewed` unchanged until the student actually reviews each case.
-AI drafts do not complete the required manual analysis; no human review is
-fabricated. Suggested fixes are future validation studies, not test-set
-tuning instructions.
+Each model's separate `ai_error_review_draft.csv` and the member's
+`failure_analysis.md` provide AI-assisted classifications, exact evidence
+quotes, explanations and one testable future fix for all twenty cases. Drafts
+are keyed to example ID and the selected checkpoint SHA-256 and include the
+full source-text hash. The original `required_20_errors_for_review.csv`
+packets remain unchanged: `error_type` and `testable_fix` are blank and all
+`student_reviewed` values are false. Student review must verify the hypotheses
+against each full review and enter its own conclusions. AI drafts do not
+complete manual analysis; suggested fixes require future training/validation
+studies and an appropriate new evaluation, not tuning from this test packet.
 
 ## Submission scope
 
-A final Part 2 archive must include the executed notebook, actual model
-weights, preprocessing/outputs and reproducibility evidence, with verified
-CRC/inventory/SHA-256 values and an independently retained copy. A remote
-GitHub commit must be verified before claiming the publication is pushed;
-local files and app access alone are not proof of a remote update.
+A final Part 2 archive includes the executed notebook, all best/last model
+weights, preprocessing/outputs and reproducibility evidence. Its current
+CRC/inventory/SHA-256 receipt is authoritative; retain a verified backup copy.
+Git publication uses branch `srinidhi/part2-desktop-final`, with targeted
+exceptions for the three selected member `best.pt` files. Resume/raw weights
+and dataset caches remain ignored by Git and are included in the ZIP.
+The final handoff and this remote check establish the actual published commit;
+local artifacts alone are not proof of a remote update:
+
+```powershell
+git ls-remote origin refs/heads/srinidhi/part2-desktop-final
+```
+
+Compare the returned commit with the final handoff. To inspect the published
+branch from a clone after verification:
+
+```powershell
+git fetch origin
+git switch srinidhi/part2-desktop-final
+```
 
 The course also requires each student's own core design/analysis and viva
 understanding. Assisted implementation and automatically executed training

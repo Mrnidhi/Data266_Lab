@@ -5,34 +5,45 @@
     {
       "role": "training",
       "models": [
-        "dilated_cnn",
-        "maxpool_mlp"
+        "bilstm"
       ],
-      "source_run": "runs/part-b-full",
-      "source_path": "runs/part-b-full/RUN_LOG.txt",
-      "published_path": "raw_logs/training_dilated_cnn_maxpool_mlp_8adc9d583f2e_37ce98c3c472.txt",
-      "sha256": "37ce98c3c472ba8ad4311d9bf80dab6231d5b2795711dba3b56c4da0b24d8270",
-      "bytes": 184109
+      "source_run": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/bilstm",
+      "source_path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/bilstm/RUN_LOG.txt",
+      "published_path": "raw_logs/training_bilstm_RUN_LOG_a3c6eac51ccd_e45813eb50c4.txt",
+      "sha256": "e45813eb50c4b8e886eebe2fd479ccde6ce0f83d32a0e5658413c42d4622a3c4",
+      "bytes": 33521
     },
     {
       "role": "training",
       "models": [
-        "bilstm"
+        "dilated_cnn"
       ],
-      "source_run": "runs/part-b-tuning/bilstm_long_schedule_control",
-      "source_path": "runs/part-b-tuning/bilstm_long_schedule_control/RUN_LOG.txt",
-      "published_path": "raw_logs/training_bilstm_f7138b9bfe85_cc5e773758f7.txt",
-      "sha256": "cc5e773758f7cd12ed0e07725aff9be2708c162973e366576269bb40639b7dfd",
-      "bytes": 62841
+      "source_run": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/dilated_cnn",
+      "source_path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/dilated_cnn/RUN_LOG.txt",
+      "published_path": "raw_logs/training_dilated_cnn_RUN_LOG_618d51401b75_fbf8b5676016.txt",
+      "sha256": "fbf8b5676016e9f79f2965027fe8cdbb681dd3c23890eb7dbea59986ba85cc6c",
+      "bytes": 17287
+    },
+    {
+      "role": "training",
+      "models": [
+        "maxpool_mlp"
+      ],
+      "source_run": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/maxpool_mlp",
+      "source_path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/maxpool_mlp/RUN_LOG.txt",
+      "published_path": "raw_logs/training_maxpool_mlp_RUN_LOG_71c8bf661f36_f12c5a6bb6d4.txt",
+      "sha256": "f12c5a6bb6d41244d9ac3bc7629692840aec62cba1caa6e512157ddde2bf3822",
+      "bytes": 17114
     },
     {
       "role": "evaluation",
       "models": [],
-      "source_run": "runs/part-b-selected",
-      "source_path": "runs/part-b-selected/RUN_LOG.txt",
-      "published_path": "raw_logs/evaluation_suite_e9e6ebe1a128_1250367a75f3.txt",
-      "sha256": "1250367a75f35969370a8757b56a152d96c938aed83226eca3c79b5f52f68e69",
-      "bytes": 196
+      "source_run": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/selected",
+      "source_path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/selected/RUN_LOG.txt",
+      "published_path": "raw_logs/evaluation_suite_RUN_LOG_33ef1617500c_045f882738b5.txt",
+      "sha256": "045f882738b5fe63c85de08340590f0bc1317a14ad70967807cd465d83e27028",
+      "bytes": 199
     }
-  ]
+  ],
+  "omitted_console_files": []
 }

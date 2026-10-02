@@ -4,17 +4,20 @@ Audit date: October 1, 2026. Scope: Srinidhi's Yelp Polarity sentiment work.
 Requirements come from Task 2 on pages 7–8 of the provided DATA266 Lab1 Fall
 2026 PDF, the individual/team instructions, and the supplied Canvas message.
 The user authorized continuing Part 2 after Part 1. This document records the
-desktop starting state, verified preparation and frozen reproduction plan.
-Fresh full training started on October 1; its final metrics, publication,
-notebook and package have not yet been established by this checklist.
+desktop starting state, frozen reproduction plan and verified technical
+completion. All three fresh runs, validation selection and full evaluation
+completed on October 1. Manual student review, independent teammate work,
+combined report and overall Canvas submission remain pending.
 
 ## Starting audit and prepared desktop state
 
-The previous cloud publication is present: three models' metrics, predictions,
+At the initial audit, the previous cloud publication was present: three models' metrics, predictions,
 plots, source/configurations, selection and training provenance, the combined
 metric CSV, and the previously executed notebook. The notebook has seven
 executed code cells with visible outputs and no saved error outputs. Those
-outputs describe the earlier run, not a new execution on this desktop.
+outputs described the earlier run. Publication now preserves those bytes under
+`srinidhi/outputs/publication_history/b257a1079ef85973/`; current member
+results and the newly executed notebook describe the desktop run.
 
 | Historical artifact | Initial audit result |
 |---|---|
@@ -34,19 +37,29 @@ use CRLF; both actual byte hashes and normalized-LF hashes are recorded in
 analysis receipts are `verification/part2_desktop_data_cache.json` and
 `verification/part2_desktop_data_analysis/data_distributions.json`.
 
-The historical notebook alone cannot finalize a desktop training/evaluation
-package. The fresh run is now executing sequentially at
+The fresh run completed sequentially at
 `reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/`.
 Its `desktop_plan.json` freezes training source hashes, configuration and the
-three `recipes/*.json` files before training. Preserve the historical
-publication and its provenance until the new run is complete, validated and
-independently identifiable.
+three `recipes/*.json` files before training. Its new selection manifest froze
+checkpoint hashes after all validation runs and before fresh test inference.
+The desktop results are independently mapped to actual new weights:
 
-The fresh MLP has completed six epochs and selected epoch 5 with validation
-macro-F1 **0.9264224689043884**. This is a validation score, not a test result.
-The remaining model runs, final selection and new test evaluation are still
-separate completion checks; do not copy historical test scores into the new
-run's report.
+| Model | Completed / selected epoch | Validation macro-F1 | Test accuracy | Test macro-F1 |
+|---|---:|---:|---:|---:|
+| MLP | 6 / 5 | 0.9264224689 | 93.192105% | 0.9319166666 |
+| BiLSTM | 12 / 11 | 0.9588569539 | 96.121053% | 0.9612104421 |
+| CNN | 6 / 6 | 0.9534456770 | 95.626316% | 0.9562622618 |
+
+`verification/part2_export.json` verifies the full metrics and source/data/
+checkpoint mapping. `part2_notebook.json` records eight executed code cells,
+eight visible output cells and zero errors. `part2_checkpoint_inference.json`
+records finite logits, identical independent reloads and padding invariance
+for all three selected models on CPU and CUDA. The original raw evidence
+inventory remained unchanged. The verified initial Part 2 ZIP passed extracted
+notebook, real-model CPU and offline-smoke checks recorded in
+`verification/part2_package_portability.json`. Final archive inventory and
+checksums are in `dist/part2_package_verification.json` after the documentation/
+AI-draft archive-only rebuild.
 
 ## Frozen desktop experiment
 
@@ -154,23 +167,23 @@ the actual new candidates.
 
 ## PDF requirement mapping
 
-| Requirement | Existing implementation/evidence | Fresh desktop completion needed |
+| Requirement | Verified desktop evidence | Remaining obligation / status |
 |---|---|---|
-| Review-length and class-balance analysis | New `verification/part2_desktop_data_analysis/` JSON and PNG | Preparation recomputed; include them in the final publication. |
-| Missing/malformed text or labels | Source rejects malformed rows and records empty counts; empty processed text maps to UNK | Verify actual new counts and report the handling policy. |
-| Lowercasing, punctuation/special-character filtering and stopwords | Casefolding, HTML/contraction cleanup, regex word tokens and frozen customized stopwords; negation/contrast words retained | Preserve the frozen preprocessing and demonstrate it in the new notebook. |
-| Stemming or lemmatization, if applicable | Not applied by the current tokenizer; the brief makes this conditional | Explain the decision; do not claim an unimplemented transformation. |
-| Tokenization and embeddings learned from scratch | Training-only word dictionary, separate random embeddings for each model | Verify new vocabulary isolation and absence of pretrained weights. |
-| Three own distinct models: baseline and two experiments | Max-pool MLP, BiLSTM, residual dilated CNN | Train all three new recipes; obtain teammate models for the required cross-member distinction. |
-| Architecture/embedding justification | Existing member README and historical results | Student verifies the choices and new evidence; AI text is not proof of independent understanding. |
-| Exact CPU/GPU for each training run | Intel Core Ultra 9 285K / RTX 5090 in the desktop environment receipt | Environment captured; verify each completed model's source mapping. |
-| All evaluation metrics per model | Existing evaluator and metric CSV cover the full list below | Recompute on the new selected weights and common test IDs. |
-| Twenty manually reviewed errors per model | Correctly grouped historical CSV packets; human fields blank | Student reviews 20 new errors for each model, types each and proposes a testable fix. |
-| Within-member comparison, limitations and future work | Historical three-model comparison is available | Compare actual new outcomes and document uncertainty/protocol limits. |
+| Review-length and class-balance analysis | New distribution JSON/PNG; balanced splits, median 60 processed tokens | Included in technical publication/package. |
+| Missing/malformed text or labels | Zero malformed/blank raw rows; 22 train and 1 validation review empty after preprocessing map to UNK | Handling policy and actual counts recorded. |
+| Lowercasing, punctuation/special-character filtering and stopwords | Casefolding, HTML/contraction cleanup, regex word tokens and frozen customized stopwords; negation/contrast retained | Verified frozen preprocessing and notebook demonstration. |
+| Stemming or lemmatization, if applicable | Not applied; word forms preserve distinctions and keep a minimal deterministic pipeline | Conditional requirement explained; student verifies rationale. |
+| Tokenization and embeddings learned from scratch | Training-only 40,000-word dictionary, separately initialized embeddings | Verified; no pretrained embedding/model weights used. |
+| Three own distinct models: baseline and two experiments | MLP, BiLSTM and residual dilated CNN freshly trained 6/12/6 epochs | Technical three-family comparison complete; student's own design and teammate distinction still require evidence. |
+| Architecture/embedding justification | Updated member README and actual new comparison | Student verifies choices and understanding; AI text is not independent authorship. |
+| Exact CPU/GPU for each training run | Intel Core Ultra 9 285K / RTX 5090 in environment and source provenance | Verified for all three source runs. |
+| All evaluation metrics per model | Fresh metric CSV/JSON, curves, CIs, slices, paired tests on identical 38,000 IDs | Technical requirement verified by export receipt. |
+| Twenty manually reviewed errors per model | Fresh 20-case packets each contain five actual errors per required group; separate AI drafts cover all 60 | Manual student classification/review pending; human fields remain blank/false. |
+| Within-member comparison, limitations and future work | Fresh results and all-model AI-assisted failure analysis | Draft comparison available; student verifies interpretation and future studies. |
 | Team comparisons and joint analysis | Teammate folders are contribution scaffolds | Obtain independent teammate results; complete combined tables and synthesis. |
-| Executed notebook, weights and required outputs | Historical executed notebook exists; actual weights/data missing here | New executed notebook, verified trained files and complete Part 2 folder/ZIP. |
-| Raw logs, environment/config and checkpoint-result mapping | Historical published raw-log/provenance copies exist | Preserve new raw logs unchanged; record portable paths and file hashes. |
-| GitHub publication | Code/results repository exists; app repository access remains unresolved | Verify the actual new remote commit and its required files before claiming a push. |
+| Executed notebook, weights and required outputs | Eight executed/output cells, zero errors; six best/last weights; CPU+CUDA reload; verified extracted package | Technical requirement complete; final archive-only inventory/checksum is authoritative. |
+| Raw logs, environment/config and checkpoint-result mapping | Fresh frozen plan, original histories/provenance, selection and SHA manifests; raw inventory unchanged | Verified portable evidence retained; original console files stay local unedited. |
+| GitHub publication | Part 2 publication target is `srinidhi/part2-desktop-final`; selected best weights have targeted Git-ignore exceptions | Final handoff and `git ls-remote` establish the actual remote commit; local artifacts alone do not prove a push. |
 
 ## Every required metric, for each model
 
@@ -206,10 +219,15 @@ AI draft columns and automatically selected examples do not complete manual
 review. When a required group lacks five actual errors, report the shortfall;
 never invent errors or replace them with correct predictions.
 
-The historical BiLSTM has 20 AI-assisted interpretations; neither those drafts
-nor historical model accuracy establish completed student review. Test-error
-fixes are future hypotheses to evaluate with training/validation data and an
-appropriate new evaluation, not authorization to tune against this test set.
+Separate fresh `ai_error_review_draft.csv` files provide error type, exact
+quotes, explanation and one testable fix for all 20 cases per model; the
+member's `failure_analysis.md` covers all 60. Example/checkpoint/source-text
+hashes are checked against the unchanged human packets. Original human fields
+remain blank and all 60 `student_reviewed` values remain false. The review
+validation receipt is `verification/part2_ai_error_drafts.json`. These selected
+cases are not a random sample and cannot estimate error-category prevalence.
+Test-error fixes are future hypotheses for training/validation studies and an
+appropriate new evaluation, not permission to tune against this test set.
 
 ## Remaining submission and ownership obligations
 

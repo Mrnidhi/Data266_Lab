@@ -84,6 +84,43 @@ def verify_prediction_metrics(predictions, metrics, *, seed, bootstrap_samples):
     return probability
 
 
+def verify_ai_error_draft(packet_path, draft_path, name, checkpoint_sha256):
+    """Optional AI interpretations must refer exactly to real, unchanged review cases."""
+    packet_path, draft_path = Path(packet_path), Path(draft_path)
+    if not draft_path.is_file():
+        return None
+    packet = pd.read_csv(packet_path, keep_default_na=False, encoding="utf-8").set_index("example_id")
+    draft = pd.read_csv(draft_path, keep_default_na=False, encoding="utf-8")
+    required = {"example_id", "model", "checkpoint_sha256", "source_text_sha256", "human_packet_sha256",
+                "review_group", "true_label", "predicted_label", "positive_probability", "original_token_length",
+                "oov_rate", "has_negation", "ai_draft_error_type", "ai_draft_evidence_quotes", "ai_draft_reason",
+                "ai_draft_testable_fix", "ai_draft_status"}
+    require(required <= set(draft.columns) and len(draft) == draft.example_id.nunique() == len(packet) == 20
+            and set(draft.example_id) == set(packet.index), f"AI draft is not paired with all 20 real cases: {name}")
+    packet_sha256 = digest(packet_path)
+    for _, row in draft.iterrows():
+        actual = packet.loc[row.example_id]
+        require(row.model == name and row.checkpoint_sha256 == actual.checkpoint_sha256 == checkpoint_sha256
+                and row.human_packet_sha256 == packet_sha256
+                and row.source_text_sha256 == hashlib.sha256(actual.text.encode("utf-8")).hexdigest(),
+                f"AI draft source/checkpoint/text identity changed: {name}/{row.example_id}")
+        for column in ("review_group", "true_label", "predicted_label", "original_token_length", "has_negation"):
+            require(row[column] == actual[column], f"AI draft case field changed: {name}/{row.example_id}/{column}")
+        for column in ("positive_probability", "oov_rate"):
+            require(math.isclose(float(row[column]), float(actual[column]), rel_tol=1e-12, abs_tol=0),
+                    f"AI draft case field changed: {name}/{row.example_id}/{column}")
+        quotes = json.loads(row.ai_draft_evidence_quotes)
+        require(isinstance(quotes, list) and bool(quotes)
+                and all(isinstance(quote, str) and bool(quote.strip()) and quote in actual.text for quote in quotes),
+                f"AI draft quote is not an exact source excerpt: {name}/{row.example_id}")
+        require(row.ai_draft_status == "AI_ASSISTED_NOT_STUDENT_REVIEW"
+                and all(isinstance(row[column], str) and bool(row[column].strip())
+                        for column in ("ai_draft_error_type", "ai_draft_reason", "ai_draft_testable_fix")),
+                f"AI draft interpretation/status missing or misrepresented: {name}/{row.example_id}")
+    return {"cases": len(draft), "human_packet_sha256": packet_sha256, "all_case_text_hashes_and_quotes_verified": True,
+            "scope": "AI draft linkage verified; this does not mark any student review complete."}
+
+
 def verify_evaluation(root, run, data_dir, *, verify_sources=True):
     root, run, data_dir = (Path(path).resolve() for path in (root, run, data_dir))
     require(run.is_relative_to(root) and data_dir.is_relative_to(root), "Run/data must remain within repository")
@@ -172,6 +209,7 @@ def verify_publication(root, evidence):
     require(execution["sha256"] == digest(member / "src/sentiment.ipynb"), "Executed notebook bytes changed after verification")
     require(set(manifest) == set(inference["models"]) == set(s.MODEL_NAMES), "All three published models are required")
     review_status = {}
+    ai_drafts = {}
     published = member / "outputs/full"
     raw = root / evidence["run"]
     with (evidence["data_dir"] / "test.jsonl").open(encoding="utf-8") as handle:
@@ -255,9 +293,14 @@ def verify_publication(root, evidence):
                     and math.isclose(row.positive_probability, measured.positive_probability, rel_tol=1e-12, abs_tol=0),
                     f"Review prediction fields were changed: {name}/{row.example_id}")
         review_status[name] = int(table.student_reviewed.astype(str).str.lower().isin(["true", "1"]).sum())
+        draft_path = published / name / "ai_error_review_draft.csv"
+        ai_check = verify_ai_error_draft(published / name / "required_20_errors_for_review.csv", draft_path,
+                                        name, files["best.pt"]["sha256"])
+        if ai_check is not None:
+            ai_drafts[name] = ai_check
     return {"notebook": notebook_runner.validate_notebook(member / "src/sentiment.ipynb"),
             "fresh_inference_verified": True, "weights_verified": True, "error_rows_per_model": 20,
-            "student_reviewed_rows": review_status}
+            "student_reviewed_rows": review_status, "ai_draft_linkage": ai_drafts}
 
 
 def inventory(root, directories):

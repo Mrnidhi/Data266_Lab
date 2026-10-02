@@ -1,0 +1,12 @@
+{
+  "notebook": "task2_sentiment/srinidhi/src/sentiment.ipynb",
+  "mode": "preserved_full_results_and_fresh_checkpoint_inference",
+  "executed_code_cells": 8,
+  "visible_output_cells": 8,
+  "errors": 0,
+  "all_outputs_visible": true,
+  "seconds": 6.589771299999484,
+  "python": "3.12.14",
+  "inference_device": "auto",
+  "sha256": "6e53c275b7ff1ba25652ce326f9c8ad09bb6ee2ba5680bf9bd4511c929d80ce8"
+}

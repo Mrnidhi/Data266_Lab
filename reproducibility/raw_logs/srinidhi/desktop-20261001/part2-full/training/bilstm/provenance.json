@@ -57,7 +57,7 @@
     "validation_only": true
   },
   "started_utc": "2026-10-01T23:31:56.116609+00:00",
-  "status": "running",
+  "status": "completed",
   "source_sha256": {
     "src\\lab1\\__init__.py": "b9849907c7465e81037a43feb0ac630d991ac608c4dbabddcbcc691f8a7b015f",
     "src\\lab1\\common.py": "9969a94baa2ef1cba3d0474262227fd178417d761b1528d4278779ef3c23bd4e",
@@ -115,5 +115,19 @@
     "task2_sentiment/srinidhi/src/sentiment.py": "ea5d6b0b8276332f35c7e1a3693763d341bf1c106bd5f712a37b6f6e2c9be6c5",
     "task2_sentiment/srinidhi/config.json": "4b244db4f3c9c32feb22ac37a91bba8f6b779fba80b521dae4de63a854c3575a",
     "scripts/tune_sentiment.py": "a8c029b365d7f6f1bf8f21f1992fb3784cdd5a735a6959a2de5874a47b1230f8"
-  }
+  },
+  "result": {
+    "model_name": "bilstm",
+    "selected_epoch": 11,
+    "selected_validation_macro_f1": 0.9588569539349926,
+    "parameter_count": 5305985,
+    "train_seconds": 2911.480776100001,
+    "peak_cuda_memory_bytes": 229768704,
+    "peak_host_rss_bytes": 3493978112,
+    "host_peak_rss_scope": "process lifetime peak resident memory, including data preparation",
+    "completed_training_steps": 47256,
+    "test_evaluated": false
+  },
+  "ended_utc": "2026-10-02T00:22:40.378591+00:00",
+  "elapsed_seconds": 3042.5561519000003
 }

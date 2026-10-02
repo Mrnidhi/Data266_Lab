@@ -88,5 +88,23 @@
     "train_seconds": 240.19342119999965,
     "examples_per_second": 2098.308927372074,
     "learning_rate": 0.0005
+  },
+  {
+    "epoch": 11,
+    "train_loss": 0.06696074472344112,
+    "validation_loss": 0.11720381741012846,
+    "validation_macro_f1": 0.9588569539349926,
+    "train_seconds": 242.3496690000011,
+    "examples_per_second": 2079.63972915514,
+    "learning_rate": 0.0005
+  },
+  {
+    "epoch": 12,
+    "train_loss": 0.06380102251375479,
+    "validation_loss": 0.12223133295348712,
+    "validation_macro_f1": 0.9583702369896052,
+    "train_seconds": 258.1807399999998,
+    "examples_per_second": 1952.120828222897,
+    "learning_rate": 0.00025
   }
 ]

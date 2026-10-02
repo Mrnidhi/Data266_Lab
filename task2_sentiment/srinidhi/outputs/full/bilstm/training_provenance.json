@@ -1,14 +1,14 @@
 {
   "candidate": {
-    "name": "bilstm_long_schedule_control",
+    "name": "desktop_bilstm",
     "model": "bilstm",
-    "hypothesis": "Control for longer schedule and patience before attributing gains to architecture.",
+    "hypothesis": "Replicate the already selected family recipe on the desktop.",
     "overrides": {
       "epochs": 12,
       "early_stopping_patience": 4,
-      "num_workers": 2,
+      "num_workers": 0,
       "checkpoint_every_steps": 1000,
-      "log_every_steps": 100
+      "log_every_steps": 200
     }
   },
   "config": {
@@ -51,30 +51,30 @@
     "cpu_threads": 2,
     "raw_data_cache": "task2_sentiment/data/huggingface",
     "encoded_cache": "task2_sentiment/srinidhi/data_processed/full_encoded",
-    "num_workers": 2,
+    "num_workers": 0,
     "checkpoint_every_steps": 1000,
-    "log_every_steps": 100,
+    "log_every_steps": 200,
     "validation_only": true
   },
-  "started_utc": "2026-09-19T02:09:12.932851+00:00",
+  "started_utc": "2026-10-01T23:31:56.116609+00:00",
   "status": "completed",
   "source_sha256": {
-    "src/lab1/__init__.py": "4597cd6743deb8dc143f2be2f7757c8d8d8fb367716dbcb4cb9626a025265217",
-    "src/lab1/common.py": "6659501f6490e5dc1c72decbb48f1c745a2e876bea24a89fea32b381518677ce",
-    "src/lab1/run.py": "571163444bc3331b59263ba9bde6f4c027360a25983ab846dfb4e052b5a5bb39",
-    "task1_llm/srinidhi/config.json": "cf5cda1c11f81ea6837421c565364c0c235ff1483e41dadad9235ba0e8e0238b",
-    "task1_llm/srinidhi/src/gpt.py": "7498de5a36d1e6cb2d851d862dad47152cf73a82dd46fe2f5fbb5aa67a5627d9",
-    "task2_sentiment/srinidhi/config.json": "84c480d132b22cb2606a5f3139702ee75d523f90050f78e0e2772fae82f30ded",
-    "task2_sentiment/srinidhi/src/sentiment.py": "f381634c3d8ea45e1f0073734516699047656ea5aa61ba31f7955de4f50b6b1b",
-    "task3_gan/srinidhi/config.json": "0c88cb843e6c2abf42561cb6ceaf557787357646fb464a6c97632e0fefb83100",
-    "task3_gan/srinidhi/evaluate_local.py": "4cb02bb71263f3a507562a99dec4b485fbcd0ed1ff08fc3757f1886e015dacfc",
-    "task3_gan/srinidhi/src/cyclegan.py": "9d7348d09246c3923ad150a1d6a297d137d51adae5240a80d38989c7f6a2f927"
+    "src\\lab1\\__init__.py": "b9849907c7465e81037a43feb0ac630d991ac608c4dbabddcbcc691f8a7b015f",
+    "src\\lab1\\common.py": "9969a94baa2ef1cba3d0474262227fd178417d761b1528d4278779ef3c23bd4e",
+    "src\\lab1\\run.py": "4edd942dc83425e0c36e588ae59194fae632819e87b88ba6104a6257eafc4900",
+    "task1_llm\\srinidhi\\config.json": "4abfd4cdfd6d6e0cd7643aaf88f601dd4a304c47152e41640c763a67b1be0d6f",
+    "task1_llm\\srinidhi\\src\\gpt.py": "ddf1adb228f3ae8cb6ea94361f153408a3b36f34cdb34ac2c6fac218eb548664",
+    "task2_sentiment\\srinidhi\\config.json": "4b244db4f3c9c32feb22ac37a91bba8f6b779fba80b521dae4de63a854c3575a",
+    "task2_sentiment\\srinidhi\\src\\sentiment.py": "ea5d6b0b8276332f35c7e1a3693763d341bf1c106bd5f712a37b6f6e2c9be6c5",
+    "task3_gan\\srinidhi\\config.json": "024eac9a34069a835858b73a5877acd97709cbbf0261dec550eceef10ae03092",
+    "task3_gan\\srinidhi\\evaluate_local.py": "322cc4f1be766fa0e7e1db130b89b1b8f1b65a82c9f29428fe2a0855fb70f9a9",
+    "task3_gan\\srinidhi\\src\\cyclegan.py": "98f1a2901eccb0f366f726654a1297830fa5541786a21ad264e2b29b7f5cd71e"
   },
   "environment": {
-    "captured_utc": "2026-09-19T02:09:12.984184+00:00",
-    "python": "3.12.3",
-    "platform": "Linux-6.11.0-26-generic-x86_64-with-glibc2.39",
-    "machine": "x86_64",
+    "captured_utc": "2026-10-01T23:31:56.169909+00:00",
+    "python": "3.12.14",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "machine": "AMD64",
     "packages": {
       "torch": "2.11.0+cu128",
       "torchvision": "0.26.0+cu128",
@@ -85,9 +85,9 @@
       "matplotlib": "3.11.2",
       "datasets": "5.0.1",
       "Pillow": "12.3.0",
-      "clean-fid": "0.1.35",
-      "lpips": "0.1.4",
-      "prdc": "0.2"
+      "clean-fid": null,
+      "lpips": null,
+      "prdc": null
     },
     "cuda_available": true,
     "cuda_build": "12.8",
@@ -96,7 +96,7 @@
       {
         "index": 0,
         "name": "NVIDIA GeForce RTX 5090",
-        "memory_bytes": 33680326656,
+        "memory_bytes": 34190458880,
         "compute_capability": [
           12,
           0
@@ -104,19 +104,30 @@
       }
     ],
     "mps_available": false,
-    "nvidia_smi": "name, uuid, driver_version, memory.total [MiB]\nNVIDIA GeForce RTX 5090, GPU-1f89be66-27b1-f3fd-debe-6a3213d26d35, 570.153.02, 32607 MiB"
+    "nvidia_smi": "name, uuid, driver_version, memory.total [MiB]\nNVIDIA GeForce RTX 5090, GPU-68465984-5de9-5fbf-2036-6e4f23dd51f1, 610.60, 32607 MiB",
+    "cpu_model": "Intel(R) Core(TM) Ultra 9 285K"
   },
   "test_policy": "No test predictions or test metrics; selection uses validation macro-F1 only",
+  "training_source_sha256": {
+    "src/lab1/run.py": "4edd942dc83425e0c36e588ae59194fae632819e87b88ba6104a6257eafc4900",
+    "src/lab1/common.py": "9969a94baa2ef1cba3d0474262227fd178417d761b1528d4278779ef3c23bd4e",
+    "src/lab1/__init__.py": "b9849907c7465e81037a43feb0ac630d991ac608c4dbabddcbcc691f8a7b015f",
+    "task2_sentiment/srinidhi/src/sentiment.py": "ea5d6b0b8276332f35c7e1a3693763d341bf1c106bd5f712a37b6f6e2c9be6c5",
+    "task2_sentiment/srinidhi/config.json": "4b244db4f3c9c32feb22ac37a91bba8f6b779fba80b521dae4de63a854c3575a",
+    "scripts/tune_sentiment.py": "a8c029b365d7f6f1bf8f21f1992fb3784cdd5a735a6959a2de5874a47b1230f8"
+  },
   "result": {
     "model_name": "bilstm",
-    "selected_epoch": 10,
-    "selected_validation_macro_f1": 0.9588017632122099,
+    "selected_epoch": 11,
+    "selected_validation_macro_f1": 0.9588569539349926,
     "parameter_count": 5305985,
-    "train_seconds": 1686.3448840710334,
+    "train_seconds": 2911.480776100001,
     "peak_cuda_memory_bytes": 229768704,
+    "peak_host_rss_bytes": 3493978112,
+    "host_peak_rss_scope": "process lifetime peak resident memory, including data preparation",
     "completed_training_steps": 47256,
     "test_evaluated": false
   },
-  "ended_utc": "2026-09-19T02:38:45.741456+00:00",
-  "elapsed_seconds": 1772.7285250489367
+  "ended_utc": "2026-10-02T00:22:40.378591+00:00",
+  "elapsed_seconds": 3042.5561519000003
 }

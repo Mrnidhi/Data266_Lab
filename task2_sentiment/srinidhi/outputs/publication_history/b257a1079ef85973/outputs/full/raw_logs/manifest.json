@@ -1,0 +1,38 @@
+{
+  "format_version": 1,
+  "path_base": "outputs/full",
+  "logs": [
+    {
+      "role": "training",
+      "models": [
+        "dilated_cnn",
+        "maxpool_mlp"
+      ],
+      "source_run": "runs/part-b-full",
+      "source_path": "runs/part-b-full/RUN_LOG.txt",
+      "published_path": "raw_logs/training_dilated_cnn_maxpool_mlp_8adc9d583f2e_37ce98c3c472.txt",
+      "sha256": "37ce98c3c472ba8ad4311d9bf80dab6231d5b2795711dba3b56c4da0b24d8270",
+      "bytes": 184109
+    },
+    {
+      "role": "training",
+      "models": [
+        "bilstm"
+      ],
+      "source_run": "runs/part-b-tuning/bilstm_long_schedule_control",
+      "source_path": "runs/part-b-tuning/bilstm_long_schedule_control/RUN_LOG.txt",
+      "published_path": "raw_logs/training_bilstm_f7138b9bfe85_cc5e773758f7.txt",
+      "sha256": "cc5e773758f7cd12ed0e07725aff9be2708c162973e366576269bb40639b7dfd",
+      "bytes": 62841
+    },
+    {
+      "role": "evaluation",
+      "models": [],
+      "source_run": "runs/part-b-selected",
+      "source_path": "runs/part-b-selected/RUN_LOG.txt",
+      "published_path": "raw_logs/evaluation_suite_e9e6ebe1a128_1250367a75f3.txt",
+      "sha256": "1250367a75f35969370a8757b56a152d96c938aed83226eca3c79b5f52f68e69",
+      "bytes": 196
+    }
+  ]
+}
