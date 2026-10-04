@@ -1,0 +1,94 @@
+{
+  "kind": "warm_start",
+  "checkpoint": "/workspace/Data266_Lab_tuning_20260929/task3_gan/srinidhi/checkpoints/best.pt",
+  "checkpoint_sha256": "d8b37673ce3cbda3397740863fcde33126eb029a9cc5a7c7cdde9dcf064d9b7e",
+  "source_config": {
+    "mode": "full",
+    "seed": 2342,
+    "image_size": 256,
+    "base_channels": 64,
+    "residual_blocks": 9,
+    "batch_size": 1,
+    "learning_rate": 0.0001,
+    "betas": [
+      0.5,
+      0.999
+    ],
+    "cycle_weight": 10.0,
+    "identity_weight": 5.0,
+    "replay_size": 50,
+    "epochs": 30,
+    "constant_epochs": 15,
+    "max_steps": null,
+    "checkpoint_every": 500,
+    "log_every": 50,
+    "allow_synthetic": false,
+    "select_best": true,
+    "validation_every_epochs": 5,
+    "evaluate_after_run": false,
+    "evaluation": {
+      "allow_metric_downloads": true,
+      "max_images": null,
+      "batch_size": 16,
+      "kid_subsets": 50,
+      "kid_subset_size": 100,
+      "prdc_k": 5,
+      "seed": 2342
+    },
+    "data": {
+      "monet_dir": "task3_gan/data/monet_jpg",
+      "photo_dir": "task3_gan/data/photo_jpg",
+      "manifest_dir": "task3_gan/srinidhi/data_processed/part3_manifests",
+      "source_note": "Verified class ZIP SHA256 5060b62d4a6a0194de10b849ea43b649f308ae516f0bf659b62ee404ca153e1d; unique-content independent 80/10/10 splits frozen at seed 2342; source receipts in reproducibility/manifests/srinidhi/part-c-source-snapshot."
+    },
+    "precision": "bf16",
+    "replay_device": "device"
+  },
+  "source_global_step": 168720,
+  "source_best_selection": {
+    "metric": "mean_validation_KID_both_directions",
+    "step": 168720,
+    "value": 0.019753425605595114,
+    "validation_only": true
+  },
+  "source_best_validation_score": 0.019753425605595114,
+  "manifest_fingerprint": "35184a0643321f99efc8df06544328b25c3364b66f29c76545ab47e01fe3438a",
+  "restored": [
+    "all_four_network_weights"
+  ],
+  "reset": [
+    "optimizers",
+    "schedulers",
+    "replay_pools",
+    "rng",
+    "global_step",
+    "training_seconds",
+    "best_selection"
+  ],
+  "selection_note": "Source scores are provenance only; selection is recomputed on this run's validation settings.",
+  "baseline_validation": {
+    "step": 0,
+    "split": "val",
+    "metric": "mean_validation_KID_both_directions",
+    "status": "computed",
+    "value": 0.019753425605595114,
+    "directions": {
+      "photo_to_monet": {
+        "status": "computed",
+        "value": 0.013203506395220756,
+        "subset_std": 0.0032765864446311775,
+        "subsets": 50,
+        "subset_size": 30,
+        "note": "Subset SD is not training-seed uncertainty; unbiased KID estimates may be negative"
+      },
+      "monet_to_photo": {
+        "status": "computed",
+        "value": 0.02630334481596947,
+        "subset_std": 0.004183719040106543,
+        "subsets": 50,
+        "subset_size": 30,
+        "note": "Subset SD is not training-seed uncertainty; unbiased KID estimates may be negative"
+      }
+    }
+  }
+}

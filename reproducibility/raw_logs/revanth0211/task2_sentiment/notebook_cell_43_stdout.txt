@@ -1,0 +1,7 @@
+/tmp/ipykernel_4325/2535952298.py:9: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  scaler = torch.cuda.amp.GradScaler(enabled=use_cuda and not use_bf16)
+cnn_multikernel epoch=1/5 train_loss=0.3612 val_loss=0.2247 val_acc=0.9085 val_macro_f1=0.9084
+cnn_multikernel epoch=2/5 train_loss=0.2138 val_loss=0.1896 val_acc=0.9225 val_macro_f1=0.9225
+cnn_multikernel epoch=3/5 train_loss=0.1633 val_loss=0.1759 val_acc=0.9277 val_macro_f1=0.9277
+cnn_multikernel epoch=4/5 train_loss=0.1307 val_loss=0.1731 val_acc=0.9317 val_macro_f1=0.9317
+cnn_multikernel epoch=5/5 train_loss=0.1094 val_loss=0.1717 val_acc=0.9326 val_macro_f1=0.9326

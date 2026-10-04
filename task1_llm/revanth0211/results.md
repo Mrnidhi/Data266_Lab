@@ -20,7 +20,7 @@ The target validation accuracy was reached at epoch 13. The run completed withou
 | Training throughput | 232,543 tokens/second |
 | Peak GPU memory | 3,687.76 MB |
 
-Validation accuracy improved from 0.7237 after the first epoch to 0.8051 at epoch 13. The validation loss generally decreased throughout training, although the small increase at epochs 10 and 12 shows that the improvement was not perfectly smooth.
+Validation accuracy improved from 0.684755 after the first epoch to 0.8051 at epoch 13. The validation loss generally decreased throughout training, although the small increase at epochs 10 and 12 shows that the improvement was not perfectly smooth.
 
 ## Interpretation
 

@@ -1,119 +1,118 @@
 # DATA266 Lab 1 — Pair 49
 
-Independent implementations by [Srinidhi](https://github.com/Mrnidhi) and
-[Revanth](https://github.com/Revanth0211): character-level text generation,
-Yelp sentiment classification and unpaired Monet/photo translation.
+Shared repository for Srinidhi ([Mrnidhi](https://github.com/Mrnidhi)) and
+Revanth ([Revanth0211](https://github.com/Revanth0211)). Each member's code,
+checkpoints, outputs, metrics and analysis live under their own folder in each task.
 
-## Latest results
+## Results and files
 
-| Part | Srinidhi's selected result | Files |
+| Task | Srinidhi | Revanth |
 |---|---|---|
-| 1 — Character GPT | Validation cross-entropy **0.5512**, perplexity **1.7353**, character accuracy **82.44%** at context 512 | [Results](task1_llm/srinidhi/results.md), [notebook](task1_llm/srinidhi/src/gpt.ipynb), [package](reproducibility/packages/parts1-2-20261002/README.md) |
-| 2 — Yelp sentiment | Test accuracy: **96.12% BiLSTM**, **95.63% CNN**, **93.31% MLP** | [Results](task2_sentiment/srinidhi/results.md), [notebook](task2_sentiment/srinidhi/src/sentiment.ipynb), [package](reproducibility/packages/parts1-2-20261002/README.md) |
-| 3 — CycleGAN | Supplied scoring notebook: **47.560426** composite, **94.716036** FID, **0.404816** MiFID | [October 4 package, notebook and results](reproducibility/packages/part3-20261004/README.md) |
+| Character GPT | [Results](task1_llm/srinidhi/results.md) · [notebook](task1_llm/srinidhi/src/gpt.ipynb) · [metrics](task1_llm/srinidhi/metrics_report.csv): validation CE 0.551181, character accuracy 82.44% at context 512 | [Results](task1_llm/revanth0211/results.md) · [notebook](task1_llm/revanth0211/src/Part1.ipynb) · [metrics](task1_llm/revanth0211/metrics_report.csv): validation CE 0.622993, character accuracy 80.51% at context 256 |
+| Yelp sentiment | [Results](task2_sentiment/srinidhi/results.md) · [notebook](task2_sentiment/srinidhi/src/sentiment.ipynb) · [metrics](task2_sentiment/srinidhi/metrics_report.csv): accuracy 93.31% MLP, 95.63% CNN, 96.12% BiLSTM | [Results](task2_sentiment/revanth0211/results.md) · [notebook](task2_sentiment/revanth0211/src/Part2.ipynb) · [metrics](task2_sentiment/revanth0211/metrics_report.csv): accuracy 92.845% mean baseline, 93.775% CNN, 93.130% BiGRU |
+| CycleGAN | [Results](task3_gan/srinidhi/results.md) · [notebook](task3_gan/srinidhi/src/cyclegan.ipynb) · [metrics](task3_gan/srinidhi/full_metrics_report.csv): supplied-notebook composite 47.560426 | [Pending independent work](task3_gan/revanth0211/results.md) |
 
-Part 3's lower score is better; the target below 44 was not reached. The selected
-batch-1 model uses slow EMA at update 221,250. Batch-1 completed 370,000 updates;
-batch-8 and R1 experiments were interrupted by host-memory exhaustion. Selection
-compared 192 scored candidates using class references also present in training,
-so this is not a held-out estimate. No Kaggle upload or rank is claimed.
-
-Revanth's independent Part 1 and Part 2 notebooks are in his member folders.
-His Part 3 folder remains a scaffold. The combined report and remaining student
-reviews are still pending; see [submission](#submission).
-
-## Where to look
+Data splits, contexts and evaluation protocols differ between members; these are
+individual measurements, not a controlled model ranking. The current CycleGAN's
+FID is 94.716036 and MiFID is 0.404816. Its local score is not a Kaggle score or rank.
 
 ```text
-task1_llm/           Character GPT
-task2_sentiment/     Yelp sentiment models
-task3_gan/           CycleGAN
-  <member>/         src, checkpoints, outputs, metrics and analysis
-src/lab1/           Shared training and evaluation entry points
-scripts/            Reproduction, packaging and verification utilities
-tests/              CPU checks and optional hardware checks
-reproducibility/    Selected-run evidence and downloadable packages
-verification/       Test and execution receipts
-report/             Combined report outline
+task1_llm/, task2_sentiment/, task3_gan/
+  data/                         shared raw data
+  srinidhi/, revanth0211/
+    src/                        implementation and executed notebooks
+    data_processed/             member-specific preprocessing, where applicable
+    checkpoints/                trained weights and their manifest
+    outputs/                    predictions, samples and plots
+    metrics_report.csv          individual metrics (GAN also has full_metrics_report.csv)
+    failure_analysis.md         failure/error analysis
+    results.md                  model choices, results and hardware
+reproducibility/
+  manifests/                    environments, configurations and checkpoint/result mapping
+  raw_logs/                     unchanged training evidence, including failed trials
+  packages/                     large data/resume artifacts and portable submission packages
+report/                         combined team report
 ```
 
-Each task keeps `srinidhi/` and `revanth0211/` separate. The latest Part 3 package
-contains its selected checkpoint, all 7,338 direct-output JPEGs, executed
-notebooks, official CSV and recorded training source. Its separate recovery ZIP
-preserves saved training states. Superseded run outputs and planning notes are
-excluded from the current tree.
-Earlier human ratings do not describe the October 4 model.
+The current GAN checkpoint and all 7,338 direct-output JPEGs are in Srinidhi's
+member folder. Shared `src/lab1/`, `scripts/` and `tests/` provide execution,
+packaging and checks. Personal paths, credentials, machine backups and temporary
+working files do not belong in Git. Raw training logs are required evidence and
+are retained; missing historical evidence is identified in the manifests.
 
-Large required archives and the wider MLP checkpoint use Git LFS. Complete
-machine backups, caches and temporary experiments stay local under ignored
-`runs/`; they are not needed to browse the repository.
-
-## Get the code and artifacts
+## Setup and smoke test
 
 ```bash
 git clone https://github.com/Mrnidhi/Data266_Lab.git
 cd Data266_Lab
 git lfs install
 git lfs pull
-```
-
-For only the latest Part 3 result, fetch that folder and the shared dataset:
-
-```bash
-git lfs pull --include="reproducibility/packages/part3-20261004/*,reproducibility/packages/part3-20261002/dataset.zip"
-```
-
-Use Python 3.12 in a virtual environment. Install `requirements.txt` and the
-editable project (`python -m pip install --no-deps -e .`). NVIDIA training needs
-a PyTorch build compatible with the GPU; the recorded RTX 5090 run used
-PyTorch 2.11.0 / torchvision 0.26.0 with CUDA 12.8. Additional image metrics use
-`task3_gan/requirements.txt`.
-
-On Linux/macOS, the preparation smoke test creates an environment and briefly
-checks all five models on synthetic CPU inputs:
-
-```bash
 bash scripts/smoke.sh
 ```
 
-On Windows, after environment setup, a Part 1 CPU check is:
+After cloning and fetching LFS artifacts, `bash scripts/smoke.sh` is the single
+setup-and-smoke command on Linux/macOS. It prepares Python 3.12 dependencies and
+checks the models on small synthetic CPU inputs. Outputs go to ignored `runs/`;
+a successful smoke test checks execution, not trained model quality.
 
-```powershell
-.venv\Scripts\python.exe -m lab1.run --task gpt --mode smoke --device cpu
+For an existing Python 3.12 environment, install `requirements.txt`,
+`task3_gan/requirements.txt`, and the editable project:
+
+```bash
+python -m pip install -r requirements.txt -r task3_gan/requirements.txt
+python -m pip install --no-deps -e .
 ```
 
-Smoke outputs establish execution, not trained model quality. For real runs use
-the task/package instructions and the recorded data and configurations. Training
-scripts do not rent hardware or stop provider billing.
+GPU training needs a PyTorch/CUDA build supported by that GPU. Srinidhi's recorded
+RTX 5090 runs used PyTorch 2.11.0+cu128; Revanth's RTX 4090 notebooks report
+PyTorch 2.14.0+cu130. The root environment is the tested reproduction environment,
+not a claim that both members trained with identical software.
 
-## Reproduce the results
+## Reproduce each member's work
 
-- [Part 1](task1_llm/srinidhi/README.md): GPT setup, selected recipe and verification.
-- [Part 2](task2_sentiment/srinidhi/README.md): sentiment setup, selected recipes and verification.
-- [Part 3](reproducibility/packages/part3-20261004/README.md): selected outputs,
-  exact trained source and checkpoint recovery. Readable working source includes
-  later formatting and resume-safety fixes; archived run artifacts are unchanged.
+- Srinidhi: [Part 1 instructions](task1_llm/srinidhi/README.md),
+  [Part 2 instructions](task2_sentiment/srinidhi/README.md), and
+  [Part 3 instructions](task3_gan/srinidhi/results.md#reproduce-and-trace-the-result).
+  These explain package preparation, saved-model notebooks and full-run recipes.
+- Revanth: open [Part1.ipynb](task1_llm/revanth0211/src/Part1.ipynb) or
+  [Part2.ipynb](task2_sentiment/revanth0211/src/Part2.ipynb) from its **src/** directory.
+  For example, `cd task2_sentiment/revanth0211/src`, then
+  `jupyter nbconvert --to notebook --execute Part2.ipynb --output Part2_executed.ipynb --ExecutePreprocessor.timeout=-1`.
+  These notebooks download public datasets and train again; run in a separate
+  clone because execution writes checkpoints and outputs. Their recorded parameters
+  are embedded in the original notebooks; a new environment can change results.
+- The [selected artifact index](reproducibility/manifests/selected.json) and
+  [run manifests](reproducibility/manifests/) link results to saved checkpoints,
+  environments, configurations and unedited logs. Exact training-source snapshots
+  remain separate from later readability and resume-safety fixes.
 
 ## Contributions and assistance
 
-Srinidhi and Revanth maintain separate member folders. Coordinate shared files
-and comparisons; record which member produced each result. Use branches for
-contributions and avoid force-pushing shared history.
+Each member is responsible for their own three models, choices, analysis and
+viva explanation. Commit under your own named folders and coordinate changes to
+shared files. Do not overwrite another member's evidence or force-push history.
 
 AI assistance was used for research, implementation, experiment operation,
-debugging, packaging and drafted analysis. Students must personally review and
-explain their choices, code and results. AI-assisted error drafts are not human
-ratings or completed student review.
+debugging, packaging and drafted analysis. It is disclosed rather than presented
+as independently authored student work. The brief requires the core decisions
+and analysis to reflect the students' own understanding. Draft error analyses do
+not count as completed student review, and AI ratings do not count as human ratings.
 
 ## Submission
 
-Canvas needs one ZIP containing **Part 1**, **Part 2**, **Part 3** and a combined
-**Report.pdf** with the GitHub link. Each part needs executed notebooks, saved
-weights and required outputs. Pushing to GitHub does not submit to Canvas or Kaggle.
+The PDF requires `report/DATA266_Lab1_Report_Team_49.pdf`: one team ownership
+paragraph, both members' architecture/hyperparameter/metric comparisons for all
+three tasks, joint analysis, linked evidence, actual failure examples and the
+three cited papers. The existing [report outline](report/REPORT_TEMPLATE.md)
+is not that completed report.
 
-Before submission, complete the student error reviews, missing metrics for the
-selected GAN, two independent ratings and agreement, Revanth's Part 3 and the
-team comparison/report. Earlier model measurements and reviews cannot be reused
-for the current model. Use the [report outline](report/REPORT_TEMPLATE.md) and
-the requirement checklist within each task. The supplied Canvas screenshot
-shows October 6 at 6 PM; confirm the deadline in the course.
+Still outstanding: Revanth's Part 3; the combined report and joint analysis;
+Srinidhi's student error reviews; a new blinded 30-sample GAN audit with two
+human raters and agreement; and the team's
+Kaggle submission and recorded rank. Some historical hardware/log evidence was
+not captured and is marked missing rather than reconstructed as a measurement.
+Earlier checkpoint ratings cannot be used for the current GAN.
+
+Canvas requests one ZIP with Part 1, Part 2, Part 3 and a combined Report.pdf
+including the repository link. Each part must contain executed notebooks,
+weights and required outputs. Git publication is not Canvas or Kaggle submission.

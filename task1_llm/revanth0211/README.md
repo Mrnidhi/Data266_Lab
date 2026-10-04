@@ -34,7 +34,9 @@ same-mode overfitting estimate.
 
 ## Model and training design
 
-The vocabulary contains 100 characters learned from the training story pool.
+The vocabulary contains 100 characters collected from both the training and
+validation story pools. Validation characters therefore informed the vocabulary;
+this is a limitation of the recorded preprocessing.
 Characters are mapped to learned token and position embeddings. Eight
 pre-normalized decoder blocks use eight attention heads, width 512, a
 four-times-wider GELU feed-forward layer, residual connections, and dropout

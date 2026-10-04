@@ -14,13 +14,14 @@ runs/
 /tmp/
 dist/
 
-# Publish only selected model artifacts and verified packages.
+# Publish selected weights and verified reproduction packages.
 *.pt
 *.pth
 *.ckpt
 *.zip
 !/task1_llm/srinidhi/checkpoints/best.pt
 !/task2_sentiment/srinidhi/checkpoints/*/best.pt
+!/task3_gan/srinidhi/checkpoints/best.pt
 !/reproducibility/packages/parts1-2-20261002/*.zip
 !/reproducibility/packages/part3-20261004/*.zip
 !/reproducibility/packages/part3-20261002/dataset.zip
@@ -44,11 +45,11 @@ data/
 !/task3_gan/data/photo_jpg/README.md
 **/data_processed/*
 !**/data_processed/README.md
+!/task3_gan/srinidhi/data_processed/examples/
+!/task3_gan/srinidhi/data_processed/examples/**
 
-# Existing selected evidence stays tracked; new logs and historical copies stay local.
-/reproducibility/raw_logs/
+# Training logs and manifests are required for every run, including failed trials.
 /reproducibility/baselines/
-/reproducibility/manifests/srinidhi/
 /reproducibility/packages/part3-retuning-20261002/
 /reproducibility/packages/part3-20261002/*
 !/reproducibility/packages/part3-20261002/README.md
@@ -57,5 +58,3 @@ data/
 /verification/
 /task2_sentiment/srinidhi/outputs/publication_history/
 /task3_gan/srinidhi/outputs/full/
-/task3_gan/srinidhi/outputs/pred_A2B/
-/task3_gan/srinidhi/outputs/pred_B2A/

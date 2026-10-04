@@ -52,15 +52,25 @@ py -3.12 -m venv .venv
 
 On Linux/macOS use `python3.12` and `.venv/bin/python`. Select that environment as
 the notebook kernel. Smoke uses synthetic data and checks execution only. NVIDIA
-training needs a compatible driver. For a fresh full run:
+training needs a compatible driver. After cloning, prepare the exact frozen data
+and both checkpoints before opening the notebook or starting a reproduction:
+
+```powershell
+git lfs pull
+.venv\Scripts\python.exe scripts/prepare_srinidhi.py --part 1
+```
+
+The preparation command verifies the published archive and restores its data and
+checkpoints only. Any differing local files are backed up under ignored `runs/`.
+It does not train or replace the recorded results. The extracted standalone ZIP
+already includes these files and does not need this step. For a fresh full run:
 
 ```powershell
 .venv\Scripts\python.exe -m lab1.run --task gpt --mode full --device cuda --config task1_llm/srinidhi/outputs/full/reproduction_config.json --set offline=true --output runs/part1-new-full
 ```
 
-The ZIP includes the frozen cache. A clone without it needs `--set offline=false`
-to prepare public TinyStories. The member `config.json` is the original baseline
-recipe; use the explicit selected recipe above. Hardware/library changes can
+The preparation command and standalone ZIP supply the same frozen cache. The
+member `config.json` is the original baseline recipe; use the explicit selected recipe above. Hardware/library changes can
 change numerical results. Full mode covers every story window each epoch.
 
 Resume an interrupted matching run using its original output, config and overrides,
@@ -87,9 +97,10 @@ notebook execution and fresh saved-model inference without training. Receipts ar
 in `verification/part1_*.json`; ZIP inventory, CRC and hashes are in
 `dist/part1_package_verification.json`. An extracted notebook/CPU smoke check is
 recorded separately from a clean dependency installation. The package contains
-best/last weights and data. Comparing against the original baseline also needs
-its separately preserved checkpoint. Original machine-specific console logs stay
-local; portable `metrics.jsonl` retains the training record.
+best/last weights and data. After preparation, the same notebook also runs from a
+clone. Comparing against the original baseline needs its separately preserved
+checkpoint. Keep original training logs unchanged; `metrics.jsonl` records
+update-level measurements.
 
 The three failure interpretations received AI assistance and still need student
 review. See [requirements](REQUIREMENTS_CHECKLIST.md),

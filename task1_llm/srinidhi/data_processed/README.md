@@ -20,8 +20,11 @@ The selected run records its manifest and vocabulary under
 `reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part1/depth_context_full/`.
 It uses exactly the same frozen story split and vocabulary as the preserved
 October 1 baseline. Its frozen
-story cache and character mappings are included in `dist/Part1_Srinidhi_2342.zip` for
+story cache and character mappings are included in `reproducibility/packages/parts1-2-20261002/Part1_Srinidhi_2342.zip` for
 portable offline reproduction. Large data remain excluded from Git; a clone
 alone obtains documentation and metadata, not the cached story files. Raw
 Hugging Face downloads are under `task1_llm/data/huggingface/` and need not be
 copied if the verified frozen member cache is available.
+
+After `git lfs pull`, run `python scripts/prepare_srinidhi.py --part 1` from the
+repository root to restore this exact cache before executing the notebook.

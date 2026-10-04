@@ -1,0 +1,10 @@
+{
+  "model_name": "dilated_cnn",
+  "selected_epoch": 6,
+  "selected_validation_macro_f1": 0.9537142828214283,
+  "parameter_count": 5736193,
+  "train_seconds": 466.38492148008663,
+  "peak_cuda_memory_bytes": 624127488,
+  "completed_training_steps": 39380,
+  "test_evaluated": false
+}

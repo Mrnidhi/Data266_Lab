@@ -10,15 +10,14 @@
 
 Each checkpoint contains model, optimizer, scheduler and AMP state, configuration, vocabulary, RNG/shuffle state and progress. Use `best.pt` for reported predictions and `last.pt` to resume its training contract. The MLP uses embedding 256, hidden width 128 and dropout 0.5; it stopped after 9 of a maximum 12 epochs.
 
-Git LFS is configured only for `task2_sentiment/srinidhi/checkpoints/maxpool_mlp/best.pt`. After installing Git LFS, run these commands inside a clone after cloning or pulling:
+After cloning, run `git lfs pull` and
+`python scripts/prepare_srinidhi.py --part 2` from the repository root. The
+preparation command verifies the published package and restores matching
+best/last states and frozen data. Existing differing files are backed up under
+ignored `runs/`. The selected best files are committed; the larger MLP file
+uses Git LFS, so a pointer must be replaced by its real contents before loading.
 
-```sh
-git lfs install
-git lfs pull
-```
-
-Verify the downloaded file against the manifest; an LFS pointer cannot be loaded as a model. Selected best files are intended for the authorized normal push to `main`. Raw copies, last checkpoints and data stay local and travel in the complete ZIP. The finalizer packages real full weights, including resume state.
-
-Saved-model checks for these hashes passed and are recorded in `verification/part2_checkpoint_inference.json`. The extracted package's notebook and CPU smoke test also passed, recorded in `verification/part2_package_portability.json`. Use the final inventory and checksum in `dist/part2_package_verification.json` and `dist/Part2_SHA256SUMS.txt`.
-
-The old desktop publication and baseline ZIP remain preserved separately. See the [finalization guide](../README.md) for current commands.
+The original archive remains unchanged at
+`reproducibility/packages/parts1-2-20261002/Part2_Srinidhi_2342.zip`. Notebook
+inference verifies every checkpoint against this member's manifest. Use the
+[member instructions](../README.md) for reproduction and evaluation.

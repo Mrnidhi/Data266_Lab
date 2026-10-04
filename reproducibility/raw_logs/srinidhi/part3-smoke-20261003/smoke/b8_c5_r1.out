@@ -1,0 +1,132 @@
+
+# 2026-10-03T21:53:32+00:00 /venv/main/bin/python /workspace/Part3_Push_5090/scripts/finetune_part3_push.py train --init /workspace/Part3_Push_5090/inputs/init.pt --output /workspace/Part3_Push_5090/work/smoke/b8_c5_r1 --device cuda --stop-file /workspace/Part3_Push_5090/work/STOP --steps 40 --eval-every 40 --constant-fraction 0.5 --ema-beta 0.999 --ema-slow-beta 0.9999 --eval-variants ema,ema_slow,raw --checkpoint-every 20 --log-every 10 --precision bf16 --data all --jpeg-quality 75 --jpeg-subsampling 2 --identity-start 0.0 --identity-end 0.0 --cycle-start 5.0 --cycle-end 5.0 --aug-monet translation --prefetch 3 --learning-rate 0.0002 --batch-size 2 --warmup-steps 500 --r1-gamma 0.01 --r1-every 4
+{
+  "device": "cuda",
+  "recipe": {
+    "steps": 40,
+    "learning_rate": 0.0002,
+    "beta1": 0.5,
+    "beta2": 0.999,
+    "constant_fraction": 0.5,
+    "cycle_start": 5.0,
+    "cycle_end": 5.0,
+    "identity_start": 0.0,
+    "identity_end": 0.0,
+    "weight_ramp_steps": 0,
+    "extra_scales": 0,
+    "d_warmup_steps": 0,
+    "aug_monet": "translation",
+    "aug_photo": "",
+    "flip_equivariance": 0.0,
+    "ema_beta": 0.999,
+    "ema_slow_beta": 0.9999,
+    "replay_size": 50,
+    "eval_every": 40,
+    "checkpoint_every": 20,
+    "log_every": 10,
+    "precision": "bf16",
+    "seed": 2342,
+    "data": "all",
+    "jpeg_quality": 75,
+    "jpeg_subsampling": 2,
+    "eval_variants": "ema,ema_slow,raw",
+    "train_view": "resize286",
+    "batch_size": 2,
+    "cycle_lowpass": 0,
+    "cycle_detail": 1.0,
+    "cycle_photo_scale": 1.0,
+    "cycle_monet_scale": 1.0,
+    "nce_weight": 0.0,
+    "nce_idt_weight": 0.0,
+    "nce_layers": "0,4,8,12,16",
+    "nce_patches": 256,
+    "nce_tau": 0.07,
+    "r1_gamma": 0.01,
+    "r1_every": 4,
+    "d_noise_start": 0.0,
+    "d_noise_end": 0.0,
+    "prefetch": 3,
+    "warmup_steps": 500
+  },
+  "init": "/workspace/Part3_Push_5090/inputs/init.pt"
+}
+EVAL {"step": 0, "variant": "ema", "fid_a2b": 98.09314170333751, "fid_b2a": 97.15527072285585, "mifid_a2b": 0.4186086593848662, "mifid_b2a": 0.40557012677745613, "fid": 97.62420621309667, "mifid": 0.41208939308116116, "composite": 49.018147803088915}
+EVAL {"step": 0, "variant": "ema_slow", "fid_a2b": 98.09314170333751, "fid_b2a": 97.15527072285585, "mifid_a2b": 0.4186086593848662, "mifid_b2a": 0.40557012677745613, "fid": 97.62420621309667, "mifid": 0.41208939308116116, "composite": 49.018147803088915}
+EVAL {"step": 0, "variant": "raw", "fid_a2b": 98.09314170333751, "fid_b2a": 97.15527072285585, "mifid_a2b": 0.4186086593848662, "mifid_b2a": 0.40557012677745613, "fid": 97.62420621309667, "mifid": 0.41208939308116116, "composite": 49.018147803088915}
+step 10/40 G=1.340 Dp=0.301 Dm=0.103 cyc_w=5.00 id_w=0.00 0.13 it/s
+step 20/40 G=1.169 Dp=0.266 Dm=0.140 cyc_w=5.00 id_w=0.00 0.26 it/s
+step 30/40 G=1.471 Dp=0.160 Dm=0.163 cyc_w=5.00 id_w=0.00 0.39 it/s
+step 40/40 G=1.328 Dp=0.274 Dm=0.138 cyc_w=5.00 id_w=0.00 0.51 it/s
+EVAL {"step": 40, "variant": "ema", "fid_a2b": 98.21145386977558, "fid_b2a": 97.0757939258207, "mifid_a2b": 0.41868792490480367, "mifid_b2a": 0.405680391647226, "fid": 97.64362389779814, "mifid": 0.41218415827601484, "composite": 49.02790402803708}
+EVAL {"step": 40, "variant": "ema_slow", "fid_a2b": 98.09236156754417, "fid_b2a": 97.2590596535163, "mifid_a2b": 0.4185793004630215, "mifid_b2a": 0.405667518440229, "fid": 97.67571061053025, "mifid": 0.4121234094516253, "composite": 49.043917009990935}
+EVAL {"step": 40, "variant": "raw", "fid_a2b": 98.57334561389469, "fid_b2a": 97.01393684897785, "mifid_a2b": 0.41846684584839733, "mifid_b2a": 0.40634342361359765, "fid": 97.79364123143627, "mifid": 0.4124051347309975, "composite": 49.103023183083636}
+{
+  "trainer": "cyclegan_push_v1",
+  "status": "completed",
+  "completed_updates": 40,
+  "best": {
+    "step": 0,
+    "variant": "ema",
+    "fid_a2b": 98.09314170333751,
+    "fid_b2a": 97.15527072285585,
+    "mifid_a2b": 0.4186086593848662,
+    "mifid_b2a": 0.40557012677745613,
+    "fid": 97.62420621309667,
+    "mifid": 0.41208939308116116,
+    "composite": 49.018147803088915
+  },
+  "nan_events": 0,
+  "training_seconds": 15.947911217808723,
+  "push_config": {
+    "steps": 40,
+    "learning_rate": 0.0002,
+    "beta1": 0.5,
+    "beta2": 0.999,
+    "constant_fraction": 0.5,
+    "cycle_start": 5.0,
+    "cycle_end": 5.0,
+    "identity_start": 0.0,
+    "identity_end": 0.0,
+    "weight_ramp_steps": 0,
+    "extra_scales": 0,
+    "d_warmup_steps": 0,
+    "aug_monet": "translation",
+    "aug_photo": "",
+    "flip_equivariance": 0.0,
+    "ema_beta": 0.999,
+    "ema_slow_beta": 0.9999,
+    "replay_size": 50,
+    "eval_every": 40,
+    "checkpoint_every": 20,
+    "log_every": 10,
+    "precision": "bf16",
+    "seed": 2342,
+    "data": "all",
+    "jpeg_quality": 75,
+    "jpeg_subsampling": 2,
+    "eval_variants": "ema,ema_slow,raw",
+    "train_view": "resize286",
+    "batch_size": 2,
+    "cycle_lowpass": 0,
+    "cycle_detail": 1.0,
+    "cycle_photo_scale": 1.0,
+    "cycle_monet_scale": 1.0,
+    "nce_weight": 0.0,
+    "nce_idt_weight": 0.0,
+    "nce_layers": "0,4,8,12,16",
+    "nce_patches": 256,
+    "nce_tau": 0.07,
+    "r1_gamma": 0.01,
+    "r1_every": 4,
+    "d_noise_start": 0.0,
+    "d_noise_end": 0.0,
+    "prefetch": 3,
+    "warmup_steps": 500
+  },
+  "data_counts": {
+    "photo": 7038,
+    "monet": 300
+  },
+  "init_sha256": "2e8274b8ba19edd95823a4b838755c35286ca3e99e91f680ade688e447da8310",
+  "best_checkpoint": "/workspace/Part3_Push_5090/work/smoke/b8_c5_r1/best.pt"
+}

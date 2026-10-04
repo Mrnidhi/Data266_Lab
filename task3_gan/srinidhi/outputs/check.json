@@ -1,0 +1,28 @@
+{
+  "checkpoint_sha256": "62d80f7ef2752b190fa496b7775b32dd77684bfceeb3b9f4c7356642848abc14",
+  "device": "cuda",
+  "class_protocol": {
+    "fid_a2b": 95.92999640714123,
+    "fid_b2a": 93.61107969055165,
+    "kid_a2b": 0.016355821256213154,
+    "kid_b2a": 0.006281199246791491
+  },
+  "fresh_sample": {
+    "fid_a2b_vs_photos_301_600": 87.46018660146709,
+    "fid_b2a_from_photos_301_600": 90.5924484019557,
+    "kid_a2b_vs_photos_301_600": 0.013817332329892906,
+    "kid_b2a_from_photos_301_600": 0.006364167411125443,
+    "composite_estimate": 44.71815875085569
+  },
+  "content_cosine_input_vs_output": {
+    "monet_to_photo": 0.7900960477232046,
+    "photo_to_monet": 0.7470643736522511
+  },
+  "memorisation": {
+    "generated_monet_nearest_training_cosine_max": 0.8452824125576588,
+    "generated_monet_nearest_training_cosine_median": 0.7654658208541645,
+    "real_monet_nearest_other_real_cosine_max": 0.9215252555689355,
+    "real_monet_nearest_other_real_cosine_median": 0.7932970432679343,
+    "outputs_closer_to_a_training_monet_than_any_real_pair": 0
+  }
+}

@@ -75,8 +75,8 @@ Start with:
 - [Output inventory](outputs/README.md)
 
 The successful environment reported PyTorch 2.14.0+cu130 and CUDA 13.0.
-Open or execute the notebook from this member folder or its `src/`
-directory:
+Execute the notebook from its `src/` directory so its output paths resolve
+correctly:
 
 ```bash
 cd task2_sentiment/revanth0211/src
@@ -96,10 +96,10 @@ training histories, full evaluation, plots, significance tests, robustness
 slices, the completed error review, hardware disclosure, and artifact checks.
 [Checkpoint hashes](checkpoints/manifest.json) and the preserved
 [run log](RUN_LOG.txt) link the write-up to the saved files. The root
-`metrics_report.csv` is byte-identical to
-`outputs/metrics_report.csv`; the duplicate is retained because the lab
-requires the report at the member-folder root while the notebook writes all
-generated evidence under `outputs/`.
+`metrics_report.csv` combines the original model metrics with the saved McNemar
+results and slice metrics so the PDF's required metrics are in one file. Original
+notebook outputs and raw logs remain unchanged; the derivation is recorded in
+[the metric manifest](../../reproducibility/manifests/revanth0211/part2-metrics.json).
 
 These measurements represent one seed and one selected split. Bootstrap
 intervals quantify test-row sampling uncertainty, not variation across

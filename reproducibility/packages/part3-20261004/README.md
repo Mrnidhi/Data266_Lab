@@ -11,6 +11,11 @@ MiFID 0.4048158824443817). The below-44 target was not reached.
   [authoritative submission CSV](submission.csv), [verification receipt](receipt.json).
 - [Existing dataset backup](../part3-20261002/dataset.zip), reused without duplication.
 
+These archives preserve the original exported run. The current
+[member folder](../../../task3_gan/srinidhi/results.md) also contains the later
+required metric measurements and a notebook that runs directly from the repository.
+The archives are unchanged evidence snapshots, not the complete team submission.
+
 After cloning, run `git lfs install` and `git lfs pull`, then extract Part3.zip.
 Open its `task3_gan/srinidhi/src/cyclegan.ipynb`; the standalone notebook displayed
 here is for viewing and must be run with the extracted package's files.
@@ -24,7 +29,6 @@ also seen during training, so this is not a held-out score. Historical packages
 and original backups remain unchanged. Readable working code is a post-run
 cleanup; the archives preserve exact source from the experiment.
 
-This is the current individual result and recovery package, not a completed
-team submission. Missing full metrics, a new blinded human audit, student
-review, the remaining teammate work/report and official Kaggle/Canvas submission
-are not claimed. No old checkpoint's human ratings or metrics were reused.
+See the member's results for current metric coverage. A new blinded human audit,
+student review, the remaining teammate work/report and official Kaggle/Canvas
+submission are not claimed. No old checkpoint's human ratings or metrics were reused.

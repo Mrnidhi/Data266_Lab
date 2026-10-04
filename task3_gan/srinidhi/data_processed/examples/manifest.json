@@ -1,0 +1,12 @@
+{
+  "monet_to_photo": {
+    "file": "monet_jpg.jpg",
+    "original_filename": "000c1e3bff.jpg",
+    "source_sha256": "ad685d43cee40aea096d90939808015c3172a76f06c5010efa3b145156526fa8"
+  },
+  "photo_to_monet": {
+    "file": "photo_jpg.jpg",
+    "original_filename": "00068bc07f.jpg",
+    "source_sha256": "06684ea9ffb9ff2edfbdf34aa5a83cc58be6d151212b5a07493caa174e53de79"
+  }
+}

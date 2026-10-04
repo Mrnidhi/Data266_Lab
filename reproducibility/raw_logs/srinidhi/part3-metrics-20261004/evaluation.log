@@ -1,0 +1,19 @@
+monet_to_photo cycle 40 / 300
+monet_to_photo cycle 80 / 300
+monet_to_photo cycle 120 / 300
+monet_to_photo cycle 160 / 300
+monet_to_photo cycle 200 / 300
+monet_to_photo cycle 240 / 300
+monet_to_photo cycle 280 / 300
+Num real: 300 Num fake: 300
+monet_to_photo {"count": 300, "cycle_reconstruction_L1": 0.06993047315627336, "LPIPS_cycle": 0.23889555041988692, "cycle_lpips_seconds": 136.2558937499998, "feature_seconds": 21.68618016599794, "generative_precision": 0.8166666666666667, "generative_recall": 0.4533333333333333, "generative_density": 1.1406666666666667, "generative_coverage": 0.8466666666666667}
+photo_to_monet cycle 40 / 300
+photo_to_monet cycle 80 / 300
+photo_to_monet cycle 120 / 300
+photo_to_monet cycle 160 / 300
+photo_to_monet cycle 200 / 300
+photo_to_monet cycle 240 / 300
+photo_to_monet cycle 280 / 300
+Num real: 300 Num fake: 300
+photo_to_monet {"count": 300, "cycle_reconstruction_L1": 0.07859528201942642, "LPIPS_cycle": 0.15792620170861482, "cycle_lpips_seconds": 137.2592343330034, "feature_seconds": 21.18706475000363, "generative_precision": 0.6766666666666666, "generative_recall": 0.7133333333333334, "generative_density": 0.5833333333333334, "generative_coverage": 0.79}
+Saved task3_gan/srinidhi/outputs/full_metrics_20261004.json

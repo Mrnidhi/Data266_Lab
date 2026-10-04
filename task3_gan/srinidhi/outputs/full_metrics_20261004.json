@@ -1,0 +1,39 @@
+{
+  "protocol_sha256": "195a2331c384038ecea6846122c4ef83964530afaeb4d6e30dc1e46192b41ac8",
+  "checkpoint_sha256": "62d80f7ef2752b190fa496b7775b32dd77684bfceeb3b9f4c7356642848abc14",
+  "benchmark_only": false,
+  "directions": {
+    "monet_to_photo": {
+      "count": 300,
+      "cycle_reconstruction_L1": 0.06993047315627336,
+      "LPIPS_cycle": 0.23889555041988692,
+      "cycle_lpips_seconds": 136.2558937499998,
+      "feature_seconds": 21.68618016599794,
+      "generative_precision": 0.8166666666666667,
+      "generative_recall": 0.4533333333333333,
+      "generative_density": 1.1406666666666667,
+      "generative_coverage": 0.8466666666666667
+    },
+    "photo_to_monet": {
+      "count": 300,
+      "cycle_reconstruction_L1": 0.07859528201942642,
+      "LPIPS_cycle": 0.15792620170861482,
+      "cycle_lpips_seconds": 137.2592343330034,
+      "feature_seconds": 21.18706475000363,
+      "generative_precision": 0.6766666666666666,
+      "generative_recall": 0.7133333333333334,
+      "generative_density": 0.5833333333333334,
+      "generative_coverage": 0.79
+    }
+  },
+  "elapsed_seconds": 316.54006350001146,
+  "library_versions": {
+    "torch": "2.11.0",
+    "numpy": "2.5.3"
+  },
+  "metric_weights_sha256": {
+    "alexnet-owt-7be5be79.pth": "7be5be791159472b1fbf3c69796f7cb30dca7ad8466c2df70058c37116cdee02",
+    "inception_v3_google-0cc3c7bd.pth": "0cc3c7bd75056d25e46cba549dc184522069b81e9787eff6df84f397bd52a5ef",
+    "alex.pth": "df73285e35b22355a2df87cdb6b70b343713b667eddbda73e1977e0c860835c0"
+  }
+}

@@ -1,0 +1,322 @@
+{
+  "task": "sentiment",
+  "mode": "smoke",
+  "device": "cpu",
+  "started_utc": "2026-09-18T22:34:45.444476+00:00",
+  "status": "completed",
+  "is_final_result": false,
+  "config": {
+    "mode": "smoke",
+    "seed": 2342,
+    "dataset": "fancyzhx/yelp_polarity",
+    "dataset_revision": "main",
+    "data_dir": null,
+    "train_limit": 24,
+    "validation_limit": 12,
+    "test_limit": 16,
+    "vocabulary_size": 128,
+    "min_frequency": 1,
+    "embedding_dim": 16,
+    "max_length": 32,
+    "batch_size": 8,
+    "epochs": 1,
+    "early_stopping_patience": 2,
+    "early_stopping_min_delta": 0.0001,
+    "mlp_hidden": 8,
+    "lstm_hidden": 8,
+    "cnn_channels": 16,
+    "dilations": [
+      1,
+      2,
+      4,
+      8
+    ],
+    "dropout": 0.3,
+    "cnn_dropout": 0.2,
+    "learning_rates": {
+      "maxpool_mlp": 0.0015,
+      "bilstm": 0.001,
+      "dilated_cnn": 0.0008
+    },
+    "weight_decay": 0.0001,
+    "gradient_clip": 1.0,
+    "amp": true,
+    "bootstrap_samples": 20,
+    "cpu_threads": 2
+  },
+  "source_sha256": {
+    "src/lab1/__init__.py": "044ce07e71a22513be8f557ba7ab7c8994657d9340ea495e649041bdf329dca5",
+    "src/lab1/common.py": "ecec0fbb3cbefdb860a001a11fdbd1e9194f34bcb54294ad8164440a0890dfec",
+    "src/lab1/run.py": "571163444bc3331b59263ba9bde6f4c027360a25983ab846dfb4e052b5a5bb39",
+    "task1_llm/srinidhi/config.json": "97037a5652b5118b75e60b9cbe7a102cdb1191a0c644e4248001ad8ef10705bc",
+    "task1_llm/srinidhi/src/gpt.py": "0452b4c406feaa5c07e7b2cac4ba1c910081c5c337605e0cbdca462f0f92f508",
+    "task2_sentiment/srinidhi/config.json": "abbb3abe01a3e2deca7238973a19bac33e4c184ba63247365528fab37ccccbef",
+    "task2_sentiment/srinidhi/src/sentiment.py": "2c4a7aa7f3458c7d93cb47256e9ba126b232d3f00709c05c528ad1ca282dd124",
+    "task3_gan/srinidhi/config.json": "0c88cb843e6c2abf42561cb6ceaf557787357646fb464a6c97632e0fefb83100",
+    "task3_gan/srinidhi/src/cyclegan.py": "f149aac9a5ad119d52b5cbed8e2f890322792a8da16d0fbe0adf07edd5944e20"
+  },
+  "environment": {
+    "captured_utc": "2026-09-18T22:34:45.453669+00:00",
+    "python": "3.12.14",
+    "platform": "macOS-27.0-arm64-arm-64bit",
+    "machine": "arm64",
+    "packages": {
+      "torch": "2.11.0",
+      "torchvision": "0.26.0",
+      "numpy": "2.5.3",
+      "pandas": "3.0.6",
+      "scikit-learn": "1.9.1",
+      "scipy": "1.16.3",
+      "matplotlib": "3.11.2",
+      "datasets": "5.0.1",
+      "Pillow": "12.3.0",
+      "clean-fid": "0.1.35",
+      "lpips": "0.1.4",
+      "prdc": "0.2"
+    },
+    "cuda_available": false,
+    "cuda_build": null,
+    "cudnn": null,
+    "gpus": [],
+    "mps_available": true
+  },
+  "resumed": false,
+  "ended_utc": "2026-09-18T22:35:02.210959+00:00",
+  "elapsed_seconds": 16.734434208003222,
+  "summary": {
+    "mode": "smoke",
+    "synthetic": true,
+    "models": {
+      "maxpool_mlp": {
+        "count": 16,
+        "accuracy": 0.625,
+        "mcc": 0.2581988897471611,
+        "brier": 0.23735546769620058,
+        "confusion_matrix": [
+          [
+            4,
+            4
+          ],
+          [
+            2,
+            6
+          ]
+        ],
+        "threshold": 0.5,
+        "macro": {
+          "precision": 0.6333333333333333,
+          "recall": 0.625,
+          "f1": 0.6190476190476191
+        },
+        "micro": {
+          "precision": 0.625,
+          "recall": 0.625,
+          "f1": 0.625
+        },
+        "weighted": {
+          "precision": 0.6333333333333333,
+          "recall": 0.625,
+          "f1": 0.6190476190476191
+        },
+        "per_class": [
+          {
+            "label": 0,
+            "precision": 0.6666666666666666,
+            "recall": 0.5,
+            "f1": 0.5714285714285714,
+            "support": 8
+          },
+          {
+            "label": 1,
+            "precision": 0.6,
+            "recall": 0.75,
+            "f1": 0.6666666666666666,
+            "support": 8
+          }
+        ],
+        "ece_15": 0.24777169711887834,
+        "ece_definition": "Top-label confidence ECE; 15 equal-width bins on [0,1]; threshold 0.5.",
+        "roc_auc": 0.78125,
+        "pr_auc_trapezoidal": 0.8426913364413364,
+        "bootstrap_95_percentile": {
+          "accuracy": {
+            "low": 0.5,
+            "high": 0.8156249999999998
+          },
+          "macro_f1": {
+            "low": 0.4920634920634921,
+            "high": 0.8030014430014428
+          },
+          "mcc": {
+            "low": -0.008333333333333331,
+            "high": 0.6060028860028857
+          }
+        },
+        "bootstrap_samples": 20,
+        "uncertainty_scope": "IID test-row resampling; does not include training-seed uncertainty.",
+        "test_loss": 0.6677674949169159,
+        "selected_epoch": 1,
+        "selected_validation_macro_f1": 0.6571428571428571,
+        "parameter_count": 1009,
+        "train_seconds": 0.002485500001057517,
+        "peak_cuda_memory_bytes": null,
+        "mode": "smoke",
+        "synthetic": true
+      },
+      "bilstm": {
+        "count": 16,
+        "accuracy": 0.5,
+        "mcc": 0.0,
+        "brier": 0.25035119918552745,
+        "confusion_matrix": [
+          [
+            8,
+            0
+          ],
+          [
+            8,
+            0
+          ]
+        ],
+        "threshold": 0.5,
+        "macro": {
+          "precision": 0.25,
+          "recall": 0.5,
+          "f1": 0.3333333333333333
+        },
+        "micro": {
+          "precision": 0.5,
+          "recall": 0.5,
+          "f1": 0.5
+        },
+        "weighted": {
+          "precision": 0.25,
+          "recall": 0.5,
+          "f1": 0.3333333333333333
+        },
+        "per_class": [
+          {
+            "label": 0,
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666,
+            "support": 8
+          },
+          {
+            "label": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 8
+          }
+        ],
+        "ece_15": 0.07994223199784756,
+        "ece_definition": "Top-label confidence ECE; 15 equal-width bins on [0,1]; threshold 0.5.",
+        "roc_auc": 0.640625,
+        "pr_auc_trapezoidal": 0.5184929653679653,
+        "bootstrap_95_percentile": {
+          "accuracy": {
+            "low": 0.3125,
+            "high": 0.5953124999999999
+          },
+          "macro_f1": {
+            "low": 0.23809523809523808,
+            "high": 0.3729230769230769
+          },
+          "mcc": {
+            "low": 0.0,
+            "high": 0.0
+          }
+        },
+        "bootstrap_samples": 20,
+        "uncertainty_scope": "IID test-row resampling; does not include training-seed uncertainty.",
+        "test_loss": 0.6938431859016418,
+        "selected_epoch": 1,
+        "selected_validation_macro_f1": 0.3333333333333333,
+        "parameter_count": 2673,
+        "train_seconds": 0.0054462500047520734,
+        "peak_cuda_memory_bytes": null,
+        "mode": "smoke",
+        "synthetic": true
+      },
+      "dilated_cnn": {
+        "count": 16,
+        "accuracy": 0.5,
+        "mcc": 0.0,
+        "brier": 0.25068240208395753,
+        "confusion_matrix": [
+          [
+            8,
+            0
+          ],
+          [
+            8,
+            0
+          ]
+        ],
+        "threshold": 0.5,
+        "macro": {
+          "precision": 0.25,
+          "recall": 0.5,
+          "f1": 0.3333333333333333
+        },
+        "micro": {
+          "precision": 0.5,
+          "recall": 0.5,
+          "f1": 0.5
+        },
+        "weighted": {
+          "precision": 0.25,
+          "recall": 0.5,
+          "f1": 0.3333333333333333
+        },
+        "per_class": [
+          {
+            "label": 0,
+            "precision": 0.5,
+            "recall": 1.0,
+            "f1": 0.6666666666666666,
+            "support": 8
+          },
+          {
+            "label": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 8
+          }
+        ],
+        "ece_15": 0.03351728618144989,
+        "ece_definition": "Top-label confidence ECE; 15 equal-width bins on [0,1]; threshold 0.5.",
+        "roc_auc": 0.546875,
+        "pr_auc_trapezoidal": 0.7262210012210013,
+        "bootstrap_95_percentile": {
+          "accuracy": {
+            "low": 0.3125,
+            "high": 0.5953124999999999
+          },
+          "macro_f1": {
+            "low": 0.23809523809523808,
+            "high": 0.3729230769230769
+          },
+          "mcc": {
+            "low": 0.0,
+            "high": 0.0
+          }
+        },
+        "bootstrap_samples": 20,
+        "uncertainty_scope": "IID test-row resampling; does not include training-seed uncertainty.",
+        "test_loss": 0.6945340931415558,
+        "selected_epoch": 1,
+        "selected_validation_macro_f1": 0.3333333333333333,
+        "parameter_count": 7553,
+        "train_seconds": 0.00918120799906319,
+        "peak_cuda_memory_bytes": null,
+        "mode": "smoke",
+        "synthetic": true
+      }
+    },
+    "output_dir": "reproducibility/raw_logs/srinidhi/smoke-20260918T223438Z-41637/sentiment",
+    "manual_error_review_complete": false
+  }
+}

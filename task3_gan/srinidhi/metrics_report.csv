@@ -2,30 +2,32 @@ scope,direction,metric,value,status,note
 unchanged_supplied_notebook,directional_mean,FID,94.71603584640337,computed,
 unchanged_supplied_notebook,directional_mean,MiFID,0.4048158824443817,computed,
 unchanged_supplied_notebook,directional_mean,composite,47.56042586442388,computed,
+unchanged_supplied_notebook,monet_to_photo,FID,95.911,computed,Rounded to three decimals in src/Part3_Evaluation_Script.executed.ipynb cell 9 output; full-precision directional mean is reported separately.
+unchanged_supplied_notebook,photo_to_monet,FID,93.521,computed,Rounded to three decimals in src/Part3_Evaluation_Script.executed.ipynb cell 9 output; full-precision directional mean is reported separately.
 export_scorer,monet_to_photo,FID,95.90505633988286,computed,Directional companion scorer; official mean is above.
 export_scorer,monet_to_photo,MiFID,0.41517722606658936,computed,Directional companion scorer; official mean is above.
 export_scorer,photo_to_monet,FID,93.52066037353589,computed,Directional companion scorer; official mean is above.
 export_scorer,photo_to_monet,MiFID,0.3944854140281677,computed,Directional companion scorer; official mean is above.
 diagnostic,monet_to_photo,KID,0.016355821256213154,computed,Class images also occurred in training; not a held-out estimate.
 diagnostic,monet_to_photo,content_cosine,0.7900960477232046,computed,
-selected_checkpoint,monet_to_photo,generative_precision,,not_measured,Not measured for this checkpoint; older model metrics do not apply.
-selected_checkpoint,monet_to_photo,generative_recall,,not_measured,Not measured for this checkpoint; older model metrics do not apply.
-selected_checkpoint,monet_to_photo,generative_density,,not_measured,Not measured for this checkpoint; older model metrics do not apply.
-selected_checkpoint,monet_to_photo,generative_coverage,,not_measured,Not measured for this checkpoint; older model metrics do not apply.
-selected_checkpoint,monet_to_photo,LPIPS,,not_measured,Not measured for this checkpoint; older model metrics do not apply.
-selected_checkpoint,monet_to_photo,cycle_reconstruction_L1,,not_measured,Not measured for this checkpoint; older model metrics do not apply.
+posttraining_fixed300,monet_to_photo,generative_precision,0.8166666666666667,computed,300 fixed training-domain images; seed 2342. See outputs/full_metrics_20261004.json and frozen protocol. Unchanged prediction JPEGs; class Inception features; PRDC k=5.
+posttraining_fixed300,monet_to_photo,generative_recall,0.4533333333333333,computed,300 fixed training-domain images; seed 2342. See outputs/full_metrics_20261004.json and frozen protocol. Unchanged prediction JPEGs; class Inception features; PRDC k=5.
+posttraining_fixed300,monet_to_photo,generative_density,1.1406666666666667,computed,300 fixed training-domain images; seed 2342. See outputs/full_metrics_20261004.json and frozen protocol. Unchanged prediction JPEGs; class Inception features; PRDC k=5.
+posttraining_fixed300,monet_to_photo,generative_coverage,0.8466666666666667,computed,300 fixed training-domain images; seed 2342. See outputs/full_metrics_20261004.json and frozen protocol. Unchanged prediction JPEGs; class Inception features; PRDC k=5.
+posttraining_fixed300,monet_to_photo,LPIPS_cycle,0.23889555041988692,computed,"300 fixed training-domain images; seed 2342. See outputs/full_metrics_20261004.json and frozen protocol. Input versus uncompressed cycle reconstruction in [-1,1]."
+posttraining_fixed300,monet_to_photo,cycle_reconstruction_L1,0.06993047315627336,computed,"300 fixed training-domain images; seed 2342. See outputs/full_metrics_20261004.json and frozen protocol. Input versus uncompressed cycle reconstruction in [-1,1]."
 human_audit,monet_to_photo,human_style,,pending,Requires new blinded ratings for this checkpoint.
 human_audit,monet_to_photo,human_content,,pending,Requires new blinded ratings for this checkpoint.
 human_audit,monet_to_photo,human_artifacts,,pending,Requires new blinded ratings for this checkpoint.
 human_audit,monet_to_photo,inter_rater_agreement,,pending,Requires new blinded ratings for this checkpoint.
 diagnostic,photo_to_monet,KID,0.006281199246791491,computed,Class images also occurred in training; not a held-out estimate.
 diagnostic,photo_to_monet,content_cosine,0.7470643736522511,computed,
-selected_checkpoint,photo_to_monet,generative_precision,,not_measured,Not measured for this checkpoint; older model metrics do not apply.
-selected_checkpoint,photo_to_monet,generative_recall,,not_measured,Not measured for this checkpoint; older model metrics do not apply.
-selected_checkpoint,photo_to_monet,generative_density,,not_measured,Not measured for this checkpoint; older model metrics do not apply.
-selected_checkpoint,photo_to_monet,generative_coverage,,not_measured,Not measured for this checkpoint; older model metrics do not apply.
-selected_checkpoint,photo_to_monet,LPIPS,,not_measured,Not measured for this checkpoint; older model metrics do not apply.
-selected_checkpoint,photo_to_monet,cycle_reconstruction_L1,,not_measured,Not measured for this checkpoint; older model metrics do not apply.
+posttraining_fixed300,photo_to_monet,generative_precision,0.6766666666666666,computed,300 fixed training-domain images; seed 2342. See outputs/full_metrics_20261004.json and frozen protocol. Unchanged prediction JPEGs; class Inception features; PRDC k=5.
+posttraining_fixed300,photo_to_monet,generative_recall,0.7133333333333334,computed,300 fixed training-domain images; seed 2342. See outputs/full_metrics_20261004.json and frozen protocol. Unchanged prediction JPEGs; class Inception features; PRDC k=5.
+posttraining_fixed300,photo_to_monet,generative_density,0.5833333333333334,computed,300 fixed training-domain images; seed 2342. See outputs/full_metrics_20261004.json and frozen protocol. Unchanged prediction JPEGs; class Inception features; PRDC k=5.
+posttraining_fixed300,photo_to_monet,generative_coverage,0.79,computed,300 fixed training-domain images; seed 2342. See outputs/full_metrics_20261004.json and frozen protocol. Unchanged prediction JPEGs; class Inception features; PRDC k=5.
+posttraining_fixed300,photo_to_monet,LPIPS_cycle,0.15792620170861482,computed,"300 fixed training-domain images; seed 2342. See outputs/full_metrics_20261004.json and frozen protocol. Input versus uncompressed cycle reconstruction in [-1,1]."
+posttraining_fixed300,photo_to_monet,cycle_reconstruction_L1,0.07859528201942642,computed,"300 fixed training-domain images; seed 2342. See outputs/full_metrics_20261004.json and frozen protocol. Input versus uncompressed cycle reconstruction in [-1,1]."
 human_audit,photo_to_monet,human_style,,pending,Requires new blinded ratings for this checkpoint.
 human_audit,photo_to_monet,human_content,,pending,Requires new blinded ratings for this checkpoint.
 human_audit,photo_to_monet,human_artifacts,,pending,Requires new blinded ratings for this checkpoint.

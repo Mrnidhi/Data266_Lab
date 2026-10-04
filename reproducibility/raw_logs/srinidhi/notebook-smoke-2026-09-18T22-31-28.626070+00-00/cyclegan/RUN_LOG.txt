@@ -1,0 +1,4 @@
+{"event": "start", "task": "cyclegan", "mode": "smoke", "utc": "2026-09-18T22:31:28.639846+00:00", "device": "cpu"}
+CycleGAN smoke: 1/2 updates, G=14.6402, 0.023s/update
+CycleGAN smoke: 2/2 updates, G=14.4842, 0.011s/update
+{"event": "completed", "task": "cyclegan", "mode": "smoke", "elapsed_seconds": 0.6022270829998888}

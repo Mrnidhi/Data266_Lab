@@ -1,0 +1,47 @@
+{
+  "completed_utc": "2026-10-04T17:57:03.594180+00:00",
+  "kind": "post-training evaluation; no model training",
+  "protocol_sha256": "195a2331c384038ecea6846122c4ef83964530afaeb4d6e30dc1e46192b41ac8",
+  "checkpoint_sha256": "62d80f7ef2752b190fa496b7775b32dd77684bfceeb3b9f4c7356642848abc14",
+  "hardware": {
+    "CPU": "Apple M1 Max",
+    "device": "cpu",
+    "threads": 4,
+    "platform": "macOS-27.0.1-arm64-arm-64bit"
+  },
+  "library_versions": {
+    "torch": "2.11.0",
+    "torchvision": "0.26.0",
+    "numpy": "2.5.3",
+    "lpips": "0.1.4",
+    "prdc": "0.2",
+    "scikit-learn": "1.9.1",
+    "scipy": "1.16.3",
+    "Pillow": "12.3.0"
+  },
+  "metric_weights_sha256": {
+    "alexnet-owt-7be5be79.pth": "7be5be791159472b1fbf3c69796f7cb30dca7ad8466c2df70058c37116cdee02",
+    "inception_v3_google-0cc3c7bd.pth": "0cc3c7bd75056d25e46cba549dc184522069b81e9787eff6df84f397bd52a5ef",
+    "alex.pth": "df73285e35b22355a2df87cdb6b70b343713b667eddbda73e1977e0c860835c0"
+  },
+  "elapsed_seconds": 316.54006350001146,
+  "original_metrics_sha256": {
+    "full_metrics_report.csv": "ca016fc229625e9676e28257185cc08bca4ec7ef4bb67aed9e25ab4fe05ba76f",
+    "metrics_report.csv": "ca016fc229625e9676e28257185cc08bca4ec7ef4bb67aed9e25ab4fe05ba76f"
+  },
+  "metrics_update": "Filled the 12 previously unmeasured image-metric rows using this fixed post-training audit. Original official score, training metrics and historical gaps were preserved.",
+  "files": {
+    "task3_gan/srinidhi/outputs/full_metrics_20261004.json": "6ae37f1fc2a796d01e464eb8c35dac7717f31a41accbc7ba1c982f231240e497",
+    "task3_gan/srinidhi/src/full_metrics.py": "4ad3c3c4bd692ba66bacb43915ae03de7475015993f64e51612f76fc11674dec",
+    "reproducibility/manifests/srinidhi/part3-metrics-20261004/protocol.json": "195a2331c384038ecea6846122c4ef83964530afaeb4d6e30dc1e46192b41ac8",
+    "reproducibility/raw_logs/srinidhi/part3-metrics-20261004/evaluation.log": "35698e27391a7341990fe1448712a301b0bfe0cac09a97b80c36af62382743c6",
+    "task3_gan/srinidhi/metrics_report.csv": "b64254f828e2266c8e3a77b94b4d38b9c181dfece4d45032c6bceeeadffb60c6",
+    "task3_gan/srinidhi/full_metrics_report.csv": "b64254f828e2266c8e3a77b94b4d38b9c181dfece4d45032c6bceeeadffb60c6",
+    "task3_gan/srinidhi/results.md": "1f3b188533f4af22fb131cef11fb92f74329adc19747b5b107dc512cf4d16648",
+    "task3_gan/srinidhi/src/cyclegan.ipynb": "db39317eb889a1e537e50a4e1c162f10a92206a1b56c8e82e348cd2367162887"
+  },
+  "reused_helpers": {
+    "task3_gan/srinidhi/src/cyclegan.py": "0094e6a272d2e7b03d86bc85c7c34e91587a7f0699570e33a22b2e7edfa37b19",
+    "task3_gan/srinidhi/src/cyclegan_push.py": "e607cd85cecbe57cdfe4a6d4d73b814d26410263fbcd1e3742f037349edac856"
+  }
+}

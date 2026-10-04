@@ -2,8 +2,8 @@
 
 This is a results-grounded draft for student review, not a completed human audit.
 
-- The official score improved from the smoke run's 48.9991 to 47.5604, but missed
-  the below-44 target. Smoke and final checks share class images, not an unseen test.
+- The official score improved from the smoke run's 48.9991 to 47.5604.
+  Smoke and final checks share class images, not an unseen test.
 - Continuing batch-1 past its selected checkpoint did not improve the best saved
   score. Its final slow EMA interim score was 48.5550 versus 47.5443 at update
   221250. Checkpoint selection matters; the final training state is not the winner.

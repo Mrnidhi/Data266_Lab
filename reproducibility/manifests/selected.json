@@ -10,8 +10,8 @@
       "sha256": "fb566c5b0dc5a3b4809db364f7425bf4be9d746e4980e9def32e2c52bd57ee8a"
     },
     "part3": {
-      "path": "reproducibility/packages/part3-20261004/receipt.json",
-      "sha256": "44ab1dbd72aa553a9967f907c351a28ff0d7bf31e5bbfcb4d6c8fa165f939936"
+      "path": "reproducibility/manifests/srinidhi/part3-push-20261003/manifest.json",
+      "sha256": "655e830735ec4680a7c8a63c0f5757c3da3236b37b68f70be84bacde70e9a0fc"
     }
   }
 }

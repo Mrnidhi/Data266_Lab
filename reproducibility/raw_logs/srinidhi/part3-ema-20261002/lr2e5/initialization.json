@@ -1,0 +1,80 @@
+{
+  "kind": "warm_start",
+  "checkpoint": "C:\\Users\\srinidhi\\Desktop\\Needi\\Data266_Lab\\runs\\part3-translation-study-20261001\\arms\\control\\best.pt",
+  "checkpoint_sha256": "5261abcdfe3bdbe67c7c98551bd4134a09947136b4e344d27ecb9e81027c9c3f",
+  "source_config": {
+    "mode": "full",
+    "seed": 2342,
+    "image_size": 256,
+    "base_channels": 64,
+    "residual_blocks": 9,
+    "batch_size": 1,
+    "learning_rate": 5e-05,
+    "betas": [
+      0.5,
+      0.999
+    ],
+    "cycle_weight": 10.0,
+    "identity_weight": 2.5,
+    "replay_size": 50,
+    "epochs": 10,
+    "constant_epochs": 5,
+    "max_steps": null,
+    "checkpoint_every": 500,
+    "log_every": 50,
+    "allow_synthetic": false,
+    "select_best": true,
+    "validation_every_epochs": 2,
+    "evaluate_after_run": false,
+    "evaluation": {
+      "allow_metric_downloads": true,
+      "max_images": null,
+      "batch_size": 16,
+      "kid_subsets": 50,
+      "kid_subset_size": 100,
+      "prdc_k": 5,
+      "seed": 2342
+    },
+    "data": {
+      "monet_dir": "task3_gan/data/monet_jpg",
+      "photo_dir": "task3_gan/data/photo_jpg",
+      "manifest_dir": "task3_gan/srinidhi/data_processed/part3_manifests",
+      "source_note": "Verified class ZIP SHA256 5060b62d4a6a0194de10b849ea43b649f308ae516f0bf659b62ee404ca153e1d; unique-content independent 80/10/10 splits frozen at seed 2342; source receipts in reproducibility/manifests/srinidhi/part-c-source-snapshot."
+    },
+    "precision": "bf16",
+    "replay_device": "device",
+    "monet_translation_ratio": 0.0
+  },
+  "source_global_step": 44992,
+  "source_best_selection": {
+    "metric": "mean_validation_KID_both_directions",
+    "step": 44992,
+    "value": 0.015693356920965018,
+    "validation_only": true
+  },
+  "source_best_validation_score": 0.015693356920965018,
+  "manifest_fingerprint": "35184a0643321f99efc8df06544328b25c3364b66f29c76545ab47e01fe3438a",
+  "restored": [
+    "all_four_network_weights"
+  ],
+  "reset": [
+    "optimizers",
+    "schedulers",
+    "replay_pools",
+    "rng",
+    "global_step",
+    "training_seconds",
+    "best_selection"
+  ],
+  "selection_note": "Source scores are provenance only; selection is recomputed on this run's validation settings.",
+  "baseline_validation": {
+    "status": "computed",
+    "step": 0,
+    "metric": "mean_validation_KID_both_directions",
+    "value": 0.015693356920965018,
+    "directions": {
+      "photo_to_monet": 0.011840296490117908,
+      "monet_to_photo": 0.019546417351812125
+    }
+  }
+}

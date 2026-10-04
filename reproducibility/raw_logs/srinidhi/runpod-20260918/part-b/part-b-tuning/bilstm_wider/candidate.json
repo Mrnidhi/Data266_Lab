@@ -1,0 +1,20 @@
+{
+  "model": "bilstm",
+  "hypothesis": "Moderately more sequence capacity and less dropout may improve validation F1.",
+  "overrides": {
+    "epochs": 12,
+    "early_stopping_patience": 4,
+    "num_workers": 2,
+    "checkpoint_every_steps": 1000,
+    "log_every_steps": 100,
+    "embedding_dim": 192,
+    "lstm_hidden": 128,
+    "dropout": 0.2,
+    "learning_rates": {
+      "maxpool_mlp": 0.0015,
+      "bilstm": 0.0007,
+      "dilated_cnn": 0.0008
+    }
+  },
+  "name": "bilstm_wider"
+}

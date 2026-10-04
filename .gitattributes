@@ -36,3 +36,24 @@ reproducibility/packages/part3-20261004/*.json -text whitespace=cr-at-eol
 reproducibility/packages/part3-20261004/*.csv -text whitespace=cr-at-eol
 reproducibility/packages/part3-20261004/*.ipynb -text whitespace=cr-at-eol
 task3_gan/srinidhi/*metrics_report.csv -text whitespace=cr-at-eol
+task3_gan/srinidhi/checkpoints/best.pt filter=lfs diff=lfs merge=lfs -text
+task3_gan/srinidhi/src/*.ipynb -text whitespace=cr-at-eol
+task3_gan/srinidhi/outputs/** -text whitespace=cr-at-eol
+task3_gan/srinidhi/submission.csv -text whitespace=cr-at-eol
+reproducibility/manifests/** -text whitespace=cr-at-eol
+task1_llm/revanth0211/src/*.ipynb -text whitespace=cr-at-eol
+task1_llm/revanth0211/outputs/** -text whitespace=cr-at-eol
+task1_llm/revanth0211/checkpoints/manifest.json -text whitespace=cr-at-eol
+task2_sentiment/revanth0211/src/*.ipynb -text whitespace=cr-at-eol
+task2_sentiment/revanth0211/outputs/** -text whitespace=cr-at-eol
+task2_sentiment/revanth0211/metrics_report.csv -text whitespace=cr-at-eol
+task2_sentiment/revanth0211/checkpoints/manifest.json -text whitespace=cr-at-eol
+task2_sentiment/revanth0211/RUN_LOG.txt -text whitespace=cr-at-eol
+reproducibility/raw_logs/srinidhi/desktop-20261001/part1-full/data_manifest.json filter=lfs diff=lfs merge=lfs -text
+reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part1/depth_context/data_manifest.json filter=lfs diff=lfs merge=lfs -text
+reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part1/depth_context_full/data_manifest.json filter=lfs diff=lfs merge=lfs -text
+reproducibility/raw_logs/srinidhi/part3-ema-20261002/lr2e5/training_log.jsonl filter=lfs diff=lfs merge=lfs -text
+reproducibility/raw_logs/srinidhi/part3-ema-20261002/lr5e5/training_log.jsonl filter=lfs diff=lfs merge=lfs -text
+reproducibility/raw_logs/srinidhi/vast-part3-20260919/training_log.jsonl filter=lfs diff=lfs merge=lfs -text
+reproducibility/raw_logs/srinidhi/vast-part3-tuning-20260929/arms/identity2p5/training_log.jsonl filter=lfs diff=lfs merge=lfs -text
+reproducibility/raw_logs/srinidhi/vast-part3-tuning-20260929/arms/identity5/training_log.jsonl filter=lfs diff=lfs merge=lfs -text

@@ -1,0 +1,233 @@
+{
+  "task": "cyclegan",
+  "mode": "full",
+  "device": "cuda",
+  "started_utc": "2026-09-29T11:47:44.300440+00:00",
+  "status": "completed",
+  "is_final_result": false,
+  "config": {
+    "mode": "full",
+    "seed": 2342,
+    "image_size": 256,
+    "base_channels": 64,
+    "residual_blocks": 9,
+    "batch_size": 1,
+    "learning_rate": 5e-05,
+    "betas": [
+      0.5,
+      0.999
+    ],
+    "cycle_weight": 10.0,
+    "identity_weight": 5.0,
+    "replay_size": 50,
+    "epochs": 10,
+    "constant_epochs": 5,
+    "max_steps": null,
+    "checkpoint_every": 500,
+    "log_every": 50,
+    "allow_synthetic": false,
+    "select_best": true,
+    "validation_every_epochs": 2,
+    "evaluate_after_run": false,
+    "evaluation": {
+      "allow_metric_downloads": true,
+      "max_images": null,
+      "batch_size": 16,
+      "kid_subsets": 50,
+      "kid_subset_size": 100,
+      "prdc_k": 5,
+      "seed": 2342
+    },
+    "data": {
+      "monet_dir": "task3_gan/data/monet_jpg",
+      "photo_dir": "task3_gan/data/photo_jpg",
+      "manifest_dir": "task3_gan/srinidhi/data_processed/part3_manifests",
+      "source_note": "Verified class ZIP SHA256 5060b62d4a6a0194de10b849ea43b649f308ae516f0bf659b62ee404ca153e1d; unique-content independent 80/10/10 splits frozen at seed 2342; source receipts in reproducibility/manifests/srinidhi/part-c-source-snapshot."
+    },
+    "precision": "bf16",
+    "replay_device": "device"
+  },
+  "source_sha256": {
+    "src/lab1/__init__.py": "4597cd6743deb8dc143f2be2f7757c8d8d8fb367716dbcb4cb9626a025265217",
+    "src/lab1/common.py": "6659501f6490e5dc1c72decbb48f1c745a2e876bea24a89fea32b381518677ce",
+    "task3_gan/srinidhi/config.json": "6f8174e53f29143e02ccd8b263062f4a03f3e5a6fae639e8e3e54f966f9fe51f",
+    "task3_gan/srinidhi/evaluate_local.py": "4cb02bb71263f3a507562a99dec4b485fbcd0ed1ff08fc3757f1886e015dacfc",
+    "task3_gan/srinidhi/src/cyclegan.py": "b7567023c01324d6c64086c3a169750fe946cdc9eff4cec7d05e94c9992f43d8",
+    "scripts/tune_cyclegan.py": "d395fc92e8e62fd5a91ec7c478e881f6627dece102064c07a5d1a45fade0c78c"
+  },
+  "environment": {
+    "captured_utc": "2026-09-29T11:47:44.328296+00:00",
+    "python": "3.12.14",
+    "platform": "Linux-6.14.0-36-generic-x86_64-with-glibc2.39",
+    "machine": "x86_64",
+    "packages": {
+      "torch": "2.11.0+cu128",
+      "torchvision": "0.26.0+cu128",
+      "numpy": "2.5.3",
+      "pandas": "3.0.6",
+      "scikit-learn": "1.9.1",
+      "scipy": "1.16.3",
+      "matplotlib": "3.11.2",
+      "datasets": null,
+      "Pillow": "12.3.0",
+      "clean-fid": "0.1.35",
+      "lpips": "0.1.4",
+      "prdc": "0.2"
+    },
+    "cuda_available": true,
+    "cuda_build": "12.8",
+    "cudnn": 91900,
+    "gpus": [
+      {
+        "index": 0,
+        "name": "NVIDIA GeForce RTX 5090",
+        "memory_bytes": 33668988928,
+        "compute_capability": [
+          12,
+          0
+        ]
+      }
+    ],
+    "mps_available": false,
+    "nvidia_smi": "name, uuid, driver_version, memory.total [MiB]\nNVIDIA GeForce RTX 5090, GPU-88287816-dbdd-a65e-9998-41fb2bcbc1fd, 580.95.05, 32607 MiB"
+  },
+  "resumed": true,
+  "tuning_arm": "identity5",
+  "protocol_sha256": "9b9749a20ffcc484428f070867b634524369d2edb3e118d730e696271969da68",
+  "warm_start_source_sha256": "d8b37673ce3cbda3397740863fcde33126eb029a9cc5a7c7cdde9dcf064d9b7e",
+  "invocation": "/venv/main/bin/python scripts/tune_cyclegan.py --action train-arm --output reproducibility/raw_logs/srinidhi/vast-part3-tuning-20260929 --arm identity5 --device cuda --resume reproducibility/raw_logs/srinidhi/vast-part3-tuning-20260929/arms/identity5/last.pt",
+  "summary": {
+    "part": 3,
+    "mode": "full",
+    "device": "cuda",
+    "precision": "bf16",
+    "replay_device": "device",
+    "seed": 2342,
+    "data_kind": "explicit_class_manifests",
+    "class_results": true,
+    "completed_updates": 56240,
+    "completed_epoch_fraction": 10.0,
+    "steps_per_epoch": 5624,
+    "epoch_definition": "one shuffled pass through larger training domain; smaller domain sampled independently with replacement",
+    "parameter_counts": {
+      "G_photo_to_monet": 11378179,
+      "G_monet_to_photo": 11378179,
+      "D_photo": 2764737,
+      "D_monet": 2764737
+    },
+    "training_seconds": 2293.413010203978,
+    "session_wall_seconds": 2811.6782026852015,
+    "training_source_images_per_second": 49.04480767290839,
+    "throughput_definition": "two source images per complete paired-domain G/D update; excludes data loading and evaluation",
+    "peak_gpu_memory_bytes": 1573897728,
+    "memory_note": "CUDA peak allocated memory; not reserved memory",
+    "nan_events": 0,
+    "checkpoint": "/workspace/Data266_Lab_tuning_20260929/reproducibility/raw_logs/srinidhi/vast-part3-tuning-20260929/arms/identity5/last.pt",
+    "best_checkpoint": "/workspace/Data266_Lab_tuning_20260929/reproducibility/raw_logs/srinidhi/vast-part3-tuning-20260929/arms/identity5/best.pt",
+    "best_selection": {
+      "metric": "mean_validation_KID_both_directions",
+      "step": 44992,
+      "value": 0.01620449319947511,
+      "validation_only": true
+    },
+    "metrics_status": "Run evaluate_checkpoint for held-out evaluation; no scores inferred from loss",
+    "human_audit_status": "Requires independent real ratings by two humans",
+    "kaggle_submission_status": "Not submitted; actual class format unverified",
+    "initialization": {
+      "kind": "warm_start",
+      "checkpoint": "/workspace/Data266_Lab_tuning_20260929/task3_gan/srinidhi/checkpoints/best.pt",
+      "checkpoint_sha256": "d8b37673ce3cbda3397740863fcde33126eb029a9cc5a7c7cdde9dcf064d9b7e",
+      "source_config": {
+        "mode": "full",
+        "seed": 2342,
+        "image_size": 256,
+        "base_channels": 64,
+        "residual_blocks": 9,
+        "batch_size": 1,
+        "learning_rate": 0.0001,
+        "betas": [
+          0.5,
+          0.999
+        ],
+        "cycle_weight": 10.0,
+        "identity_weight": 5.0,
+        "replay_size": 50,
+        "epochs": 30,
+        "constant_epochs": 15,
+        "max_steps": null,
+        "checkpoint_every": 500,
+        "log_every": 50,
+        "allow_synthetic": false,
+        "select_best": true,
+        "validation_every_epochs": 5,
+        "evaluate_after_run": false,
+        "evaluation": {
+          "allow_metric_downloads": true,
+          "max_images": null,
+          "batch_size": 16,
+          "kid_subsets": 50,
+          "kid_subset_size": 100,
+          "prdc_k": 5,
+          "seed": 2342
+        },
+        "data": {
+          "monet_dir": "task3_gan/data/monet_jpg",
+          "photo_dir": "task3_gan/data/photo_jpg",
+          "manifest_dir": "task3_gan/srinidhi/data_processed/part3_manifests",
+          "source_note": "Verified class ZIP SHA256 5060b62d4a6a0194de10b849ea43b649f308ae516f0bf659b62ee404ca153e1d; unique-content independent 80/10/10 splits frozen at seed 2342; source receipts in reproducibility/manifests/srinidhi/part-c-source-snapshot."
+        },
+        "precision": "bf16",
+        "replay_device": "device"
+      },
+      "source_global_step": 168720,
+      "source_best_selection": {
+        "metric": "mean_validation_KID_both_directions",
+        "step": 168720,
+        "value": 0.019753425605595114,
+        "validation_only": true
+      },
+      "source_best_validation_score": 0.019753425605595114,
+      "manifest_fingerprint": "35184a0643321f99efc8df06544328b25c3364b66f29c76545ab47e01fe3438a",
+      "restored": [
+        "all_four_network_weights"
+      ],
+      "reset": [
+        "optimizers",
+        "schedulers",
+        "replay_pools",
+        "rng",
+        "global_step",
+        "training_seconds",
+        "best_selection"
+      ],
+      "selection_note": "Source scores are provenance only; selection is recomputed on this run's validation settings.",
+      "baseline_validation": {
+        "step": 0,
+        "split": "val",
+        "metric": "mean_validation_KID_both_directions",
+        "status": "computed",
+        "value": 0.019753425605595114,
+        "directions": {
+          "photo_to_monet": {
+            "status": "computed",
+            "value": 0.013203506395220756,
+            "subset_std": 0.0032765864446311775,
+            "subsets": 50,
+            "subset_size": 30,
+            "note": "Subset SD is not training-seed uncertainty; unbiased KID estimates may be negative"
+          },
+          "monet_to_photo": {
+            "status": "computed",
+            "value": 0.02630334481596947,
+            "subset_std": 0.004183719040106543,
+            "subsets": 50,
+            "subset_size": 30,
+            "note": "Subset SD is not training-seed uncertainty; unbiased KID estimates may be negative"
+          }
+        }
+      }
+    }
+  },
+  "ended_utc": "2026-09-29T12:34:37.920019+00:00",
+  "elapsed_seconds": 2813.571411516983
+}

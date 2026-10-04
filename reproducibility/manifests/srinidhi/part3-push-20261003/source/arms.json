@@ -1,0 +1,60 @@
+{
+  "hours": 6.0,
+  "parallel": 3,
+  "benchmark_seconds": 150,
+  "eval_rounds": 25,
+  "eval_minutes_per_arm": 45,
+  "min_steps": 8000,
+  "max_steps": 600000,
+  "defaults": {
+    "steps": "auto",
+    "eval_every": "auto",
+    "constant_fraction": 0.5,
+    "ema_beta": 0.999,
+    "ema_slow_beta": 0.9999,
+    "eval_variants": "ema,ema_slow,raw",
+    "checkpoint_every": 1000,
+    "log_every": 50,
+    "precision": "bf16",
+    "data": "all",
+    "jpeg_quality": 75,
+    "jpeg_subsampling": 2,
+    "identity_start": 0.0,
+    "identity_end": 0.0,
+    "cycle_start": 5.0,
+    "cycle_end": 5.0,
+    "aug_monet": "translation",
+    "prefetch": 3
+  },
+  "arms": [
+    {
+      "name": "b1_c5",
+      "note": "Mac-proven recipe: batch 1, LR 1e-4, cycle 5, translation DiffAugment, warm-up",
+      "flags": {
+        "learning_rate": 0.0001,
+        "batch_size": 1,
+        "warmup_steps": 1000
+      }
+    },
+    {
+      "name": "b8_c5",
+      "note": "same losses at batch 8, LR 2e-4: several times more images per hour",
+      "flags": {
+        "learning_rate": 0.0002,
+        "batch_size": 8,
+        "warmup_steps": 500
+      }
+    },
+    {
+      "name": "b8_c5_r1",
+      "note": "batch 8, LR 2e-4, plus a gentle R1 gradient penalty on both discriminators (UVCGAN)",
+      "flags": {
+        "learning_rate": 0.0002,
+        "batch_size": 8,
+        "warmup_steps": 500,
+        "r1_gamma": 0.01,
+        "r1_every": 4
+      }
+    }
+  ]
+}

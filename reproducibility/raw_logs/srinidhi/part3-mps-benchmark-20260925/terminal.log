@@ -1,0 +1,27 @@
+HARDWARE: Apple M1 Max | torch 2.11.0 | MPS | FP32 | CPU fallback OFF
+MODEL: 2 generators + 2 discriminators | 9 blocks | 256x256 | batch 1
+SOURCE: final 168720-step checkpoint; fresh benchmark Adam; saved final results untouched
+DATA: 5624 training photos, 240 training Monets. Starting 3 warmup + 12 timed updates.
+WARMUP 01/15: 7.740 s/update | G=3.8245 Dphoto=0.0966 Dmonet=0.0256 | allocated=2.39 GB driver=3.61 GB | gradients finite
+WARMUP 02/15: 0.596 s/update | G=3.7904 Dphoto=0.1050 Dmonet=0.1051 | allocated=2.93 GB driver=3.63 GB | gradients finite
+WARMUP 03/15: 0.616 s/update | G=3.9005 Dphoto=0.2015 Dmonet=0.0392 | allocated=2.90 GB driver=3.63 GB | gradients finite
+TIMED 04/15: 0.619 s/update | G=3.5040 Dphoto=0.1371 Dmonet=0.0456 | allocated=2.90 GB driver=3.63 GB | gradients finite
+TIMED 05/15: 0.625 s/update | G=2.8080 Dphoto=0.0977 Dmonet=0.0885 | allocated=2.90 GB driver=3.63 GB | gradients finite
+TIMED 06/15: 0.628 s/update | G=3.3822 Dphoto=0.1599 Dmonet=0.0802 | allocated=2.90 GB driver=3.63 GB | gradients finite
+TIMED 07/15: 0.595 s/update | G=2.8582 Dphoto=0.0982 Dmonet=0.0376 | allocated=2.90 GB driver=3.63 GB | gradients finite
+TIMED 08/15: 0.590 s/update | G=2.7286 Dphoto=0.1641 Dmonet=0.0611 | allocated=2.90 GB driver=3.63 GB | gradients finite
+TIMED 09/15: 0.583 s/update | G=3.2216 Dphoto=0.0725 Dmonet=0.2752 | allocated=2.90 GB driver=3.63 GB | gradients finite
+TIMED 10/15: 0.600 s/update | G=3.2687 Dphoto=0.1381 Dmonet=0.0892 | allocated=2.90 GB driver=3.63 GB | gradients finite
+TIMED 11/15: 0.611 s/update | G=4.5780 Dphoto=0.1219 Dmonet=0.1729 | allocated=2.90 GB driver=3.63 GB | gradients finite
+TIMED 12/15: 0.589 s/update | G=4.2367 Dphoto=0.2200 Dmonet=0.0638 | allocated=2.90 GB driver=3.63 GB | gradients finite
+TIMED 13/15: 0.596 s/update | G=3.1823 Dphoto=0.1551 Dmonet=0.0618 | allocated=2.90 GB driver=3.63 GB | gradients finite
+TIMED 14/15: 0.623 s/update | G=2.9305 Dphoto=0.1957 Dmonet=0.1201 | allocated=2.90 GB driver=3.63 GB | gradients finite
+TIMED 15/15: 0.597 s/update | G=3.2098 Dphoto=0.1291 Dmonet=0.0888 | allocated=2.90 GB driver=3.63 GB | gradients finite
+PASS: all four networks updated; weights/gradients finite; full replay replacement exercised
+PASS: checkpoint saved/reloaded; both generator outputs match; resumed update 0.581s
+RESULT: 0.599s median/update; 12 measured updates; no NaNs
+ESTIMATE: 1 epochs = 0.95 hours training only (short-run projection)
+ESTIMATE: 10 epochs = 9.53 hours training only (short-run projection)
+ESTIMATE: 20 epochs = 19.06 hours training only (short-run projection)
+ESTIMATE: 30 epochs = 28.59 hours training only (short-run projection)
+BENCHMARK COMPLETE. No full training job remains running.

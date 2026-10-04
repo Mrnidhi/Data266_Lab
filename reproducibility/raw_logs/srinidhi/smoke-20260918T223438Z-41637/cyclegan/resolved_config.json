@@ -1,0 +1,36 @@
+{
+  "mode": "smoke",
+  "seed": 2342,
+  "image_size": 32,
+  "base_channels": 8,
+  "residual_blocks": 1,
+  "batch_size": 1,
+  "learning_rate": 0.0001,
+  "betas": [
+    0.5,
+    0.999
+  ],
+  "cycle_weight": 10.0,
+  "identity_weight": 5.0,
+  "replay_size": 2,
+  "epochs": 2,
+  "constant_epochs": 1,
+  "max_steps": 2,
+  "checkpoint_every": 1,
+  "log_every": 1,
+  "cpu_threads": 2,
+  "allow_synthetic": true,
+  "synthetic_images": 4,
+  "select_best": false,
+  "evaluate_after_run": true,
+  "evaluation": {
+    "allow_metric_downloads": false,
+    "max_images": 2,
+    "seed": 2342
+  },
+  "data": {
+    "monet_dir": null,
+    "photo_dir": null,
+    "manifest_dir": null
+  }
+}

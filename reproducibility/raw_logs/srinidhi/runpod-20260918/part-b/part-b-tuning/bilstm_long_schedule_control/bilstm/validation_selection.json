@@ -1,0 +1,10 @@
+{
+  "model_name": "bilstm",
+  "selected_epoch": 10,
+  "selected_validation_macro_f1": 0.9588017632122099,
+  "parameter_count": 5305985,
+  "train_seconds": 1686.3448840710334,
+  "peak_cuda_memory_bytes": 229768704,
+  "completed_training_steps": 47256,
+  "test_evaluated": false
+}

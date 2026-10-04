@@ -55,8 +55,17 @@ On Linux/macOS use `python3.12` and `.venv/bin/python`. Smoke checks synthetic C
 execution only. Select this environment's kernel for [sentiment.ipynb](src/sentiment.ipynb).
 After cloning, run `git lfs install` and `git lfs pull` for the 124,098,311-byte MLP
 checkpoint. A pointer is not loadable; compare [checkpoint hashes](checkpoints/manifest.json).
-The standalone ZIP contains real best/last weights, `data_processed/full/` and
-`full_encoded/` with manifests; a Git clone alone does not supply the data caches.
+Before opening the notebook or reproducing a selected recipe from a clone, restore
+its frozen caches and matching resume checkpoints:
+
+```powershell
+.venv\Scripts\python.exe scripts/prepare_srinidhi.py --part 2
+```
+
+The command verifies the published ZIP, restores only data and checkpoints, and
+backs up any differing local files under ignored `runs/`. It does not train or
+replace recorded outputs. The extracted standalone ZIP already contains these
+files and does not need this step.
 
 Run each selected recipe into a new output directory:
 

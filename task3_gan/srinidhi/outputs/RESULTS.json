@@ -1,0 +1,186 @@
+{
+  "finished_utc": "2026-10-04T04:42:19+00:00",
+  "selected": {
+    "arm": "b1_c5",
+    "class_scores_during_training": {
+      "fid_a2b": 95.87804001420324,
+      "fid_b2a": 93.48982717843126,
+      "mifid_a2b": 0.41510431708184165,
+      "mifid_b2a": 0.394342721868295,
+      "fid": 94.68393359631725,
+      "mifid": 0.40472351947506835,
+      "composite": 47.54432855789616
+    },
+    "state": {
+      "global_step": 221250,
+      "data_fingerprint": "c67369c6aa64d8970e331907aa6120d0f1c938dec6c72f108a8e7859978e49e9",
+      "data_counts": {
+        "photo": 7038,
+        "monet": 300
+      },
+      "training_data": "all",
+      "init_checkpoint": "inputs/init.pt",
+      "init_sha256": "2e8274b8ba19edd95823a4b838755c35286ca3e99e91f680ade688e447da8310",
+      "candidate_variant": "ema_slow",
+      "ema_beta": 0.9999,
+      "ema_updates": 221250
+    }
+  },
+  "export_metrics": {
+    "checkpoint": "work/final/best.pt",
+    "checkpoint_sha256": "62d80f7ef2752b190fa496b7775b32dd77684bfceeb3b9f4c7356642848abc14",
+    "notebook_sha256": "702a1265433bf2f15c7900c83442c626d10ac0918094d093dde8ef82069d4cef",
+    "n_eval": 300,
+    "device": "cuda",
+    "directions": {
+      "monet_to_photo": {
+        "class_label": "pred_A2B",
+        "FID": 95.90505633988286,
+        "MiFID": 0.41517722606658936
+      },
+      "photo_to_monet": {
+        "class_label": "pred_B2A",
+        "FID": 93.52066037353589,
+        "MiFID": 0.3944854140281677
+      }
+    },
+    "directional_means": {
+      "FID": 94.71285835670938,
+      "MiFID": 0.40483132004737854
+    },
+    "local_composite": 47.55884483837838,
+    "selection_note": "Selected by the supplied class FID/MiFID evaluator on its fixed 300+300 images",
+    "class_scores_during_training": {
+      "fid_a2b": 95.87804001420324,
+      "fid_b2a": 93.48982717843126,
+      "mifid_a2b": 0.41510431708184165,
+      "mifid_b2a": 0.394342721868295,
+      "fid": 94.68393359631725,
+      "mifid": 0.40472351947506835,
+      "composite": 47.54432855789616
+    },
+    "elapsed_seconds": 44.536547899246216,
+    "kaggle_submitted": false
+  },
+  "official_notebook": {
+    "FID": 94.71603584640337,
+    "MiFID": 0.4048158824443817,
+    "composite": 47.56042586442388
+  },
+  "checks": {
+    "checkpoint_sha256": "62d80f7ef2752b190fa496b7775b32dd77684bfceeb3b9f4c7356642848abc14",
+    "device": "cuda",
+    "class_protocol": {
+      "fid_a2b": 95.92999640714123,
+      "fid_b2a": 93.61107969055165,
+      "kid_a2b": 0.016355821256213154,
+      "kid_b2a": 0.006281199246791491
+    },
+    "fresh_sample": {
+      "fid_a2b_vs_photos_301_600": 87.46018660146709,
+      "fid_b2a_from_photos_301_600": 90.5924484019557,
+      "kid_a2b_vs_photos_301_600": 0.013817332329892906,
+      "kid_b2a_from_photos_301_600": 0.006364167411125443,
+      "composite_estimate": 44.71815875085569
+    },
+    "content_cosine_input_vs_output": {
+      "monet_to_photo": 0.7900960477232046,
+      "photo_to_monet": 0.7470643736522511
+    },
+    "memorisation": {
+      "generated_monet_nearest_training_cosine_max": 0.8452824125576588,
+      "generated_monet_nearest_training_cosine_median": 0.7654658208541645,
+      "real_monet_nearest_other_real_cosine_max": 0.9215252555689355,
+      "real_monet_nearest_other_real_cosine_median": 0.7932970432679343,
+      "outputs_closer_to_a_training_monet_than_any_real_pair": 0
+    }
+  },
+  "scored_candidates": 192,
+  "environment": {
+    "captured_utc": "2026-10-03T21:58:37+00:00",
+    "python": "3.12.14",
+    "executable": "/venv/main/bin/python",
+    "platform": "Linux-6.14.0-36-generic-x86_64-with-glibc2.39",
+    "torch": "2.11.0+cu128",
+    "torchvision": "0.26.0+cu128",
+    "numpy": "2.5.3",
+    "scipy": "1.16.3",
+    "pillow": "12.3.0",
+    "device": "cuda",
+    "cuda_build": "12.8",
+    "cudnn": 91900,
+    "tqdm": "4.70.0",
+    "nbclient": "0.11.0",
+    "nbformat": "5.11.1",
+    "ipykernel": "7.3.0",
+    "pytest": "9.1.1",
+    "gpu": "NVIDIA GeForce RTX 5090",
+    "gpu_memory_gb": 31.4,
+    "bf16_supported": true,
+    "compute_capability": "12.0",
+    "nvidia_smi": "NVIDIA GeForce RTX 5090, 580.95.05, 4 MiB, 32607 MiB, 0 %",
+    "cuda_matmul_ok": true,
+    "disk_free_gb": 36.5
+  },
+  "plan": {
+    "hours": 6.0,
+    "parallel": 3,
+    "benchmark_seconds": 150,
+    "eval_rounds": 25,
+    "eval_minutes_per_arm": 45,
+    "min_steps": 8000,
+    "max_steps": 600000,
+    "defaults": {
+      "steps": "auto",
+      "eval_every": "auto",
+      "constant_fraction": 0.5,
+      "ema_beta": 0.999,
+      "ema_slow_beta": 0.9999,
+      "eval_variants": "ema,ema_slow,raw",
+      "checkpoint_every": 1000,
+      "log_every": 50,
+      "precision": "bf16",
+      "data": "all",
+      "jpeg_quality": 75,
+      "jpeg_subsampling": 2,
+      "identity_start": 0.0,
+      "identity_end": 0.0,
+      "cycle_start": 5.0,
+      "cycle_end": 5.0,
+      "aug_monet": "translation",
+      "prefetch": 3
+    },
+    "arms": [
+      {
+        "name": "b1_c5",
+        "note": "Mac-proven recipe: batch 1, LR 1e-4, cycle 5, translation DiffAugment, warm-up",
+        "flags": {
+          "learning_rate": 0.0001,
+          "batch_size": 1,
+          "warmup_steps": 1000
+        }
+      },
+      {
+        "name": "b8_c5",
+        "note": "same losses at batch 8, LR 2e-4: several times more images per hour",
+        "flags": {
+          "learning_rate": 0.0002,
+          "batch_size": 8,
+          "warmup_steps": 500
+        }
+      },
+      {
+        "name": "b8_c5_r1",
+        "note": "batch 8, LR 2e-4, plus a gentle R1 gradient penalty on both discriminators (UVCGAN)",
+        "flags": {
+          "learning_rate": 0.0002,
+          "batch_size": 8,
+          "warmup_steps": 500,
+          "r1_gamma": 0.01,
+          "r1_every": 4
+        }
+      }
+    ]
+  },
+  "integrity": "Submitted images are direct JPEG outputs of the selected CycleGAN generators, one per source image in alphabetical source order; none were edited, reordered or picked. Checkpoint selection used the supplied class evaluator's score."
+}

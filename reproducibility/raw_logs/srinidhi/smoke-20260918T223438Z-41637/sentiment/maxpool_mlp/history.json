@@ -1,0 +1,11 @@
+[
+  {
+    "epoch": 1,
+    "train_loss": 0.6550922592480978,
+    "validation_loss": 0.6525905330975851,
+    "validation_macro_f1": 0.6571428571428571,
+    "train_seconds": 0.002485500001057517,
+    "examples_per_second": 9656.00482389403,
+    "learning_rate": 0.0015
+  }
+]

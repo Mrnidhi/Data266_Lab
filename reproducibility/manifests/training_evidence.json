@@ -1,0 +1,2701 @@
+{
+  "schema_version": 1,
+  "purpose": "Required unedited training evidence for DATA266 Lab1, Section5.",
+  "restored_from_commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+  "preservation": "Original files are copied byte-for-byte. Only the clearly labelled notebook stream exports and this index are newly derived. Incremental backup duplicates, plots, billing and monitoring snapshots are not duplicated here.",
+  "current_result_mappings": "reproducibility/manifests/selected.json",
+  "files": [
+    {
+      "path": "reproducibility/raw_logs/revanth0211/task1_llm/notebook_cell_20_stdout.txt",
+      "sha256": "16fd73bd41cfe71788b479ac5f5842f5dc3753754e89c4b016da487efda30be9",
+      "bytes": 2166,
+      "source": {
+        "kind": "executed_notebook_stream_export",
+        "path": "task1_llm/revanth0211/src/Part1.ipynb",
+        "notebook_sha256": "8ec4f66bbda596a70b7f83107af33b55c5379e2c44cba25139204e7891fefcc0",
+        "cell_index_zero_based": 20,
+        "execution_count": 37,
+        "transformation": "Concatenated stored stream text only; no edits or normalization. This export was created after the run, not recorded as a separate run-time file."
+      },
+      "role": "derived_export_of_authentic_notebook_output"
+    },
+    {
+      "path": "reproducibility/raw_logs/revanth0211/task2_sentiment/notebook_cell_41_stdout.txt",
+      "sha256": "df77ed191970af3e3c6acdd14dae8a1ad65e7e3f7932f636aaf2335e07ec1598",
+      "bytes": 701,
+      "source": {
+        "kind": "executed_notebook_stream_export",
+        "path": "task2_sentiment/revanth0211/src/Part2.ipynb",
+        "notebook_sha256": "36dd2977f7599c67db076bfec3fad14085a6deb83e2cc9cc90e358ff0cf610c1",
+        "cell_index_zero_based": 41,
+        "execution_count": 20,
+        "transformation": "Concatenated stored stream text only; no edits or normalization. This export was created after the run, not recorded as a separate run-time file."
+      },
+      "role": "derived_export_of_authentic_notebook_output"
+    },
+    {
+      "path": "reproducibility/raw_logs/revanth0211/task2_sentiment/notebook_cell_43_stdout.txt",
+      "sha256": "609dbce1040963b95b4d2dcc7b78f0b26bef6a525b94a1ada83997269c1fb545",
+      "bytes": 711,
+      "source": {
+        "kind": "executed_notebook_stream_export",
+        "path": "task2_sentiment/revanth0211/src/Part2.ipynb",
+        "notebook_sha256": "36dd2977f7599c67db076bfec3fad14085a6deb83e2cc9cc90e358ff0cf610c1",
+        "cell_index_zero_based": 43,
+        "execution_count": 21,
+        "transformation": "Concatenated stored stream text only; no edits or normalization. This export was created after the run, not recorded as a separate run-time file."
+      },
+      "role": "derived_export_of_authentic_notebook_output"
+    },
+    {
+      "path": "reproducibility/raw_logs/revanth0211/task2_sentiment/notebook_cell_45_stdout.txt",
+      "sha256": "869b7e6f51073de9c821af59f0788ddaf8a3451d20ba5d9b89afaeb8d42a6ded",
+      "bytes": 661,
+      "source": {
+        "kind": "executed_notebook_stream_export",
+        "path": "task2_sentiment/revanth0211/src/Part2.ipynb",
+        "notebook_sha256": "36dd2977f7599c67db076bfec3fad14085a6deb83e2cc9cc90e358ff0cf610c1",
+        "cell_index_zero_based": 45,
+        "execution_count": 22,
+        "transformation": "Concatenated stored stream text only; no edits or normalization. This export was created after the run, not recorded as a separate run-time file."
+      },
+      "role": "derived_export_of_authentic_notebook_output"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part1-full/config.json",
+      "sha256": "769dc4ba6f14e2249c5632c11a5e222ee450bb5d7a0b7b72befb3f77afad5380",
+      "bytes": 994,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part1-full/config.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part1-full/data_manifest.json",
+      "sha256": "bfc64c9ae2e6fd611c71758882c4f7294b0a451682bc5496f21add2f13faafbe",
+      "bytes": 13562980,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part1-full/data_manifest.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part1-full/history.json",
+      "sha256": "8fab2a11b3ca324b9af169b5f04252452bcc1651bbe6d606933e8121ba3235f4",
+      "bytes": 12872,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part1-full/history.json"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part1-full/metrics.jsonl",
+      "sha256": "b2f5f81e8b49d5bf621444fe8020c855810ca606d65690929644099a7c9dcfab",
+      "bytes": 123937,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part1-full/metrics.jsonl"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part1-full/provenance/2026-10-01T22-42-32.001897+00-00.json",
+      "sha256": "2387695950809715868b9b895e9bb3e513e649be5c0d83b685d873793be0bec6",
+      "bytes": 8117,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part1-full/provenance/2026-10-01T22-42-32.001897+00-00.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part1-full/resolved_config.json",
+      "sha256": "769dc4ba6f14e2249c5632c11a5e222ee450bb5d7a0b7b72befb3f77afad5380",
+      "bytes": 994,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part1-full/resolved_config.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part1-full/run_summary.json",
+      "sha256": "2387695950809715868b9b895e9bb3e513e649be5c0d83b685d873793be0bec6",
+      "bytes": 8117,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part1-full/run_summary.json"
+      },
+      "role": "original_run_result"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part1-full/summary.json",
+      "sha256": "b29b68401690e9d5434f4f62eca86d18f28d5d18ca115272bae7bdf255f01f60",
+      "bytes": 4392,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part1-full/summary.json"
+      },
+      "role": "original_run_result"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/bilstm/RUN_LOG.txt",
+      "sha256": "e45813eb50c4b8e886eebe2fd479ccde6ce0f83d32a0e5658413c42d4622a3c4",
+      "bytes": 33521,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/bilstm/RUN_LOG.txt"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/bilstm/bilstm/history.json",
+      "sha256": "ed545c418149e320c62fd93286a46970a1e4386dd9344adf49317437b7b2a95f",
+      "bytes": 3340,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/bilstm/bilstm/history.json"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/bilstm/bilstm/validation_selection.json",
+      "sha256": "5a972f726544695302fdbcd07ea78808e6fa4fd18c16670ee67052de98423dcf",
+      "bytes": 421,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/bilstm/bilstm/validation_selection.json"
+      },
+      "role": "original_run_result"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/bilstm/candidate.json",
+      "sha256": "3cc9a90050363cd96740ee41fa4cdfaa206790799ee5f80fd2694ea6b4c3a26a",
+      "bytes": 303,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/bilstm/candidate.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/bilstm/config.json",
+      "sha256": "55976d013e75fb55819300839a7ead50b4c7946d7ec7f0912f71b2c46025a005",
+      "bytes": 1094,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/bilstm/config.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/bilstm/provenance.json",
+      "sha256": "b04bbfb969be747140c76b53fcc909d323e83c78c8384fa1be9fd46dc03b79c0",
+      "bytes": 5099,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/bilstm/provenance.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/bilstm/provenance_invocations/2026-10-01T23-31-56.116609+00-00.json",
+      "sha256": "b04bbfb969be747140c76b53fcc909d323e83c78c8384fa1be9fd46dc03b79c0",
+      "bytes": 5099,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/bilstm/provenance_invocations/2026-10-01T23-31-56.116609+00-00.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/bilstm/source_snapshot/task2_sentiment/srinidhi/config.json",
+      "sha256": "4b244db4f3c9c32feb22ac37a91bba8f6b779fba80b521dae4de63a854c3575a",
+      "bytes": 2903,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/bilstm/source_snapshot/task2_sentiment/srinidhi/config.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/dilated_cnn/RUN_LOG.txt",
+      "sha256": "fbf8b5676016e9f79f2965027fe8cdbb681dd3c23890eb7dbea59986ba85cc6c",
+      "bytes": 17287,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/dilated_cnn/RUN_LOG.txt"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/dilated_cnn/candidate.json",
+      "sha256": "1fe07d0de2a0ebac53053a81ea2c7fafe5ccafc12dc7f616f8d74c08d342fdb5",
+      "bytes": 312,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/dilated_cnn/candidate.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/dilated_cnn/config.json",
+      "sha256": "b7557065e5d9f0af7bf9831d3ad30155cd119efea2337a87b96363bb286700aa",
+      "bytes": 1093,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/dilated_cnn/config.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/dilated_cnn/dilated_cnn/history.json",
+      "sha256": "7396b2721fd4d94ba8c30182d25a4c6d7186e0f197e6aeb470c3d8c5856d8cee",
+      "bytes": 1676,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/dilated_cnn/dilated_cnn/history.json"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/dilated_cnn/dilated_cnn/validation_selection.json",
+      "sha256": "20855f99d3cfceb67da03878bd987f8e49838d4af4e63191ca4e12f75a62236e",
+      "bytes": 425,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/dilated_cnn/dilated_cnn/validation_selection.json"
+      },
+      "role": "original_run_result"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/dilated_cnn/provenance.json",
+      "sha256": "9e4978eb63a3da30b479167c850b6926d4e3b4d9f44d9555eda52a1a65f90402",
+      "bytes": 5110,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/dilated_cnn/provenance.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/dilated_cnn/provenance_invocations/2026-10-02T00-22-49.870966+00-00.json",
+      "sha256": "9e4978eb63a3da30b479167c850b6926d4e3b4d9f44d9555eda52a1a65f90402",
+      "bytes": 5110,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/dilated_cnn/provenance_invocations/2026-10-02T00-22-49.870966+00-00.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/dilated_cnn/source_snapshot/task2_sentiment/srinidhi/config.json",
+      "sha256": "4b244db4f3c9c32feb22ac37a91bba8f6b779fba80b521dae4de63a854c3575a",
+      "bytes": 2903,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/dilated_cnn/source_snapshot/task2_sentiment/srinidhi/config.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/maxpool_mlp/RUN_LOG.txt",
+      "sha256": "f12c5a6bb6d41244d9ac3bc7629692840aec62cba1caa6e512157ddde2bf3822",
+      "bytes": 17114,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/maxpool_mlp/RUN_LOG.txt"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/maxpool_mlp/candidate.json",
+      "sha256": "4cccb2a06c7f53526f930a5654ba5bbe5f67db4056aa8b250111dc991c9d5211",
+      "bytes": 312,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/maxpool_mlp/candidate.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/maxpool_mlp/config.json",
+      "sha256": "b7557065e5d9f0af7bf9831d3ad30155cd119efea2337a87b96363bb286700aa",
+      "bytes": 1093,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/maxpool_mlp/config.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/maxpool_mlp/maxpool_mlp/history.json",
+      "sha256": "195f2ec06f298c755193737f47590c762f1aa0aa65e06f38f3f75c7868c33073",
+      "bytes": 1679,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/maxpool_mlp/maxpool_mlp/history.json"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/maxpool_mlp/maxpool_mlp/validation_selection.json",
+      "sha256": "00645627097f07c8ff36189da3dec13004240a3e01b51c2edcd76cab80b62c95",
+      "bytes": 425,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/maxpool_mlp/maxpool_mlp/validation_selection.json"
+      },
+      "role": "original_run_result"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/maxpool_mlp/provenance.json",
+      "sha256": "7b8aa9d779ae0e508828b0e12b89bbede83a45ff1aa66045e5aa542358d46c82",
+      "bytes": 5111,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/maxpool_mlp/provenance.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/maxpool_mlp/provenance_invocations/2026-10-01T23-30-09.324344+00-00.json",
+      "sha256": "7b8aa9d779ae0e508828b0e12b89bbede83a45ff1aa66045e5aa542358d46c82",
+      "bytes": 5111,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/maxpool_mlp/provenance_invocations/2026-10-01T23-30-09.324344+00-00.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/maxpool_mlp/source_snapshot/task2_sentiment/srinidhi/config.json",
+      "sha256": "4b244db4f3c9c32feb22ac37a91bba8f6b779fba80b521dae4de63a854c3575a",
+      "bytes": 2903,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-20261001/part2-full/training/maxpool_mlp/source_snapshot/task2_sentiment/srinidhi/config.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part1/depth_context/RUN_LOG.txt",
+      "sha256": "9e1ddc40bb1c36f9544c983ca03e2444f3663533fd1acae8234669e92538223b",
+      "bytes": 234,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part1/depth_context/RUN_LOG.txt"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part1/depth_context/config.json",
+      "sha256": "0fb6f0768f5e8d369deccbd8fff75c047db77f732ec639ed51c30deff04be1b1",
+      "bytes": 994,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part1/depth_context/config.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part1/depth_context/data_manifest.json",
+      "sha256": "bfc64c9ae2e6fd611c71758882c4f7294b0a451682bc5496f21add2f13faafbe",
+      "bytes": 13562980,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part1/depth_context/data_manifest.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part1/depth_context/provenance/2026-10-02T00-55-03.556352+00-00.json",
+      "sha256": "8ad392eb81415825248c93ba0f9f2dd6b269d522868fd4eebc0604f9b73c9c95",
+      "bytes": 3403,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part1/depth_context/provenance/2026-10-02T00-55-03.556352+00-00.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part1/depth_context/resolved_config.json",
+      "sha256": "0fb6f0768f5e8d369deccbd8fff75c047db77f732ec639ed51c30deff04be1b1",
+      "bytes": 994,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part1/depth_context/resolved_config.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part1/depth_context_full/RUN_LOG.txt",
+      "sha256": "73d37da0ab1bd6feb238de685f85cd59146dfe678f7d92e4b74ff33a30b62c74",
+      "bytes": 16740,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part1/depth_context_full/RUN_LOG.txt"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part1/depth_context_full/config.json",
+      "sha256": "0fb6f0768f5e8d369deccbd8fff75c047db77f732ec639ed51c30deff04be1b1",
+      "bytes": 994,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part1/depth_context_full/config.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part1/depth_context_full/data_manifest.json",
+      "sha256": "bfc64c9ae2e6fd611c71758882c4f7294b0a451682bc5496f21add2f13faafbe",
+      "bytes": 13562980,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part1/depth_context_full/data_manifest.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part1/depth_context_full/history.json",
+      "sha256": "fe6a82f2f11fad188f73a8a199e05cb57000a6a6eba5cf0c3de7f91c58b67859",
+      "bytes": 17196,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part1/depth_context_full/history.json"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part1/depth_context_full/metrics.jsonl",
+      "sha256": "6e4fe1762f12f6f64d23e78ac62136d6d0ee7f8ef0285e196ba112420c66e500",
+      "bytes": 57476,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part1/depth_context_full/metrics.jsonl"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part1/depth_context_full/provenance/2026-10-02T00-56-10.313391+00-00.json",
+      "sha256": "bc3859ea010ae83f77f6f324e29ab8ac7c26021a7b5ecb2f678fd171982553a6",
+      "bytes": 8190,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part1/depth_context_full/provenance/2026-10-02T00-56-10.313391+00-00.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part1/depth_context_full/resolved_config.json",
+      "sha256": "0fb6f0768f5e8d369deccbd8fff75c047db77f732ec639ed51c30deff04be1b1",
+      "bytes": 994,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part1/depth_context_full/resolved_config.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part1/depth_context_full/run_summary.json",
+      "sha256": "bc3859ea010ae83f77f6f324e29ab8ac7c26021a7b5ecb2f678fd171982553a6",
+      "bytes": 8190,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part1/depth_context_full/run_summary.json"
+      },
+      "role": "original_run_result"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part1/depth_context_full/summary.json",
+      "sha256": "c70cf2bcb2b1d69a07e71430049e5557e9c09463ec0ea3ff4ae2d7a6bfc2d42c",
+      "bytes": 4466,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part1/depth_context_full/summary.json"
+      },
+      "role": "original_run_result"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/cnn_regularized/RUN_LOG.txt",
+      "sha256": "cbcd3043e99a69bbd098a3d4129317318df8e1b2bc0462f22e28fc397f990c5f",
+      "bytes": 31654,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/cnn_regularized/RUN_LOG.txt"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/cnn_regularized/candidate.json",
+      "sha256": "bca02a89815d704919ac2c77d0ecb565c3d2ded3058380ba756b7b65118a2bc0",
+      "bytes": 474,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/cnn_regularized/candidate.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/cnn_regularized/config.json",
+      "sha256": "38eb66bdc11cc12436f61e1c2b09e8ad35cf75d10335655a4fd6c9ded027e2f0",
+      "bytes": 1094,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/cnn_regularized/config.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/cnn_regularized/dilated_cnn/history.json",
+      "sha256": "97a79f4988690d73206af6881bb80d11ea881798ffb473a9f9a96a540b07291d",
+      "bytes": 3060,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/cnn_regularized/dilated_cnn/history.json"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/cnn_regularized/dilated_cnn/validation_selection.json",
+      "sha256": "7835f64dad8e96f67cfe2942e321cecffc375adb02b82b9b7aba51ae93168ffd",
+      "bytes": 425,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/cnn_regularized/dilated_cnn/validation_selection.json"
+      },
+      "role": "original_run_result"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/cnn_regularized/provenance.json",
+      "sha256": "a63165da4fe814780f5a0ab7529f9dd5c045a1dbab4f6ba047ded9ea7ebff5b9",
+      "bytes": 5279,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/cnn_regularized/provenance.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/cnn_regularized/provenance_invocations/2026-10-02T01-14-13.376346+00-00.json",
+      "sha256": "a63165da4fe814780f5a0ab7529f9dd5c045a1dbab4f6ba047ded9ea7ebff5b9",
+      "bytes": 5279,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/cnn_regularized/provenance_invocations/2026-10-02T01-14-13.376346+00-00.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/cnn_regularized/source_snapshot/task2_sentiment/srinidhi/config.json",
+      "sha256": "4b244db4f3c9c32feb22ac37a91bba8f6b779fba80b521dae4de63a854c3575a",
+      "bytes": 2903,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/cnn_regularized/source_snapshot/task2_sentiment/srinidhi/config.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/cnn_wide_regularized/RUN_LOG.txt",
+      "sha256": "75e9e11de4d386782fdd50139f2b3b6773695d09955c5a5b4fe2632db79eb12e",
+      "bytes": 34634,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/cnn_wide_regularized/RUN_LOG.txt"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/cnn_wide_regularized/candidate.json",
+      "sha256": "f492e8a10d0c0c350bf4ef73ef8977a0386055474954c59fcf50efafe9825907",
+      "bytes": 719,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/cnn_wide_regularized/candidate.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/cnn_wide_regularized/config.json",
+      "sha256": "ea185b9b101671c59fb0daa4f0c10e6511973196c0387d3302f71910fecdd3ce",
+      "bytes": 1095,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/cnn_wide_regularized/config.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/cnn_wide_regularized/dilated_cnn/history.json",
+      "sha256": "fe910e4e35f9da1392bf43744a34edeb10eaf71ccdab03a0645a635f73cb1a84",
+      "bytes": 3337,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/cnn_wide_regularized/dilated_cnn/history.json"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/cnn_wide_regularized/dilated_cnn/validation_selection.json",
+      "sha256": "44965419262ee34350e22755dc643cc7c09128968cf7e944477b849db2b61574",
+      "bytes": 426,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/cnn_wide_regularized/dilated_cnn/validation_selection.json"
+      },
+      "role": "original_run_result"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/cnn_wide_regularized/provenance.json",
+      "sha256": "80b3b3c943450afe9acf6ca9b7f239382e1c735c20f0321e91c6d7095d365d15",
+      "bytes": 5543,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/cnn_wide_regularized/provenance.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/cnn_wide_regularized/provenance_invocations/2026-10-02T01-30-44.745128+00-00.json",
+      "sha256": "80b3b3c943450afe9acf6ca9b7f239382e1c735c20f0321e91c6d7095d365d15",
+      "bytes": 5543,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/cnn_wide_regularized/provenance_invocations/2026-10-02T01-30-44.745128+00-00.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/cnn_wide_regularized/source_snapshot/task2_sentiment/srinidhi/config.json",
+      "sha256": "4b244db4f3c9c32feb22ac37a91bba8f6b779fba80b521dae4de63a854c3575a",
+      "bytes": 2903,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/cnn_wide_regularized/source_snapshot/task2_sentiment/srinidhi/config.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/mlp_regularized/RUN_LOG.txt",
+      "sha256": "98e79c49e1dc6141326fe28335a4fdc8935f9aa58889cb934f298575c5fb2f45",
+      "bytes": 31599,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/mlp_regularized/RUN_LOG.txt"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/mlp_regularized/candidate.json",
+      "sha256": "ca2499362344e5a8cf74ed64f65232d71248db41d50069a42b4a8c9608f1942f",
+      "bytes": 416,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/mlp_regularized/candidate.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/mlp_regularized/config.json",
+      "sha256": "c70efdc66bd2678ebe40382e3c9456bb676acbc583fec8da0ddc7cdc9cd5f960",
+      "bytes": 1094,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/mlp_regularized/config.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/mlp_regularized/maxpool_mlp/history.json",
+      "sha256": "6afdc1669da1e5518b3b676ac661499709e4c7fcf1af6851902c23fd1e6c7fc6",
+      "bytes": 3068,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/mlp_regularized/maxpool_mlp/history.json"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/mlp_regularized/maxpool_mlp/validation_selection.json",
+      "sha256": "6056ba144e834f55daaaa968f6d91f3ba0ff0608dc56816f55af81753fbadf49",
+      "bytes": 425,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/mlp_regularized/maxpool_mlp/validation_selection.json"
+      },
+      "role": "original_run_result"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/mlp_regularized/provenance.json",
+      "sha256": "ba21b7661c6f7b640a3ea64c98ab3a501e267cfc928bc81b713f919f00634bd7",
+      "bytes": 5219,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/mlp_regularized/provenance.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/mlp_regularized/provenance_invocations/2026-10-02T00-55-48.199200+00-00.json",
+      "sha256": "ba21b7661c6f7b640a3ea64c98ab3a501e267cfc928bc81b713f919f00634bd7",
+      "bytes": 5219,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/mlp_regularized/provenance_invocations/2026-10-02T00-55-48.199200+00-00.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/mlp_regularized/source_snapshot/task2_sentiment/srinidhi/config.json",
+      "sha256": "4b244db4f3c9c32feb22ac37a91bba8f6b779fba80b521dae4de63a854c3575a",
+      "bytes": 2903,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/mlp_regularized/source_snapshot/task2_sentiment/srinidhi/config.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/mlp_wide_regularized/RUN_LOG.txt",
+      "sha256": "262da68512f652ff65f4c4601a09b884ac8ce4762c44a914ab049adb5c80de4e",
+      "bytes": 25972,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/mlp_wide_regularized/RUN_LOG.txt"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/mlp_wide_regularized/candidate.json",
+      "sha256": "989c732a31f2e872d1eeeaad36160f6a7a691ded452f99b958b3d048adb0f10f",
+      "bytes": 518,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/mlp_wide_regularized/candidate.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/mlp_wide_regularized/config.json",
+      "sha256": "fa42bc53bcbd02efe5ea681f59550cd6ba147bf19939707eb717d44c89134d9d",
+      "bytes": 1095,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/mlp_wide_regularized/config.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/mlp_wide_regularized/maxpool_mlp/history.json",
+      "sha256": "8c6ebfc3e99d1a138027ab49a96d4982283c7f3fd55cff70f17158b0ee13da52",
+      "bytes": 2508,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/mlp_wide_regularized/maxpool_mlp/history.json"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/mlp_wide_regularized/maxpool_mlp/validation_selection.json",
+      "sha256": "c4bbc6a8de9a3de508db9fa32e1cc57ee372d97a3aa7caeade33ce65f08b4e99",
+      "bytes": 426,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/mlp_wide_regularized/maxpool_mlp/validation_selection.json"
+      },
+      "role": "original_run_result"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/mlp_wide_regularized/provenance.json",
+      "sha256": "add1d3fc1a1920eb06351c6c195651237d0ed2b0ddc2b59fba9d53c4c4c1bf1d",
+      "bytes": 5327,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/mlp_wide_regularized/provenance.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/mlp_wide_regularized/provenance_invocations/2026-10-02T01-05-55.282698+00-00.json",
+      "sha256": "add1d3fc1a1920eb06351c6c195651237d0ed2b0ddc2b59fba9d53c4c4c1bf1d",
+      "bytes": 5327,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/mlp_wide_regularized/provenance_invocations/2026-10-02T01-05-55.282698+00-00.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/mlp_wide_regularized/source_snapshot/task2_sentiment/srinidhi/config.json",
+      "sha256": "4b244db4f3c9c32feb22ac37a91bba8f6b779fba80b521dae4de63a854c3575a",
+      "bytes": 2903,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/training/mlp_wide_regularized/source_snapshot/task2_sentiment/srinidhi/config.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/notebook-smoke-2026-09-18T22-31-24.196483+00-00/sentiment/RUN_LOG.txt",
+      "sha256": "166123103c9b2a037e4372a2ecd8fa57729e66597b671b9ab096b6b035a453b9",
+      "bytes": 416,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/notebook-smoke-2026-09-18T22-31-24.196483+00-00/sentiment/RUN_LOG.txt"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/notebook-smoke-2026-09-18T22-31-24.196483+00-00/sentiment/bilstm/history.json",
+      "sha256": "c63ae83441e6fdaa394b5baae4ad033c539e873117b69af01bb6be5770e2cc4e",
+      "bytes": 273,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/notebook-smoke-2026-09-18T22-31-24.196483+00-00/sentiment/bilstm/history.json"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/notebook-smoke-2026-09-18T22-31-24.196483+00-00/sentiment/config.json",
+      "sha256": "c9b7d74d5bbe75001982f7c44a2e150a513e1c909a02007da784ade115ccc459",
+      "bytes": 752,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/notebook-smoke-2026-09-18T22-31-24.196483+00-00/sentiment/config.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/notebook-smoke-2026-09-18T22-31-24.196483+00-00/sentiment/dilated_cnn/history.json",
+      "sha256": "35560bb88e6e00cab0ab24719f90046f5db7a5caea55768f34a0ff649266844f",
+      "bytes": 271,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/notebook-smoke-2026-09-18T22-31-24.196483+00-00/sentiment/dilated_cnn/history.json"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/notebook-smoke-2026-09-18T22-31-24.196483+00-00/sentiment/maxpool_mlp/history.json",
+      "sha256": "e23e16a49799e95a1453edcfbc6a43ce1235bd921c717b5e159539f967abf026",
+      "bytes": 273,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/notebook-smoke-2026-09-18T22-31-24.196483+00-00/sentiment/maxpool_mlp/history.json"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/notebook-smoke-2026-09-18T22-31-24.196483+00-00/sentiment/provenance/2026-09-18T22-31-24.200748+00-00.json",
+      "sha256": "61c93ec2262d0a68998c8d9d39cf663d4ae81946afdbae8ffb8c4990a9d72a3e",
+      "bytes": 9093,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/notebook-smoke-2026-09-18T22-31-24.196483+00-00/sentiment/provenance/2026-09-18T22-31-24.200748+00-00.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/notebook-smoke-2026-09-18T22-31-24.196483+00-00/sentiment/resolved_config.json",
+      "sha256": "c9b7d74d5bbe75001982f7c44a2e150a513e1c909a02007da784ade115ccc459",
+      "bytes": 752,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/notebook-smoke-2026-09-18T22-31-24.196483+00-00/sentiment/resolved_config.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/notebook-smoke-2026-09-18T22-31-24.196483+00-00/sentiment/run_summary.json",
+      "sha256": "61c93ec2262d0a68998c8d9d39cf663d4ae81946afdbae8ffb8c4990a9d72a3e",
+      "bytes": 9093,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/notebook-smoke-2026-09-18T22-31-24.196483+00-00/sentiment/run_summary.json"
+      },
+      "role": "original_run_result"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/notebook-smoke-2026-09-18T22-31-24.196483+00-00/sentiment/summary.json",
+      "sha256": "b4e067d4c1ffd99fcdc4fb28f2450047b9f884cd3d5105d54e2e887c4d0b54ab",
+      "bytes": 6856,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/notebook-smoke-2026-09-18T22-31-24.196483+00-00/sentiment/summary.json"
+      },
+      "role": "original_run_result"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/notebook-smoke-2026-09-18T22-31-28.626070+00-00/cyclegan/RUN_LOG.txt",
+      "sha256": "d38f145808717775d64aa1f8611ccf257a5b673e1fd12e2304ae471c68925af7",
+      "bytes": 323,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/notebook-smoke-2026-09-18T22-31-28.626070+00-00/cyclegan/RUN_LOG.txt"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/notebook-smoke-2026-09-18T22-31-28.626070+00-00/cyclegan/data_manifest.json",
+      "sha256": "1ee2f64540480168827441e0206ccc9352de3bb6f530639d05631e59538bb49b",
+      "bytes": 260,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/notebook-smoke-2026-09-18T22-31-28.626070+00-00/cyclegan/data_manifest.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/notebook-smoke-2026-09-18T22-31-28.626070+00-00/cyclegan/provenance/2026-09-18T22-31-28.629121+00-00.json",
+      "sha256": "504ffef1d42199a12a8418d92754d99d8bf45eb66977965c60a768fc96c5812e",
+      "bytes": 8860,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/notebook-smoke-2026-09-18T22-31-28.626070+00-00/cyclegan/provenance/2026-09-18T22-31-28.629121+00-00.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/notebook-smoke-2026-09-18T22-31-28.626070+00-00/cyclegan/resolved_config.json",
+      "sha256": "76872fc6b3b538acd461aee12c434da44b82173089b1bb9dca87b04492b1ca20",
+      "bytes": 669,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/notebook-smoke-2026-09-18T22-31-28.626070+00-00/cyclegan/resolved_config.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/notebook-smoke-2026-09-18T22-31-28.626070+00-00/cyclegan/run_summary.json",
+      "sha256": "504ffef1d42199a12a8418d92754d99d8bf45eb66977965c60a768fc96c5812e",
+      "bytes": 8860,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/notebook-smoke-2026-09-18T22-31-28.626070+00-00/cyclegan/run_summary.json"
+      },
+      "role": "original_run_result"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/notebook-smoke-2026-09-18T22-31-28.626070+00-00/cyclegan/training_log.jsonl",
+      "sha256": "a58d872b0d1836b5196a2f4163b2f7e249fb3b75626c2aaa50780e32e0767087",
+      "bytes": 1430,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/notebook-smoke-2026-09-18T22-31-28.626070+00-00/cyclegan/training_log.jsonl"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-ema-20261002/lr2e5/data_manifest.json",
+      "sha256": "b7aae04a9fca553029bc8748ebdd10eb7259be3c573655747264242e8953a4ab",
+      "bytes": 1092644,
+      "source": {
+        "kind": "archive_member",
+        "archive": "reproducibility/packages/part3-20261002/Part3.zip",
+        "member": "Part3/evidence/study/arms/lr2e5/data_manifest.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-ema-20261002/lr2e5/initialization.json",
+      "sha256": "aa5090232ea6da266088faed29bfb585934ae35fc1bdd40e3e2039e40bb60c9a",
+      "bytes": 2570,
+      "source": {
+        "kind": "archive_member",
+        "archive": "reproducibility/packages/part3-20261002/Part3.zip",
+        "member": "Part3/evidence/study/arms/lr2e5/initialization.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-ema-20261002/lr2e5/provenance/2026-10-02T16-06-15.060025+00-00.json",
+      "sha256": "130909293c9656f6e66a27eb5c2561ad8d2baffd133c37c99185cb4e82d51a07",
+      "bytes": 11805,
+      "source": {
+        "kind": "archive_member",
+        "archive": "reproducibility/packages/part3-20261002/Part3.zip",
+        "member": "Part3/evidence/study/arms/lr2e5/provenance/2026-10-02T16-06-15.060025+00-00.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-ema-20261002/lr2e5/resolved_config.json",
+      "sha256": "cd452028c471b689230c22dee647d9586a250294cd5a2245e88ec247858a42e2",
+      "bytes": 1486,
+      "source": {
+        "kind": "archive_member",
+        "archive": "reproducibility/packages/part3-20261002/Part3.zip",
+        "member": "Part3/evidence/study/arms/lr2e5/resolved_config.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-ema-20261002/lr2e5/run_summary.json",
+      "sha256": "130909293c9656f6e66a27eb5c2561ad8d2baffd133c37c99185cb4e82d51a07",
+      "bytes": 11805,
+      "source": {
+        "kind": "archive_member",
+        "archive": "reproducibility/packages/part3-20261002/Part3.zip",
+        "member": "Part3/evidence/study/arms/lr2e5/run_summary.json"
+      },
+      "role": "original_run_result"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-ema-20261002/lr2e5/training_log.jsonl",
+      "sha256": "42fedf94e663dfc35bf6c056ed120ffa52d72eb5b3631cc0153fdddd598554ad",
+      "bytes": 17003993,
+      "source": {
+        "kind": "archive_member",
+        "archive": "reproducibility/packages/part3-20261002/Part3.zip",
+        "member": "Part3/evidence/study/arms/lr2e5/training_log.jsonl"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-ema-20261002/lr5e5/data_manifest.json",
+      "sha256": "b7aae04a9fca553029bc8748ebdd10eb7259be3c573655747264242e8953a4ab",
+      "bytes": 1092644,
+      "source": {
+        "kind": "archive_member",
+        "archive": "reproducibility/packages/part3-20261002/Part3.zip",
+        "member": "Part3/evidence/study/arms/lr5e5/data_manifest.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-ema-20261002/lr5e5/initialization.json",
+      "sha256": "aa5090232ea6da266088faed29bfb585934ae35fc1bdd40e3e2039e40bb60c9a",
+      "bytes": 2570,
+      "source": {
+        "kind": "archive_member",
+        "archive": "reproducibility/packages/part3-20261002/Part3.zip",
+        "member": "Part3/evidence/study/arms/lr5e5/initialization.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-ema-20261002/lr5e5/provenance/2026-10-02T14-34-56.869704+00-00.json",
+      "sha256": "b5362acb2a8458a3250ce04e266d3e6f3cb58147eddeb723938335456067d20d",
+      "bytes": 9417,
+      "source": {
+        "kind": "archive_member",
+        "archive": "reproducibility/packages/part3-20261002/Part3.zip",
+        "member": "Part3/evidence/study/arms/lr5e5/provenance/2026-10-02T14-34-56.869704+00-00.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-ema-20261002/lr5e5/provenance/2026-10-02T14-37-16.660961+00-00.json",
+      "sha256": "f5432829ba7027d3af7fd30000e7098b4e82c1eb8bb80866abafbd0d7c183e21",
+      "bytes": 14116,
+      "source": {
+        "kind": "archive_member",
+        "archive": "reproducibility/packages/part3-20261002/Part3.zip",
+        "member": "Part3/evidence/study/arms/lr5e5/provenance/2026-10-02T14-37-16.660961+00-00.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-ema-20261002/lr5e5/resolved_config.json",
+      "sha256": "6d24949b4d612fd5cb61e4e60e0d1dba28731a1bd8ec0c24b88613cd8cbdaa53",
+      "bytes": 1485,
+      "source": {
+        "kind": "archive_member",
+        "archive": "reproducibility/packages/part3-20261002/Part3.zip",
+        "member": "Part3/evidence/study/arms/lr5e5/resolved_config.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-ema-20261002/lr5e5/run_summary.json",
+      "sha256": "f5432829ba7027d3af7fd30000e7098b4e82c1eb8bb80866abafbd0d7c183e21",
+      "bytes": 14116,
+      "source": {
+        "kind": "archive_member",
+        "archive": "reproducibility/packages/part3-20261002/Part3.zip",
+        "member": "Part3/evidence/study/arms/lr5e5/run_summary.json"
+      },
+      "role": "original_run_result"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-ema-20261002/lr5e5/training_log.jsonl",
+      "sha256": "0fc5d0e1eb638d73c995eeb34f2f36e18be3e79fc32f7a6831f9ac03a5cdc383",
+      "bytes": 34377042,
+      "source": {
+        "kind": "archive_member",
+        "archive": "reproducibility/packages/part3-20261002/Part3.zip",
+        "member": "Part3/evidence/study/arms/lr5e5/training_log.jsonl"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-mps-benchmark-20260925/steps.jsonl",
+      "sha256": "b2f97a5044096e94c2a5743fc794844bf3ab32828be7f04484830d7d98a1e2bb",
+      "bytes": 10903,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part-c-mps-benchmark-20260925T214714Z/steps.jsonl"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-mps-benchmark-20260925/terminal.log",
+      "sha256": "8c2e0985d96caa6df9ac3cc06acc319c024103fd9a92bf7b2bfe14fac4ecac0e",
+      "bytes": 2711,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part-c-mps-benchmark-20260925T214714Z/terminal.log"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-pilots-20261003/A_ctrl/training_log.jsonl",
+      "sha256": "751dd7829bae1153e819c4a2d6a9de2b9e2028a3734ecd132118800a363b1aad",
+      "bytes": 24152,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-push-work/v2/pilots/A_ctrl/training_log.jsonl"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-pilots-20261003/B_c5i0/training_log.jsonl",
+      "sha256": "f1a375d7a8bc114106fe804b53bb1079bd045634cffb951de2fd385cd976e3bb",
+      "bytes": 25828,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-push-work/v2/pilots/B_c5i0/training_log.jsonl"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-pilots-20261003/C_c3i0/training_log.jsonl",
+      "sha256": "69f7956ac5fe8c91ce0a15aed496175ee9dd043e7d5b9f991b82fc59989571e9",
+      "bytes": 20956,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-push-work/v2/pilots/C_c3i0/training_log.jsonl"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-pilots-20261003/R2_c1i0/training_log.jsonl",
+      "sha256": "130512fd407e0027380cc5c5d6a44fe080028f31a58da195bfc4c9594c16f104",
+      "bytes": 9788,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-push-work/v2/pilots/R2_c1i0/training_log.jsonl"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-pilots-20261003/R2_c5i0_daug/training_log.jsonl",
+      "sha256": "1c224cd31affa66f4b41186e5bbb43c8cf4444b6f84895974bab92e702632788",
+      "bytes": 25859,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-push-work/v2/pilots/R2_c5i0_daug/training_log.jsonl"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-pilots-20261003/R2_c5i0_ms2/training_log.jsonl",
+      "sha256": "83d64a99eb7b1aeb1d8d45feb0e59b19a7ed5f3118b7bfb399ac580e1b165e0f",
+      "bytes": 10952,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-push-work/v2/pilots/R2_c5i0_ms2/training_log.jsonl"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-pilots-20261003/R3_c3nce_daug/training_log.jsonl",
+      "sha256": "7c89e6016653e77a363ff853dd71d6d7dd70a1c27f13be0245fd522b458e1e0d",
+      "bytes": 9196,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-push-work/v2/pilots/R3_c3nce_daug/training_log.jsonl"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-pilots-20261003/R3_c5i0_ms2_daug/training_log.jsonl",
+      "sha256": "9d85acab218629ad271632be16e6b6a9f612eb61fe9c6eb6ebea2998257958d7",
+      "bytes": 13703,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-push-work/v2/pilots/R3_c5i0_ms2_daug/training_log.jsonl"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-pilots-20261003/R3_lp4d02_daug/training_log.jsonl",
+      "sha256": "3c45e0383e813ac0ba746e01f754d64e78fa9ef30da4ae5f86770c209d219f7c",
+      "bytes": 15714,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-push-work/v2/pilots/R3_lp4d02_daug/training_log.jsonl"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-pilots-20261003/R4_c2nce_dtr/training_log.jsonl",
+      "sha256": "5885363415d06d5f3e7dd14faab4b55bd9e24e0dffc81034edf72099f7241c25",
+      "bytes": 15534,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-push-work/v2/pilots/R4_c2nce_dtr/training_log.jsonl"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-pilots-20261003/R4_c5_dtr/training_log.jsonl",
+      "sha256": "5cd75030a401bb7ad472a4826ed288e47930f60b9f38a8b34e52d97bcd370aa8",
+      "bytes": 25870,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-push-work/v2/pilots/R4_c5_dtr/training_log.jsonl"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-pilots-20261003/R4_lp4_dtr/training_log.jsonl",
+      "sha256": "b506946cd913fd14fc7c700c9ca0de009feed91b128c9eecdaa2ba77bfea6a7f",
+      "bytes": 23354,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-push-work/v2/pilots/R4_lp4_dtr/training_log.jsonl"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-pilots-20261003/R6_c3n/training_log.jsonl",
+      "sha256": "671b8b1ff8d113f69090cc4237330d00db566cceb3ed3fbc2593822a2b384e8b",
+      "bytes": 14889,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-push-work/v2/pilots/R6_c3n/training_log.jsonl"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-pilots-20261003/R6_c5/training_log.jsonl",
+      "sha256": "39416336e681656a91875a51844a3343fbb20c2e9f489849bbaecac51d2df6a9",
+      "bytes": 27636,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-push-work/v2/pilots/R6_c5/training_log.jsonl"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-pilots-20261003/R6_c5_id15/training_log.jsonl",
+      "sha256": "e2df7eee87f25d8e7ae4e119e5f264353bbbdbafffd2ec5363e5595158048735",
+      "bytes": 12474,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-push-work/v2/pilots/R6_c5_id15/training_log.jsonl"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-pilots-20261003/R6_c5_m04/training_log.jsonl",
+      "sha256": "898820034b340044ba024fa8809404f505d168a68df2d6ff7d5be9efda788bc7",
+      "bytes": 26445,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-push-work/v2/pilots/R6_c5_m04/training_log.jsonl"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-pilots-20261003/R6_c5_nat_wu/training_log.jsonl",
+      "sha256": "c060fe45ef7b08385fcba479aaa20a430bbc0eff3a54373ac3f9cffbcbae9af7",
+      "bytes": 13759,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-push-work/v2/pilots/R6_c5_nat_wu/training_log.jsonl"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-pilots-20261003/R6_c5_wu/training_log.jsonl",
+      "sha256": "3da2cc238069f17dbaaa5c835bccf1a5c0c32f6ca712eac661acc9b4c869adaa",
+      "bytes": 28851,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-push-work/v2/pilots/R6_c5_wu/training_log.jsonl"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-pilots-20261003/failed_gpu_overload/R5_b1_c5/training_log.jsonl",
+      "sha256": "8d35c993020b4c00f5226abcac6cd535156e55f25abe530e668e82ff3e06b27b",
+      "bytes": 4107,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-push-work/v2/pilots/failed_gpu_overload/R5_b1_c5/training_log.jsonl"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-pilots-20261003/failed_gpu_overload/R5_b1_c5_m04/training_log.jsonl",
+      "sha256": "9be10faee44204254150049a1b47491ca8e139ed67f38647361ece200a5c0612",
+      "bytes": 4493,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-push-work/v2/pilots/failed_gpu_overload/R5_b1_c5_m04/training_log.jsonl"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-pilots-20261003/failed_gpu_overload/R5_b4_c3n/training_log.jsonl",
+      "sha256": "a9328392a298a36ba61d656f26a5f92f309560496437d93026d3e98ab168f8fb",
+      "bytes": 1753,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-push-work/v2/pilots/failed_gpu_overload/R5_b4_c3n/training_log.jsonl"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-pilots-20261003/failed_gpu_overload/R5_b4_c5/training_log.jsonl",
+      "sha256": "bab1ae287a47058f0f389fcf89134a7d12be36fa4e0b8c3e414dac2626fb9112",
+      "bytes": 579,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-push-work/v2/pilots/failed_gpu_overload/R5_b4_c5/training_log.jsonl"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-push-20261003/b1_c5/training_log.jsonl",
+      "sha256": "4c177440b836315d4e90c9df33d1096da53e9f6fd7213b8bf3c7da7f03d963d3",
+      "bytes": 3000351,
+      "source": {
+        "kind": "latest_verified_run",
+        "manifest": "reproducibility/manifests/selected.json"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-push-20261003/b8_c5/training_log.jsonl",
+      "sha256": "a42ca90bc98c9c0278ca6e25fb011c4b03a73c48c0f71fb1925b3dc871e6e28b",
+      "bytes": 460591,
+      "source": {
+        "kind": "latest_verified_run",
+        "manifest": "reproducibility/manifests/selected.json"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-push-20261003/b8_c5_r1/training_log.jsonl",
+      "sha256": "a2c158f1379d77c6f3599fc270fc39274742f7511a5ab46bde4779216ac5e0a6",
+      "bytes": 445974,
+      "source": {
+        "kind": "latest_verified_run",
+        "manifest": "reproducibility/manifests/selected.json"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-push-20261003/run_all.log",
+      "sha256": "f60f9c6d4511d3599ccfb4543a464a53192a5741cca0aefd6d23dd92f5a93088",
+      "bytes": 70998,
+      "source": {
+        "kind": "latest_verified_run",
+        "manifest": "reproducibility/manifests/selected.json"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-smoke-20261003/arms.json",
+      "sha256": "06c1e1f3f8c2fbb09c3f6f4c7ecb0c9fa42fc8a22cf7292944630cfa448b6eeb",
+      "bytes": 1436,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-push-work/results/Vast_54065624_full_backup_20261004/Part3_Push_5090/arms.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-smoke-20261003/smoke-default-threads-preserved/b1_c5.out",
+      "sha256": "ec240cf940e11aa21412fa12ab985c4ccc36a50cdfc590a575b5f29f24ceefd3",
+      "bytes": 2369,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-push-work/results/Vast_54065624_full_backup_20261004/Part3_Push_5090/work/smoke-default-threads-preserved/b1_c5.out"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-smoke-20261003/smoke-default-threads-preserved/b1_c5/training_log.jsonl",
+      "sha256": "c27af0d5f72b125247dfa77b0869393963f79276fc4018796381707050c4b7cc",
+      "bytes": 584,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-push-work/results/Vast_54065624_full_backup_20261004/Part3_Push_5090/work/smoke-default-threads-preserved/b1_c5/training_log.jsonl"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-smoke-20261003/smoke-default-threads-preserved/b8_c5.out",
+      "sha256": "8851001cc8f9418f47284b1d45e6d4ef81c3c839a470b82714dcc74128db4490",
+      "bytes": 2367,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-push-work/results/Vast_54065624_full_backup_20261004/Part3_Push_5090/work/smoke-default-threads-preserved/b8_c5.out"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-smoke-20261003/smoke-default-threads-preserved/b8_c5/training_log.jsonl",
+      "sha256": "57c7ff9cd4f39e8e52c23373dd0d240ff1c84a371c918109234060721c5929e2",
+      "bytes": 585,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-push-work/results/Vast_54065624_full_backup_20261004/Part3_Push_5090/work/smoke-default-threads-preserved/b8_c5/training_log.jsonl"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-smoke-20261003/smoke-default-threads-preserved/b8_c5_r1.out",
+      "sha256": "c833e4f0bcc5f2003f3264d39c1c24724f540e6917faadcd8a7cd793b0fe01d5",
+      "bytes": 2400,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-push-work/results/Vast_54065624_full_backup_20261004/Part3_Push_5090/work/smoke-default-threads-preserved/b8_c5_r1.out"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-smoke-20261003/smoke-default-threads-preserved/b8_c5_r1/training_log.jsonl",
+      "sha256": "8fca379e7977dff9648f4af1bc9a13cf290914eda00e779177caf44cfe35537f",
+      "bytes": 585,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-push-work/results/Vast_54065624_full_backup_20261004/Part3_Push_5090/work/smoke-default-threads-preserved/b8_c5_r1/training_log.jsonl"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-smoke-20261003/smoke/b1_c5.out",
+      "sha256": "5d37bfbb424644e90ea4c59f20674ea4807b27e096a57b81b3fef1c8edf92764",
+      "bytes": 5426,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-push-work/results/Vast_54065624_full_backup_20261004/Part3_Push_5090/work/smoke/b1_c5.out"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-smoke-20261003/smoke/b1_c5/summary.json",
+      "sha256": "db599e53469fd94337c92c353433f572484da1eae410ec614a2e8e8ac70bf88f",
+      "bytes": 1781,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-push-work/results/Vast_54065624_full_backup_20261004/Part3_Push_5090/work/smoke/b1_c5/summary.json"
+      },
+      "role": "original_run_result"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-smoke-20261003/smoke/b1_c5/training_log.jsonl",
+      "sha256": "ba294230e4da82e2a6e23f01def2c0b536d9348e93adeaf896a8e0eccab36f9f",
+      "bytes": 3363,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-push-work/results/Vast_54065624_full_backup_20261004/Part3_Push_5090/work/smoke/b1_c5/training_log.jsonl"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-smoke-20261003/smoke/b8_c5.out",
+      "sha256": "9f00231c58cdb8465877a04314adad114897b111bc7304d0b84a175cdb52f058",
+      "bytes": 5425,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-push-work/results/Vast_54065624_full_backup_20261004/Part3_Push_5090/work/smoke/b8_c5.out"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-smoke-20261003/smoke/b8_c5/summary.json",
+      "sha256": "af9c71875c516a03b562177a75333416dbd8cea422e2da96203f4fc4bd1c3b09",
+      "bytes": 1782,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-push-work/results/Vast_54065624_full_backup_20261004/Part3_Push_5090/work/smoke/b8_c5/summary.json"
+      },
+      "role": "original_run_result"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-smoke-20261003/smoke/b8_c5/training_log.jsonl",
+      "sha256": "0661fbc3b771c02dd83450d3f9fd7c12889f68d9f86abb791bc2f493dc98dfb7",
+      "bytes": 3359,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-push-work/results/Vast_54065624_full_backup_20261004/Part3_Push_5090/work/smoke/b8_c5/training_log.jsonl"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-smoke-20261003/smoke/b8_c5_r1.out",
+      "sha256": "f938edd241b47e71e73b1633f0a813c2026d5c72122c8648128dc5230d2bc362",
+      "bytes": 5471,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-push-work/results/Vast_54065624_full_backup_20261004/Part3_Push_5090/work/smoke/b8_c5_r1.out"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-smoke-20261003/smoke/b8_c5_r1/summary.json",
+      "sha256": "5d04854e09dc4c0b7f1e0dcd9e81d4e9b81638c7fe0bbcda6fa117b438dbd933",
+      "bytes": 1788,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-push-work/results/Vast_54065624_full_backup_20261004/Part3_Push_5090/work/smoke/b8_c5_r1/summary.json"
+      },
+      "role": "original_run_result"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-smoke-20261003/smoke/b8_c5_r1/training_log.jsonl",
+      "sha256": "eed5a0c537b601a7c169c1e170014db2a1f037b8f6c4cf6abb87aeb1b0c8a770",
+      "bytes": 3370,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-push-work/results/Vast_54065624_full_backup_20261004/Part3_Push_5090/work/smoke/b8_c5_r1/training_log.jsonl"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-full/RUN_LOG.txt",
+      "sha256": "37ce98c3c472ba8ad4311d9bf80dab6231d5b2795711dba3b56c4da0b24d8270",
+      "bytes": 184109,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-full/RUN_LOG.txt"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-full/bilstm/history.json",
+      "sha256": "c21b653e222d832540c45e57d7bdac16eae7c2a52a36680fd8cb309800d185a9",
+      "bytes": 1621,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-full/bilstm/history.json"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-full/config.json",
+      "sha256": "7080e2b6f917a91745dfcb8cccd71830c3c157d80590753ab9ef621008bc51e3",
+      "bytes": 986,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-full/config.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-full/dilated_cnn/history.json",
+      "sha256": "9ff02d4b95085522693f06aef0a330142d2a0b0c71b81c10c443ac92a1929c83",
+      "bytes": 1617,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-full/dilated_cnn/history.json"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-full/maxpool_mlp/history.json",
+      "sha256": "87cafb8be8f58c1b1ef11089f0e8ca9d2a530a0c9bd765aa9fe28da2eca6f16b",
+      "bytes": 1621,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-full/maxpool_mlp/history.json"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-full/provenance/2026-09-19T01-40-08.215178+00-00.json",
+      "sha256": "ea5dd604493f70c438b51253ea0611264190a21b160f003869b6fa7aba29a833",
+      "bytes": 10699,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-full/provenance/2026-09-19T01-40-08.215178+00-00.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-full/resolved_config.json",
+      "sha256": "7080e2b6f917a91745dfcb8cccd71830c3c157d80590753ab9ef621008bc51e3",
+      "bytes": 986,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-full/resolved_config.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-full/run_summary.json",
+      "sha256": "ea5dd604493f70c438b51253ea0611264190a21b160f003869b6fa7aba29a833",
+      "bytes": 10699,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-full/run_summary.json"
+      },
+      "role": "original_run_result"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-full/summary.json",
+      "sha256": "53f86be0b2c6c1bf6f27bb1198a3b4422638111c573fc6825539ff2c9e2f4d03",
+      "bytes": 7842,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-full/summary.json"
+      },
+      "role": "original_run_result"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/bilstm_long_schedule_control/RUN_LOG.txt",
+      "sha256": "cc5e773758f7cd12ed0e07725aff9be2708c162973e366576269bb40639b7dfd",
+      "bytes": 62841,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/bilstm_long_schedule_control/RUN_LOG.txt"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/bilstm_long_schedule_control/bilstm/history.json",
+      "sha256": "102037915eea486ffa4e24805fa0aac7e6a8bd35044fed9884be89005eb73324",
+      "bytes": 3250,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/bilstm_long_schedule_control/bilstm/history.json"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/bilstm_long_schedule_control/bilstm/validation_selection.json",
+      "sha256": "9f37b608715823a284627703715c9d2e049368843d08d64ca0711537382ec846",
+      "bytes": 279,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/bilstm_long_schedule_control/bilstm/validation_selection.json"
+      },
+      "role": "original_run_result"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/bilstm_long_schedule_control/candidate.json",
+      "sha256": "abc6a004f45c643cfd7ce8d43dfad8baa43d3598dcdf426fecb7c0dd72bec85a",
+      "bytes": 327,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/bilstm_long_schedule_control/candidate.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/bilstm_long_schedule_control/config.json",
+      "sha256": "e128e5a3eec8b17db5bae50fb810e7fe7bb7b1a5da8107758a098b9d0ea5ada4",
+      "bytes": 1049,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/bilstm_long_schedule_control/config.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/bilstm_long_schedule_control/provenance.json",
+      "sha256": "32155a56e6c563aa8fcc2d00936fc1dec26c75966aefe2f846e181c28b50bb66",
+      "bytes": 4181,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/bilstm_long_schedule_control/provenance.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/bilstm_wider/RUN_LOG.txt",
+      "sha256": "d2780bf5a24ef88a6cb1f191e154ffa6fe4ff71081cc11abd62818b276808a21",
+      "bytes": 62904,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/bilstm_wider/RUN_LOG.txt"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/bilstm_wider/bilstm/history.json",
+      "sha256": "b4acac2927a27f784a218cc6302aaee0b43776549d3f6017bbc75594dc452688",
+      "bytes": 3257,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/bilstm_wider/bilstm/history.json"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/bilstm_wider/bilstm/validation_selection.json",
+      "sha256": "4382d12ad76526691dc2dc033cb4637769c2dc67b4ba3ccfe9aa650ff49f1e6a",
+      "bytes": 278,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/bilstm_wider/bilstm/validation_selection.json"
+      },
+      "role": "original_run_result"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/bilstm_wider/candidate.json",
+      "sha256": "fadfedf5174689f0fd0a9431e9f38e1370eb48266033d05f6c5dec41d5c5c193",
+      "bytes": 488,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/bilstm_wider/candidate.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/bilstm_wider/config.json",
+      "sha256": "c4110f2ec33715b7816cc9bf3b998c6a51c77f6991f0745bb66e3a853d3a49d0",
+      "bytes": 1051,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/bilstm_wider/config.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/bilstm_wider/provenance.json",
+      "sha256": "8bc7752ac045f3a3673aaf982a9d7719806d2fb98656253604ebc8c21d4336be",
+      "bytes": 4359,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/bilstm_wider/provenance.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/cnn_long_context/RUN_LOG.txt",
+      "sha256": "115dd2f076c6045035e34fcbdfd3ee04e764bb16ffc25bc32ac9d6b4a084d3c7",
+      "bytes": 54057,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/cnn_long_context/RUN_LOG.txt"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/cnn_long_context/candidate.json",
+      "sha256": "8dc3de39a2842f38fcaf4e479fb052b8bba7a591348b5e94a29daa747e0fab4a",
+      "bytes": 405,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/cnn_long_context/candidate.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/cnn_long_context/config.json",
+      "sha256": "071eb6c8e45e4d9601b7143268bb435c84fe235c6b439e333b997adff1b93b77",
+      "bytes": 1065,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/cnn_long_context/config.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/cnn_long_context/dilated_cnn/history.json",
+      "sha256": "58e62b3ad85b67b90cb8eebaf00a928b1ebdae0829e0a30ae549a5296de486a6",
+      "bytes": 2701,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/cnn_long_context/dilated_cnn/history.json"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/cnn_long_context/dilated_cnn/validation_selection.json",
+      "sha256": "8190d50c754f469c0444d583b3d05a08c2949e4c14e7a1e5c24761ca51cfbd07",
+      "bytes": 283,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/cnn_long_context/dilated_cnn/validation_selection.json"
+      },
+      "role": "original_run_result"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/cnn_long_context/provenance.json",
+      "sha256": "081e1debab077b7c2039590b27d053bfcebc247bac27ccac316312aa21833c93",
+      "bytes": 4298,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/cnn_long_context/provenance.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/dilated_cnn_long_schedule_control/RUN_LOG.txt",
+      "sha256": "965df270c451dee6d8df58916bf766e96a936c812c295de1430158e4d6c278a1",
+      "bytes": 54007,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/dilated_cnn_long_schedule_control/RUN_LOG.txt"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/dilated_cnn_long_schedule_control/candidate.json",
+      "sha256": "0fc53e328ad7ebca0f20ebb75680cfc14ec3d963a42d6b3655928a718b40fb63",
+      "bytes": 337,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/dilated_cnn_long_schedule_control/candidate.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/dilated_cnn_long_schedule_control/config.json",
+      "sha256": "e128e5a3eec8b17db5bae50fb810e7fe7bb7b1a5da8107758a098b9d0ea5ada4",
+      "bytes": 1049,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/dilated_cnn_long_schedule_control/config.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/dilated_cnn_long_schedule_control/dilated_cnn/history.json",
+      "sha256": "d7580f3f71f3a1d7caba2a004979b0ddead90f0add1ea221f7287e203d8b95ed",
+      "bytes": 2691,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/dilated_cnn_long_schedule_control/dilated_cnn/history.json"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/dilated_cnn_long_schedule_control/dilated_cnn/validation_selection.json",
+      "sha256": "84b60a402282d6ef2f8105ade76ee831898200491d22a1dad296deb5b1ff43b6",
+      "bytes": 282,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/dilated_cnn_long_schedule_control/dilated_cnn/validation_selection.json"
+      },
+      "role": "original_run_result"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/dilated_cnn_long_schedule_control/provenance.json",
+      "sha256": "e40a79a49696a4b74727a16a3b8abe4b42e2ff653090d80d68b0ee24a32ab31d",
+      "bytes": 4194,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/dilated_cnn_long_schedule_control/provenance.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/maxpool_mlp_long_schedule_control/RUN_LOG.txt",
+      "sha256": "27542f4df8e48ac7af64b6a5ae74511df0bc6e43f0e07a91c6f3275379f220f4",
+      "bytes": 48580,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/maxpool_mlp_long_schedule_control/RUN_LOG.txt"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/maxpool_mlp_long_schedule_control/candidate.json",
+      "sha256": "8e83b846f10a0ec773070382cb1612b5936c730c406ce8818558edc2573719b6",
+      "bytes": 337,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/maxpool_mlp_long_schedule_control/candidate.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/maxpool_mlp_long_schedule_control/config.json",
+      "sha256": "e128e5a3eec8b17db5bae50fb810e7fe7bb7b1a5da8107758a098b9d0ea5ada4",
+      "bytes": 1049,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/maxpool_mlp_long_schedule_control/config.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/maxpool_mlp_long_schedule_control/maxpool_mlp/history.json",
+      "sha256": "17eaa1f4517efd084f0932835dcb1d2ecb48ed873b1c5373a7274fc98ec69492",
+      "bytes": 2434,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/maxpool_mlp_long_schedule_control/maxpool_mlp/history.json"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/maxpool_mlp_long_schedule_control/maxpool_mlp/validation_selection.json",
+      "sha256": "91f654746513c3a9c6f853fea48e89d0f73a06be066fb91bfb9c309c7c4f583a",
+      "bytes": 282,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/maxpool_mlp_long_schedule_control/maxpool_mlp/validation_selection.json"
+      },
+      "role": "original_run_result"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/maxpool_mlp_long_schedule_control/provenance.json",
+      "sha256": "14e7ba08bf2eb1b83947a8fa36a8eb9ba0bd266bb59b95e11d5a69e0869d2d0f",
+      "bytes": 4193,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/maxpool_mlp_long_schedule_control/provenance.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/mlp_wider/RUN_LOG.txt",
+      "sha256": "145c62ceb9ce4dd6e33ebf2be486488b84864cf3dcfd033010cff4868d01db0b",
+      "bytes": 37823,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/mlp_wider/RUN_LOG.txt"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/mlp_wider/candidate.json",
+      "sha256": "ba3f57beeb6b9f611a6d6ae1c96979f0d820728efd45f7c6c970b1fd21dc1baf",
+      "bytes": 360,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/mlp_wider/candidate.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/mlp_wider/config.json",
+      "sha256": "2755804dd0ad4dd9ed7de39ec98d278ff9512c20ac7da8e5b71d273c1a208f8b",
+      "bytes": 1050,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/mlp_wider/config.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/mlp_wider/maxpool_mlp/history.json",
+      "sha256": "81a1b2e19d4299c4fd281e08c1a76bb1f092e886b8e2caa6d29a2b49ab042dc8",
+      "bytes": 1893,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/mlp_wider/maxpool_mlp/history.json"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/mlp_wider/maxpool_mlp/validation_selection.json",
+      "sha256": "a38379573a2cc6b84f7344976122ade5d14e3bd2aa92258fb081a9d4312382bc",
+      "bytes": 283,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/mlp_wider/maxpool_mlp/validation_selection.json"
+      },
+      "role": "original_run_result"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/mlp_wider/provenance.json",
+      "sha256": "4cd02f039639ceccf47f626f2fdcdb9774d7287062731c3b07e16889a464d2be",
+      "bytes": 4224,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/part-b/part-b-tuning/mlp_wider/provenance.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/setup/setup_and_part_a.log",
+      "sha256": "530915b8b75f11c05bdcbf695fbfe98a0fde9d0ec7b6af01bc4f8ac8096fadd0",
+      "bytes": 50587,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/runpod-20260918/setup/setup_and_part_a.log"
+      },
+      "role": "raw_smoke_and_rehearsal_console"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/smoke-20260918T223438Z-41637/cyclegan/RUN_LOG.txt",
+      "sha256": "8e4e29f5303054e1f1b8bc854af6a975acdc5f7ac6d5af58eb9e1c08deda0003",
+      "bytes": 323,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/smoke-20260918T223438Z-41637/cyclegan/RUN_LOG.txt"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/smoke-20260918T223438Z-41637/cyclegan/data_manifest.json",
+      "sha256": "1ee2f64540480168827441e0206ccc9352de3bb6f530639d05631e59538bb49b",
+      "bytes": 260,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/smoke-20260918T223438Z-41637/cyclegan/data_manifest.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/smoke-20260918T223438Z-41637/cyclegan/provenance/2026-09-18T22-35-03.468449+00-00.json",
+      "sha256": "da161a1fee92490bbce25f41d11e90df14a8facf86da95efee206410d4768cbe",
+      "bytes": 8844,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/smoke-20260918T223438Z-41637/cyclegan/provenance/2026-09-18T22-35-03.468449+00-00.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/smoke-20260918T223438Z-41637/cyclegan/resolved_config.json",
+      "sha256": "76872fc6b3b538acd461aee12c434da44b82173089b1bb9dca87b04492b1ca20",
+      "bytes": 669,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/smoke-20260918T223438Z-41637/cyclegan/resolved_config.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/smoke-20260918T223438Z-41637/cyclegan/run_summary.json",
+      "sha256": "da161a1fee92490bbce25f41d11e90df14a8facf86da95efee206410d4768cbe",
+      "bytes": 8844,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/smoke-20260918T223438Z-41637/cyclegan/run_summary.json"
+      },
+      "role": "original_run_result"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/smoke-20260918T223438Z-41637/cyclegan/training_log.jsonl",
+      "sha256": "b0b8aa36973c789088a59168f7e841ac742ad797b559c009844098779c935c79",
+      "bytes": 1431,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/smoke-20260918T223438Z-41637/cyclegan/training_log.jsonl"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/smoke-20260918T223438Z-41637/sentiment/RUN_LOG.txt",
+      "sha256": "0448fc4bca54e005f3a3d0d54c4d95e243e98f74c579c2fb9293e82cb649a73e",
+      "bytes": 416,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/smoke-20260918T223438Z-41637/sentiment/RUN_LOG.txt"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/smoke-20260918T223438Z-41637/sentiment/bilstm/history.json",
+      "sha256": "f13c388d3d195c8bd3a9335b09b87ca13abaa2852b124002dbc26c8d9aa75800",
+      "bytes": 273,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/smoke-20260918T223438Z-41637/sentiment/bilstm/history.json"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/smoke-20260918T223438Z-41637/sentiment/config.json",
+      "sha256": "c9b7d74d5bbe75001982f7c44a2e150a513e1c909a02007da784ade115ccc459",
+      "bytes": 752,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/smoke-20260918T223438Z-41637/sentiment/config.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/smoke-20260918T223438Z-41637/sentiment/dilated_cnn/history.json",
+      "sha256": "7b9ef95462acfbe96e989693206177e33c8a0b0c2a2156e71355a57bbc6b17cc",
+      "bytes": 273,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/smoke-20260918T223438Z-41637/sentiment/dilated_cnn/history.json"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/smoke-20260918T223438Z-41637/sentiment/maxpool_mlp/history.json",
+      "sha256": "19db08a54513426cb36e117f5983fd9ab671bf51abcad8eb7f510f336342c669",
+      "bytes": 272,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/smoke-20260918T223438Z-41637/sentiment/maxpool_mlp/history.json"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/smoke-20260918T223438Z-41637/sentiment/provenance/2026-09-18T22-34-45.444476+00-00.json",
+      "sha256": "11d9a6906b9083895b8b428d8c60001e8cbe725e21d4e8b5508592279496e352",
+      "bytes": 9074,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/smoke-20260918T223438Z-41637/sentiment/provenance/2026-09-18T22-34-45.444476+00-00.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/smoke-20260918T223438Z-41637/sentiment/resolved_config.json",
+      "sha256": "c9b7d74d5bbe75001982f7c44a2e150a513e1c909a02007da784ade115ccc459",
+      "bytes": 752,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/smoke-20260918T223438Z-41637/sentiment/resolved_config.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/smoke-20260918T223438Z-41637/sentiment/run_summary.json",
+      "sha256": "11d9a6906b9083895b8b428d8c60001e8cbe725e21d4e8b5508592279496e352",
+      "bytes": 9074,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/smoke-20260918T223438Z-41637/sentiment/run_summary.json"
+      },
+      "role": "original_run_result"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/smoke-20260918T223438Z-41637/sentiment/summary.json",
+      "sha256": "4c1a99d142b7f7a65c37bae7960da134ef325fdf7117f6c6aa8d52fb57f63195",
+      "bytes": 6856,
+      "source": {
+        "kind": "git_blob",
+        "commit": "fb8507b445fd702d6c8f72c95199e9b9cbf1f9c2",
+        "path": "reproducibility/raw_logs/srinidhi/smoke-20260918T223438Z-41637/sentiment/summary.json"
+      },
+      "role": "original_run_result"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/vast-part3-20260919/RUN_LOG.txt",
+      "sha256": "8eb3f974a4f03216c463c9d4b428062318a2c19ab17529f042496d8746871d79",
+      "bytes": 582772,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part-c-vast-backup/vast-51639909/final/extracted/reproducibility/raw_logs/srinidhi/vast-part3/publication-final/outputs/full/raw_logs/run_00/RUN_LOG.txt"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/vast-part3-20260919/data_manifest.json",
+      "sha256": "9e178ac6d5959bc62fe711de582d592d6fbeb18bdb5eaaaf6cb210e0e01e3aa6",
+      "bytes": 1063304,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part-c-vast-backup/vast-51639909/final/extracted/reproducibility/raw_logs/srinidhi/vast-part3/publication-final/outputs/full/raw_logs/run_00/data_manifest.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/vast-part3-20260919/resolved_config.json",
+      "sha256": "aa5daa6d88d20c5054f9f656f089655f64fefa5fc521dc94f1ed516bbed1b33b",
+      "bytes": 1158,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part-c-vast-backup/vast-51639909/final/extracted/reproducibility/raw_logs/srinidhi/vast-part3/publication-final/outputs/full/raw_logs/run_00/resolved_config.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/vast-part3-20260919/run_summary.json",
+      "sha256": "b1e2ef0c3e89125f2b3ccb8257843d0ba133b3c649d715ccc5a131370324d2f6",
+      "bytes": 4793,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part-c-vast-backup/vast-51639909/final/extracted/reproducibility/raw_logs/srinidhi/vast-part3/publication-final/outputs/full/raw_logs/run_00/run_summary.json"
+      },
+      "role": "original_run_result"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/vast-part3-20260919/training_log.jsonl",
+      "sha256": "fcee739974c56025ea43d47111739a0596baebcaf600de47ce6ecfc619e5ce87",
+      "bytes": 125116298,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part-c-vast-backup/vast-51639909/final/extracted/reproducibility/raw_logs/srinidhi/vast-part3/publication-final/outputs/full/raw_logs/run_00/training_log.jsonl"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/vast-part3-tuning-20260929/arms/identity2p5/RUN_LOG.txt",
+      "sha256": "edddd19b1b77f709b96c9f0980f35fa363fa675a1eba002e882a08effd575c72",
+      "bytes": 194605,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-tuning-vast-backup-20260929/final-full-experiment/arms/identity2p5/RUN_LOG.txt"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/vast-part3-tuning-20260929/arms/identity2p5/data_manifest.json",
+      "sha256": "9e178ac6d5959bc62fe711de582d592d6fbeb18bdb5eaaaf6cb210e0e01e3aa6",
+      "bytes": 1063304,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-tuning-vast-backup-20260929/final-full-experiment/arms/identity2p5/data_manifest.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/vast-part3-tuning-20260929/arms/identity2p5/initialization.json",
+      "sha256": "631c238eb5e6a152222c9d1d627749b78d65fab528e126033ef0eb3879c1c412",
+      "bytes": 2949,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-tuning-vast-backup-20260929/final-full-experiment/arms/identity2p5/initialization.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/vast-part3-tuning-20260929/arms/identity2p5/provenance/2026-09-29T12-34-39.522297+00-00.json",
+      "sha256": "fa1dbafdd8e5fbb41749888b2b5cc56dfc14affbfe4655f510bac5f9259d071d",
+      "bytes": 8681,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-tuning-vast-backup-20260929/final-full-experiment/arms/identity2p5/provenance/2026-09-29T12-34-39.522297+00-00.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/vast-part3-tuning-20260929/arms/identity2p5/resolved_config.json",
+      "sha256": "9983eac1fdc649069c970de71d7d27d92ec6c7cc6e2ba4355e3607dacea6eea6",
+      "bytes": 1156,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-tuning-vast-backup-20260929/final-full-experiment/arms/identity2p5/resolved_config.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/vast-part3-tuning-20260929/arms/identity2p5/run_summary.json",
+      "sha256": "fa1dbafdd8e5fbb41749888b2b5cc56dfc14affbfe4655f510bac5f9259d071d",
+      "bytes": 8681,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-tuning-vast-backup-20260929/final-full-experiment/arms/identity2p5/run_summary.json"
+      },
+      "role": "original_run_result"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/vast-part3-tuning-20260929/arms/identity2p5/training_log.jsonl",
+      "sha256": "aae7ffbb37676ff3d4cf864918afe5c0fc4cda0174e9900e216c984e9229b3b5",
+      "bytes": 41678262,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-tuning-vast-backup-20260929/final-full-experiment/arms/identity2p5/training_log.jsonl"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/vast-part3-tuning-20260929/arms/identity5/RUN_LOG.txt",
+      "sha256": "2d7c0fbef266cebe8ea6c206f8ef608e06486482082169a447edc246fe4a034d",
+      "bytes": 197925,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-tuning-vast-backup-20260929/final-full-experiment/arms/identity5/RUN_LOG.txt"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/vast-part3-tuning-20260929/arms/identity5/data_manifest.json",
+      "sha256": "9e178ac6d5959bc62fe711de582d592d6fbeb18bdb5eaaaf6cb210e0e01e3aa6",
+      "bytes": 1063304,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-tuning-vast-backup-20260929/final-full-experiment/arms/identity5/data_manifest.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/vast-part3-tuning-20260929/arms/identity5/initialization.json",
+      "sha256": "631c238eb5e6a152222c9d1d627749b78d65fab528e126033ef0eb3879c1c412",
+      "bytes": 2949,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-tuning-vast-backup-20260929/final-full-experiment/arms/identity5/initialization.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/vast-part3-tuning-20260929/arms/identity5/provenance/2026-09-29T11-45-00.055246+00-00.json",
+      "sha256": "a15d77f38d6416972f0b6e5064e0d94f66874ba90a0ac8d6fc35d5342a3e8c07",
+      "bytes": 8693,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-tuning-vast-backup-20260929/final-full-experiment/arms/identity5/provenance/2026-09-29T11-45-00.055246+00-00.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/vast-part3-tuning-20260929/arms/identity5/provenance/2026-09-29T11-47-44.300440+00-00.json",
+      "sha256": "ba04e313ef18d841bef120bd849d4b931380e77a0ddfdb4f5da081b5083dfe9c",
+      "bytes": 8764,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-tuning-vast-backup-20260929/final-full-experiment/arms/identity5/provenance/2026-09-29T11-47-44.300440+00-00.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/vast-part3-tuning-20260929/arms/identity5/resolved_config.json",
+      "sha256": "e4c2027bb60f4dd93dc42f0b75206dcce546223dfeb95623f7328e96e7ed7ec9",
+      "bytes": 1156,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-tuning-vast-backup-20260929/final-full-experiment/arms/identity5/resolved_config.json"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/vast-part3-tuning-20260929/arms/identity5/run_summary.json",
+      "sha256": "ba04e313ef18d841bef120bd849d4b931380e77a0ddfdb4f5da081b5083dfe9c",
+      "bytes": 8764,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-tuning-vast-backup-20260929/final-full-experiment/arms/identity5/run_summary.json"
+      },
+      "role": "original_run_result"
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/vast-part3-tuning-20260929/arms/identity5/training_log.jsonl",
+      "sha256": "9a679f715e8e4462bcaf6a76aa8b64b305ff00dfbc5a19206c7724d13d4ceb8a",
+      "bytes": 41675858,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-tuning-vast-backup-20260929/final-full-experiment/arms/identity5/training_log.jsonl"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "task1_llm/revanth0211/checkpoints/manifest.json",
+      "sha256": "091786aeb0dc90fa4aceb37089f2011b4a96cd0f8ac08a0365aa1bacd99ba123",
+      "bytes": 161,
+      "source": {
+        "kind": "member_committed_original"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "task1_llm/revanth0211/outputs/training_history.csv",
+      "sha256": "77bb264199dd36c00da36c5d1f81f92b022178bf079dfc82e1712dc3a3bfbd9c",
+      "bytes": 1574,
+      "source": {
+        "kind": "member_committed_original"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "task1_llm/revanth0211/outputs/training_log.txt",
+      "sha256": "e04bcb28e3c3b2861cace271e2c235fef5a41ea787ca5d894af8edff7b1d2827",
+      "bytes": 6985,
+      "source": {
+        "kind": "member_committed_original"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "task2_sentiment/revanth0211/RUN_LOG.txt",
+      "sha256": "b3c08d757115abdfa6459fe4467bd55960cfee5d6e2645e40980689c14f01161",
+      "bytes": 2212,
+      "source": {
+        "kind": "member_committed_original"
+      },
+      "role": "raw_training_log"
+    },
+    {
+      "path": "task2_sentiment/revanth0211/checkpoints/manifest.json",
+      "sha256": "f67958d499f20e80754851dfd2852b7675099710c571046ba2902793edd576c6",
+      "bytes": 509,
+      "source": {
+        "kind": "member_committed_original"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "task2_sentiment/revanth0211/outputs/hardware_and_config.json",
+      "sha256": "d8542b1ed92d0a1208eec4ee3d7dd8149bd3de5927b74416eab9b2545b5c1486",
+      "bytes": 321,
+      "source": {
+        "kind": "member_committed_original"
+      },
+      "role": "original_run_manifest_or_configuration"
+    },
+    {
+      "path": "task2_sentiment/revanth0211/outputs/training_history.csv",
+      "sha256": "fd2d78bd1d8af2e0ef8b15de618778821a1ceb113d55c9594658c090e77b42e0",
+      "bytes": 1265,
+      "source": {
+        "kind": "member_committed_original"
+      },
+      "role": "raw_training_log"
+    }
+  ],
+  "omitted_originals": [
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-ema-20261002/lr2e5/RUN_LOG.txt",
+      "sha256": "d9cf5fb87d35069a360288959b25ee53ad2c56ac1475a5ac754576ef2da98029",
+      "bytes": 34637,
+      "source": {
+        "kind": "archive_member",
+        "archive": "reproducibility/packages/part3-20261002/Part3.zip",
+        "member": "Part3/evidence/study/arms/lr2e5/RUN_LOG.txt"
+      },
+      "role": "raw_training_log",
+      "reason": "Original contains a personal path or credential-pattern match; preserved locally unchanged. Clean structured logs are published where available."
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-ema-20261002/lr5e5/RUN_LOG.txt",
+      "sha256": "3288ca21f0be7873172731583c35e0696d462720a90aad9d38ad7b695f0fa6b1",
+      "bytes": 68519,
+      "source": {
+        "kind": "archive_member",
+        "archive": "reproducibility/packages/part3-20261002/Part3.zip",
+        "member": "Part3/evidence/study/arms/lr5e5/RUN_LOG.txt"
+      },
+      "role": "raw_training_log",
+      "reason": "Original contains a personal path or credential-pattern match; preserved locally unchanged. Clean structured logs are published where available."
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-pilots-20261003/B_c5i0/summary.json",
+      "sha256": "15ece89337cd826d810bdc9872d6fe8b53f0659534034acd77cf726998db250f",
+      "bytes": 1395,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-push-work/v2/pilots/B_c5i0/summary.json"
+      },
+      "role": "original_run_result",
+      "reason": "Original contains a personal path or credential-pattern match; preserved locally unchanged. Clean structured logs are published where available."
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-pilots-20261003/R2_c5i0_daug/summary.json",
+      "sha256": "5c881233eedacb5a805cc8d1c6ad46abd8ec6a99a4dfe44d42c70bb96bae785b",
+      "bytes": 1433,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-push-work/v2/pilots/R2_c5i0_daug/summary.json"
+      },
+      "role": "original_run_result",
+      "reason": "Original contains a personal path or credential-pattern match; preserved locally unchanged. Clean structured logs are published where available."
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-pilots-20261003/R4_c5_dtr/summary.json",
+      "sha256": "d96ca06cdfa9fad184db8bf02f155e46de387b578d5d31fae88c2715b9a0e0a7",
+      "bytes": 1633,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part3-push-work/v2/pilots/R4_c5_dtr/summary.json"
+      },
+      "role": "original_run_result",
+      "reason": "Original contains a personal path or credential-pattern match; preserved locally unchanged. Clean structured logs are published where available."
+    },
+    {
+      "path": "reproducibility/raw_logs/srinidhi/part3-mps-benchmark-20260925/report.json",
+      "sha256": "c2d3e6cdce99e9f0657daddb33f13ef026b11d4289ffc13cb4f938e5b808a173",
+      "bytes": 4583,
+      "source": {
+        "kind": "verified_local_backup",
+        "path": "runs/part-c-mps-benchmark-20260925T214714Z/report.json"
+      },
+      "role": "original_run_manifest_or_configuration",
+      "reason": "Original contains a personal path or credential-pattern match; preserved locally unchanged. Clean structured logs are published where available."
+    }
+  ],
+  "unresolved_evidence_gaps": [
+    {
+      "scope": "part3-pilots-20261003",
+      "missing": "Complete run-time environment/config/checkpoint mapping for each pilot is not available in the retained pilot directories. Logs are preserved without reconstructing those missing records."
+    },
+    {
+      "scope": "part3-smoke-20261003",
+      "missing": "Separate environment capture for each smoke attempt was not retained; the later full-launch environment is indexed with the final run."
+    },
+    {
+      "scope": "srinidhi/runpod-20260918/part1-full",
+      "missing": "Original full Part1 run log not found. The recovered setup console only contains smoke/rehearsal runs; later October1/2 rerun logs are present."
+    },
+    {
+      "scope": "revanth0211/task1_llm",
+      "missing": "outputs/training_log.txt belongs to older 15-epoch runs, not the current 13-epoch result. Current epoch output is preserved in the executed notebook and its explicitly derived stream export."
+    },
+    {
+      "scope": "revanth0211/environment",
+      "missing": "Notebooks disclose RTX4090, PyTorch2.14.0+cu130 and CUDA13.0. Exact CPU and complete original package-version/environment file are not supplied; they cannot be reconstructed from current software."
+    },
+    {
+      "scope": "revanth0211/task3_gan",
+      "missing": "Training logs, run manifest and completed experiment have not been supplied."
+    }
+  ]
+}

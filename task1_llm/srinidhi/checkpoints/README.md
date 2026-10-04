@@ -15,8 +15,9 @@ Each file contains model, optimizer, scheduler, AMP and RNG state, vocabulary,
 data manifest and progress. Use `best.pt` for inference. Resume with `last.pt`,
 the selected reproduction config and the complete matching raw run.
 
-The selected best checkpoint is prepared for Git publication. Both weights,
-the notebook and frozen story cache are included in `dist/Part1_Srinidhi_2342.zip`.
-Check the verified remote commit before assuming a clone contains these new
-weights. The baseline raw run and `dist/Part1_Baseline_20261001.zip` remain
-preserved separately. Earlier missing cloud weights are not claimed recovered.
+The selected `best.pt` is committed. The verified standalone package at
+`reproducibility/packages/parts1-2-20261002/Part1_Srinidhi_2342.zip` contains both
+states. From the repository root, run `git lfs pull`, then
+`python scripts/prepare_srinidhi.py --part 1` to restore the exact `last.pt` and
+frozen data before executing the notebook. Existing differing files are backed
+up under ignored `runs/`; do not substitute an older run's last checkpoint.

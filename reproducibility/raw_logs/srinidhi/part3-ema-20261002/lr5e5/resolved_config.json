@@ -1,0 +1,50 @@
+{
+  "mode": "full",
+  "seed": 2342,
+  "image_size": 256,
+  "base_channels": 64,
+  "residual_blocks": 9,
+  "batch_size": 1,
+  "learning_rate": 5e-05,
+  "betas": [
+    0.5,
+    0.999
+  ],
+  "cycle_weight": 10.0,
+  "identity_weight": 2.5,
+  "replay_size": 50,
+  "epochs": 8,
+  "constant_epochs": 4,
+  "max_steps": null,
+  "checkpoint_every": 500,
+  "log_every": 50,
+  "allow_synthetic": false,
+  "select_best": false,
+  "validation_every_epochs": 4,
+  "evaluate_after_run": false,
+  "evaluation": {
+    "allow_metric_downloads": true,
+    "max_images": null,
+    "batch_size": 16,
+    "kid_subsets": 50,
+    "kid_subset_size": 100,
+    "prdc_k": 5,
+    "seed": 2342
+  },
+  "data": {
+    "monet_dir": "task3_gan/data/monet_jpg",
+    "photo_dir": "task3_gan/data/photo_jpg",
+    "manifest_dir": "task3_gan/srinidhi/data_processed/part3_manifests",
+    "source_note": "Verified class ZIP SHA256 5060b62d4a6a0194de10b849ea43b649f308ae516f0bf659b62ee404ca153e1d; unique-content independent 80/10/10 splits frozen at seed 2342; source receipts in reproducibility/manifests/srinidhi/part-c-source-snapshot."
+  },
+  "precision": "bf16",
+  "replay_device": "device",
+  "monet_translation_ratio": 0.0,
+  "ema_beta": 0.999,
+  "validation_epochs": [
+    4,
+    8
+  ],
+  "expected_source_sha256": "5261abcdfe3bdbe67c7c98551bd4134a09947136b4e344d27ecb9e81027c9c3f",
+  "source_checkpoint": "runs/part3-translation-study-20261001/arms/control/best.pt"
+}

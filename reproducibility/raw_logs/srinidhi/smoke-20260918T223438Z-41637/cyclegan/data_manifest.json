@@ -1,0 +1,13 @@
+{
+  "kind": "synthetic_pipeline_check",
+  "class_results": false,
+  "counts": {
+    "train_photo": 4,
+    "train_monet": 4,
+    "val_photo": 4,
+    "val_monet": 4,
+    "test_photo": 4,
+    "test_monet": 4
+  },
+  "manifest_fingerprint": "synthetic:2342:32:4"
+}

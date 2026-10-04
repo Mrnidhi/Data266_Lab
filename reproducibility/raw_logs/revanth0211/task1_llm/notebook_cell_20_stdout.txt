@@ -1,0 +1,20 @@
+epoch=01/35 train_loss=1.71999 validation_loss=1.01300 next_char_accuracy=0.68476 grad_norm=1.8182 lr=1.72e-04 time=111.1s  BEST_ACC  BEST_LOSS
+epoch=02/35 train_loss=0.90201 validation_loss=0.78038 next_char_accuracy=0.75388 grad_norm=0.6822 lr=3.00e-04 time=110.0s  BEST_ACC  BEST_LOSS
+epoch=03/35 train_loss=0.75899 validation_loss=0.71034 next_char_accuracy=0.77405 grad_norm=0.3961 lr=2.99e-04 time=110.2s  BEST_ACC  BEST_LOSS
+epoch=04/35 train_loss=0.69922 validation_loss=0.67990 next_char_accuracy=0.78416 grad_norm=0.3394 lr=2.97e-04 time=111.6s  BEST_ACC  BEST_LOSS
+epoch=05/35 train_loss=0.66361 validation_loss=0.65956 next_char_accuracy=0.79057 grad_norm=0.3165 lr=2.94e-04 time=108.7s  BEST_ACC  BEST_LOSS
+epoch=06/35 train_loss=0.63810 validation_loss=0.64781 next_char_accuracy=0.79480 grad_norm=0.3047 lr=2.89e-04 time=108.7s  BEST_ACC  BEST_LOSS
+epoch=07/35 train_loss=0.61787 validation_loss=0.63835 next_char_accuracy=0.79772 grad_norm=0.2978 lr=2.83e-04 time=108.8s  BEST_ACC  BEST_LOSS
+epoch=08/35 train_loss=0.60079 validation_loss=0.63221 next_char_accuracy=0.79964 grad_norm=0.2937 lr=2.77e-04 time=108.8s  BEST_ACC  BEST_LOSS
+epoch=09/35 train_loss=0.58613 validation_loss=0.62765 next_char_accuracy=0.80159 grad_norm=0.2914 lr=2.69e-04 time=108.3s  BEST_ACC  BEST_LOSS
+epoch=10/35 train_loss=0.57262 validation_loss=0.62826 next_char_accuracy=0.80265 grad_norm=0.2913 lr=2.60e-04 time=108.7s  BEST_ACC
+epoch=11/35 train_loss=0.56040 validation_loss=0.62400 next_char_accuracy=0.80374 grad_norm=0.2921 lr=2.51e-04 time=108.6s  BEST_ACC  BEST_LOSS
+epoch=12/35 train_loss=0.54903 validation_loss=0.62491 next_char_accuracy=0.80448 grad_norm=0.2942 lr=2.40e-04 time=108.6s  BEST_ACC
+epoch=13/35 train_loss=0.53811 validation_loss=0.62299 next_char_accuracy=0.80514 grad_norm=0.2971 lr=2.29e-04 time=108.7s  BEST_ACC  BEST_LOSS
+Target validation accuracy reached: 0.80514 at epoch 13. Stopping after epoch 13.
+Best accuracy checkpoint epoch: 13
+Lowest-loss checkpoint epoch: 13
+Best validation loss: 0.6229930255889893
+Best top-1 next-character accuracy: 0.805136328125
+Maximum mean epoch gradient norm: 1.818156386033816
+NaN/Inf loss count: 0

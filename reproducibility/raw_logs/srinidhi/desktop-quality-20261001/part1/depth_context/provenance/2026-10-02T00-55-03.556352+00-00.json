@@ -1,0 +1,98 @@
+{
+  "task": "gpt",
+  "mode": "full",
+  "device": "cuda",
+  "started_utc": "2026-10-02T00:55:03.556352+00:00",
+  "status": "running",
+  "is_final_result": false,
+  "config": {
+    "mode": "full",
+    "seed": 2342,
+    "dataset": "roneneldan/TinyStories",
+    "dataset_revision": "main",
+    "selection": "indexed_permutation",
+    "shuffle_buffer": 1000,
+    "data_cache": "task1_llm/srinidhi/data_processed/full",
+    "raw_data_cache": "task1_llm/data/huggingface",
+    "offline": true,
+    "train_stories": 100000,
+    "validation_stories": 10000,
+    "layers": 6,
+    "heads": 8,
+    "embedding_dim": 256,
+    "feedforward_dim": 1024,
+    "context_length": 512,
+    "dropout": 0.1,
+    "batch_size": 128,
+    "learning_rate": 0.0004,
+    "adam_betas": [
+      0.9,
+      0.95
+    ],
+    "weight_decay": 0.01,
+    "warmup_fraction": 0.05,
+    "minimum_lr_ratio": 0.1,
+    "epochs": 16,
+    "max_steps": null,
+    "gradient_clip": 1.0,
+    "mixed_precision": true,
+    "deterministic": true,
+    "num_workers": 0,
+    "cpu_threads": 2,
+    "log_every_steps": 200,
+    "checkpoint_every_steps": 500,
+    "generation_prompts": 5,
+    "generation_characters": 256,
+    "temperature": 0.8,
+    "top_k": 40
+  },
+  "source_sha256": {
+    "src\\lab1\\__init__.py": "b9849907c7465e81037a43feb0ac630d991ac608c4dbabddcbcc691f8a7b015f",
+    "src\\lab1\\common.py": "9969a94baa2ef1cba3d0474262227fd178417d761b1528d4278779ef3c23bd4e",
+    "src\\lab1\\run.py": "4edd942dc83425e0c36e588ae59194fae632819e87b88ba6104a6257eafc4900",
+    "task1_llm\\srinidhi\\config.json": "4abfd4cdfd6d6e0cd7643aaf88f601dd4a304c47152e41640c763a67b1be0d6f",
+    "task1_llm\\srinidhi\\src\\gpt.py": "ddf1adb228f3ae8cb6ea94361f153408a3b36f34cdb34ac2c6fac218eb548664",
+    "task2_sentiment\\srinidhi\\config.json": "4b244db4f3c9c32feb22ac37a91bba8f6b779fba80b521dae4de63a854c3575a",
+    "task2_sentiment\\srinidhi\\src\\sentiment.py": "ea5d6b0b8276332f35c7e1a3693763d341bf1c106bd5f712a37b6f6e2c9be6c5",
+    "task3_gan\\srinidhi\\config.json": "024eac9a34069a835858b73a5877acd97709cbbf0261dec550eceef10ae03092",
+    "task3_gan\\srinidhi\\evaluate_local.py": "322cc4f1be766fa0e7e1db130b89b1b8f1b65a82c9f29428fe2a0855fb70f9a9",
+    "task3_gan\\srinidhi\\src\\cyclegan.py": "98f1a2901eccb0f366f726654a1297830fa5541786a21ad264e2b29b7f5cd71e"
+  },
+  "environment": {
+    "captured_utc": "2026-10-02T00:55:03.586871+00:00",
+    "python": "3.12.14",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "machine": "AMD64",
+    "packages": {
+      "torch": "2.11.0+cu128",
+      "torchvision": "0.26.0+cu128",
+      "numpy": "2.5.3",
+      "pandas": "3.0.6",
+      "scikit-learn": "1.9.1",
+      "scipy": "1.16.3",
+      "matplotlib": "3.11.2",
+      "datasets": "5.0.1",
+      "Pillow": "12.3.0",
+      "clean-fid": null,
+      "lpips": null,
+      "prdc": null
+    },
+    "cuda_available": true,
+    "cuda_build": "12.8",
+    "cudnn": 91900,
+    "gpus": [
+      {
+        "index": 0,
+        "name": "NVIDIA GeForce RTX 5090",
+        "memory_bytes": 34190458880,
+        "compute_capability": [
+          12,
+          0
+        ]
+      }
+    ],
+    "mps_available": false,
+    "nvidia_smi": "name, uuid, driver_version, memory.total [MiB]\nNVIDIA GeForce RTX 5090, GPU-68465984-5de9-5fbf-2036-6e4f23dd51f1, 610.60, 32607 MiB"
+  },
+  "resumed": false
+}

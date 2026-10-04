@@ -1,0 +1,12 @@
+# Only needed for a fresh environment. The existing Data266_Lab .venv on the 5090 already has these.
+# RTX 50-series GPUs need the CUDA 12.8 PyTorch build, installed first:
+#   python -m pip install torch==2.11.0 torchvision==0.26.0 --index-url https://download.pytorch.org/whl/cu128
+numpy>=1.26
+scipy==1.16.3
+pillow>=10
+pandas>=2.2
+tqdm>=4.66
+nbclient>=0.10
+nbformat>=5.10
+ipykernel>=6
+pytest>=8

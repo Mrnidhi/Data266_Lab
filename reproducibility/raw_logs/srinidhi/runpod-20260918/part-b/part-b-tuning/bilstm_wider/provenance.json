@@ -1,0 +1,130 @@
+{
+  "candidate": {
+    "model": "bilstm",
+    "hypothesis": "Moderately more sequence capacity and less dropout may improve validation F1.",
+    "overrides": {
+      "epochs": 12,
+      "early_stopping_patience": 4,
+      "num_workers": 2,
+      "checkpoint_every_steps": 1000,
+      "log_every_steps": 100,
+      "embedding_dim": 192,
+      "lstm_hidden": 128,
+      "dropout": 0.2,
+      "learning_rates": {
+        "maxpool_mlp": 0.0015,
+        "bilstm": 0.0007,
+        "dilated_cnn": 0.0008
+      }
+    },
+    "name": "bilstm_wider"
+  },
+  "config": {
+    "mode": "full",
+    "seed": 2342,
+    "dataset": "fancyzhx/yelp_polarity",
+    "dataset_revision": "main",
+    "data_dir": "task2_sentiment/srinidhi/data_processed/full",
+    "train_limit": null,
+    "validation_limit": null,
+    "test_limit": null,
+    "vocabulary_size": 40000,
+    "min_frequency": 2,
+    "embedding_dim": 192,
+    "max_length": 384,
+    "batch_size": 128,
+    "epochs": 12,
+    "early_stopping_patience": 4,
+    "early_stopping_min_delta": 0.0001,
+    "mlp_hidden": 64,
+    "lstm_hidden": 128,
+    "cnn_channels": 128,
+    "dilations": [
+      1,
+      2,
+      4,
+      8
+    ],
+    "dropout": 0.2,
+    "cnn_dropout": 0.2,
+    "learning_rates": {
+      "maxpool_mlp": 0.0015,
+      "bilstm": 0.0007,
+      "dilated_cnn": 0.0008
+    },
+    "weight_decay": 0.0001,
+    "gradient_clip": 1.0,
+    "amp": true,
+    "bootstrap_samples": 1000,
+    "cpu_threads": 2,
+    "raw_data_cache": "task2_sentiment/data/huggingface",
+    "encoded_cache": "task2_sentiment/srinidhi/data_processed/full_encoded",
+    "num_workers": 2,
+    "checkpoint_every_steps": 1000,
+    "log_every_steps": 100,
+    "validation_only": true
+  },
+  "started_utc": "2026-09-19T01:58:05.409806+00:00",
+  "status": "completed",
+  "source_sha256": {
+    "src/lab1/__init__.py": "4597cd6743deb8dc143f2be2f7757c8d8d8fb367716dbcb4cb9626a025265217",
+    "src/lab1/common.py": "6659501f6490e5dc1c72decbb48f1c745a2e876bea24a89fea32b381518677ce",
+    "src/lab1/run.py": "571163444bc3331b59263ba9bde6f4c027360a25983ab846dfb4e052b5a5bb39",
+    "task1_llm/srinidhi/config.json": "cf5cda1c11f81ea6837421c565364c0c235ff1483e41dadad9235ba0e8e0238b",
+    "task1_llm/srinidhi/src/gpt.py": "7498de5a36d1e6cb2d851d862dad47152cf73a82dd46fe2f5fbb5aa67a5627d9",
+    "task2_sentiment/srinidhi/config.json": "84c480d132b22cb2606a5f3139702ee75d523f90050f78e0e2772fae82f30ded",
+    "task2_sentiment/srinidhi/src/sentiment.py": "f381634c3d8ea45e1f0073734516699047656ea5aa61ba31f7955de4f50b6b1b",
+    "task3_gan/srinidhi/config.json": "0c88cb843e6c2abf42561cb6ceaf557787357646fb464a6c97632e0fefb83100",
+    "task3_gan/srinidhi/evaluate_local.py": "4cb02bb71263f3a507562a99dec4b485fbcd0ed1ff08fc3757f1886e015dacfc",
+    "task3_gan/srinidhi/src/cyclegan.py": "9d7348d09246c3923ad150a1d6a297d137d51adae5240a80d38989c7f6a2f927"
+  },
+  "environment": {
+    "captured_utc": "2026-09-19T01:58:05.467926+00:00",
+    "python": "3.12.3",
+    "platform": "Linux-6.11.0-26-generic-x86_64-with-glibc2.39",
+    "machine": "x86_64",
+    "packages": {
+      "torch": "2.11.0+cu128",
+      "torchvision": "0.26.0+cu128",
+      "numpy": "2.5.3",
+      "pandas": "3.0.6",
+      "scikit-learn": "1.9.1",
+      "scipy": "1.16.3",
+      "matplotlib": "3.11.2",
+      "datasets": "5.0.1",
+      "Pillow": "12.3.0",
+      "clean-fid": "0.1.35",
+      "lpips": "0.1.4",
+      "prdc": "0.2"
+    },
+    "cuda_available": true,
+    "cuda_build": "12.8",
+    "cudnn": 91900,
+    "gpus": [
+      {
+        "index": 0,
+        "name": "NVIDIA GeForce RTX 5090",
+        "memory_bytes": 33680326656,
+        "compute_capability": [
+          12,
+          0
+        ]
+      }
+    ],
+    "mps_available": false,
+    "nvidia_smi": "name, uuid, driver_version, memory.total [MiB]\nNVIDIA GeForce RTX 5090, GPU-1f89be66-27b1-f3fd-debe-6a3213d26d35, 570.153.02, 32607 MiB"
+  },
+  "test_policy": "No test predictions or test metrics; selection uses validation macro-F1 only",
+  "result": {
+    "model_name": "bilstm",
+    "selected_epoch": 8,
+    "selected_validation_macro_f1": 0.9586605798139588,
+    "parameter_count": 8026241,
+    "train_seconds": 1872.9709017369896,
+    "peak_cuda_memory_bytes": 313527296,
+    "completed_training_steps": 47256,
+    "test_evaluated": false
+  },
+  "ended_utc": "2026-09-19T02:30:56.260757+00:00",
+  "elapsed_seconds": 1970.7647907739738
+}

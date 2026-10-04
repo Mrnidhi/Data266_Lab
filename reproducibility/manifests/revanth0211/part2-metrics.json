@@ -1,0 +1,23 @@
+{
+  "member": "revanth0211",
+  "task": "task2_sentiment",
+  "operation": "Join existing model metrics, slice metrics and final saved McNemar results by model. No measurements were rerun or changed. Baseline self-comparison cells are blank.",
+  "sources": [
+    {
+      "path": "task2_sentiment/revanth0211/outputs/metrics_report.csv",
+      "sha256": "1755700e648d94c8dea28e7cfde7e52e7155f51405b2c39adca2f09a0be29ce5"
+    },
+    {
+      "path": "task2_sentiment/revanth0211/outputs/slice_metrics.csv",
+      "sha256": "92039c22a8152a12a702cc3f560fa7cea86cc820c88b1434615c84bec9491c4b"
+    },
+    {
+      "path": "task2_sentiment/revanth0211/RUN_LOG.txt",
+      "sha256": "b3c08d757115abdfa6459fe4467bd55960cfee5d6e2645e40980689c14f01161"
+    }
+  ],
+  "output": {
+    "path": "task2_sentiment/revanth0211/metrics_report.csv",
+    "sha256": "33b0f7a6d247d3a253a767be7545fd9dacf6acb3f933602f0478e094d5c6b14a"
+  }
+}

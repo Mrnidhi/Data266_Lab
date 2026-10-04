@@ -1,0 +1,314 @@
+{
+  "task": "cyclegan_ema",
+  "mode": "full",
+  "arm": "lr5e5",
+  "status": "completed",
+  "started_utc": "2026-10-02T14:37:16.660961+00:00",
+  "config": {
+    "mode": "full",
+    "seed": 2342,
+    "image_size": 256,
+    "base_channels": 64,
+    "residual_blocks": 9,
+    "batch_size": 1,
+    "learning_rate": 5e-05,
+    "betas": [
+      0.5,
+      0.999
+    ],
+    "cycle_weight": 10.0,
+    "identity_weight": 2.5,
+    "replay_size": 50,
+    "epochs": 8,
+    "constant_epochs": 4,
+    "max_steps": null,
+    "checkpoint_every": 500,
+    "log_every": 50,
+    "allow_synthetic": false,
+    "select_best": false,
+    "validation_every_epochs": 4,
+    "evaluate_after_run": false,
+    "evaluation": {
+      "allow_metric_downloads": true,
+      "max_images": null,
+      "batch_size": 16,
+      "kid_subsets": 50,
+      "kid_subset_size": 100,
+      "prdc_k": 5,
+      "seed": 2342
+    },
+    "data": {
+      "monet_dir": "task3_gan/data/monet_jpg",
+      "photo_dir": "task3_gan/data/photo_jpg",
+      "manifest_dir": "task3_gan/srinidhi/data_processed/part3_manifests",
+      "source_note": "Verified class ZIP SHA256 5060b62d4a6a0194de10b849ea43b649f308ae516f0bf659b62ee404ca153e1d; unique-content independent 80/10/10 splits frozen at seed 2342; source receipts in reproducibility/manifests/srinidhi/part-c-source-snapshot."
+    },
+    "precision": "bf16",
+    "replay_device": "device",
+    "monet_translation_ratio": 0.0,
+    "ema_beta": 0.999,
+    "validation_epochs": [
+      4,
+      8
+    ],
+    "expected_source_sha256": "5261abcdfe3bdbe67c7c98551bd4134a09947136b4e344d27ecb9e81027c9c3f",
+    "source_checkpoint": "runs/part3-translation-study-20261001/arms/control/best.pt"
+  },
+  "device": "cuda",
+  "resumed": true,
+  "protocol_sha256": "b077f2a8e72d5207d65714081b7620dd5808f0e82a248471f5f384ac735a3866",
+  "budget_sha256": "70c31999fcea3677d50cb059d470be73669ffbbfdde75605bfe79c57570ce2c8",
+  "source_sha256": {
+    "scripts/study_cyclegan_ema.py": "43b68f8b91ca2287ea1e0c2396805c1432d6943a7a5c25e5b075616a514e43e7",
+    "task3_gan/srinidhi/src/cyclegan_ema.py": "de459e1830e3c3f065d99bf796776933f3532019e693952ada2e70fd7721223a",
+    "task3_gan/srinidhi/src/cyclegan.py": "0094e6a272d2e7b03d86bc85c7c34e91587a7f0699570e33a22b2e7edfa37b19",
+    "src/lab1/common.py": "9969a94baa2ef1cba3d0474262227fd178417d761b1528d4278779ef3c23bd4e",
+    "src/lab1/__init__.py": "b9849907c7465e81037a43feb0ac630d991ac608c4dbabddcbcc691f8a7b015f"
+  },
+  "environment": {
+    "captured_utc": "2026-10-02T14:37:16.689958+00:00",
+    "python": "3.12.14",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "machine": "AMD64",
+    "packages": {
+      "torch": "2.11.0+cu128",
+      "torchvision": "0.26.0+cu128",
+      "numpy": "2.5.3",
+      "pandas": "3.0.6",
+      "scikit-learn": "1.9.1",
+      "scipy": "1.16.3",
+      "matplotlib": "3.11.2",
+      "datasets": "5.0.1",
+      "Pillow": "12.3.0",
+      "clean-fid": "0.1.35",
+      "lpips": "0.1.4",
+      "prdc": "0.2"
+    },
+    "cuda_available": true,
+    "cuda_build": "12.8",
+    "cudnn": 91900,
+    "gpus": [
+      {
+        "index": 0,
+        "name": "NVIDIA GeForce RTX 5090",
+        "memory_bytes": 34190458880,
+        "compute_capability": [
+          12,
+          0
+        ]
+      }
+    ],
+    "mps_available": false,
+    "nvidia_smi": "name, uuid, driver_version, memory.total [MiB]\nNVIDIA GeForce RTX 5090, GPU-68465984-5de9-5fbf-2036-6e4f23dd51f1, 610.60, 32607 MiB"
+  },
+  "warm_start_source_sha256": "5261abcdfe3bdbe67c7c98551bd4134a09947136b4e344d27ecb9e81027c9c3f",
+  "operational_deadline_utc": "2026-10-02T20:19:56.833977+00:00",
+  "invocation": "'C:\\Users\\srinidhi\\Desktop\\Needi\\Data266_Lab\\.venv\\Scripts\\python.exe' 'C:\\Users\\srinidhi\\Desktop\\Needi\\Data266_Lab\\scripts\\study_cyclegan_ema.py' --action train-arm --output 'C:\\Users\\srinidhi\\Desktop\\Needi\\Data266_Lab\\runs\\part3-ema-study-20261002' --arm lr5e5 --device cuda --resume 'C:\\Users\\srinidhi\\Desktop\\Needi\\Data266_Lab\\runs\\part3-ema-study-20261002\\arms\\lr5e5\\last.pt'",
+  "is_final_result": false,
+  "summary": {
+    "part": 3,
+    "trainer": "cyclegan_ema_v1",
+    "status": "completed",
+    "stop_reason": "completed",
+    "completed_updates": 44992,
+    "completed_epoch_fraction": 8.0,
+    "steps_per_epoch": 5624,
+    "manifest_fingerprint": "35184a0643321f99efc8df06544328b25c3364b66f29c76545ab47e01fe3438a",
+    "class_results": true,
+    "mode": "full",
+    "device": "cuda",
+    "precision": "bf16",
+    "training_seconds": 4670.4814124973345,
+    "session_wall_seconds": 5317.0548797999945,
+    "session_initial_step": 200,
+    "training_source_images_per_second": 19.26653637015226,
+    "throughput_definition": "Two source images per paired G/D update; includes EMA updates, excludes data loading/evaluation/checkpoint I/O",
+    "peak_gpu_memory_bytes": 1668601856,
+    "parameter_counts": {
+      "G_photo_to_monet": 11378179,
+      "G_monet_to_photo": 11378179,
+      "D_photo": 2764737,
+      "D_monet": 2764737
+    },
+    "nan_events": 0,
+    "initialization": {
+      "kind": "warm_start",
+      "checkpoint": "C:\\Users\\srinidhi\\Desktop\\Needi\\Data266_Lab\\runs\\part3-translation-study-20261001\\arms\\control\\best.pt",
+      "checkpoint_sha256": "5261abcdfe3bdbe67c7c98551bd4134a09947136b4e344d27ecb9e81027c9c3f",
+      "source_config": {
+        "mode": "full",
+        "seed": 2342,
+        "image_size": 256,
+        "base_channels": 64,
+        "residual_blocks": 9,
+        "batch_size": 1,
+        "learning_rate": 5e-05,
+        "betas": [
+          0.5,
+          0.999
+        ],
+        "cycle_weight": 10.0,
+        "identity_weight": 2.5,
+        "replay_size": 50,
+        "epochs": 10,
+        "constant_epochs": 5,
+        "max_steps": null,
+        "checkpoint_every": 500,
+        "log_every": 50,
+        "allow_synthetic": false,
+        "select_best": true,
+        "validation_every_epochs": 2,
+        "evaluate_after_run": false,
+        "evaluation": {
+          "allow_metric_downloads": true,
+          "max_images": null,
+          "batch_size": 16,
+          "kid_subsets": 50,
+          "kid_subset_size": 100,
+          "prdc_k": 5,
+          "seed": 2342
+        },
+        "data": {
+          "monet_dir": "task3_gan/data/monet_jpg",
+          "photo_dir": "task3_gan/data/photo_jpg",
+          "manifest_dir": "task3_gan/srinidhi/data_processed/part3_manifests",
+          "source_note": "Verified class ZIP SHA256 5060b62d4a6a0194de10b849ea43b649f308ae516f0bf659b62ee404ca153e1d; unique-content independent 80/10/10 splits frozen at seed 2342; source receipts in reproducibility/manifests/srinidhi/part-c-source-snapshot."
+        },
+        "precision": "bf16",
+        "replay_device": "device",
+        "monet_translation_ratio": 0.0
+      },
+      "source_global_step": 44992,
+      "source_best_selection": {
+        "metric": "mean_validation_KID_both_directions",
+        "step": 44992,
+        "value": 0.015693356920965018,
+        "validation_only": true
+      },
+      "source_best_validation_score": 0.015693356920965018,
+      "manifest_fingerprint": "35184a0643321f99efc8df06544328b25c3364b66f29c76545ab47e01fe3438a",
+      "restored": [
+        "all_four_network_weights"
+      ],
+      "reset": [
+        "optimizers",
+        "schedulers",
+        "replay_pools",
+        "rng",
+        "global_step",
+        "training_seconds",
+        "best_selection"
+      ],
+      "selection_note": "Source scores are provenance only; selection is recomputed on this run's validation settings.",
+      "baseline_validation": {
+        "status": "computed",
+        "step": 0,
+        "metric": "mean_validation_KID_both_directions",
+        "value": 0.015693356920965018,
+        "directions": {
+          "photo_to_monet": 0.011840296490117908,
+          "monet_to_photo": 0.019546417351812125
+        }
+      }
+    },
+    "ema_beta": 0.999,
+    "ema_updates": 44992,
+    "checkpoint": "C:\\Users\\srinidhi\\Desktop\\Needi\\Data266_Lab\\runs\\part3-ema-study-20261002\\arms\\lr5e5\\last.pt",
+    "pending_validation": null,
+    "validation_history": [
+      {
+        "status": "complete",
+        "trainer": "cyclegan_ema_v1",
+        "step": 0,
+        "candidate_variant": "raw",
+        "checkpoint_sha256": "5261abcdfe3bdbe67c7c98551bd4134a09947136b4e344d27ecb9e81027c9c3f",
+        "metrics_sha256": "ce3468e8cb38aafaa40c3fc1e12054d9c1fe56973692ca5aabaae5e96c40cc59",
+        "source_checkpoint_sha256": "5261abcdfe3bdbe67c7c98551bd4134a09947136b4e344d27ecb9e81027c9c3f",
+        "manifest_fingerprint": "35184a0643321f99efc8df06544328b25c3364b66f29c76545ab47e01fe3438a",
+        "directional_kid": {
+          "photo_to_monet": 0.011840296490117908,
+          "monet_to_photo": 0.019546417351812125
+        },
+        "mean_validation_kid": 0.015693356920965018,
+        "checkpoint": "C:\\Users\\srinidhi\\Desktop\\Needi\\Data266_Lab\\runs\\part3-translation-study-20261001\\arms\\control\\best.pt",
+        "metrics_path": "C:\\Users\\srinidhi\\Desktop\\Needi\\Data266_Lab\\runs\\part3-ema-study-20261002\\arms\\lr5e5\\validation\\step_0000000\\raw\\metrics.json",
+        "weights_note": "Unchanged starting checkpoint"
+      },
+      {
+        "status": "complete",
+        "trainer": "cyclegan_ema_v1",
+        "step": 22496,
+        "candidate_variant": "raw",
+        "checkpoint_sha256": "1e5526b82cf35af677a66a723451f03173b2a7e4eb3818328d26d1a391fc658d",
+        "metrics_sha256": "d15a0b424d9f040e820e957220049100cb9903fa8735dfe52845991f6a2336e8",
+        "source_checkpoint_sha256": "5261abcdfe3bdbe67c7c98551bd4134a09947136b4e344d27ecb9e81027c9c3f",
+        "manifest_fingerprint": "35184a0643321f99efc8df06544328b25c3364b66f29c76545ab47e01fe3438a",
+        "directional_kid": {
+          "photo_to_monet": 0.014608413698151707,
+          "monet_to_photo": 0.02109482331201434
+        },
+        "mean_validation_kid": 0.017851618505083024,
+        "checkpoint": "C:\\Users\\srinidhi\\Desktop\\Needi\\Data266_Lab\\runs\\part3-ema-study-20261002\\arms\\lr5e5\\candidates\\step_0022496\\raw.pt",
+        "metrics_path": "C:\\Users\\srinidhi\\Desktop\\Needi\\Data266_Lab\\runs\\part3-ema-study-20261002\\arms\\lr5e5\\validation\\step_0022496\\raw\\metrics.json",
+        "weights_note": "All four raw networks"
+      },
+      {
+        "status": "complete",
+        "trainer": "cyclegan_ema_v1",
+        "step": 22496,
+        "candidate_variant": "ema",
+        "checkpoint_sha256": "0c2eab37c42062bbd7b3b2c5c5c097adc949535ff77a9f805ad89842f6f8073b",
+        "metrics_sha256": "9c4429b842b9e1b28cf8e22e4b3497cd302644000b9a8f7959bf4fe33d23c099",
+        "source_checkpoint_sha256": "5261abcdfe3bdbe67c7c98551bd4134a09947136b4e344d27ecb9e81027c9c3f",
+        "manifest_fingerprint": "35184a0643321f99efc8df06544328b25c3364b66f29c76545ab47e01fe3438a",
+        "directional_kid": {
+          "photo_to_monet": 0.010648971521295608,
+          "monet_to_photo": 0.017362538762390613
+        },
+        "mean_validation_kid": 0.01400575514184311,
+        "checkpoint": "C:\\Users\\srinidhi\\Desktop\\Needi\\Data266_Lab\\runs\\part3-ema-study-20261002\\arms\\lr5e5\\candidates\\step_0022496\\ema.pt",
+        "metrics_path": "C:\\Users\\srinidhi\\Desktop\\Needi\\Data266_Lab\\runs\\part3-ema-study-20261002\\arms\\lr5e5\\validation\\step_0022496\\ema\\metrics.json",
+        "weights_note": "Paired EMA generators and raw discriminators"
+      },
+      {
+        "status": "complete",
+        "trainer": "cyclegan_ema_v1",
+        "step": 44992,
+        "candidate_variant": "raw",
+        "checkpoint_sha256": "cd4e0c9e8233c5d17a0746e78a0c06780f575ea8c6b78f4e368d5f9b709fa7fd",
+        "metrics_sha256": "a714a3eed4fdcd877743fb22a65609a6bce0c84bf0dc4a217c84e612fb001ce2",
+        "source_checkpoint_sha256": "5261abcdfe3bdbe67c7c98551bd4134a09947136b4e344d27ecb9e81027c9c3f",
+        "manifest_fingerprint": "35184a0643321f99efc8df06544328b25c3364b66f29c76545ab47e01fe3438a",
+        "directional_kid": {
+          "photo_to_monet": 0.010461074830964208,
+          "monet_to_photo": 0.02179424025118351
+        },
+        "mean_validation_kid": 0.01612765754107386,
+        "checkpoint": "C:\\Users\\srinidhi\\Desktop\\Needi\\Data266_Lab\\runs\\part3-ema-study-20261002\\arms\\lr5e5\\candidates\\step_0044992\\raw.pt",
+        "metrics_path": "C:\\Users\\srinidhi\\Desktop\\Needi\\Data266_Lab\\runs\\part3-ema-study-20261002\\arms\\lr5e5\\validation\\step_0044992\\raw\\metrics.json",
+        "weights_note": "All four raw networks"
+      },
+      {
+        "status": "complete",
+        "trainer": "cyclegan_ema_v1",
+        "step": 44992,
+        "candidate_variant": "ema",
+        "checkpoint_sha256": "87a4d01dc172e431adf4d2c1b2ddcae7f037e07172648c6fa01c924ad59244fa",
+        "metrics_sha256": "43cecc01764b8fd3a22ede7a12d58e7232885c1d8c6b1e46b35e6ae26ec46f6a",
+        "source_checkpoint_sha256": "5261abcdfe3bdbe67c7c98551bd4134a09947136b4e344d27ecb9e81027c9c3f",
+        "manifest_fingerprint": "35184a0643321f99efc8df06544328b25c3364b66f29c76545ab47e01fe3438a",
+        "directional_kid": {
+          "photo_to_monet": 0.01041717017069459,
+          "monet_to_photo": 0.021710230465978385
+        },
+        "mean_validation_kid": 0.01606370031833649,
+        "checkpoint": "C:\\Users\\srinidhi\\Desktop\\Needi\\Data266_Lab\\runs\\part3-ema-study-20261002\\arms\\lr5e5\\candidates\\step_0044992\\ema.pt",
+        "metrics_path": "C:\\Users\\srinidhi\\Desktop\\Needi\\Data266_Lab\\runs\\part3-ema-study-20261002\\arms\\lr5e5\\validation\\step_0044992\\ema\\metrics.json",
+        "weights_note": "Paired EMA generators and raw discriminators"
+      }
+    ],
+    "selection_note": "Cross-arm selection is performed by the frozen wrapper; no test/class feedback here"
+  },
+  "ended_utc": "2026-10-02T16:06:08.707492+00:00",
+  "elapsed_seconds": 5331.852799
+}
