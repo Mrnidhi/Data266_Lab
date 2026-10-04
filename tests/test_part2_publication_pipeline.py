@@ -120,7 +120,7 @@ def package_fixture(tmp_path):
     run = root / run_relative
     data_dir = root / "task2_sentiment/srinidhi/data_processed/full"
     features = root / "task2_sentiment/srinidhi/data_processed/full_encoded"
-    required = ["src/lab1/__init__.py", "src/lab1/common.py", "src/lab1/run.py",
+    required = ["task2_sentiment/srinidhi/README.md", "src/lab1/__init__.py", "src/lab1/common.py", "src/lab1/run.py",
                 "task2_sentiment/srinidhi/src/sentiment.py", "task2_sentiment/srinidhi/config.json",
                 "task2_sentiment/srinidhi/metrics_report.csv", "task2_sentiment/srinidhi/checkpoints/manifest.json", "scripts/finalize_part2.py",
                 "scripts/publish_sentiment_results.py", "scripts/verify_part2_notebook.py", "scripts/tune_sentiment.py"]
@@ -128,6 +128,7 @@ def package_fixture(tmp_path):
         path = root / relative
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_bytes(b"fixture\n")
+    (root / "README.md").write_text("## Contributions and assistance\nAI-assisted.\n\n## Submission\nReport pending.\n")
     notebook = nbformat.v4.new_notebook(cells=[nbformat.v4.new_code_cell("print('ok')", execution_count=1,
         outputs=[nbformat.v4.new_output("stream", name="stdout", text="ok\n")])],
         metadata={"lab1": {"mode": "completed_full_run_evidence"}})
@@ -171,6 +172,8 @@ def test_archive_contains_portable_runtime_six_weights_and_exact_data(tmp_path):
         names = handle.namelist()
         assert all("\\" not in name for name in names)
         assert b"torchvision" not in handle.read("Part 2/pyproject.toml")
+        assert b"## Contributions and assistance" in handle.read("Part 2/README.md")
+        assert not any(name.endswith(("AI_USE.md", "PART2_FINALIZATION.md")) for name in names)
         config = json.loads(handle.read(f"Part 2/{evidence['run']}/config.json"))
         assert config["data_dir"] == "task2_sentiment/srinidhi/data_processed/full"
         manifest = json.loads(handle.read("Part 2/PACKAGE_MANIFEST.json"))

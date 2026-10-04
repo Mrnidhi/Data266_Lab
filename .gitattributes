@@ -1,7 +1,5 @@
 # Preserve generated evidence byte-for-byte, including standard CSV CRLF endings.
 reproducibility/raw_logs/** -text whitespace=cr-at-eol
-# Preserve the generated blank rater sheets exactly as produced.
-task3_gan/srinidhi/outputs/full/evaluation/human_audit/*.csv -text whitespace=cr-at-eol
 # Part 1's training source hashes and executed notebook stay byte-identical
 # across Windows/Linux clones instead of undergoing line-ending conversion.
 src/lab1/*.py -text whitespace=cr-at-eol
@@ -14,10 +12,7 @@ task2_sentiment/srinidhi/src/sentiment.ipynb -text whitespace=cr-at-eol
 task2_sentiment/srinidhi/config.json -text whitespace=cr-at-eol
 scripts/*.py -text whitespace=cr-at-eol
 task3_gan/srinidhi/src/*.py -text whitespace=cr-at-eol
-reproducibility/packages/part3-20261002/*.json -text whitespace=cr-at-eol
-reproducibility/packages/part3-20261002/*.csv -text whitespace=cr-at-eol
 reproducibility/packages/part3-20261002/*.ipynb -text whitespace=cr-at-eol
-reproducibility/packages/part3-retuning-20261002/*.json -text whitespace=cr-at-eol
 # Generated metric and review records carry SHA-256 links; preserve their bytes.
 task1_llm/srinidhi/outputs/** -text whitespace=cr-at-eol
 task1_llm/srinidhi/metrics_report.csv -text whitespace=cr-at-eol
@@ -28,20 +23,16 @@ task2_sentiment/srinidhi/checkpoints/manifest.json -text whitespace=cr-at-eol
 verification/part1*.json -text whitespace=cr-at-eol
 verification/part2*.json -text whitespace=cr-at-eol
 verification/part2*/** -text whitespace=cr-at-eol
-# Published receipts, frozen recipes and baseline snapshots carry byte hashes.
-verification/part2*.xml -text whitespace=cr-at-eol
-verification/parts1_2_quality_tests* -text whitespace=cr-at-eol
+# Frozen experiment recipes carry byte hashes.
 task1_llm/srinidhi/experiments/** -text whitespace=cr-at-eol
 task2_sentiment/srinidhi/experiments/** -text whitespace=cr-at-eol
-reproducibility/baselines/** -text whitespace=cr-at-eol
 # AI draft verification records this generated prose's exact byte hash.
 task2_sentiment/srinidhi/failure_analysis.md -text whitespace=cr-at-eol
 task2_sentiment/srinidhi/checkpoints/maxpool_mlp/best.pt filter=lfs diff=lfs merge=lfs -text
-reproducibility/packages/part3-20261002/Part3.zip filter=lfs diff=lfs merge=lfs -text
 reproducibility/packages/part3-20261002/dataset.zip filter=lfs diff=lfs merge=lfs -text
 reproducibility/packages/parts1-2-20261002/*.zip filter=lfs diff=lfs merge=lfs -text
-reproducibility/packages/part3-retuning-20261002/*.zip filter=lfs diff=lfs merge=lfs -text
 reproducibility/packages/part3-20261004/*.zip filter=lfs diff=lfs merge=lfs -text
 reproducibility/packages/part3-20261004/*.json -text whitespace=cr-at-eol
 reproducibility/packages/part3-20261004/*.csv -text whitespace=cr-at-eol
 reproducibility/packages/part3-20261004/*.ipynb -text whitespace=cr-at-eol
+task3_gan/srinidhi/*metrics_report.csv -text whitespace=cr-at-eol

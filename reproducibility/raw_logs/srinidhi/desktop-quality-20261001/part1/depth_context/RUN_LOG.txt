@@ -1,2 +1,0 @@
-{"event": "start", "task": "gpt", "mode": "full", "utc": "2026-10-02T00:55:03.685962+00:00", "device": "cuda"}
-gpt/full training device=cuda step=0/28416; ETA estimates cover remaining training steps; evaluation/export may add time

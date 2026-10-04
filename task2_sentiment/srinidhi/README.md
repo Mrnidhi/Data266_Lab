@@ -1,6 +1,9 @@
 # Part 2 — Yelp sentiment, Srinidhi
 
-The current `outputs/full/` publication compares three independently trained classifiers with embeddings learned from scratch. The selected suite is `reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/selected/`. Its wider MLP replaces the previous MLP; BiLSTM and CNN retain their earlier desktop checkpoints.
+Three independently trained classifiers with embeddings learned from scratch.
+The current suite retains the desktop BiLSTM/CNN and selects a wider max-pool MLP.
+
+## Results and selection
 
 | Model | Completed / selected epoch | Validation macro-F1 | Test accuracy | Test macro-F1 | Parameters |
 |---|---:|---:|---:|---:|---:|
@@ -8,40 +11,94 @@ The current `outputs/full/` publication compares three independently trained cla
 | BiLSTM | 12 / 11 | 0.958857 | 96.121053% | 0.961210 | 5,305,985 |
 | Dilated CNN | 6 / 6 | 0.953446 | 95.626316% | 0.956262 | 5,539,073 |
 
-Selection considered three existing controls and four completed new candidates. The frozen rule prefers fewer parameters within 0.001 of each family's highest validation macro-F1. The wider CNN reached 0.954179 versus the original CNN's 0.953446, a gain of 0.000733; the original CNN was therefore retained. Test scores did not enter this decision. Full candidate records and hashes are in [selection_manifest.json](outputs/full/selection_manifest.json).
+Seven candidates were considered. The frozen rule prefers fewer parameters within
+0.001 of each family's highest validation macro-F1. The wider CNN's 0.000733 gain
+was inside that tolerance, so the original CNN was retained. Test scores did not
+enter this decision. [Selection](outputs/full/selection_manifest.json) and
+[training sources](outputs/full/training_sources.json) record recipes and hashes.
 
 ## Models and data
 
-| Model | Selected architecture | Initial LR / maximum epochs / patience |
+| Model | Architecture | Initial LR / maximum epochs / patience |
 |---|---|---|
-| MLP baseline | Embedding 256 → masked max pool → dense 128/ReLU/dropout 0.5 → binary logit | 0.0015 / 12 / 4 |
-| BiLSTM experiment | Embedding 128 → bidirectional LSTM, 96 units per direction → masked max pool → dense 64/dropout 0.3 → logit | 0.001 / 12 / 4 |
-| CNN experiment | Embedding 128 → 128 channels → four residual blocks, two kernel-3 convolutions each, dilations 1/2/4/8 → masked pool → dense 64/dropout 0.3 → logit | 0.0008 / 6 / 2 |
+| MLP | Embedding 256 → masked max pool → dense 128/ReLU/dropout 0.5 → logit | 0.0015 / 12 / 4 |
+| BiLSTM | Embedding 128 → BiLSTM, 96 units/direction → masked max pool → dense 64/dropout 0.3 → logit | 0.001 / 12 / 4 |
+| CNN | Embedding 128 → 128 channels → four residual blocks with kernel 3, dilations 1/2/4/8 → masked pool → dense 64/dropout 0.3 → logit | 0.0008 / 6 / 2 |
 
-The MLP measures unordered lexical evidence; BiLSTM adds sequence context; CNN composes local patterns over a wider receptive field. The wider MLP changes both capacity and regularization, so its improvement does not isolate one cause. Each model has its own embedding; CNN-block dropout is 0.2. Padding is masked during pooling and convolution.
+Each model learns its own embedding. CNN blocks use two convolutions and dropout
+0.2. Padding is masked. All use seed 2342, vocabulary cap 40,000, minimum frequency
+2, token cap 384, batch 128, AdamW weight decay 0.0001 and clipping 1.0. Learning
+rate falls on a validation-loss plateau; checkpoint macro-F1 must improve by
+0.0001. The wider MLP changes capacity and regularization together.
 
-All use seed 2342, a training-only vocabulary cap of 40,000, minimum frequency 2, the first 384 processed tokens, batch 128, AdamW weight decay 0.0001 and clipping 1.0. Learning rate falls on a validation-loss plateau. Checkpoint improvement must exceed 0.0001 validation macro-F1. [training_sources.json](outputs/full/training_sources.json) and each model's `training_config.json` record exact settings and CPU/GPU.
+The frozen data contain 504,000 training, 56,000 validation and 38,000 test reviews
+with balanced labels. Vocabulary is training-only. Preprocessing casefolds,
+handles HTML/contractions and removes punctuation/selected stopwords, retaining
+negation and contrast. Stemming is omitted. Empty processed inputs map to UNK
+(22 training, one validation, zero test). See [data details](data_processed/README.md).
 
-The frozen data contain 504,000 training, 56,000 validation and 38,000 test reviews, with balanced labels. Preprocessing casefolds, handles HTML/contractions, removes punctuation and selected stopwords, and retains negation/contrast. Stemming is omitted to retain word forms. Empty processed text maps to UNK: 22 training rows, one validation row and no test rows. See [data details](data_processed/README.md).
+## Setup and reproduction
 
-## Read and reproduce
-
-Start with [results.md](results.md), [metrics_report.csv](metrics_report.csv) and [sentiment.ipynb](src/sentiment.ipynb). The [finalization guide](../../PART2_FINALIZATION.md) gives setup, selected-recipe training, evaluation and package checks. After setup:
+Work from the repository root or extracted ZIP's `Part 2/` folder. Use Python 3.12;
+recorded training used PyTorch 2.11.0+cu128 / CUDA 12.8 on an RTX 5090.
 
 ```powershell
+py -3.12 -m venv .venv
+.venv\Scripts\python.exe -m pip install torch==2.11.0 --index-url https://download.pytorch.org/whl/cu128
+.venv\Scripts\python.exe -m pip install -r requirements.txt
+.venv\Scripts\python.exe -m pip install --no-deps -e .
+.venv\Scripts\python.exe -m pip check
 .venv\Scripts\python.exe -m lab1.run --task sentiment --mode smoke --device cpu
 ```
 
-Smoke uses synthetic data to check execution. Real reproduction requires frozen processed data and complete checkpoints. The wider MLP's exact Git LFS path is `task2_sentiment/srinidhi/checkpoints/maxpool_mlp/best.pt`; after cloning or pulling, run `git lfs install` and `git lfs pull`. See [checkpoint details](checkpoints/README.md).
+On Linux/macOS use `python3.12` and `.venv/bin/python`. Smoke checks synthetic CPU
+execution only. Select this environment's kernel for [sentiment.ipynb](src/sentiment.ipynb).
+After cloning, run `git lfs install` and `git lfs pull` for the 124,098,311-byte MLP
+checkpoint. A pointer is not loadable; compare [checkpoint hashes](checkpoints/manifest.json).
+The standalone ZIP contains real best/last weights, `data_processed/full/` and
+`full_encoded/` with manifests; a Git clone alone does not supply the data caches.
 
-Metric/source checks, the eight-cell notebook, saved-model inference and the extracted package's notebook/CPU smoke test passed. The ZIP contains real best/last weights and processed data; its checksum and inventory are recorded in `dist/part2_package_verification.json`. A normal final push to `main` is authorized, preserving history.
+Run each selected recipe into a new output directory:
 
-## Required analysis and review
+```powershell
+.venv\Scripts\python.exe scripts/tune_sentiment.py --candidate task2_sentiment/srinidhi/outputs/full/reproduction/maxpool_mlp_candidate.json --output runs/reproduce-part2-mlp --device cuda
+.venv\Scripts\python.exe scripts/tune_sentiment.py --candidate task2_sentiment/srinidhi/outputs/full/reproduction/bilstm_candidate.json --output runs/reproduce-part2-bilstm --device cuda
+.venv\Scripts\python.exe scripts/tune_sentiment.py --candidate task2_sentiment/srinidhi/outputs/full/reproduction/dilated_cnn_candidate.json --output runs/reproduce-part2-cnn --device cuda
+```
 
-The publication includes classification metrics, ROC/PR curves, MCC, Brier score, 15-bin ECE, 1,000-draw bootstrap intervals, two exact paired McNemar comparisons against MLP, predefined length/negation/OOV slices, parameter counts, training time, examples/second and memory. Definitions and measurement limits are in [results.md](results.md).
+Keep matching configs, best/last states and histories. Resume only under the same
+training contract; never use two writers per output. Newly trained candidates
+need a new validation-only selection before test evaluation. The saved suite can
+be reevaluated with `scripts/finalize_sentiment_selection.py --selection <saved-selection.json> --output <new-evaluation-dir> --device cuda`.
 
-The test set has previously been observed, seven text hashes are shared between train and test, and only one training seed is represented. These results do not establish a new unseen holdout, a global optimum or production readiness. Training costs come from actual invocations; differing workload overlap limits direct speed comparisons.
+## Verify and package
 
-Each model has 20 real errors: five confident false positives, five confident false negatives, five near-threshold errors and five long-review errors. Separate AI draft CSVs support [failure_analysis.md](failure_analysis.md) with exact quotes and future testable fixes. All 60 human review flags are currently false. Student review, independent teammate comparisons and the combined report remain required; see the [checklist](../REQUIREMENTS_CHECKLIST.md) and [AI disclosure](../../AI_USE.md).
+```powershell
+.venv\Scripts\python.exe scripts/finalize_part2.py --run-dir reproducibility/raw_logs/srinidhi/desktop-quality-20261001/part2-search/selected --data-dir task2_sentiment/srinidhi/data_processed/full
+.venv\Scripts\python.exe scripts/finalize_part2.py --verify-archive dist/Part2_Srinidhi_2342.zip
+.venv\Scripts\python.exe scripts/finalize_part2.py --verify-portability dist/Part2_Srinidhi_2342.zip
+```
 
-The preceding desktop publication remains under `outputs/publication_history/026926f7d98246d3/`; older results remain historical. Canvas requires the combined three-part ZIP and `Report.pdf`, not this Part 2 package alone.
+Add `--device cpu` when CUDA is unavailable. Finalization verifies metrics/source
+identities, executes the notebook, checks inference and creates the ZIP without
+training. After a successful finalization, `--archive-only` rebuilds documentation
+using saved checks only if frozen data, runtime, results and notebook are unchanged.
+Receipts are `verification/part2_*.json`; ZIP inventory, CRC and SHA-256 are in
+`dist/part2_package_verification.json` and `dist/Part2_SHA256SUMS.txt`.
+
+## Analysis and remaining review
+
+[Results](results.md) and [metrics](metrics_report.csv) include classification
+metrics, ROC/PR, MCC, Brier/ECE, bootstrap intervals, McNemar comparisons, slices,
+parameters, time, throughput and memory. One seed, seven shared train/test text
+hashes and previously observed test data limit generalization claims. Intervals
+measure test-row variation; overlapping GPU work limits speed comparisons.
+
+Each model has 20 real errors across confident false positives/negatives,
+near-threshold and long-review groups. [Failure analysis](failure_analysis.md)
+contains AI-assisted drafts; all 60 human flags remain false. Review full inputs
+before marking them complete. `scripts/render_sentiment_error_drafts.py` verifies
+draft linkage and updates prose while preserving human fields and notebook bytes.
+See [requirements](../REQUIREMENTS_CHECKLIST.md),
+[assistance](../../README.md#contributions-and-assistance) and
+[submission](../../README.md#submission). Team comparison and report remain separate.

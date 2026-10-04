@@ -21,4 +21,4 @@ Verify the downloaded file against the manifest; an LFS pointer cannot be loaded
 
 Saved-model checks for these hashes passed and are recorded in `verification/part2_checkpoint_inference.json`. The extracted package's notebook and CPU smoke test also passed, recorded in `verification/part2_package_portability.json`. Use the final inventory and checksum in `dist/part2_package_verification.json` and `dist/Part2_SHA256SUMS.txt`.
 
-The old desktop publication and baseline ZIP remain preserved separately. See the [finalization guide](../../../PART2_FINALIZATION.md) for current commands.
+The old desktop publication and baseline ZIP remain preserved separately. See the [finalization guide](../README.md) for current commands.

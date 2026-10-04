@@ -64,7 +64,7 @@ The small positive gap does not establish performance outside the frozen split.
 
 | Requirement | Remaining action |
 |---|---|
-| Own core architecture decisions and analysis; permitted assistance | Student must address course AI-use rules honestly. Assisted code/results alone do not prove independent authorship. See root `AI_USE.md`. |
+| Own core architecture decisions and analysis; permitted assistance | Student must address course AI-use rules honestly. Assisted code/results alone do not prove independent authorship. See the root README assistance section. |
 | Review and individual demo/viva | Verify the code and actual failure snippets; explain design choices, metrics, masking, schedule and checkpoint selection. |
 | Each member independently trains a distinct Part 1 model | Revanth's folder is a scaffold; obtain his actual independent code/config/weights/results. |
 | Team comparison and joint synthesis | Compare every member's architecture, hyperparameters and full required metrics using the agreed protocol. |

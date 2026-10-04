@@ -1,7 +1,7 @@
 {
   "status": "verified_AI_assisted_not_student_review",
   "renderer": "scripts/render_sentiment_error_drafts.py",
-  "renderer_sha256": "cd3d9d73308e4b6e3b65b2b5cdc678537a476cabccaab741c38b601ff87df42c",
+  "renderer_sha256": "4a7097db4f745f2e77a0a142d41989672326166e8c0518f72b13e8b7c4704b41",
   "total_entries": 60,
   "human_reviewed_rows": 0,
   "human_review_complete": false,
@@ -112,8 +112,8 @@
     "task2_sentiment/srinidhi/src/sentiment.ipynb": "aeddbe084af3ffe93ee319ce6fed24d511a7f4c82cc473eccfbda7e97d5c957c"
   },
   "failure_analysis_path": "task2_sentiment/srinidhi/failure_analysis.md",
-  "failure_analysis_sha256": "9b3415f745803d73398d83e6405ab6070d0e9c980f3ef107475e59588c4440a8",
-  "failure_analysis_normalized_lf_sha256": "9b3415f745803d73398d83e6405ab6070d0e9c980f3ef107475e59588c4440a8",
+  "failure_analysis_sha256": "da4edd82f277c22193d084daec16588f9491bf7164532f283b726d2a3831f9fc",
+  "failure_analysis_normalized_lf_sha256": "da4edd82f277c22193d084daec16588f9491bf7164532f283b726d2a3831f9fc",
   "notebook_sha256_before": "aeddbe084af3ffe93ee319ce6fed24d511a7f4c82cc473eccfbda7e97d5c957c",
   "notebook_sha256_after": "aeddbe084af3ffe93ee319ce6fed24d511a7f4c82cc473eccfbda7e97d5c957c",
   "notebook_unchanged": true,

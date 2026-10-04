@@ -1,3 +1,5 @@
-# Run manifests
+# Selected artifact manifests
 
-Each member stores immutable manifests here, grouped by member and run. Srinidhi's initial manifests are byte-identical copies of the originals within raw_logs/. index.json records each original path and SHA-256. Do not rewrite historical manifests when code or configurations change.
+`selected.json` indexes the current checkpoint/package records and their hashes.
+Full run manifests are preserved inside the selected packages. Superseded smoke
+and cloud manifests remain local and in Git history.

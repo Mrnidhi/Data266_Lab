@@ -194,7 +194,7 @@ def test_part1_archive_runtime_inventory_and_hashes(tmp_path):
     root.mkdir()
     run_relative = "reproducibility/raw_logs/srinidhi/unit-test/part1-full"
     run = root / run_relative
-    required = ["PART1_FINALIZATION.md", "src/lab1/__init__.py", "src/lab1/common.py", "src/lab1/run.py",
+    required = ["task1_llm/srinidhi/README.md", "src/lab1/__init__.py", "src/lab1/common.py", "src/lab1/run.py",
                 "task1_llm/srinidhi/src/gpt.py", "task1_llm/srinidhi/src/gpt.ipynb",
                 "task1_llm/srinidhi/checkpoints/best.pt", "task1_llm/srinidhi/checkpoints/last.pt",
                 "task1_llm/srinidhi/metrics_report.csv", "task1_llm/srinidhi/failure_analysis.md",
@@ -209,6 +209,7 @@ def test_part1_archive_runtime_inventory_and_hashes(tmp_path):
         path = root / relative
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_bytes(b"test fixture\n")
+    (root / "README.md").write_text("## Contributions and assistance\nAI-assisted.\n\n## Submission\nReport pending.\n")
     notebook = nbformat.v4.new_notebook(cells=[nbformat.v4.new_code_cell("print('verified')", execution_count=1,
         outputs=[nbformat.v4.new_output("stream", name="stdout", text="verified\n")])],
         metadata={"lab1": {"mode": "completed_full_run_evidence"}})
@@ -227,7 +228,9 @@ def test_part1_archive_runtime_inventory_and_hashes(tmp_path):
         assert not any(name.endswith("RUN_LOG.txt") for name in names)
         assert b"torch==" in handle.read("Part 1/requirements.txt")
         assert b"torchvision" not in handle.read("Part 1/pyproject.toml")
-        assert handle.read("Part 1/README.md") == b"test fixture\n"
+        assert handle.read("Part 1/README.md").startswith(b"test fixture\n")
+        assert b"## Contributions and assistance" in handle.read("Part 1/README.md")
+        assert not any(name.endswith(("AI_USE.md", "PART1_FINALIZATION.md")) for name in names)
         entries = {name: handle.read(name) for name in names}
     # Rebuild valid-CRC ZIP with altered bytes: SHA verification must still fail.
     entries["Part 1/task1_llm/srinidhi/checkpoints/best.pt"] = b"tampered"
@@ -266,7 +269,7 @@ def test_portable_inventory_selects_recipe_receipt_and_excludes_history(tmp_path
                "protocol": {"manifest_sha256": "same-frozen-data"},
                "candidates": [{"run": selected_run, "checkpoint_sha256": publisher.digest(checkpoint)}]}
     write(root / "verification/part1_quality_comparison.json", receipt)
-    included = ["PART1_FINALIZATION.md", "scripts/compare_gpt_candidates.py",
+    included = ["task1_llm/srinidhi/README.md", "scripts/compare_gpt_candidates.py",
                 "tests/test_compare_gpt_candidates.py", "task1_llm/srinidhi/outputs/full/config.json"]
     excluded = ["task1_llm/srinidhi/outputs/publication_history/baseline/best.pt",
                 "task1_llm/srinidhi/checkpoints/snapshots/old.pt",
@@ -278,6 +281,7 @@ def test_portable_inventory_selects_recipe_receipt_and_excludes_history(tmp_path
         path = root / relative
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_bytes(b"fixture")
+    (root / "README.md").write_text("## Contributions and assistance\nAI-assisted.\n\n## Submission\nReport pending.\n")
     files, _ = finalizer.package_files(root, evidence)
     assert set(included) <= files.keys()
     assert not set(excluded) & files.keys()

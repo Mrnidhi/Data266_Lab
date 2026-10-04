@@ -8,6 +8,8 @@ import json
 import math
 import os
 from pathlib import Path, PurePosixPath
+import posixpath
+import re
 import shutil
 import stat
 import subprocess
@@ -439,6 +441,21 @@ def quality_study_files(root, evidence):
     return sorted(files)
 
 
+def package_readme(root):
+    member = "task2_sentiment/srinidhi"
+    guide = root / member / "README.md"
+    require(guide.is_file(), "Member setup guide is missing")
+    body = guide.read_text(encoding="utf-8")
+    body = re.sub(r"\]\((?!https?://|#)([^)\s]+)\)",
+                  lambda match: "](" + posixpath.normpath(f"{member}/{match[1]}") + ")", body)
+    overview = (root / "README.md").read_text(encoding="utf-8")
+    for heading in ("Contributions and assistance", "Submission"):
+        section = re.search(rf"^## {heading}\n.*?(?=^## |\Z)", overview, re.MULTILINE | re.DOTALL)
+        require(section is not None, f"Root README is missing {heading}")
+        body += "\n" + section[0].rstrip() + "\n"
+    return body.encode("utf-8")
+
+
 def package_files(root, evidence):
     root = Path(root).resolve()
     paths = {}
@@ -475,7 +492,7 @@ def package_files(root, evidence):
         add(path)
     for path in quality_study_files(root, evidence):
         add(path)
-    for name in ("AI_USE.md", "PART2_FINALIZATION.md", ".gitattributes", ".gitignore"):
+    for name in (".gitattributes", ".gitignore"):
         add(root / name)
     for name in ("publish_sentiment_results.py", "verify_part2_notebook.py", "finalize_part2.py", "tune_sentiment.py", "run_sentiment_desktop.py",
                  "select_sentiment_candidates.py", "finalize_sentiment_selection.py", "sentiment_data_analysis.py",
@@ -495,26 +512,7 @@ def package_files(root, evidence):
         "[project]\nname = \"data266-part2-2342\"\nversion = \"0.1.0\"\nrequires-python = \">=3.12\"\n"
         f"dependencies = [{deps}]\n\n[project.optional-dependencies]\ntest = [\"pytest>=8\"]\n\n"
         "[tool.setuptools.packages.find]\nwhere = [\"src\"]\n\n[tool.pytest.ini_options]\npythonpath = [\"src\"]\ntestpaths = [\"tests\"]\n").encode()
-    paths["README.md"] = ("# Part 2 — Srinidhi's desktop Yelp classifiers\n\n"
-        "Extract this complete Part 2 folder and use it as the working directory. Repository: https://github.com/Mrnidhi/Data266_Lab\n\n"
-        "Create a Python 3.12 virtual environment. On Windows:\n\n```powershell\n"
-        "py -3.12 -m venv .venv\n.venv\\Scripts\\python.exe -m pip install torch==2.11.0 --index-url https://download.pytorch.org/whl/cu128\n"
-        ".venv\\Scripts\\python.exe -m pip install -r requirements.txt\n.venv\\Scripts\\python.exe -m pip install --no-deps -e .\n"
-        ".venv\\Scripts\\python.exe -m lab1.run --task sentiment --mode smoke --device cpu\n```\n\n"
-        "The last command is the one-command offline CPU smoke test. It uses synthetic data; the recorded metrics use all official rows. "
-        "Linux/macOS use python3.12 and .venv/bin/python. Open task2_sentiment/srinidhi/src/sentiment.ipynb to see executed results. "
-        "Select the virtual-environment kernel; the notebook checks CPU and available CUDA saved-model inference without retraining.\n\n"
-        f"To re-finalize the existing saved run:\n\n```powershell\n.venv\\Scripts\\python.exe scripts/finalize_part2.py --run-dir {evidence['run']} "
-        f"--data-dir {evidence['data_dir'].relative_to(root).as_posix()}\n```\n\n"
-        "Use --device cpu when CUDA is unavailable. Exact three training recipes, frozen selection, original logs, best/last weights, "
-        "processed JSONL data and encoded features are included. See member results.md for commands that retrain into new folders; "
-        "create a new validation-only selection before evaluating those newly trained models.\n\n"
-        "Prior publications and snapshot archives remain in the producing repository and preserved baseline ZIP. Current review_history "
-        "is retained with this run. Completed quality-study metadata is included without unselected checkpoint weights. "
-        "Error interpretations require honest student review; new rows remain unreviewed. "
-        "This Part 2 technical bundle is one component of the eventual three-part team Canvas ZIP and combined Report.pdf.\n").encode()
-    if (root / "PART2_FINALIZATION.md").is_file():
-        paths["README.md"] = (root / "PART2_FINALIZATION.md").read_bytes()
+    paths["README.md"] = package_readme(root)
     derived_metadata = []
     # The preserved evaluator writes machine-local cache paths. Portable copies
     # change those paths only; original local bytes and hashes remain recorded.

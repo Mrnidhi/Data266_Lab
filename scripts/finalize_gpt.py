@@ -7,6 +7,8 @@ import importlib.metadata
 import json
 import os
 from pathlib import Path, PurePosixPath
+import posixpath
+import re
 import stat
 import sys
 from tempfile import TemporaryDirectory
@@ -159,6 +161,21 @@ def selected_experiment_files(root, evidence):
     return selected
 
 
+def package_readme(root):
+    member = "task1_llm/srinidhi"
+    guide = root / member / "README.md"
+    publisher.require(guide.is_file(), "Member setup guide is missing")
+    body = guide.read_text(encoding="utf-8")
+    body = re.sub(r"\]\((?!https?://|#)([^)\s]+)\)",
+                  lambda match: "](" + posixpath.normpath(f"{member}/{match[1]}") + ")", body)
+    overview = (root / "README.md").read_text(encoding="utf-8")
+    for heading in ("Contributions and assistance", "Submission"):
+        section = re.search(rf"^## {heading}\n.*?(?=^## |\Z)", overview, re.MULTILINE | re.DOTALL)
+        publisher.require(section is not None, f"Root README is missing {heading}")
+        body += "\n" + section[0].rstrip() + "\n"
+    return body.encode("utf-8")
+
+
 def package_files(root, evidence):
     root = Path(root).resolve()
     files = {}
@@ -169,7 +186,7 @@ def package_files(root, evidence):
         publisher.require(not path.is_symlink() and path.resolve().is_relative_to(root),
                           f"Package file is a symlink or outside repository: {path.name}")
         files[path.relative_to(root).as_posix()] = path
-    for name in ("pyproject.toml", "PART1_FINALIZATION.md", "AI_USE.md", ".gitattributes", ".gitignore"):
+    for name in ("pyproject.toml", ".gitattributes", ".gitignore"):
         add(root / name)
     for path in sorted((root / "src/lab1").glob("*.py")):
         add(path)
@@ -200,14 +217,13 @@ def package_files(root, evidence):
                  "part1_finalization_pytest.xml", "part1_desktop_preflight.xml", "part1_desktop_smoke.json",
                  "part1_package_portability.json"):
         add(root / "verification" / name)
-    publisher.require("PART1_FINALIZATION.md" in files, "Standalone PART1_FINALIZATION.md setup guide is missing")
     # Portable install pins omit the CUDA local version suffix; the guide gives
     # the tested CUDA-wheel index. Full runtime versions remain in the receipt.
     versions = {name: importlib.metadata.version(name) for name in RUNTIME_PACKAGES}
     requirements = "# Part 1 direct dependencies; see README.md for CUDA wheel installation.\n" + "".join(
         f"{name}=={version.split('+')[0]}\n" for name, version in versions.items())
     files["requirements.txt"] = requirements.encode("utf-8")
-    files["README.md"] = (root / "PART1_FINALIZATION.md").read_bytes()
+    files["README.md"] = package_readme(root)
     # Part 1 needs none of the image-classification/image-metric dependencies.
     dependencies = ", ".join(json.dumps(f"{name}=={version.split('+')[0]}") for name, version in versions.items())
     files["pyproject.toml"] = ("[build-system]\nrequires = [\"setuptools>=77,<82\"]\n"

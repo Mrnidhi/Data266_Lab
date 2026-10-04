@@ -247,7 +247,7 @@ def document(evidence):
               "the hypotheses in personal words and propose a testable study. Set a human-reviewed flag only after "
               "that review occurs. This rendering does not add, remove or approve human annotations.", "",
               "Independent teammate evidence, the joint comparison/report, individual viva understanding and the "
-              "remaining whole-lab obligations require their own completion evidence. The root AI_USE.md disclosure "
+              "remaining whole-lab obligations require their own completion evidence. The root README contributions and assistance section "
               "describes assistance; these drafts do not establish independent authorship.", ""]
     return "\n".join(lines)
 

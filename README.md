@@ -20,7 +20,7 @@ so this is not a held-out estimate. No Kaggle upload or rank is claimed.
 
 Revanth's independent Part 1 and Part 2 notebooks are in his member folders.
 His Part 3 folder remains a scaffold. The combined report and remaining student
-reviews are still pending; see the [submission checklist](SUBMISSION_CHECKLIST.md).
+reviews are still pending; see [submission](#submission).
 
 ## Where to look
 
@@ -32,18 +32,17 @@ task3_gan/           CycleGAN
 src/lab1/           Shared training and evaluation entry points
 scripts/            Reproduction, packaging and verification utilities
 tests/              CPU checks and optional hardware checks
-reproducibility/    Frozen logs, manifests and downloadable packages
+reproducibility/    Selected-run evidence and downloadable packages
 verification/       Test and execution receipts
-report/             Combined report outline and experiment reports
-docs/history/       Earlier planning and machine handoff notes
+report/             Combined report outline
 ```
 
 Each task keeps `srinidhi/` and `revanth0211/` separate. The latest Part 3 package
 contains its selected checkpoint, all 7,338 direct-output JPEGs, executed
 notebooks, official CSV and recorded training source. Its separate recovery ZIP
-preserves saved training states. Older Part 3 member outputs and dated packages
-remain historical evidence; their metrics and human ratings do not describe the
-October 4 model.
+preserves saved training states. Superseded run outputs and planning notes are
+excluded from the current tree.
+Earlier human ratings do not describe the October 4 model.
 
 Large required archives and the wider MLP checkpoint use Git LFS. Complete
 machine backups, caches and temporary experiments stay local under ignored
@@ -68,7 +67,7 @@ Use Python 3.12 in a virtual environment. Install `requirements.txt` and the
 editable project (`python -m pip install --no-deps -e .`). NVIDIA training needs
 a PyTorch build compatible with the GPU; the recorded RTX 5090 run used
 PyTorch 2.11.0 / torchvision 0.26.0 with CUDA 12.8. Additional image metrics use
-`requirements-image-metrics.txt`.
+`task3_gan/requirements.txt`.
 
 On Linux/macOS, the preparation smoke test creates an environment and briefly
 checks all five models on synthetic CPU inputs:
@@ -87,16 +86,34 @@ Smoke outputs establish execution, not trained model quality. For real runs use
 the task/package instructions and the recorded data and configurations. Training
 scripts do not rent hardware or stop provider billing.
 
-## Reproduction and submission
+## Reproduce the results
 
-- [Part 1 finalization](PART1_FINALIZATION.md) and [Part 2 finalization](PART2_FINALIZATION.md)
-  describe the selected models and evidence checks.
-- [Part 3 package](reproducibility/packages/part3-20261004/README.md) distinguishes
-  the exact trained source from later readability and resume-safety fixes.
-- [Team workflow](TEAM_WORKFLOW.md), [AI assistance disclosure](AI_USE.md) and
-  [report outline](report/REPORT_TEMPLATE.md) record ownership and remaining work.
+- [Part 1](task1_llm/srinidhi/README.md): GPT setup, selected recipe and verification.
+- [Part 2](task2_sentiment/srinidhi/README.md): sentiment setup, selected recipes and verification.
+- [Part 3](reproducibility/packages/part3-20261004/README.md): selected outputs,
+  exact trained source and checkpoint recovery. Readable working source includes
+  later formatting and resume-safety fixes; archived run artifacts are unchanged.
+
+## Contributions and assistance
+
+Srinidhi and Revanth maintain separate member folders. Coordinate shared files
+and comparisons; record which member produced each result. Use branches for
+contributions and avoid force-pushing shared history.
+
+AI assistance was used for research, implementation, experiment operation,
+debugging, packaging and drafted analysis. Students must personally review and
+explain their choices, code and results. AI-assisted error drafts are not human
+ratings or completed student review.
+
+## Submission
 
 Canvas needs one ZIP containing **Part 1**, **Part 2**, **Part 3** and a combined
 **Report.pdf** with the GitHub link. Each part needs executed notebooks, saved
-weights and required outputs. The current packages preserve the completed work;
-they do not replace the unfinished team report or student reviews.
+weights and required outputs. Pushing to GitHub does not submit to Canvas or Kaggle.
+
+Before submission, complete the student error reviews, missing metrics for the
+selected GAN, two independent ratings and agreement, Revanth's Part 3 and the
+team comparison/report. Earlier model measurements and reviews cannot be reused
+for the current model. Use the [report outline](report/REPORT_TEMPLATE.md) and
+the requirement checklist within each task. The supplied Canvas screenshot
+shows October 6 at 6 PM; confirm the deadline in the course.

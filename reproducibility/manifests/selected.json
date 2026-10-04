@@ -1,0 +1,17 @@
+{
+  "member": "srinidhi",
+  "selected_artifact_records": {
+    "part1": {
+      "path": "task1_llm/srinidhi/checkpoints/manifest.json",
+      "sha256": "57ed2f60f2127edba5e1248bcc65165be38da20962a88f11895ec64a2a233fc0"
+    },
+    "part2": {
+      "path": "task2_sentiment/srinidhi/checkpoints/manifest.json",
+      "sha256": "fb566c5b0dc5a3b4809db364f7425bf4be9d746e4980e9def32e2c52bd57ee8a"
+    },
+    "part3": {
+      "path": "reproducibility/packages/part3-20261004/receipt.json",
+      "sha256": "44ab1dbd72aa553a9967f907c351a28ff0d7bf31e5bbfcb4d6c8fa165f939936"
+    }
+  }
+}

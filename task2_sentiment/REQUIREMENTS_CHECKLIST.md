@@ -50,6 +50,6 @@ Each model's `required_20_errors_for_review.csv` contains five confident false p
 
 AI drafts retain `AI_ASSISTED_NOT_STUDENT_REVIEW`; they do not satisfy manual review or prove a failure mechanism. Their linkage receipt is `verification/part2_ai_error_drafts.json`. Proposed changes require training/validation studies rather than selection from these test errors.
 
-Follow [PART2_FINALIZATION.md](../PART2_FINALIZATION.md) for commands and receipts. Finalization must package actual selected weights, notebook, data and outputs, then verify the ZIP and extracted execution. The wider MLP's exact LFS path is `task2_sentiment/srinidhi/checkpoints/maxpool_mlp/best.pt`; clone users need `git lfs pull`. A normal final push to `main` is authorized, preserving history.
+Follow [the member guide](srinidhi/README.md) for commands and receipts. Finalization must package actual selected weights, notebook, data and outputs, then verify the ZIP and extracted execution. The wider MLP's exact LFS path is `task2_sentiment/srinidhi/checkpoints/maxpool_mlp/best.pt`; clone users need `git lfs pull`. A normal final push to `main` is authorized, preserving history.
 
-Canvas requires one combined ZIP with Part 1, Part 2 and Part 3 folders and one combined `Report.pdf` containing the GitHub link. A Part 2-only ZIP does not complete teammate work, student review, the report or submission. See [AI_USE.md](../AI_USE.md) for assistance disclosure.
+Canvas requires one combined ZIP with Part 1, Part 2 and Part 3 folders and one combined `Report.pdf` containing the GitHub link. A Part 2-only ZIP does not complete teammate work, student review, the report or submission. See [the assistance disclosure](../README.md#contributions-and-assistance) for assistance disclosure.

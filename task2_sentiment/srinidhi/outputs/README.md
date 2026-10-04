@@ -13,4 +13,4 @@ The selected suite is `reproducibility/raw_logs/srinidhi/desktop-quality-2026100
 
 Each `ai_error_review_draft.csv` provides AI-assisted hypotheses and future testable fixes, linked to current packet, checkpoint and text hashes. Human `error_type` and `testable_fix` fields remain blank and all 60 `student_reviewed` flags are false. These drafts support student review; they do not complete it.
 
-The preceding desktop publication is preserved under `publication_history/026926f7d98246d3/`; older publications remain historical. New ZIPs omit recursive history while retaining current publication and compact candidate evidence. Metric, notebook, saved-model and extracted-package checks passed for the selected suite. See the [finalization guide](../../../PART2_FINALIZATION.md).
+Earlier publications remain local and in Git history. The current ZIP retains selected results and compact candidate evidence. Metric, notebook, saved-model and extracted-package checks passed for the selected suite. See the [finalization guide](../README.md).

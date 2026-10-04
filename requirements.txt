@@ -1,4 +1,4 @@
-# Tested direct dependencies. CUDA wheels are installed first by bootstrap_gpu.sh.
+# Tested direct dependencies. Install a compatible CUDA PyTorch wheel before these for GPU training.
 torch==2.11.0
 torchvision==0.26.0
 numpy==2.5.3

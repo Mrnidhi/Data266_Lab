@@ -10,4 +10,4 @@ Duplicate texts are audited and retained: seven hashes occur in both training an
 
 The tuner verifies all split/cache fingerprints, including test metadata and arrays, then removes the test dataset before training. Only training/validation tensors reach training and checkpoint selection. Earlier test results were observed, so repeated evaluation is not a newly sealed holdout.
 
-Git does not include dataset caches. Use the complete local data or finalized ZIP, or prepare the public dataset and verify the manifest. The ZIP includes real processed files. See the [finalization guide](../../../PART2_FINALIZATION.md); other members keep their own preprocessing/model artifacts in their own folders.
+Git does not include dataset caches. Use the complete local data or finalized ZIP, or prepare the public dataset and verify the manifest. The ZIP includes real processed files. See the [finalization guide](../README.md); other members keep their own preprocessing/model artifacts in their own folders.
