@@ -1,8 +1,10 @@
+> Historical planning record. Use the [repository README](../../README.md) for current results and packages. Commands and availability below describe the original session.
+
 # Visible training over SSH
 
 This is a historical September 18 connection guide. Part 1 was replaced by a
 fresh desktop RTX 5090 run on October 1 at the user's request, and its previous
-run artifacts were removed from the working tree. Use [Part 1 finalization](PART1_FINALIZATION.md)
+run artifacts were removed from the working tree. Use [Part 1 finalization](../../PART1_FINALIZATION.md)
 for current weights, results and local reproduction; the connection details and
 prices below are historical observations.
 

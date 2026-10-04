@@ -1,3 +1,5 @@
+> Historical planning record. Use the [repository README](../../README.md) for current results and packages. Commands and availability below describe the original session.
+
 # Part 3 on Colab
 
 The class data and A100 training pipeline are prepared. Full training and final

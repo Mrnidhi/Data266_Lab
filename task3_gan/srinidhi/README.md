@@ -1,12 +1,20 @@
 # Part 3 — Srinidhi's CycleGAN (seed 2342)
 
-**Current model: [October 2 verified package](../../reproducibility/packages/part3-20261002/README.md).** Fetch Git LFS files and extract that complete ZIP for the current executed notebook, weights, JPEGs, class CSV, full metrics and reproduction commands. It selects the LR `5e-5` epoch-four EMA candidate using validation KID; local class composite `(FID + MiFID) / 2` is **50.172385**. Official upload/rank and both independent ratings of the current model remain pending.
+**Current model: [October 4 verified package](../../reproducibility/packages/part3-20261004/README.md).**
+The unchanged supplied scoring notebook reports composite **47.560426**, FID
+**94.716036** and MiFID **0.404816**. The selected batch-1 slow-EMA checkpoint is
+from update 221,250. Batch-1 completed; batch-8 and R1 stopped after host-memory
+exhaustion. See the package for exact weights, all JPEGs, executed notebooks,
+official CSV, frozen training source and recovery states.
 
-Current class **A=Monet, B=Photo**: `pred_A2B` contains 300 Monet-to-Photo JPEGs; `pred_B2A` contains 7,038 Photo-to-Monet JPEGs. Older A/B filenames below use the historical opposite mapping. Share only the extracted `human_review_packet.zip` with raters; the complete backup retains original provenance and the private mapping.
+Class **A=Monet, B=Photo**: `pred_A2B` has 300 Monet-to-Photo JPEGs;
+`pred_B2A` has 7,038 Photo-to-Monet JPEGs. Selection used 192 scored candidates
+and references also present in training. This is not held-out evaluation, and
+no Kaggle rank or current-model human ratings are claimed.
 
 ## Historical baseline documentation
 
-The remaining notebook, metrics, configuration, manifest and `outputs/full/` in this member directory record the earlier 30-epoch baseline. The instructions and results below describe that historical run; use the extracted October 2 package for the current model.
+The remaining notebook, metrics, configuration, manifest and `outputs/full/` in this member directory record the earlier 30-epoch baseline. The instructions and results below describe that historical run; use the extracted October 4 package for the current model.
 
 Full training and held-out evaluation are complete on the real class data and frozen splits. The selected checkpoint completed all 30 epochs (168,720 updates) with zero non-finite events, and both translation directions were evaluated on the frozen test split. The executed notebook, metrics, plots, fixed audit panels and direct prediction exports are saved in this folder. No class Kaggle submission was generated or sent automatically because the class submission schema is still unverified.
 
@@ -50,7 +58,7 @@ Every checkpoint contains all four model states, both optimizer states, both sch
 PYTHONPATH=src python -m lab1.cyclegan train --mode rehearsal --device cuda --output-dir runs/cyclegan_rehearsal --resume runs/cyclegan_rehearsal/last.pt
 ```
 
-Transfer the complete run, keeping `best.pt` beside `last.pt`, plus the same data and split manifests. Fresh-output resume validates and preserves the previous best checkpoint; missing or inconsistent selected-best artifacts fail explicitly. If a crash leaves logs beyond the last saved update, retain the old run and resume into a fresh output directory. Changing visible CUDA device counts is supported, but cross-device continuation is not guaranteed to be bitwise identical. See [portable run instructions](../../COMPUTE_PLAN.md).
+Transfer the complete run, keeping `best.pt` beside `last.pt`, plus the same data and split manifests. Fresh-output resume validates and preserves the previous best checkpoint; missing or inconsistent selected-best artifacts fail explicitly. If a crash leaves logs beyond the last saved update, retain the old run and resume into a fresh output directory. Changing visible CUDA device counts is supported, but cross-device continuation is not guaranteed to be bitwise identical. See [portable run instructions](../../docs/history/COMPUTE_PLAN.md).
 
 `training_log.jsonl` records raw directional cycle/identity losses, adversarial losses, discriminator losses, gradient norms for each network, NaN events, learning rate, and update timing. `run_summary.json` records counts, parameters, memory, runtime, and provenance. Throughput counts two source images per update; it excludes loading/evaluation and is not the number of generator forward passes. CUDA peak allocated training memory is measured; CPU/MPS memory is explicitly unavailable. Fixed input → translation → reconstruction grids are saved. Non-finite losses/gradients stop training before applying the update.
 

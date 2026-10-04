@@ -1,0 +1,74 @@
+{
+  "archives": [
+    {
+      "file": "Part3.zip",
+      "bytes": 221572371,
+      "sha256": "637d70d185ccdbbcb02e5dae169cb31ae4eebcc5467684d86de97f16ff518212",
+      "zip_crc": "passed",
+      "all_member_hashes": "passed",
+      "entries": 7383
+    },
+    {
+      "file": "Recovery.zip",
+      "bytes": 1889084810,
+      "sha256": "6fa6a938e7702bf2b298fddd637d215c9b77a48211368630ce8f8aa56a1678dd",
+      "zip_crc": "passed",
+      "all_member_hashes": "passed",
+      "entries": 34
+    }
+  ],
+  "selected_checkpoint_sha256": "62d80f7ef2752b190fa496b7775b32dd77684bfceeb3b9f4c7356642848abc14",
+  "official_evaluator_sha256": "702a1265433bf2f15c7900c83442c626d10ac0918094d093dde8ef82069d4cef",
+  "official_notebook": {
+    "FID": 94.71603584640337,
+    "MiFID": 0.4048158824443817,
+    "composite": 47.56042586442388
+  },
+  "image_counts": {
+    "pred_A2B": 300,
+    "pred_B2A": 7038
+  },
+  "results_notebook": {
+    "cpu_inferences": 2,
+    "executed_code_cells": 3,
+    "errors": 0
+  },
+  "trials": [
+    {
+      "arm": "b1_c5",
+      "last_step": 370000,
+      "scheduled_steps": 370000,
+      "status": "completed",
+      "nan_events": 0
+    },
+    {
+      "arm": "b8_c5",
+      "last_step": 55000,
+      "scheduled_steps": 85000,
+      "status": "interrupted_oom",
+      "nan_events": 0
+    },
+    {
+      "arm": "b8_c5_r1",
+      "last_step": 53000,
+      "scheduled_steps": 79000,
+      "status": "interrupted_oom",
+      "nan_events": 0
+    }
+  ],
+  "warm_start_publication": {
+    "source_sha256": "2e8274b8ba19edd95823a4b838755c35286ca3e99e91f680ade688e447da8310",
+    "sha256": "48cf7d442aad68ccd585afe1bf71fba557713f4783e424640566206bcc1f1890",
+    "metadata_changes": [
+      "state.init_checkpoint: historical filename only"
+    ],
+    "tensor_count": 116,
+    "every_tensor_unchanged": true,
+    "tensor_manifest_sha256": "a6181c5e500780f59dea7f71d6b0f8a3f0743c4214b6cbf8f9913396adaa7583"
+  },
+  "no_new_training": true,
+  "no_kaggle_submission": true,
+  "dataset": "../part3-20261002/dataset.zip",
+  "original_backup_unchanged": true,
+  "dataset_sha256": "7529feac2b43278597ea795038f8e10aa673c0dc98d8de9f92071e236281e9cd"
+}

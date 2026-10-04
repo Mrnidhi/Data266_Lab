@@ -41,3 +41,7 @@ reproducibility/packages/part3-20261002/Part3.zip filter=lfs diff=lfs merge=lfs 
 reproducibility/packages/part3-20261002/dataset.zip filter=lfs diff=lfs merge=lfs -text
 reproducibility/packages/parts1-2-20261002/*.zip filter=lfs diff=lfs merge=lfs -text
 reproducibility/packages/part3-retuning-20261002/*.zip filter=lfs diff=lfs merge=lfs -text
+reproducibility/packages/part3-20261004/*.zip filter=lfs diff=lfs merge=lfs -text
+reproducibility/packages/part3-20261004/*.json -text whitespace=cr-at-eol
+reproducibility/packages/part3-20261004/*.csv -text whitespace=cr-at-eol
+reproducibility/packages/part3-20261004/*.ipynb -text whitespace=cr-at-eol

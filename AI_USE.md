@@ -1,13 +1,5 @@
 # Lab Pair 49 — assistance and ownership
 
-In the current Codex session, the user explicitly requested consolidating the
-completed work on `main`, deleting merged extra branches, and then improving
-Parts 1 and 2. The desktop baseline reached `main` at `87f00dc`; only `main`
-remains locally and remotely. Further verified results may be committed and
-pushed normally under that request. Existing history and raw evidence are
-preserved. Earlier local-only instructions recorded by another session do not
-describe this session's current authorization.
-
 An AI coding assistant helped research candidate architectures, prepare code/configurations, build notebook entry points and run verification. On October 1, 2026 the user requested a fresh Part 1 run on the Windows desktop RTX 5090 and deletion of previous Part 1 runs after the older checkpoint download could not be located. The assistant prepared an isolated pinned environment, checked CUDA compatibility, fixed Windows/Unicode portability issues, operated the from-scratch run and prepared evidence-based publication/notebook/packaging tools. The new run's logs, manifests, weights and actual outputs establish its technical results. They do not establish that the student independently originated the core architecture or analysis. The original console remains local unedited; portable raw step/epoch metrics are preserved without rewriting them.
 
 For the earlier Part B cloud work, the assistant prepared and benchmarked the full Yelp dataset, operated the authorized RTX 5090 reference suite and six validation-only comparison invocations (nine model candidates across seven training invocations), froze selection using validation scores, verified the local checkpoint backup and stopped the pod. Final evaluation and notebook verification ran on the Mac CPU. Those historical results are preserved separately from the new desktop reproduction.
@@ -46,4 +38,22 @@ The course brief requires the student's own core architecture decisions and anal
 
 At the user's request, the assistant researched and implemented a paired learning-rate/EMA continuation study, operated training and evaluation, checked checkpoint and output identities, drafted fixed-sample visual observations, and prepared the executed notebook and verified backup. Before any new endpoint validation result, the user's 11 AM lab-access cutoff prompted a documented amendment: compare the unchanged incumbent with epoch-four raw/EMA candidates in both learning-rate arms. The first arm completed eight epochs and the second stopped at four; epoch-eight candidates were excluded. Validation selected the LR `5e-5` epoch-four EMA model. Class and held-out results were reported after selection; earlier test/class results had already been observed.
 
-The assistant prepared a fixed 30-sample packet with blank sheets for two human raters, repaired a notebook-only selection-path defect with preserved before/after evidence, and assisted the user-authorized Git backup. No current-model human ratings, official Kaggle upload/rank, independent student authorship or completed team submission are claimed. The [latest backup](reproducibility/packages/part3-20261002/README.md) retains original provenance; only its separate anonymous reviewer packet should be sent to raters. Student interpretation, two independent human ratings, teammate comparison and the combined report remain pending.
+The assistant prepared a fixed 30-sample packet with blank sheets for two human raters, repaired a notebook-only selection-path defect with preserved before/after evidence, and assisted the user-authorized Git backup. No current-model human ratings, official Kaggle upload/rank, independent student authorship or completed team submission are claimed. The [October 2 backup](reproducibility/packages/part3-20261002/README.md) retains original provenance; only its separate anonymous reviewer packet should be sent to raters. Student interpretation, two independent human ratings, teammate comparison and the combined report remain pending.
+
+## October 3–4, 2026 — Part 3 continuation and publication
+
+The assistant helped prepare and operate the authorized three-arm RTX 5090 run,
+optimized CPU thread limits with the user's approval, monitored memory failures,
+and verified the final exports and complete local backup. Batch-1 completed;
+batch-8 and R1 were interrupted by host-memory exhaustion. The unchanged supplied
+notebook returned composite 47.56042586442388. The requested score below 44 was
+not achieved. Selection used 192 candidates and class references also included
+in training; it does not establish held-out performance. No Kaggle submission,
+current-model human review or completed team report is claimed.
+
+At the user's request, the assistant cleaned the current source formatting and
+comments, organized historical documentation and packaged the results for Git.
+Post-run fixes protect saved schedules, existing packages and stronger best
+checkpoints during resume. These fixes were tested locally; they were not used
+to produce the recorded run. Exact training source and model outputs remain in
+the dated package, and original machine backups remain local.

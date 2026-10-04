@@ -1,3 +1,5 @@
+> Historical planning record. Use the [repository README](../../README.md) for current results and packages. Commands and availability below describe the original session.
+
 # Design rationale and references
 
 The assignment's constraints determine the architecture families. Recent research informs evaluation and experiment design; a recent paper is not evidence that its hyperparameters are optimal for these much smaller models.

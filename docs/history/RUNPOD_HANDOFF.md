@@ -1,7 +1,9 @@
+> Historical planning record. Use the [repository README](../../README.md) for current results and packages. Commands and availability below describe the original session.
+
 # Lab Pair 49 — RunPod handoff
 
 This is the historical cloud preparation plan. Part 1 was retrained on the
-desktop RTX 5090 on October 1; use [Part 1 finalization](PART1_FINALIZATION.md)
+desktop RTX 5090 on October 1; use [Part 1 finalization](../../PART1_FINALIZATION.md)
 for its current run and artifacts. This local finalization needs no rented pod.
 
 No pod is started by any script in this package. The current preparation step does not authorize a paid run.

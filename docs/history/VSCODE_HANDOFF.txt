@@ -1,3 +1,6 @@
+HISTORICAL PLANNING RECORD. See ../../README.md for current results and packages.
+Commands and availability below describe the original session.
+
 DATA266 LAB 1 - CONTINUE IN VS CODE
 Updated: 1 October 2026. Pair 49. This is a project handoff, not the full chat history.
 All paths below are relative to the Data266_Lab repository root.

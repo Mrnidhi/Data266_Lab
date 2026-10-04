@@ -1,3 +1,6 @@
+HISTORICAL PLANNING RECORD. See ../../README.md for current results and packages.
+Commands and availability below describe the original session.
+
 DATA266 PART 3 - COMPLETED DEADLINE-AMENDED ROUND
 Completed October 2, 2026, before 10:02 AM Pacific; lab access ends at 11 AM.
 

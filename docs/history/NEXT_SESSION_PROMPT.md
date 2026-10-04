@@ -1,3 +1,5 @@
+> Historical planning record. Use the [repository README](../../README.md) for current results and packages. Commands and availability below describe the original session.
+
 # Continue DATA266 Lab 1 — Part 3 on my RTX 5090
 
 I want you to continue improving my own CycleGAN for DATA266 Lab 1, Pair 49, using the RTX 5090 available to me for approximately six hours. Aim for the strongest defensible class result; do not promise first place. This is a continuation of completed experiments, not a request to restart the entire lab. Work in the current VS Code repository, `Mrnidhi/Data266_Lab`.

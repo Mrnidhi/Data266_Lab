@@ -1,3 +1,5 @@
+> Historical planning record. Use the [repository README](../../README.md) for current results and packages. Commands and availability below describe the original session.
+
 # Lab Pair 49 — compute allocation and portable runs
 
 Updated October 1, 2026. The Parts 1/2 baseline and quality-study training completed on the user's Windows desktop. Cloud cost records below describe earlier Parts 2/3 work. This plan does not allocate resources.
