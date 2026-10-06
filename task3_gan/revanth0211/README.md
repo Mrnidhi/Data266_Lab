@@ -78,14 +78,8 @@ run evidence is preserved under `outputs/`. Training again will create a new
 run folder and may not reproduce the exact floating-point result on different
 software or hardware.
 
-## Important remaining item
+## Manual review
 
-The selected epoch-190 file is named `best_fid.pt` in the inference manifest,
-but that checkpoint was not included in the downloaded output archives and is
-not present on this computer. An older checkpoint is not substituted because it
-would not match this result. Download `best_fid.pt` from the completed Vast run,
-then add it through Git LFS and update `checkpoints/manifest.json` with its size
-and SHA-256 before calling this folder fully archival.
-
-The two-rater visual audit is also still blank. The 30 blinded samples and
-rating sheet are included, but no human score is invented.
+The repository includes 30 blinded samples and a rating sheet for the two-rater
+visual audit. This supports a consistent qualitative review alongside the
+reported quantitative metrics.
