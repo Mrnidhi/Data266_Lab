@@ -1,0 +1,11 @@
+{
+  "run_id": "vast_256_seed3143_v1",
+  "selected_epoch": 190,
+  "selection_metric": "fixed-subset FID",
+  "selection_value": 103.87740773392176,
+  "expected_file": "best_fid.pt",
+  "present": false,
+  "sha256": null,
+  "size_bytes": null,
+  "note": "The exact selected checkpoint is referenced by the downloaded inference manifest but was not included in the local output archives. No older checkpoint is substituted."
+}

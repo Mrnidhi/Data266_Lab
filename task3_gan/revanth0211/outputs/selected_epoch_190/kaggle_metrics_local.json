@@ -1,0 +1,13 @@
+{
+  "FID": 88.25302496317252,
+  "MiFID": 88.25302496317252,
+  "memorization_distance": 0.2049605165747498,
+  "memorization_penalty": 1.0,
+  "direction": "real_to_fake",
+  "epsilon": 0.1,
+  "rule_confirmed": false,
+  "generated_images": 7038,
+  "selected_epoch": 190,
+  "protocol_sanity_FID": 0.06936098674026425,
+  "status": "LOCAL_MEASUREMENTS_NOT_KAGGLE_SCORE"
+}

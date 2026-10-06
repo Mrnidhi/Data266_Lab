@@ -1,0 +1,11 @@
+{
+  "sanity_fid": 0.06936098674026425,
+  "sanity_scipy": 0.06931586727420708,
+  "stats_sha256": "43c1616e28b6a8c5c5bdc91e1ece0fda6e07050f1c5e2b52c332090f411c18e0",
+  "inception": "torchvision IMAGENET1K_V1 transform_input=True",
+  "initial_size": 256,
+  "pil_resize": "BICUBIC",
+  "tensor_resize": "bilinear 299 align_corners=False",
+  "normalization": "ImageNet",
+  "dtype": "float32 extractor, float64 FID"
+}

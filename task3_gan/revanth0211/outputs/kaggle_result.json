@@ -1,0 +1,11 @@
+{
+  "submission_file": "selected_epoch_190/submission.csv",
+  "submitted_FID": 107.21183928701066,
+  "submitted_MiFID": 0.41853196918964386,
+  "submitted_composite": 53.81518562810015,
+  "latest_leaderboard_score": -53.8151,
+  "score_source": "User-reported latest Kaggle submission result",
+  "rank": null,
+  "public_score": null,
+  "private_score": null
+}

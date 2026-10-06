@@ -1,0 +1,12 @@
+{
+  "protocol_passed": true,
+  "training_complete": true,
+  "best_checkpoint": true,
+  "all_photo_outputs": 7038,
+  "expected_photos": 7038,
+  "raw_log": true,
+  "manifest": true,
+  "human_audit_complete": false,
+  "kaggle_submission_ready": false,
+  "kaggle_result_recorded": false
+}
